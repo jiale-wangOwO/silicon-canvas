@@ -1,0 +1,241 @@
+{
+  "id": "fresh-06-credit-pipeline",
+  "split": "development",
+  "natural_input": {
+    "description": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "pipeline"
+    ],
+    "required_concepts": [
+      {
+        "concept": "p",
+        "pattern": "Producer"
+      },
+      {
+        "concept": "pack",
+        "pattern": "Pack"
+      },
+      {
+        "concept": "fifo",
+        "pattern": "FIFO"
+      },
+      {
+        "concept": "unpack",
+        "pattern": "Unpack"
+      },
+      {
+        "concept": "c",
+        "pattern": "Consumer"
+      }
+    ],
+    "relations": [
+      [
+        "p",
+        "pack",
+        "payload",
+        "data"
+      ],
+      [
+        "pack",
+        "fifo",
+        "payload",
+        "data"
+      ],
+      [
+        "fifo",
+        "unpack",
+        "payload",
+        "data"
+      ],
+      [
+        "unpack",
+        "c",
+        "payload",
+        "data"
+      ],
+      [
+        "c",
+        "unpack",
+        "credit",
+        "control"
+      ],
+      [
+        "unpack",
+        "fifo",
+        "credit",
+        "control"
+      ],
+      [
+        "fifo",
+        "pack",
+        "credit",
+        "control"
+      ],
+      [
+        "pack",
+        "p",
+        "credit",
+        "control"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 5,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-06-credit-pipeline",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "pipeline",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "p",
+          "label": "Producer",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "id": "pack",
+          "label": "Pack",
+          "kind": "stage",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "id": "fifo",
+          "label": "FIFO",
+          "kind": "memory",
+          "group": "",
+          "detail": "3 entries",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "id": "unpack",
+          "label": "Unpack",
+          "kind": "stage",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "id": "c",
+          "label": "Consumer",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "p",
+          "target": "pack",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "pack",
+          "target": "fifo",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "fifo",
+          "target": "unpack",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "unpack",
+          "target": "c",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "c",
+          "target": "unpack",
+          "label": "credit",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "unpack",
+          "target": "fifo",
+          "label": "credit",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "fifo",
+          "target": "pack",
+          "label": "credit",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        },
+        {
+          "source": "pack",
+          "target": "p",
+          "label": "credit",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Dataflow for a credit-controlled pipeline; only Producer, Pack, FIFO, Unpack, Consumer. Payload flows Producer -> Pack -> FIFO -> Unpack -> Consumer. Separate control credit flows Consumer -> Unpack -> FIFO -> Pack -> Producer. FIFO capacity is 3 entries, not a latency. No cycles or stage latencies are supplied.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

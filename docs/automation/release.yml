@@ -1,0 +1,150 @@
+name: Publish Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Verify tag and source versions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Match tag to every version field
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import ast
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import tomllib
+
+          tag = os.environ['RELEASE_TAG']
+          if not re.fullmatch(r'v[0-9][A-Za-z0-9.+-]*', tag):
+              raise SystemExit('Expected a version tag beginning with v and a digit.')
+          package = ast.parse(Path('src/silicon_canvas/__init__.py').read_text(encoding='utf-8'))
+          package_version = next(ast.literal_eval(item.value) for item in package.body
+                                 if isinstance(item, ast.Assign)
+                                 and any(isinstance(target, ast.Name) and target.id == '__version__'
+                                         for target in item.targets))
+          versions = {
+              'pyproject.toml': tomllib.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']['version'],
+              'src/silicon_canvas/__init__.py': package_version,
+              'web/package.json': json.loads(Path('web/package.json').read_text(encoding='utf-8'))['version'],
+          }
+          if set(versions.values()) != {tag[1:]}:
+              raise SystemExit(f'Tag {tag} does not match source versions: {versions}')
+          print(f'Version fields match {tag}.')
+          PY
+
+  verify-and-build:
+    name: Verify and build the tagged source
+    needs: version
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Publish verified release assets
+    needs: verify-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: silicon-canvas-python
+          path: release-assets
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: silicon-canvas-web
+          path: release-assets
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: silicon-canvas-mcp-windows
+          path: release-assets
+      - name: Check the asset set and generate SHA-256 checksums
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          directory = Path('release-assets')
+          files = sorted(directory.iterdir())
+          wheel = list(directory.glob('*.whl'))
+          source = list(directory.glob('*.tar.gz'))
+          expected = {*wheel, *source, directory / 'silicon-canvas-web.zip',
+                      directory / 'silicon-canvas-mcp-windows-x64.zip'}
+          if len(wheel) != 1 or len(source) != 1 or len(files) != 4 or set(files) != expected:
+              raise SystemExit('Expected exactly one wheel, one sdist, one Web ZIP and one Windows MCP ZIP.')
+          if any(not path.is_file() or not path.stat().st_size for path in files):
+              raise SystemExit('Release assets must be nonempty regular files.')
+          checksums = ''.join(f'{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}\n'
+                              for path in files)
+          (directory / 'SHA256SUMS').write_text(checksums, encoding='utf-8', newline='\n')
+          PY
+      - name: Read release notes from the tagged changelog
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import re
+
+          tag = os.environ['RELEASE_TAG']
+          source = Path('CHANGELOG.md')
+          lines = source.read_text(encoding='utf-8').splitlines() if source.is_file() else []
+          heading = re.compile(r'^##\s+\[?' + re.escape(tag[1:]) + r'\]?(?=\s|$)')
+          start = next((index + 1 for index, line in enumerate(lines) if heading.match(line)), None)
+          if start is not None:
+              end = next((index for index in range(start, len(lines)) if lines[index].startswith('## ')), len(lines))
+              body = '\n'.join(lines[start:end]).strip()
+              if body:
+                  repo = os.environ['RELEASE_REPOSITORY']
+                  body += ('\n\n## Installation\n\n'
+                           '- Windows: download the portable MCP ZIP, extract the complete folder, and add its executable to your MCP client.\n'
+                           '- Python 3.11+: use the wheel or the source installer.\n\n'
+                           f'[MCP setup](https://github.com/{repo}/blob/{tag}/docs/mcp.md) · '
+                           f'[Web guide](https://github.com/{repo}/blob/{tag}/docs/web.md)\n')
+                  Path('release-notes.md').write_text(body, encoding='utf-8', newline='\n')
+                  print(f'Using the changelog section for {tag}.')
+          PY
+      - name: Create the release from the existing tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          args=(--verify-tag --title "$RELEASE_TAG")
+          if [[ -f release-notes.md ]]; then
+            args+=(--notes-file release-notes.md)
+          else
+            args+=(--generate-notes)
+          fi
+          if [[ "${RELEASE_TAG#v}" =~ [[:alpha:]-] ]]; then
+            args+=(--prerelease)
+          fi
+          gh release create "$RELEASE_TAG" release-assets/* "${args[@]}"

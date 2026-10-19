@@ -1,0 +1,226 @@
+{
+  "id": "variant-03-product-override",
+  "split": "development",
+  "natural_input": {
+    "description": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+    "scene": "system",
+    "representation": "diagram",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [
+      {
+        "concept": "host",
+        "pattern": "Host"
+      },
+      {
+        "concept": "hi",
+        "pattern": "Host Interface"
+      },
+      {
+        "concept": "cmd",
+        "pattern": "Command Processor"
+      },
+      {
+        "concept": "ecc",
+        "pattern": "ECC Engine"
+      },
+      {
+        "concept": "fi",
+        "pattern": "Flash Interface"
+      },
+      {
+        "concept": "flash",
+        "pattern": "Flash Devices"
+      }
+    ],
+    "relations": [
+      [
+        "host",
+        "hi",
+        "",
+        "data"
+      ],
+      [
+        "hi",
+        "cmd",
+        "",
+        "data"
+      ],
+      [
+        "cmd",
+        "ecc",
+        "",
+        "data"
+      ],
+      [
+        "ecc",
+        "fi",
+        "",
+        "data"
+      ],
+      [
+        "fi",
+        "flash",
+        "",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "hi": "chip",
+      "cmd": "chip",
+      "ecc": "chip",
+      "fi": "chip"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+    "settings": {
+      "scene": "system",
+      "representation": "diagram",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-07-storage-product",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "chip",
+          "label": "Controller",
+          "parent": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "host",
+          "label": "Host",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "id": "hi",
+          "label": "Host Interface",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "id": "cmd",
+          "label": "Command Processor",
+          "kind": "control",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "id": "ecc",
+          "label": "ECC Engine",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "id": "fi",
+          "label": "Flash Interface",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "id": "flash",
+          "label": "Flash Devices",
+          "kind": "memory",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "host",
+          "target": "hi",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "source": "hi",
+          "target": "cmd",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "source": "cmd",
+          "target": "ecc",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "source": "ecc",
+          "target": "fi",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        },
+        {
+          "source": "fi",
+          "target": "flash",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Commercial product introduction for a storage controller. Explain the system relationships with a functional cutaway, not just an exterior cover. Inside the Controller: Host Interface, Command Processor, ECC Engine, Flash Interface. Host and Flash Devices are external. Only these paths: Host -> Host Interface -> Command Processor -> ECC Engine -> Flash Interface -> Flash Devices. This is a logical illustration, not a measured floorplan.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  },
+  "parent_case_sha256": "a57b90fdfc1aa059b1e1195d650770956da3c2d652d5b7a8883b7543fce1f8c8",
+  "transformation": "explicit_settings_override_natural_commercial_intent"
+}

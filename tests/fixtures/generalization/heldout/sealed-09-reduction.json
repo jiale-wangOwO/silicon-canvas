@@ -1,0 +1,246 @@
+{
+  "id": "sealed-09-reduction",
+  "split": "holdout",
+  "natural_input": {
+    "description": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "algorithm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "x",
+        "pattern": "Samples"
+      },
+      {
+        "concept": "idx",
+        "pattern": "Bin Index"
+      },
+      {
+        "concept": "local",
+        "pattern": "Local Histogram"
+      },
+      {
+        "concept": "prev",
+        "pattern": "Previous Histogram"
+      },
+      {
+        "concept": "merge",
+        "pattern": "Merge Histogram"
+      },
+      {
+        "concept": "norm",
+        "pattern": "Normalize"
+      },
+      {
+        "concept": "dist",
+        "pattern": "Distribution"
+      }
+    ],
+    "relations": [
+      [
+        "x",
+        "idx",
+        "",
+        "data"
+      ],
+      [
+        "idx",
+        "local",
+        "",
+        "data"
+      ],
+      [
+        "local",
+        "merge",
+        "",
+        "data"
+      ],
+      [
+        "prev",
+        "merge",
+        "",
+        "data"
+      ],
+      [
+        "merge",
+        "norm",
+        "",
+        "data"
+      ],
+      [
+        "norm",
+        "dist",
+        "",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 7,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "sealed-09-reduction",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "algorithm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "x",
+          "label": "Samples",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "tensor"
+        },
+        {
+          "id": "idx",
+          "label": "Bin Index",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "local",
+          "label": "Local Histogram",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "reduction"
+        },
+        {
+          "id": "prev",
+          "label": "Previous Histogram",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "state"
+        },
+        {
+          "id": "merge",
+          "label": "Merge Histogram",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "norm",
+          "label": "Normalize",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "dist",
+          "label": "Distribution",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": "",
+          "diagram_role": "tensor"
+        }
+      ],
+      "edges": [
+        {
+          "source": "x",
+          "target": "idx",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "idx",
+          "target": "local",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "local",
+          "target": "merge",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "prev",
+          "target": "merge",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "merge",
+          "target": "norm",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "norm",
+          "target": "dist",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dependency graph only: Samples feeds Bin Index; Bin Index feeds Local Histogram; Local Histogram and Previous Histogram feed Merge Histogram; Merge Histogram feeds Normalize; Normalize feeds Distribution. Previous Histogram is an operand, not a feedback control line. No hardware buffers, no inferred stage schedule.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

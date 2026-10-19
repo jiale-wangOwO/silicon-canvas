@@ -1,0 +1,116 @@
+{
+  "description": "画个数据采集系统吧，用在产品介绍里。",
+  "spec": {
+    "title": "Illustrative Acquisition System",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "input",
+        "label": "Measurement Input",
+        "kind": "io",
+        "group": "",
+        "detail": "Proposed source",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "id": "buffer",
+        "label": "Input Buffer",
+        "kind": "memory",
+        "group": "",
+        "detail": "Proposed buffering",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "id": "process",
+        "label": "Signal Processing",
+        "kind": "compute",
+        "group": "",
+        "detail": "Proposed transform",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "id": "storage",
+        "label": "Capture Storage",
+        "kind": "memory",
+        "group": "",
+        "detail": "Proposed retention",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "id": "host",
+        "label": "Host Interface",
+        "kind": "io",
+        "group": "",
+        "detail": "Proposed output",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      }
+    ],
+    "edges": [
+      {
+        "source": "input",
+        "target": "buffer",
+        "kind": "data",
+        "label": "measurements",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "source": "buffer",
+        "target": "process",
+        "kind": "data",
+        "label": "sample stream",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "source": "process",
+        "target": "storage",
+        "kind": "data",
+        "label": "processed records",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      },
+      {
+        "source": "storage",
+        "target": "host",
+        "kind": "data",
+        "label": "readout",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "Generic illustrative completion of a sparse acquisition-system request; not supplied by the user."
+      }
+    ],
+    "layout": "",
+    "steps": [],
+    "annotations": [
+      "This is a proposed generic completion. The input did not specify processing algorithm, interfaces, memory capacity or physical implementation."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "auto",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": "Choose an informative generic system explanation; no precise hardware claims."
+  }
+}

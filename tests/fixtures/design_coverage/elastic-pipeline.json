@@ -1,0 +1,186 @@
+{
+  "description": "Explain the functional pipeline and reverse backpressure separately. Put valid/data on the forward path and ready on a distinct return lane. Stage numbers express functional order, not exact clock latency. The two-entry FIFO is storage capacity.",
+  "spec": {
+    "title": "Elastic Packet Pipeline",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "pipeline",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "source",
+        "label": "Byte Source",
+        "kind": "io",
+        "group": "",
+        "detail": "Produces ready/valid bytes",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "decode",
+        "label": "Header Decode",
+        "kind": "stage",
+        "group": "",
+        "detail": "Functional stage 0",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "crc",
+        "label": "CRC Update",
+        "kind": "stage",
+        "group": "",
+        "detail": "Functional stage 1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fifo",
+        "label": "Elastic FIFO",
+        "kind": "memory",
+        "group": "",
+        "detail": "2 entries; absorption capacity, not 2-cycle latency",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "frame",
+        "label": "Frame Assembly",
+        "kind": "stage",
+        "group": "",
+        "detail": "Functional stage 2",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sink",
+        "label": "Frame Sink",
+        "kind": "io",
+        "group": "",
+        "detail": "May apply backpressure",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "source",
+        "target": "decode",
+        "kind": "data",
+        "label": "byte + valid",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "decode",
+        "target": "crc",
+        "kind": "data",
+        "label": "payload + valid",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "crc",
+        "target": "fifo",
+        "kind": "data",
+        "label": "updated CRC + valid",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fifo",
+        "target": "frame",
+        "kind": "data",
+        "label": "byte + valid",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "frame",
+        "target": "sink",
+        "kind": "data",
+        "label": "frame + valid",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "decode",
+        "target": "source",
+        "kind": "control",
+        "label": "ready",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "crc",
+        "target": "decode",
+        "kind": "control",
+        "label": "ready",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fifo",
+        "target": "crc",
+        "kind": "control",
+        "label": "ready",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "frame",
+        "target": "fifo",
+        "kind": "control",
+        "label": "ready",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sink",
+        "target": "frame",
+        "kind": "control",
+        "label": "ready",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "",
+    "steps": [
+      "Stage 0: decode the header.",
+      "Stage 1: update CRC on accepted payload bytes.",
+      "Two-entry FIFO stores pending accepted items.",
+      "Stage 2: assemble a frame.",
+      "The sink can lower ready; do not change unaccepted payload."
+    ],
+    "annotations": [
+      "No stage latency, initiation interval or cycle schedule has been supplied. Do not invent a timing grid."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

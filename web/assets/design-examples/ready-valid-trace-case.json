@@ -1,0 +1,100 @@
+{
+  "description": "Draw these exact eight sampling edges as an aligned waveform or timing table. Emphasize the stall then three consecutive transfers. Do not invent delays or transactions.",
+  "spec": {
+    "title": "Ready/Valid Stall and Consecutive Transfers",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "timing",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "clk",
+        "label": "clk",
+        "kind": "signal",
+        "group": "",
+        "detail": "All c0..c7 columns are rising sampling edges",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "rst_n",
+        "label": "rst_n",
+        "kind": "signal",
+        "group": "",
+        "detail": "c0..c7: 0 1 1 1 1 1 1 1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "valid",
+        "label": "valid",
+        "kind": "signal",
+        "group": "",
+        "detail": "c0..c7: 0 0 1 1 1 1 1 0",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ready",
+        "label": "ready",
+        "kind": "signal",
+        "group": "",
+        "detail": "c0..c7: 0 1 0 0 1 1 1 1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "data",
+        "label": "data",
+        "kind": "signal",
+        "group": "",
+        "detail": "c0..c7: - - A A A B C -",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "transfer",
+        "label": "transfer",
+        "kind": "event",
+        "group": "",
+        "detail": "c0..c7: 0 0 0 0 1 1 1 0",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [],
+    "layout": "",
+    "steps": [
+      "c0: reset active; no transfer.",
+      "c1: reset released; source idle.",
+      "c2: valid=1, ready=0, data=A; no transfer.",
+      "c3: valid=1, ready=0, data=A; no transfer.",
+      "c4: valid=1, ready=1, data=A; transfer A.",
+      "c5: valid=1, ready=1, data=B; transfer B.",
+      "c6: valid=1, ready=1, data=C; transfer C.",
+      "c7: valid=0, ready=1; no transfer."
+    ],
+    "annotations": [
+      "Each column describes signal values sampled immediately before that rising edge. Changes after an edge belong to the next column.",
+      "transfer = rst_n && valid && ready. A remains stable during c2 and c3 stall and through its c4 acceptance.",
+      "This is one generic ready/valid channel, not an AXI bus or measured waveform."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": "Exact supplied timing trace. Keep all six signal rows and c0..c7 sample values."
+  }
+}

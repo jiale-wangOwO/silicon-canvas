@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "silicon-canvas"
+version = "0.7.0"
+description = "Model-independent semiconductor render and engineering figure briefs for Image Gen, Web and MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Jiale Wang"}]
+dependencies = ["Pillow==12.2.0", "mcp==2.3.0"]
+
+[project.urls]
+Homepage = "https://jiale-wangOwO.github.io/silicon-canvas/"
+Repository = "https://github.com/jiale-wangOwO/silicon-canvas"
+Documentation = "https://github.com/jiale-wangOwO/silicon-canvas/tree/main/docs"
+Issues = "https://github.com/jiale-wangOwO/silicon-canvas/issues"
+
+[project.optional-dependencies]
+dev = ["build>=1.2,<2", "playwright>=1.50,<2", "pyinstaller>=6.10,<7"]
+
+[project.scripts]
+silicon-canvas-mcp = "silicon_canvas.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+silicon_canvas = ["catalog.json", "fonts/*", "reference_images/*.json"]

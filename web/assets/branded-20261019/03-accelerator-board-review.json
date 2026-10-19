@@ -1,0 +1,33 @@
+{
+  "id": "03-accelerator-board",
+  "status": "first_brand_edit_accepted",
+  "asset_kind": "ImageGen branded derivative of an existing render-study image; not an original MCP first-output sample",
+  "brand_verdict": "pass",
+  "spelling_verdict": "pass",
+  "structure_verdict": "pass",
+  "appearance_verdict": "pass",
+  "review_method": "Host visually inspected the original target, official Logo A reference and full-size first edited bitmap.",
+  "image_size_px": [
+    1672,
+    941
+  ],
+  "image_sha256": "6e2d427deb72cb365daafedfb47086de0c237c59a7b682c0d901b28f8240c0ff",
+  "source_sha256": "2b04876b5e23cf7c43b4b57265f6b004fd11e9b77890fd8e6cbb2361ef6c2bd1",
+  "edit_prompt_sha256": "af9671f474e578cfc1cb81bd930d8789d028636ec81b6ad4031cee0f41ec1a14",
+  "observations": [
+    "Exactly two pale silver-gray Logo A marks and two correctly spelled single-line Silicon Canvas wordmarks appear, one centered on each of the two large central compute-chip faces.",
+    "The mark visually retains the reference open rounded outline and the inset solid upper-right shape. It is not replaced by a generic chip icon or an unrelated letter.",
+    "Both wordmarks read Silicon Canvas with the requested capitals and one space; no other text was added.",
+    "The markings follow each dark chip face perspective and remain understated, with the original blue-gray reflectance showing through. There is no white card, sticker background, plaque or floating watermark.",
+    "The two central compute packages, four surrounding memory packages, left mounting bracket, original PCB layout, gold PCIe edge connector, camera, lighting, shadows and light background remain visually consistent with the source.",
+    "Output dimensions remain 1672×941. The accepted public PNG is a byte-for-byte copy of the built-in generator output; the source file remains unchanged."
+  ],
+  "limits": [
+    "Visual matching at this raster resolution does not prove vector-path identity of the logo or verify manufactured engraving.",
+    "ImageGen editing can resynthesize fine surface texture and tiny component details; unchanged geometry and counts were visually checked, not certified as a bitwise-preserved background.",
+    "This is a deliberate branding edit for presentation use and must not be represented as the original unedited MCP first output."
+  ],
+  "retry_count": 0,
+  "first_output_selected": true,
+  "further_edit_required": false
+}

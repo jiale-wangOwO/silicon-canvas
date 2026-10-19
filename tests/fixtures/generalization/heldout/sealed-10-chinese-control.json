@@ -1,0 +1,229 @@
+{
+  "id": "sealed-10-chinese-control",
+  "split": "holdout",
+  "natural_input": {
+    "description": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "fsm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "sleep",
+        "pattern": "SLEEP"
+      },
+      {
+        "concept": "wake",
+        "pattern": "WAKE"
+      },
+      {
+        "concept": "run",
+        "pattern": "RUN"
+      },
+      {
+        "concept": "fault",
+        "pattern": "FAULT"
+      }
+    ],
+    "relations": [
+      [
+        "sleep",
+        "wake",
+        "irq",
+        "control"
+      ],
+      [
+        "sleep",
+        "sleep",
+        "!irq",
+        "control"
+      ],
+      [
+        "wake",
+        "run",
+        "",
+        "control"
+      ],
+      [
+        "run",
+        "fault",
+        "error",
+        "control"
+      ],
+      [
+        "run",
+        "sleep",
+        "!error && stop",
+        "control"
+      ],
+      [
+        "run",
+        "run",
+        "!error && !stop",
+        "control"
+      ],
+      [
+        "fault",
+        "sleep",
+        "clear",
+        "control"
+      ],
+      [
+        "fault",
+        "fault",
+        "!clear",
+        "control"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 4,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "sealed-10-chinese-control",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "fsm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "sleep",
+          "label": "SLEEP",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "id": "wake",
+          "label": "WAKE",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "id": "run",
+          "label": "RUN",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "id": "fault",
+          "label": "FAULT",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "sleep",
+          "target": "wake",
+          "label": "irq",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "sleep",
+          "target": "sleep",
+          "label": "!irq",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "wake",
+          "target": "run",
+          "label": "",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "run",
+          "target": "fault",
+          "label": "error",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "run",
+          "target": "sleep",
+          "label": "!error && stop",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "run",
+          "target": "run",
+          "label": "!error && !stop",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "fault",
+          "target": "sleep",
+          "label": "clear",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        },
+        {
+          "source": "fault",
+          "target": "fault",
+          "label": "!clear",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "画状态机，只包括 SLEEP、WAKE、RUN、FAULT 四个状态。reset 进入 SLEEP；SLEEP 在 irq 时去 WAKE，否则 !irq 自保持；WAKE 无条件去 RUN；RUN 在 error 时去 FAULT，在 !error && stop 时去 SLEEP，在 !error && !stop 时自保持；FAULT 在 clear 时去 SLEEP，在 !clear 时自保持。error 优先于 stop。事件只能写在线上。",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [
+        "reset enters SLEEP; error has priority over stop."
+      ],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

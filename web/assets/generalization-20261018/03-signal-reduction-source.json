@@ -1,0 +1,406 @@
+{
+  "description": "画一个 GPU 线程块的分层求和过程：四个 warp 各自产生一个 partial sum，分别写入共享缓冲的 s0、s1、s2、s3 四个槽。全块同步完成后，一个 warp 读取这些槽，先计算 s0+s1 和 s2+s3，再把两个结果相加，最后把 block sum 写入输出缓冲。希望突出数据如何从并行部分结果汇合到单个输出，barrier 只是允许读取的控制条件，不要把它当作执行加法的数据节点，也不指定周期数或 shuffle 指令实现。",
+  "settings": {
+    "category": "dataflow",
+    "style": "signal",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "flow",
+    "resolved_representation": "diagram"
+  },
+  "spec": {
+    "title": "GPU Block Reduction: Warp Partials to Block Sum",
+    "summary": "该图表达一个 GPU 线程块内的分层求和：四个 warp 各自产生 partial sum 并写入共享缓冲的 s0–s3 槽；全块 barrier 仅作为允许读取的控制条件；随后一个 warp 读取四个槽，先算 s0+s1 与 s2+s3，再相加得到 block sum 写入输出缓冲。图中不指定周期数，也不指定 shuffle 实现；barrier 不承担加法数据角色。",
+    "category": "dataflow",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_warp",
+        "label": "Warp Producers",
+        "parent": "",
+        "evidence": "四个 warp 各自产生一个 partial sum",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_smem",
+        "label": "Shared Buffer",
+        "parent": "",
+        "evidence": "共享缓冲的 s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_reduce",
+        "label": "Block Reduction Warp",
+        "parent": "",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_out",
+        "label": "Output",
+        "parent": "",
+        "evidence": "把 block sum 写入输出缓冲",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "w0",
+        "label": "Warp 0",
+        "kind": "compute",
+        "group": "g_warp",
+        "detail": "Produces partial sum",
+        "evidence": "四个 warp 各自产生一个 partial sum",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "w1",
+        "label": "Warp 1",
+        "kind": "compute",
+        "group": "g_warp",
+        "detail": "Produces partial sum",
+        "evidence": "四个 warp 各自产生一个 partial sum",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "w2",
+        "label": "Warp 2",
+        "kind": "compute",
+        "group": "g_warp",
+        "detail": "Produces partial sum",
+        "evidence": "四个 warp 各自产生一个 partial sum",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "w3",
+        "label": "Warp 3",
+        "kind": "compute",
+        "group": "g_warp",
+        "detail": "Produces partial sum",
+        "evidence": "四个 warp 各自产生一个 partial sum",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "s0",
+        "label": "s0",
+        "kind": "memory",
+        "group": "g_smem",
+        "detail": "Slot for Warp 0 partial",
+        "evidence": "s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "storage"
+      },
+      {
+        "id": "s1",
+        "label": "s1",
+        "kind": "memory",
+        "group": "g_smem",
+        "detail": "Slot for Warp 1 partial",
+        "evidence": "s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "storage"
+      },
+      {
+        "id": "s2",
+        "label": "s2",
+        "kind": "memory",
+        "group": "g_smem",
+        "detail": "Slot for Warp 2 partial",
+        "evidence": "s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "storage"
+      },
+      {
+        "id": "s3",
+        "label": "s3",
+        "kind": "memory",
+        "group": "g_smem",
+        "detail": "Slot for Warp 3 partial",
+        "evidence": "s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "storage"
+      },
+      {
+        "id": "barrier",
+        "label": "Block Barrier",
+        "kind": "control",
+        "group": "",
+        "detail": "Allows reads only after all warps finish",
+        "evidence": "全块同步完成后",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "rd",
+        "label": "Read s0–s3",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "Reduction warp loads four slots",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "add01",
+        "label": "s0 + s1",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "",
+        "evidence": "先计算 s0+s1 和 s2+s3",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "reduction_axis": "s0, s1"
+      },
+      {
+        "id": "add23",
+        "label": "s2 + s3",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "",
+        "evidence": "先计算 s0+s1 和 s2+s3",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "reduction_axis": "s2, s3"
+      },
+      {
+        "id": "add_final",
+        "label": "(s0+s1) + (s2+s3)",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "Final combine",
+        "evidence": "再把两个结果相加",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction"
+      },
+      {
+        "id": "out",
+        "label": "Output Buffer",
+        "kind": "memory",
+        "group": "g_out",
+        "detail": "Holds block sum",
+        "evidence": "把 block sum 写入输出缓冲",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "storage"
+      }
+    ],
+    "edges": [
+      {
+        "source": "w0",
+        "target": "s0",
+        "kind": "data",
+        "label": "partial",
+        "evidence": "分别写入共享缓冲的 s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w1",
+        "target": "s1",
+        "kind": "data",
+        "label": "partial",
+        "evidence": "分别写入共享缓冲的 s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w2",
+        "target": "s2",
+        "kind": "data",
+        "label": "partial",
+        "evidence": "分别写入共享缓冲的 s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w3",
+        "target": "s3",
+        "kind": "data",
+        "label": "partial",
+        "evidence": "分别写入共享缓冲的 s0、s1、s2、s3 四个槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w0",
+        "target": "barrier",
+        "kind": "control",
+        "label": "arrive",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "barrier 需等待各 warp 完成写入，补入到达信号"
+      },
+      {
+        "source": "w1",
+        "target": "barrier",
+        "kind": "control",
+        "label": "arrive",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "barrier 需等待各 warp 完成写入，补入到达信号"
+      },
+      {
+        "source": "w2",
+        "target": "barrier",
+        "kind": "control",
+        "label": "arrive",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "barrier 需等待各 warp 完成写入，补入到达信号"
+      },
+      {
+        "source": "w3",
+        "target": "barrier",
+        "kind": "control",
+        "label": "arrive",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "barrier 需等待各 warp 完成写入，补入到达信号"
+      },
+      {
+        "source": "barrier",
+        "target": "rd",
+        "kind": "control",
+        "label": "reads allowed",
+        "evidence": "全块同步完成后，一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "s0",
+        "target": "rd",
+        "kind": "data",
+        "label": "",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "s1",
+        "target": "rd",
+        "kind": "data",
+        "label": "",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "s2",
+        "target": "rd",
+        "kind": "data",
+        "label": "",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "s3",
+        "target": "rd",
+        "kind": "data",
+        "label": "",
+        "evidence": "一个 warp 读取这些槽",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "rd",
+        "target": "add01",
+        "kind": "data",
+        "label": "s0, s1",
+        "evidence": "先计算 s0+s1 和 s2+s3",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "rd",
+        "target": "add23",
+        "kind": "data",
+        "label": "s2, s3",
+        "evidence": "先计算 s0+s1 和 s2+s3",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "add01",
+        "target": "add_final",
+        "kind": "data",
+        "label": "",
+        "evidence": "再把两个结果相加",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "add23",
+        "target": "add_final",
+        "kind": "data",
+        "label": "",
+        "evidence": "再把两个结果相加",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "add_final",
+        "target": "out",
+        "kind": "data",
+        "label": "block sum",
+        "evidence": "把 block sum 写入输出缓冲",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Left-to-right dominant flow. Top-left: g_warp with w0–w3 stacked vertically. Center: g_smem with s0–s3 aligned one-to-one with the warps, so each partial edge is a short horizontal arrow. Barrier sits between g_smem and g_reduce as a narrow vertical control band: arrive edges from warps route along the top corridor into barrier; a single dashed control edge from barrier to rd. Right: g_reduce with rd at left, add01 and add23 stacked in parallel, add_final below/right of them, then g_out with out at far right. Reading order: warps → slots → barrier → read → pairwise adds → final add → output.",
+    "steps": [
+      "Each of the four warps computes its own partial sum.",
+      "Warp 0–3 write partials into s0–s3 of the shared buffer.",
+      "All warps reach the block barrier; only after full-block synchronization may the slots be read.",
+      "One warp reads s0, s1, s2, s3.",
+      "It computes s0+s1 and s2+s3 in parallel.",
+      "It adds the two results together.",
+      "The block sum is written to the output buffer."
+    ],
+    "annotations": [
+      "Barrier is a control condition for read permission, not an adder and not a data operand.",
+      "No cycle counts or shuffle-based implementation is specified; the reduction is shown as explicit slot reads and adds."
+    ],
+    "assumptions": [
+      "补入各 warp 到 barrier 的 arrive 控制边，用于表达“全块同步完成后”这一前提；若原设计使用其他同步机制可替换。",
+      "s0–s3 与 Warp 0–3 的一一对应按写入顺序推定，属通用示意。",
+      "rd 节点表示归约 warp 的读取动作，其内部寄存器/加载细节未展开。"
+    ],
+    "questions": [
+      "是否需要把归约 warp 的读取与两次加法展开为更细的寄存器级数据流？",
+      "是否需要在图中显式区分共享缓冲的写端口与读端口？"
+    ],
+    "checks": [
+      "确认 barrier 只以控制边出现，未作为加法数据输入。",
+      "确认 s0+s1 与 s2+s3 为并行分支，且最终加法有两个输入。",
+      "确认图中未出现周期数或 shuffle 指令等未指定实现细节。"
+    ]
+  }
+}

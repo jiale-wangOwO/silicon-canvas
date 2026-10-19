@@ -1,0 +1,637 @@
+{
+  "metadata_only": true,
+  "notice": "Source images are not redistributed. Metadata informs visual grammar only.",
+  "items": [
+    {
+      "path": "architecture/feather-2024-fig7-system-overview.png",
+      "source_url": "https://arxiv.org/abs/2405.13170",
+      "category": "architecture",
+      "features": [
+        "顶部缓冲区、中部计算和归约、底部后处理形成清楚的纵向主路径",
+        "控制与指令列放在右侧，与计算链保持对齐",
+        "浅色填充和同色边框表达模块角色，片外 DRAM 置于系统虚线边界外",
+        "图中只有关键路径，短标签和双行模块文字保持可读"
+      ],
+      "focus": [
+        "compact_system_overview"
+      ],
+      "width": 884,
+      "height": 443,
+      "reference_tier": "overview"
+    },
+    {
+      "path": "architecture/simba-2019-fig2-package-chiplet-pe.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_simba-scaling-deep-learning-inference-multi-chip-module-based-architecture",
+      "category": "architecture",
+      "features": [
+        "从左到右逐级放大，三层语义清楚",
+        "重复单元使用规整网格和一致形状",
+        "细黑线承担连接，绿色和蓝色仅强调角色",
+        "PE 内部按存储、计算、累加分层排列"
+      ],
+      "focus": [
+        "hierarchical-zoom",
+        "chiplet-array",
+        "representative-detail",
+        "balanced-density"
+      ],
+      "width": 2198,
+      "height": 850,
+      "reference_tier": "overview"
+    },
+    {
+      "path": "architecture/highlight-2023-fig6c-hierarchical-architecture.png",
+      "source_url": "https://emze.csail.mit.edu/",
+      "category": "architecture",
+      "features": [
+        "上方全局缓冲、中间阵列、右侧寄存器和激活构成清楚的硬件层级",
+        "重复 PE 仅保留九个代表块和省略号，并明确标注 16×16",
+        "黑色标题带区分局部功能与 PE 主体",
+        "点线层级边界和倍数标签表达多个相同阵列；只截取架构子图 6(c)，不带性能图"
+      ],
+      "focus": [
+        "monochrome_hierarchical_array"
+      ],
+      "width": 755,
+      "height": 500,
+      "reference_tier": "overview"
+    },
+    {
+      "path": "architecture/accelsim-2020-fig2-gpu-performance-model.png",
+      "source_url": "https://engineering.purdue.edu/tgrogers/publication/khairy-isca-2020/",
+      "category": "architecture",
+      "features": [
+        "GPU 与 SM 内部两级并列展开",
+        "同构 Sub-core 使用一致列宽和顺序",
+        "互联、缓存与外存按共享层级形成横向带"
+      ],
+      "focus": [
+        "gpu-to-sm-detail",
+        "repeated-subcore",
+        "shared-resource-bands"
+      ],
+      "width": 1074,
+      "height": 730,
+      "reference_tier": "overview"
+    },
+    {
+      "path": "architecture/maestro-2019-fig2-abstract-accelerator.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_understanding-reuse-performance-and-hardware-cost-dnn-dataflows-data-centric",
+      "category": "architecture",
+      "features": [
+        "共享存储、NoC 和 PE 分成三条清晰水平带",
+        "重复 PE 只画首尾代表单元与省略号",
+        "计算和局部存储采用固定角色色彩",
+        "参数说明与模块保持同层对齐"
+      ],
+      "focus": [
+        "horizontal-bands",
+        "repeat-ellipsis",
+        "role-colors",
+        "aligned-callouts"
+      ],
+      "width": 1064,
+      "height": 437,
+      "reference_tier": "overview"
+    },
+    {
+      "path": "dataflow/accelsim-2020-fig1-framework-flow.png",
+      "source_url": "https://engineering.purdue.edu/tgrogers/publication/khairy-isca-2020/",
+      "category": "dataflow",
+      "features": [
+        "框架边界与外部工具边界清楚",
+        "主处理路径横向排列，校准反馈置于外围",
+        "输入文件与处理模块采用不同视觉角色"
+      ],
+      "focus": [
+        "framework-boundary",
+        "feedback-routing",
+        "file-vs-process"
+      ],
+      "width": 1031,
+      "height": 595,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/eie-2016-fig4-pe-architecture.png",
+      "source_url": "https://arxiv.org/abs/1602.01528",
+      "category": "microarchitecture",
+      "features": [
+        "检测节点和 PE 拆成两个有边界的子图",
+        "指针读取、稀疏访问、运算和写回分段",
+        "主路径水平贯穿，值与索引路径分别编码"
+      ],
+      "focus": [
+        "partitioned-pe",
+        "continuous-main-path",
+        "metadata-path"
+      ],
+      "width": 2158,
+      "height": 608,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/feather-2024-fig8-datapath-microarchitecture.png",
+      "source_url": "https://arxiv.org/abs/2405.13170",
+      "category": "microarchitecture",
+      "features": [
+        "计算阵列、归约网络和输出缓冲按数据方向分成连续层级",
+        "用省略号和 AW/AH 维度标记表达可扩展阵列",
+        "代表 PE 和交换单元在右侧展开，用引线关联原位置",
+        "输入、权重、结果和配置保持各自的语义颜色；只学习分区和展开方法，不复制全部细节密度"
+      ],
+      "focus": [
+        "array_with_representative_detail"
+      ],
+      "width": 922,
+      "height": 1510,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/highlight-2023-fig10-sparse-pe-datapath.png",
+      "source_url": "https://emze.csail.mit.edu/",
+      "category": "microarchitecture",
+      "features": [
+        "缓冲、选择单元和 MAC 按上到下路径对齐",
+        "只画两个 PE 展示相同硬件机制，右侧独立回写通道",
+        "蓝绿区分两个操作数、紫金区分元数据、红色表示部分和",
+        "浅底区域强调功能分组，MAC/MUX 使用统一的硬件符号"
+      ],
+      "focus": [
+        "operand_metadata_datapath"
+      ],
+      "width": 1018,
+      "height": 668,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/highlight-2023-fig7-sparse-selection-logic.png",
+      "source_url": "https://emze.csail.mit.edu/",
+      "category": "microarchitecture",
+      "features": [
+        "上半部用带颜色的小数据格表示有效值和索引",
+        "下半部四个 MUX 并列且等间距，输入、控制和输出位置一致",
+        "右上角局部展开展示 8-to-1 的流水分解",
+        "视觉颜色在算法层和硬件层之间保持对应"
+      ],
+      "focus": [
+        "algorithm_to_selection_hardware"
+      ],
+      "width": 1018,
+      "height": 468,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "dataflow/highlight-2023-fig11-buffer-to-fetch-dataflow.png",
+      "source_url": "https://emze.csail.mit.edu/",
+      "category": "dataflow",
+      "features": [
+        "上下两块分别表达静态存储布局和动态处理步骤",
+        "彩色数据块在两部分之间保持对应，空槽留白",
+        "每一步的缓冲条等长对齐，用下箭头标出真正输出",
+        "无效填充值用灰色箭头和标签弱化，阅读重点明确"
+      ],
+      "focus": [
+        "buffer_state_steps"
+      ],
+      "width": 1014,
+      "height": 539,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "dataflow/simba-2019-fig14-data-placement.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_simba-scaling-deep-learning-inference-multi-chip-module-based-architecture",
+      "category": "dataflow",
+      "features": [
+        "四幅小图保持完全相同的阵列位置",
+        "蓝色输入与红色输出形成稳定图例",
+        "相同拓扑上只改变需要比较的布局",
+        "将策略对比变成可一眼识别的空间差异"
+      ],
+      "focus": [
+        "small-multiples",
+        "fixed-topology",
+        "semantic-colors",
+        "placement-comparison"
+      ],
+      "width": 1829,
+      "height": 543,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "dataflow/simba-2019-fig16-residual-pipeline.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_simba-scaling-deep-learning-inference-multi-chip-module-based-architecture",
+      "category": "dataflow",
+      "features": [
+        "左侧算法关系与右侧硬件阵列并排",
+        "用相同颜色建立计算阶段与硬件区域对应",
+        "虚线区域框保留底层阵列可见性",
+        "只展开关键数据依赖和映射区域"
+      ],
+      "focus": [
+        "algorithm-to-hardware",
+        "matched-colors",
+        "mapping-regions",
+        "pipeline"
+      ],
+      "width": 1056,
+      "height": 516,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/sigma-2020-fig6a-forwarding-adder-network.png",
+      "source_url": "https://doi.org/10.1109/HPCA47549.2020.00015",
+      "category": "microarchitecture",
+      "features": [
+        "输入沿水平轴排列，归约层次沿垂直轴排列",
+        "灰色线保留完整硬件，彩色线突出选中的归约路径",
+        "乘法器、加法器、复用器使用不同形状",
+        "符号图例和层级编号帮助读者解析密集互连"
+      ],
+      "focus": [
+        "reduction-tree",
+        "active-path-highlight",
+        "shape-legend",
+        "aligned-levels"
+      ],
+      "width": 1355,
+      "height": 506,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "dataflow/maestro-2019-fig3-weight-stationary-reuse.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_understanding-reuse-performance-and-hardware-cost-dnn-dataflows-data-centric",
+      "category": "dataflow",
+      "features": [
+        "上方说明单个输出的计算关系，下方说明实际执行",
+        "PE 与周期形成明确二维坐标",
+        "权重、输入、部分和、输出使用四种固定颜色",
+        "三条醒目的注释箭头分别解释时间复用、多播、归约"
+      ],
+      "focus": [
+        "space-time-grid",
+        "computation-and-execution",
+        "reuse-annotations",
+        "tensor-colors"
+      ],
+      "width": 1074,
+      "height": 866,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/maestro-2019-fig7a-analysis-framework.png",
+      "source_url": "https://research.nvidia.com/publication/2019-10_understanding-reuse-performance-and-hardware-cost-dnn-dataflows-data-centric",
+      "category": "architecture",
+      "features": [
+        "输入置左，主要引擎居中，输出置右",
+        "引擎内部用嵌套块说明职责",
+        "主框与递归分析容器表达不同层级",
+        "连接上的文字明确中间数据的语义"
+      ],
+      "focus": [
+        "input-engine-output",
+        "nested-engines",
+        "labeled-data",
+        "framework"
+      ],
+      "width": 1393,
+      "height": 648,
+      "reference_tier": "detail-or-flow"
+    },
+    {
+      "path": "architecture/neupims-2024-fig8-dual-row-buffer-banks.png",
+      "category": "architecture",
+      "width": 1022,
+      "height": 659,
+      "source_url": "https://arxiv.org/abs/2403.00579",
+      "features": [
+        "两种微架构使用相同尺寸和位置并列，差异集中在行缓冲区",
+        "同一存储 Bank 内按阵列、行缓冲、选择与计算、结果由上到下组织",
+        "深浅两种路径区分常规访存和 PIM 数据，外侧竖向总线避免穿过模块",
+        "三层轻微错位的矩形表达多个 Bank，主图只展开一个代表实例"
+      ],
+      "focus": [
+        "paired-microarchitecture-comparison",
+        "aligned-memory-compute-stages",
+        "external-bus-lanes"
+      ],
+      "diagram_type": "microarchitecture"
+    },
+    {
+      "path": "dataflow/neupims-2024-fig10-head-overlap-dependencies.png",
+      "category": "dataflow",
+      "width": 1018,
+      "height": 330,
+      "source_url": "https://arxiv.org/abs/2403.00579",
+      "features": [
+        "三个硬件资源形成等距泳道，共享从左到右的时间轴",
+        "相同 attention head 跨资源保持同色，灰斜线表示空闲",
+        "依赖关系用短绿色斜箭头跨泳道连接相关阶段",
+        "图例放在右侧，与流程区域留出独立空白"
+      ],
+      "focus": [
+        "resource-swimlanes",
+        "dependency-arrows",
+        "head-color-consistency"
+      ],
+      "diagram_type": "pipeline"
+    },
+    {
+      "path": "architecture/attacc-2024-fig9-controller-hbm-processing-units.png",
+      "category": "architecture",
+      "width": 2071,
+      "height": 576,
+      "source_url": "https://scale.snu.ac.kr/papers/2024-04-Conference-ASPLOS-AttAcc.pdf",
+      "features": [
+        "由左到右依次是系统控制器、存储层组织和 GEMV/softmax 内部结构",
+        "仅高亮展开一个 HBM 处理单元，其余副本弱化并用省略号表示规模",
+        "放大引线明确连接原模块边界与展开区域，子图 a/b/c 标清层级",
+        "计算、累加与 softmax 使用浅粉、浅黄、浅蓝分区，文字和线条主要为黑色"
+      ],
+      "focus": [
+        "overview-to-hbm-to-unit",
+        "representative-instance",
+        "restrained-role-colors"
+      ]
+    },
+    {
+      "path": "dataflow/attacc-2024-fig10-heterogeneous-execution-flow.png",
+      "category": "dataflow",
+      "width": 1014,
+      "height": 376,
+      "source_url": "https://scale.snu.ac.kr/papers/2024-04-Conference-ASPLOS-AttAcc.pdf",
+      "features": [
+        "Host、xPU 和 AttAcc 按固定高度分成三条水平泳道",
+        "初始化、总结和生成阶段用淡色背景分区并在下方命名",
+        "蓝色竖箭头表示控制命令，黑色竖箭头表示数据传递，图例紧靠上方",
+        "实际计算画为泳道中的短块，空余区通过省略号压缩"
+      ],
+      "focus": [
+        "control-versus-data",
+        "heterogeneous-execution-swimlanes",
+        "stage-backgrounds"
+      ]
+    },
+    {
+      "path": "architecture/duplex-2024-fig7-chip-logic-pim-pu-hierarchy.png",
+      "category": "architecture",
+      "width": 1947,
+      "height": 597,
+      "source_url": "https://scale.snu.ac.kr/papers/2024-12-Conference-MICRO-Duplex.pdf",
+      "features": [
+        "芯片级视图、Logic-PIM 控制与数据组织、功能单元详细结构横向排开",
+        "左侧只选一个外围 Logic-PIM 展开，用灰色虚引线连接到中间区域",
+        "xPU 与 PIM 路径分别用黑色和红色，标签和端点保留明确技术语义",
+        "右侧 GEMM、softmax、激活与 PU 通过虚线边界分区，重复算子以少量代表符号表达"
+      ],
+      "focus": [
+        "chip-to-subsystem-to-datapath",
+        "dual-path-colors",
+        "functional-unit-regions"
+      ]
+    },
+    {
+      "path": "dataflow/duplex-2024-fig9-moe-attention-hbm-distribution.png",
+      "category": "dataflow",
+      "width": 851,
+      "height": 780,
+      "source_url": "https://scale.snu.ac.kr/papers/2024-12-Conference-MICRO-Duplex.pdf",
+      "features": [
+        "顶部表达原始 MoE/attention 操作，底部表达分配到 HBM 的局部执行",
+        "左右两列对应两类算子，用一条竖向灰色虚线保持阅读分区",
+        "存储位置用蓝色深浅区块表示，颜色在全局和局部视图保持对应",
+        "只画 HBM0 与 HBM3 两个代表实例，省略号和 all-reduce 连线表达中间实例与归并"
+      ],
+      "focus": [
+        "global-to-local-data-partition",
+        "two-operator-columns",
+        "hbm-placement-colors"
+      ]
+    },
+    {
+      "path": "architecture/trapezoid-2024-fig5-row-array-overview.png",
+      "category": "architecture",
+      "width": 814,
+      "height": 776,
+      "source_url": "https://yang-yifan.github.io/papers/isca24_trapezoid.pdf",
+      "features": [
+        "每个 PE row 使用相同宽度的分发、乘法和归约层，纵向重复保持规整",
+        "紫色为交集与分发、黄色为乘法、浅橙为归约、绿色为缓冲与缓存",
+        "右侧共享缓存作为连续竖条，每行缓冲只用短连线接入",
+        "少量代表乘法器和 PE 行配合省略号表达规模，主路径仍可逐级追踪"
+      ],
+      "focus": [
+        "regular-row-array",
+        "staged-compute-grammar",
+        "shared-side-cache"
+      ]
+    },
+    {
+      "path": "dataflow/trapezoid-2024-fig7-inner-product-row-walkthrough.png",
+      "category": "dataflow",
+      "width": 909,
+      "height": 1126,
+      "source_url": "https://yang-yifan.github.io/papers/isca24_trapezoid.pdf",
+      "features": [
+        "顶部小矩阵定义输入和输出，蓝绿橙颜色向下延续到硬件数据值",
+        "硬件仅展开一行四个乘法器、两级加法树和输入分发，保持算术路径清楚",
+        "红色箭头与黑圆数字标出四个关键步骤，无关硬件用灰色弱化",
+        "行间流动通过图外 From/To 标签说明，不需画整个阵列"
+      ],
+      "focus": [
+        "numbered-datapath-walkthrough",
+        "operand-to-hardware-colors",
+        "inactive-hardware-fade"
+      ]
+    },
+    {
+      "path": "architecture/trapezoid-2024-fig13-multi-level-memory.png",
+      "category": "architecture",
+      "width": 871,
+      "height": 534,
+      "source_url": "https://yang-yifan.github.io/papers/isca24_trapezoid.pdf",
+      "features": [
+        "缓存 Bank、交叉开关和 PE 行本地缓冲由上到下形成三层",
+        "Cache/buffer 用绿色、crossbar 用蓝色，硬件重复通过省略号和乘数表达",
+        "单个 PE 行局部区域用点状引线从全局交叉开关展开",
+        "总线宽度、缓存容量和并行份数直接靠近对应模块，便于工程解释"
+      ],
+      "focus": [
+        "memory-hierarchy-expansion",
+        "bandwidth-at-boundaries",
+        "capacity-and-scale-labels"
+      ],
+      "diagram_type": "memory"
+    },
+    {
+      "path": "dataflow/fusemax-2024-fig5-pipeline-fill-steady-state.png",
+      "category": "dataflow",
+      "width": 1738,
+      "height": 1200,
+      "source_url": "https://arxiv.org/abs/2406.10491",
+      "features": [
+        "五个时刻使用同一 2×2 二维阵列与一维阵列布局，分面间结构保持一致",
+        "三种输入和三种中间结果通过稳定颜色标识，编号表示具体数据实例",
+        "空白单元表示未激活或未填充，随时间逐步出现彩色操作",
+        "右下角同时提供颜色图例和 PE 符号定义，便于脱离正文理解"
+      ],
+      "focus": [
+        "stepwise-array-small-multiples",
+        "pipeline-fill-versus-steady-state",
+        "symbol-and-color-legend"
+      ]
+    },
+    {
+      "path": "architecture/xiangshan-micro2022-fig10-nanhu-microarchitecture.png",
+      "source_url": "https://github.com/OpenXiangShan/XiangShan#publications",
+      "category": "architecture",
+      "features": [
+        "大面积浅色圆角分区区分 Frontend、Rename & Dispatch、Float、Integer 和 Memory，分区标题比叶子模块更醒目。",
+        "主取指与译码通路自上而下，浮点、访存和整数执行资源并列，便于先读流水再读并行度。",
+        "橙色存储块、紫色队列和蓝色执行块在不同分区重复，模块功能不只依赖所在位置。",
+        "L2/L3 以底部横条延伸，核边界用虚线表达，容量和带宽紧贴对应模块或连接。"
+      ],
+      "focus": [
+        "cpu-microarchitecture",
+        "hierarchical-zones",
+        "parallel-execution-banks",
+        "semantic-role-colors"
+      ],
+      "width": 1022,
+      "height": 1209
+    },
+    {
+      "path": "architecture/cwsp-isca2024-fig3-persistence-architectures.png",
+      "source_url": "https://jianpingzeng.github.io/papers/ISCA24-cWSP.pdf",
+      "category": "architecture",
+      "features": [
+        "两种方案保持 Core、Cache、MC、DRAM、NVM 的相同垂直层级，变化可以直接横向比较。",
+        "蓝色虚线独立表示只写持久化路径，黑色实线保留普通缓存层级，双路径不混杂。",
+        "持久化域用灰色填充，新增资源用圆角边框，与普通矩形资源分开编码。",
+        "被移除的写回行为用红叉标示，Read Only 文本明确其余连接仍允许的方向。"
+      ],
+      "focus": [
+        "before-after-architecture",
+        "persistence-domain",
+        "separate-control-path",
+        "cache-hierarchy"
+      ],
+      "width": 1013,
+      "height": 788
+    },
+    {
+      "path": "dataflow/cwsp-isca2024-fig5-stale-read-prevention.png",
+      "source_url": "https://jianpingzeng.github.io/papers/ISCA24-cWSP.pdf",
+      "category": "dataflow",
+      "features": [
+        "Core 到 L1D、L2、DRAM 和 NVM 排成一条横向主链，用很少节点表达完整存储路径。",
+        "写缓冲 WB 放在主链下方，检查信号折回 PB，反馈机制与主数据通路分别走线。",
+        "蓝色虚线持久化通路沿底部绕行，避免穿过缓存模块。",
+        "延迟位置用小型黄色标志强调，被禁止的写回用红叉强调，视觉焦点集中在机制改变处。"
+      ],
+      "focus": [
+        "memory-behavior",
+        "feedback-routing",
+        "highlighted-modification",
+        "compact-horizontal-flow"
+      ],
+      "width": 1009,
+      "height": 321
+    },
+    {
+      "path": "architecture/drain-hpca2020-fig7-router-microarchitecture.png",
+      "source_url": "https://research.cs.wisc.edu/arch/uwarch-wiki2/index.php/PubsUWArch/B2hd-DBLPconfhpcaParasarFJGKM20",
+      "category": "architecture",
+      "features": [
+        "输入缓冲放在左侧，Crossbar 占据下半部，输出在右侧；数据方向与硬件布局保持一致。",
+        "路由计算和仲裁器放在左上，新增的 epoch 与 drain 控制放在右上，控制与数据平面分区明确。",
+        "新增模块、信号名和区域边界统一用红色，原有基线路由器保持黑灰。",
+        "数据线比控制线粗，重复输入端口使用相同缓冲形状，局部 VC 细节只展开一处。"
+      ],
+      "focus": [
+        "noc-router",
+        "baseline-plus-extension",
+        "control-datapath-separation",
+        "selective-detail"
+      ],
+      "width": 1043,
+      "height": 1026
+    },
+    {
+      "path": "dataflow/drain-hpca2020-fig8-deadlock-resolution.png",
+      "source_url": "https://research.cs.wisc.edu/arch/uwarch-wiki2/index.php/PubsUWArch/B2hd-DBLPconfhpcaParasarFJGKM20",
+      "category": "dataflow",
+      "features": [
+        "三个子图复用相同九节点位置，依次展示死锁、drain 窗口和解除结果，读者无需重新理解拓扑。",
+        "灰色路由器和链路作为稳定背景，报文用带目的地编号的圆点，动态状态独立叠加。",
+        "黑色循环箭头、紫色 drain 路径与红色故障叉号分别对应不同语义，右侧图例逐一说明。",
+        "有报文的 drain 边用实色，没有报文的边用淡色；结果颜色区分有效路由和误路由。"
+      ],
+      "focus": [
+        "noc-behavior",
+        "small-multiple-steps",
+        "topology-stability",
+        "packet-state-legend"
+      ],
+      "width": 2130,
+      "height": 735
+    },
+    {
+      "path": "architecture/cxl-nic-micro2025-fig5-type1-architecture.png",
+      "source_url": "https://doi.org/10.1145/3725843.3756102",
+      "category": "architecture",
+      "features": [
+        "Host CPU 与 PCIe PHY 在左，网络 Tx/Rx 在右，整张图有清楚的端到端阅读方向。",
+        "两个虚线容器区分 CXL controller 与 User design，DCOH 内再嵌套请求处理和设备缓存。",
+        "描述符管理和报文转发模块上下对齐，配置/MMIO 块放到底部形成独立控制带。",
+        "粗双向箭头表示主接口，洋红虚线表示配置关系，编号圆点将组件与文字说明关联。"
+      ],
+      "focus": [
+        "cxl-system",
+        "nested-boundaries",
+        "separate-configuration-plane",
+        "numbered-components"
+      ],
+      "width": 1034,
+      "height": 447
+    },
+    {
+      "path": "timing/cxl-nic-micro2025-fig6-coherent-polling.png",
+      "source_url": "https://doi.org/10.1145/3725843.3756102",
+      "category": "timing",
+      "features": [
+        "并列方案保留 Host Mem.、HMC、CXL-NIC 三条生命线，使消息经过缓存与否可直接比较。",
+        "时间自上而下，消息是生命线间的斜向箭头，反复轮询用重复箭头及省略号表达。",
+        "旧值 N 用蓝色、新值 N+1 用绿色，更新事件用横向绿色虚线贯穿相关生命线。",
+        "失效缓存值用斜线纹理覆盖，invalidation 文本紧贴相应消息，不额外引入复杂波形。"
+      ],
+      "focus": [
+        "coherence-sequence",
+        "side-by-side-mechanisms",
+        "value-state-color",
+        "event-alignment"
+      ],
+      "width": 1030,
+      "height": 539
+    },
+    {
+      "path": "dataflow/cxl-nic-micro2025-fig8-memory-layouts.png",
+      "source_url": "https://doi.org/10.1145/3725843.3756102",
+      "category": "dataflow",
+      "features": [
+        "四个子图用相同 CPU/CXL 分区对照布局与生产消费方向，节点排列尽量保持一致。",
+        "缓存路径和内存路径分成上下通道，粗箭头和编号圆点将多步传输拆成可追踪阶段。",
+        "上排和下排使用不同步骤标记色，配合 producer/consumer 标签避免只靠颜色理解方向。",
+        "每个子图下方保留编号对应的请求图例，使路径图保持短标签，同时明确请求语义；这些是机制图例，非性能数据表。"
+      ],
+      "focus": [
+        "memory-placement",
+        "producer-consumer-paths",
+        "numbered-transfers",
+        "four-panel-comparison"
+      ],
+      "width": 1034,
+      "height": 876
+    }
+  ]
+}

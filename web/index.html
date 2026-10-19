@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f3">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self' https:; img-src 'self' blob: data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="description" content="把芯片、系统与算法的想法，变成适合图片生成的提示词。">
+  <title>看见架构，清晰呈现</title>
+  <link rel="stylesheet" href="./workbench.css">
+  <link rel="stylesheet" href="./option-previews.css">
+  <script type="module" src="./app.js"></script>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./brand.css">
+</head>
+<body class="workbench">
+  <header class="wb-header">
+    <a class="wb-wordmark" href="./" aria-label="Silicon Canvas 首页"><svg class="sc-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="./assets/logo.svg#mark"/></svg><span>Silicon <strong>Canvas</strong></span></a>
+    <nav class="wb-header-actions" aria-label="工具入口">
+      <a class="wb-header-link" href="https://github.com/jiale-wangOwO/silicon-canvas" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="wb-header-link" href="./agent.html">Agent / MCP <span aria-hidden="true">↗</span></a>
+      <button id="openSettings" class="wb-api" type="button"><span id="keyDot" class="wb-key-dot" aria-hidden="true"></span><span id="keyStatus">连接模型</span><span aria-hidden="true">⌘</span></button>
+    </nav>
+  </header>
+  <main class="wb-main">
+    <section class="wb-workspace" aria-labelledby="workspaceTitle">
+      <div class="wb-heading"><p class="wb-kicker">A canvas for your next idea</p><h1 id="workspaceTitle">看见架构，清晰呈现</h1><p class="wb-intro">网页演示版 · <a href="./agent.html">完整体验请使用 MCP 工具 ↗</a></p></div>
+      <div id="notice" class="wb-notice" role="status" hidden></div>
+      <form id="createForm" class="wb-composer">
+        <label class="sr-only" for="description">想画的内容</label>
+        <textarea id="description" maxlength="20000" rows="5" placeholder="我想画一张 GPU 架构图，讲清任务怎样分发到计算簇，以及共享缓存和显存怎样连接……" required></textarea>
+        <div class="wb-composer-foot">
+          <div class="wb-composer-tools"><button id="fillExample" class="wb-text-button" type="button">试个例子 <span aria-hidden="true">↗</span></button></div>
+          <div class="wb-generate-actions"><button id="cancel" class="wb-text-button" type="button" hidden>取消</button><button id="generate" class="wb-button wb-primary" type="submit"><span id="generateLabel">生成提示词</span><span class="wb-send" aria-hidden="true">↗</span></button></div>
+        </div>
+      </form>
+      <div class="wb-under-composer">
+        <details id="customDetails" class="wb-custom">
+          <summary>自定义 <span id="customCount" class="wb-custom-count" hidden></span><span class="wb-chevron" aria-hidden="true"></span></summary>
+          <div class="wb-custom-body">
+            <div class="wb-custom-heading"><p>留给你想特别指定的地方。</p><button id="resetSettings" class="wb-text-button" type="button">恢复自动</button></div>
+            <div id="optionPreview" aria-label="当前自定义选项的视觉预览"></div>
+            <div class="wb-settings-grid">
+              <label>表现形式<select id="representation"><option value="auto">自动</option><option value="diagram">工程图</option><option value="system_illustration">系统示意</option><option value="product_render">商业渲染</option></select></label>
+              <label>用途<select id="scene"><option value="auto">自动</option><option value="concept">整体概念</option><option value="system">系统组织</option><option value="flow">工作过程</option><option value="detail">实现细节</option></select></label>
+              <label>视觉配色<select id="style"><option value="auto">自动</option><option value="paper">白皮书 · 明净</option><option value="blueprint">技术蓝</option><option value="signal">数据流强调色</option><option value="monochrome">黑白印刷</option></select></label>
+              <label>详略<select id="density"><option value="auto">自动</option><option value="low">概览</option><option value="medium">适中</option><option value="high">详细</option></select></label>
+              <label>画幅<select id="aspect"><option value="auto">自动</option><option value="16:9">16:9</option><option value="4:3">4:3</option><option value="1:1">1:1</option><option value="A4">A4 纵向</option></select></label>
+              <label>展示视角<select id="explanatoryMode"><option value="auto">自动</option><option value="hero">产品主视觉</option><option value="annotated_context">产品与外围</option><option value="functional_cutaway">功能分区</option><option value="assembly">组成与层次</option></select></label>
+              <label>内容处理<select id="completionMode"><option value="auto">智能补全</option><option value="strict">仅按输入</option></select></label>
+            </div>
+          </div>
+        </details>
+        <p id="progress" class="wb-progress" role="status" aria-live="polite"></p>
+      </div>
+      <section id="outputPanel" class="wb-result" aria-label="生成的提示词" aria-busy="false" hidden>
+        <div class="wb-result-heading"><div><p class="wb-result-eyebrow">YOUR PROMPT</p><h2 id="resultTitle"></h2></div><label id="figureChoiceLabel" class="wb-view-select" hidden><span class="sr-only">选择视图</span><select id="figureChoice"></select></label></div>
+        <label class="sr-only" for="promptOutput">Image Gen 提示词</label><textarea id="promptOutput" class="wb-prompt" readonly rows="10" spellcheck="false"></textarea>
+        <div class="wb-result-toolbar"><p id="generationHint" class="wb-generation-hint"></p><div class="wb-output-actions"><button id="downloadBundle" class="wb-button wb-secondary" type="button">下载绘图包 <span aria-hidden="true">↓</span></button><button id="copyPrompt" class="wb-button wb-primary" type="button"><span id="copyLabel">复制提示词</span><span aria-hidden="true">⧉</span></button><details id="downloadMenu" class="wb-download-menu"><summary class="wb-button wb-more" aria-label="更多导出选项">···</summary><div class="wb-menu"><button id="downloadPrompt" type="button">提示词 .txt</button><button id="saveProject" type="button">保存项目 .json</button></div></details></div></div>
+        <details id="refinement" class="wb-refinement"><summary>再调整一下 <span aria-hidden="true">＋</span></summary><div class="wb-refine-content"><label class="sr-only" for="feedback">希望调整的内容</label><textarea id="feedback" maxlength="6000" rows="3" placeholder="比如，突出计算与存储的关系，少一些次要标签，让画面更适合放进演示文稿。"></textarea><div class="wb-refine-foot"><label class="wb-check"><input id="lockStructure" type="checkbox" checked>保留当前模块与连接</label><button id="refine" class="wb-button wb-secondary" type="button">改进提示词 <span aria-hidden="true">↗</span></button></div></div></details>
+      </section>
+    </section>
+    <section class="wb-showcase" aria-labelledby="showcaseTitle">
+      <div class="wb-showcase-header"><div class="wb-showcase-identity"><h2 id="showcaseTitle" class="wb-showcase-signature"><svg class="wb-showcase-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="./assets/logo.svg#mark"/></svg><span>Made with <strong>Silicon Canvas</strong></span></h2></div><div class="wb-showcase-navigation"><button id="artworkPause" class="wb-carousel-pause" type="button" aria-label="暂停自动轮播" aria-pressed="false">暂停</button><button id="artworkPrevious" class="wb-arrow" type="button" aria-label="查看上一张图片" aria-controls="artworkStrip">←</button><button id="artworkNext" class="wb-arrow" type="button" aria-label="查看下一张图片" aria-controls="artworkStrip">→</button></div></div>
+      <div id="artworkStrip" class="wb-artwork-strip" tabindex="0" aria-label="绘图作品，可以左右切换">
+        <article class="wb-artwork wb-artwork-wide" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/02-monochrome-fsm.png" target="_blank" rel="noopener" aria-label="打开原图：状态与重试"><img src="./assets/generalization-20261018/02-monochrome-fsm.png" width="1946" height="808" alt="英文发送控制状态图，区分正常完成、退避重试与失败路径" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/render-examples/functional-soc.png" target="_blank" rel="noopener" aria-label="打开原图：系统与功能"><img src="./assets/render-examples/functional-soc.png" width="1672" height="941" alt="计算、存储、管理及I/O功能分区的芯片系统概念图" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/06-signal-fft.png" target="_blank" rel="noopener" aria-label="打开原图：阶段与蝶形"><img src="./assets/generalization-20261018/06-signal-fft.png" width="1672" height="941" alt="英文FFT流程图，分开排列bit reversal与三级蝶形运算" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-classic" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/10-chiplet-assembly-valid.png" target="_blank" rel="noopener" aria-label="打开原图：组成与层次"><img src="./assets/generalization-20261018/10-chiplet-assembly-valid.png" width="1448" height="1086" alt="两个计算Chiplet、一个I/O Die与两组HBM的英文空间装配概念图" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-square" data-original-artwork data-origin="native"><a class="wb-artwork-picture" href="./assets/design-examples/mesh-memory-guide.png" target="_blank" rel="noopener" aria-label="打开原图：网格与方向"><img src="./assets/design-examples/mesh-memory-guide.png" width="1800" height="1600" alt="2×2网格及共享存储的原生拓扑预览，请求与响应使用独立方向" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/branded-20261019/01-optical-package.png" target="_blank" rel="noopener" aria-label="打开原图：Silicon Canvas 光电芯片封装"><img src="./assets/branded-20261019/01-optical-package.png" width="1671" height="941" alt="带有 Silicon Canvas 标志的光电芯片封装概念渲染" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-wide" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/04-auto-soc.png" target="_blank" rel="noopener" aria-label="打开原图：智能音频系统"><img src="./assets/generalization-20261018/04-auto-soc.png" width="1774" height="887" alt="英文智能音频SoC系统示意，展示音频处理、应用计算、通信和片外设备" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-panorama" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/05-paper-softmax.png" target="_blank" rel="noopener" aria-label="打开原图：归约与归一化"><img src="./assets/generalization-20261018/05-paper-softmax.png" width="2146" height="733" alt="英文稳定Softmax数据流图，呈现最大值、指数、求和和归一化分支" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-wide" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/design-examples/ready-valid-trace.png" target="_blank" rel="noopener" aria-label="打开原图：采样与传输"><img src="./assets/design-examples/ready-valid-trace.png" width="1756" height="896" alt="ready valid的英文离散采样表，标出等待与接收事件" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture wb-dark-picture" href="./assets/render-study-20261018/02-inference-system.png" target="_blank" rel="noopener" aria-label="打开原图：AI 推理系统"><img src="./assets/render-study-20261018/02-inference-system.png" width="1672" height="941" alt="AI 推理系统渲染，展示四个推理节点、中央交换机、客户端和共享存储" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-panorama" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/03-signal-reduction.png" target="_blank" rel="noopener" aria-label="打开原图：分层归约"><img src="./assets/generalization-20261018/03-signal-reduction.png" width="2058" height="764" alt="英文Block Sum分层归约示意，展示四个warp、共享槽和树形求和" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-classic" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/generalization-20261018/07-blueprint-stream.png" target="_blank" rel="noopener" aria-label="打开原图：并行与融合"><img src="./assets/generalization-20261018/07-blueprint-stream.png" width="1575" height="999" alt="英文双传感器流处理图，展示时间戳对齐、融合与输出路径" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-classic" data-original-artwork data-origin="native"><a class="wb-artwork-picture" href="./assets/design-examples/heterogeneous-instrument-guide.png" target="_blank" rel="noopener" aria-label="打开原图：资源与归属"><img src="./assets/design-examples/heterogeneous-instrument-guide.png" width="1800" height="1286" alt="快慢采集通路、共同分析资源及外部设备的英文原生结构预览" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture wb-dark-picture" href="./assets/scenario-gallery-20261017/08-accelerator-product-hero.png" target="_blank" rel="noopener" aria-label="打开原图：暗色产品主视觉"><img src="./assets/scenario-gallery-20261017/08-accelerator-product-hero.png" width="1672" height="941" alt="暗色背景上的金属芯片封装商业主视觉" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-panorama" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/design-examples/elastic-pipeline.png" target="_blank" rel="noopener" aria-label="打开原图：前进与返回"><img src="./assets/design-examples/elastic-pipeline.png" width="2172" height="724" alt="线性流水线的英文前向数据及独立反向ready路径" loading="lazy" decoding="async"></a></article>
+        <article class="wb-artwork wb-artwork-landscape" data-original-artwork data-origin="imagegen"><a class="wb-artwork-picture" href="./assets/branded-20261019/03-accelerator-board.png" target="_blank" rel="noopener" aria-label="打开原图：Silicon Canvas 加速器板卡"><img src="./assets/branded-20261019/03-accelerator-board.png" width="1672" height="941" alt="带有 Silicon Canvas 标志的加速器板卡概念渲染" loading="lazy" decoding="async"></a></article>
+      </div>
+    </section>
+  </main>
+  <dialog id="settingsDialog" class="wb-dialog">
+    <form id="settingsForm">
+      <div class="wb-dialog-heading"><div><p class="wb-kicker">MODEL CONNECTION</p><h2>连接你的模型</h2></div><button id="closeSettings" class="wb-close" type="button" aria-label="关闭接口设置">×</button></div>
+      <p class="wb-dialog-intro">用你选择的模型整理内容，为 Image Gen 生成提示词。</p>
+      <div class="wb-connection-fields">
+        <div><label for="baseUrl">HTTPS API 地址</label><input id="baseUrl" type="url" value="https://api.deepseek.com" autocomplete="off" spellcheck="false"></div>
+        <div><label for="model">模型名称</label><input id="model" type="text" value="deepseek-flash" maxlength="150" autocomplete="off" spellcheck="false"><p class="wb-field-hint">兼容 Chat Completions 与 JSON 输出，接口需允许浏览器跨域访问。</p></div>
+        <div><label for="apiKey">API Key</label><div class="wb-key-row"><input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="输入你的 API Key"><button id="toggleKey" class="wb-text-button" type="button">显示</button></div><p class="wb-field-hint">仅保留在本页内存，刷新后清除。</p></div>
+      </div>
+      <p id="destination" class="wb-destination">请求将从浏览器直接发送至 api.deepseek.com。</p>
+      <div id="settingsError" class="wb-notice error" role="alert" hidden></div>
+      <div class="wb-dialog-actions"><button id="clearKey" class="wb-text-button" type="button">清除密钥</button><button class="wb-button wb-primary" type="submit">保存设置 <span aria-hidden="true">↗</span></button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="wb-toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

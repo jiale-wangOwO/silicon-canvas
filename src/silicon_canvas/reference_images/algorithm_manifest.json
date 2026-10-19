@@ -1,0 +1,431 @@
+{
+  "metadata_only": true,
+  "notice": "Source images remain local and are not redistributed. Metadata records visually inspected algorithm-figure composition only; it does not license or copy paper artwork into generated figures.",
+  "reviewed_on": "2026-10-11",
+  "items": [
+    {
+      "path": "dataflow/flashattention-2022-fig1-io-tiling.png",
+      "source_url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/67d57c32e20fd0a7a302cb81d36e40d5-Paper-Conference.pdf#page=2",
+      "source_pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/67d57c32e20fd0a7a302cb81d36e40d5-Paper-Conference.pdf",
+      "paper": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "venue": "NeurIPS 2022",
+      "figure": "Figure 1, memory hierarchy and tiling panels",
+      "pdf_page": 2,
+      "category": "dataflow",
+      "features": [
+        "Matrices are data glyphs with aspect and block divisions; Q, K-transpose, V, and output retain distinct positions.",
+        "One current tile is highlighted while the full attention matrix is a dotted conceptual region, not a hardware container.",
+        "Outer and inner traversal use distinct arrows; HBM copies are distinct from on-chip tile computation.",
+        "The crop excludes the runtime chart so composition cues cannot accidentally invent performance claims."
+      ],
+      "focus": [
+        "tensor-shapes",
+        "matrix-glyphs",
+        "data-residency",
+        "tile-reuse",
+        "materialization",
+        "streamed-tiles",
+        "loop-traversal"
+      ],
+      "width": 1152,
+      "height": 648,
+      "reference_tier": "overview",
+      "crop_points": [
+        105,
+        65,
+        393,
+        227
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "315f252a8c791dd051ae84b531e4549465279c2a7264606a9cfe1f3495d9dfc8",
+      "image_sha256": "fddfc053d2c7b7fc58823428c87cfea940e9438958a7d9578e582236de026457",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/transformer-2017-fig1-encoder-decoder.png",
+      "source_url": "https://arxiv.org/pdf/1706.03762v7#page=3",
+      "source_pdf_url": "https://arxiv.org/pdf/1706.03762v7",
+      "paper": "Attention Is All You Need",
+      "venue": "NeurIPS 2017; arXiv v7",
+      "figure": "Figure 1",
+      "pdf_page": 3,
+      "category": "dataflow",
+      "features": [
+        "Encoder and decoder are two stable vertical columns with a shared bottom-to-top reading direction.",
+        "Residual rails stay outside the corresponding operation and join at the explicit Add and Norm block.",
+        "Repeated stacks use one representative enclosure and an N-times label rather than drawing every layer.",
+        "The encoder-to-decoder cross-attention input is routed as one distinct bridge, not a generic global bus."
+      ],
+      "focus": [
+        "operator-graph",
+        "explicit-operators",
+        "split-merge",
+        "residual-bypass",
+        "repeated-block",
+        "cross-branch-input"
+      ],
+      "width": 900,
+      "height": 1308,
+      "reference_tier": "overview",
+      "crop_points": [
+        194,
+        69,
+        419,
+        396
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+      "image_sha256": "ab074efdb70011fdec03cc639bd7df47dfaf9cd47b4d07e37b95906833cd0f8b",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/transformer-2017-fig2-attention-operators.png",
+      "source_url": "https://arxiv.org/pdf/1706.03762v7#page=4",
+      "source_pdf_url": "https://arxiv.org/pdf/1706.03762v7",
+      "paper": "Attention Is All You Need",
+      "venue": "NeurIPS 2017; arXiv v7",
+      "figure": "Figure 2",
+      "pdf_page": 4,
+      "category": "dataflow",
+      "features": [
+        "Q and K enter the first MatMul through separate short input lines; V bypasses the score path and enters the final MatMul.",
+        "MatMul, scaling, optional mask, SoftMax, and final MatMul form a compact operator chain with semantic color roles.",
+        "Several projected attention heads are represented by offset repeats, one h label, and a single Concat merge.",
+        "The primitive operator view and repeated-head view are aligned side by side, each answering a different level of explanation."
+      ],
+      "focus": [
+        "operator-graph",
+        "explicit-operators",
+        "tensor-versus-operator",
+        "dual-input",
+        "parallel-execution",
+        "operand-feeders",
+        "bypass-input",
+        "parallel-heads"
+      ],
+      "width": 1324,
+      "height": 732,
+      "reference_tier": "overview",
+      "crop_points": [
+        144,
+        68,
+        475,
+        251
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+      "image_sha256": "5206c9d511db9825f4fb2400d4a236084c3408452c69a43ac08e68aca2414282",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/mamba-2024-fig1-state-selection.png",
+      "source_url": "https://arxiv.org/pdf/2312.00752v2#page=3",
+      "source_pdf_url": "https://arxiv.org/pdf/2312.00752v2",
+      "paper": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "venue": "COLM 2024; arXiv v2",
+      "figure": "Figure 1",
+      "pdf_page": 3,
+      "category": "dataflow",
+      "features": [
+        "Previous and next hidden state sit at opposite ends of one long horizontal state rail, with channels kept parallel.",
+        "Current input and output use compact vector glyphs below the state rail instead of undifferentiated boxes.",
+        "Selection-derived parameter feeders form a separate lower rail and enter their corresponding state operators.",
+        "State expansion, input transformation, and readout remain spatially distinct; the overview does not unroll every timestep."
+      ],
+      "focus": [
+        "recurrence",
+        "state-rail",
+        "state-update",
+        "tensor-shapes",
+        "vector-glyphs",
+        "parameter-feeders"
+      ],
+      "width": 1980,
+      "height": 756,
+      "reference_tier": "overview",
+      "crop_points": [
+        69,
+        70,
+        564,
+        259
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "adf70ed1803c85b1899dec3e21f3af0b124411439e8654b840ea65f7b9f52b2e",
+      "image_sha256": "f9b74f9657c9741fc5cda34429cdb76973debdc62bace6fe345f9c47a259dfca",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/mamba-2024-fig3-gated-block.png",
+      "source_url": "https://arxiv.org/pdf/2312.00752v2#page=8",
+      "source_pdf_url": "https://arxiv.org/pdf/2312.00752v2",
+      "paper": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "venue": "COLM 2024; arXiv v2",
+      "figure": "Figure 3",
+      "pdf_page": 8,
+      "category": "dataflow",
+      "features": [
+        "H3, Gated MLP, and Mamba reuse the same frame, input origin, output position, and operator vocabulary for comparison.",
+        "Linear projection, sequence transformation, and nonlinear operators use different shape roles rather than only different colors.",
+        "The content path and gate path split at the bottom and merge at one explicit multiplication circle.",
+        "Small activation circles and short gate feeders avoid implying that a gate is a full hardware module."
+      ],
+      "focus": [
+        "operator-graph",
+        "explicit-operators",
+        "tensor-versus-operator",
+        "dual-input",
+        "split-merge",
+        "gating-operators",
+        "aligned-comparison"
+      ],
+      "width": 1884,
+      "height": 712,
+      "reference_tier": "overview",
+      "crop_points": [
+        94,
+        70,
+        565,
+        248
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "adf70ed1803c85b1899dec3e21f3af0b124411439e8654b840ea65f7b9f52b2e",
+      "image_sha256": "096a93241075ec1e7c53d5608a3316dd31dfab9b51ca550e955b3618ebbb81d6",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/mamba2-2024-fig2-projection-parallelism.png",
+      "source_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/dao24a/dao24a.pdf#page=7",
+      "source_pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/dao24a/dao24a.pdf",
+      "paper": "Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality",
+      "venue": "ICML 2024 proceedings",
+      "figure": "Figure 2",
+      "pdf_page": 7,
+      "category": "dataflow",
+      "features": [
+        "Sequential and parallel projection designs use identical frames, operator colors, and output alignment.",
+        "Parameter projections relocate to the input stage in the parallel block, making the dependency difference visible without prose.",
+        "The gate bypass is a quiet side rail, while SSM and convolution remain on the principal branch.",
+        "Normalization, multiplication, and activation are small distinct operator circles with a concise common legend."
+      ],
+      "focus": [
+        "operator-graph",
+        "explicit-operators",
+        "parallel-execution",
+        "dual-input",
+        "split-merge",
+        "parameter-feeders",
+        "dependency-comparison"
+      ],
+      "width": 972,
+      "height": 504,
+      "reference_tier": "overview",
+      "crop_points": [
+        302,
+        264,
+        545,
+        390
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "26dacf8c612feae41c8350e447fae914355220424925520096ad212dcc54bd47",
+      "image_sha256": "430ae0337459cc7b0cc1e5cc224f0459c0e150d840dd444f13bd8d837aacd9f1",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/unet-2015-fig1-feature-pyramid.png",
+      "source_url": "https://arxiv.org/pdf/1505.04597v1#page=2",
+      "source_pdf_url": "https://arxiv.org/pdf/1505.04597v1",
+      "paper": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+      "venue": "MICCAI 2015; arXiv v1",
+      "figure": "Figure 1",
+      "pdf_page": 2,
+      "category": "dataflow",
+      "features": [
+        "The contracting and expanding paths are mirrored in a U shape; spatial resolution determines vertical level.",
+        "Feature maps use changing aspect and thickness with channel counts and spatial sizes, not identical process rectangles.",
+        "Skip-feature copies bridge only matching resolutions, leaving a clear central corridor between the two paths.",
+        "Filled and outlined feature maps distinguish resident and copied features; a compact arrow legend identifies operations."
+      ],
+      "focus": [
+        "feature-maps",
+        "tensor-shapes",
+        "tensor-versus-operator",
+        "multiscale-features",
+        "matched-level-skips",
+        "shape-transformations"
+      ],
+      "width": 1384,
+      "height": 920,
+      "reference_tier": "overview",
+      "crop_points": [
+        129,
+        111,
+        475,
+        341
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "a3172b2124f38e260dc2c7ed968d87c31bc94dbc19a42a7ab3dcbd7534319c44",
+      "image_sha256": "2165452e465dad5cfd5c75ac0ad21977449f3a501b4a16a2d00a6a5468592d4d",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/resnet-2016-fig2-residual-merge.png",
+      "source_url": "https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf#page=2",
+      "source_pdf_url": "https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf",
+      "paper": "Deep Residual Learning for Image Recognition",
+      "venue": "CVPR 2016",
+      "figure": "Figure 2",
+      "pdf_page": 2,
+      "category": "dataflow",
+      "features": [
+        "A two-operation principal branch and one identity bypass explain the mechanism with almost no enclosure.",
+        "The bypass rejoins at a visible plus-circle; the output activation is placed after the merge, not before it.",
+        "The short x, F(x), and F(x)+x labels name values separately from the weight-layer operations.",
+        "Monochrome strokes and generous whitespace make data dependency carry the explanation without decorative effects."
+      ],
+      "focus": [
+        "operator-graph",
+        "explicit-operators",
+        "tensor-versus-operator",
+        "dual-input",
+        "residual-bypass",
+        "explicit-merge",
+        "minimal-mechanism"
+      ],
+      "width": 580,
+      "height": 316,
+      "reference_tier": "overview",
+      "crop_points": [
+        94,
+        77,
+        239,
+        156
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "51b5de45eb0b558b19c3affe49503cff50cb170a32de602983d6e2ec286942a7",
+      "image_sha256": "329d1524a974fb5a2a872e531e62e0ea49370de040f92ceeb72ac08de7d1d08b",
+      "diagram_type": "algorithm"
+    },
+    {
+      "path": "dataflow/flashattention3-2024-fig1-pingpong-schedule.png",
+      "source_url": "https://tridao.me/publications/flash3/flash3.pdf#page=6",
+      "source_pdf_url": "https://tridao.me/publications/flash3/flash3.pdf",
+      "paper": "FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision",
+      "venue": "Author paper, July 2024",
+      "figure": "Figure 1",
+      "pdf_page": 6,
+      "category": "dataflow",
+      "features": [
+        "Two warpgroups have separate resource rows on one left-to-right time axis.",
+        "Matching iteration colors track the same work across GEMM0, Softmax, and GEMM1 rather than assigning a new color to every operation.",
+        "Vertical dashed separators align overlap boundaries; each row retains its own ordered operation sequence.",
+        "This is a supplied schedule explanation: bar widths and overlap must not be invented for an unspecified algorithm."
+      ],
+      "focus": [
+        "parallel-execution",
+        "time-resource-schedule",
+        "iteration-tracking",
+        "pingpong-overlap",
+        "stage-alignment"
+      ],
+      "width": 1856,
+      "height": 340,
+      "reference_tier": "overview",
+      "crop_points": [
+        89,
+        131,
+        553,
+        216
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "5d1d550eae942e67f60960b5660bbd49e9a37914ae962957528e96cc94f4a36a",
+      "image_sha256": "c9432e91b11fa874ec7f9433e4870b896d86db216450c54d6c110d42970849b2",
+      "diagram_type": "timing"
+    },
+    {
+      "path": "dataflow/butterfly-2019-fig1-sparse-factor-patterns.png",
+      "source_url": "https://proceedings.mlr.press/v97/dao19a/dao19a.pdf#page=4",
+      "source_pdf_url": "https://proceedings.mlr.press/v97/dao19a/dao19a.pdf",
+      "paper": "Learning Fast Algorithms for Linear Transforms Using Butterfly Factorizations",
+      "venue": "ICML 2019",
+      "figure": "Figure 1",
+      "pdf_page": 4,
+      "category": "dataflow",
+      "features": [
+        "Four equal-size sparse-matrix views expose how nonzero structure changes between factors.",
+        "One red mark color and a common matrix coordinate frame make the recursive block patterns comparable.",
+        "The progression from coarse to fine block structure is the visual subject; no decorative process modules are added.",
+        "These are factor sparsity views, not an FFT signal-flow graph; actual permutation and twiddle dependencies need source data."
+      ],
+      "focus": [
+        "matrix-glyphs",
+        "tensor-shapes",
+        "sparse-matrix-pattern",
+        "aligned-comparison",
+        "recursive-factorization"
+      ],
+      "width": 976,
+      "height": 232,
+      "reference_tier": "overview",
+      "crop_points": [
+        55,
+        115,
+        299,
+        173
+      ],
+      "inspected": true,
+      "verification": {
+        "individual_png_view_image_checked": true,
+        "full_pdf_page_view_image_checked": true,
+        "crop_labels_unclipped": true
+      },
+      "source_sha256": "37617170d189617b1486eee0299a82d13ab0e2baf98b61d41d9c6f428b7f3380",
+      "image_sha256": "c628b7dd75427729b96d4105f38f5c89029ec9b1a002e1d8b65d3a12358b2a0b",
+      "diagram_type": "algorithm"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+Create one polished technical figure with Image Gen using the supplied semantic target guide.
+Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.
+Prioritize the reader's task: What behavior, dependency, or interaction should the reader understand?
+Use crisp sans-serif type, compact labels and purposeful whitespace. Dark neutral text; sparse role-based accents. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale.
+Crop the canvas to the actual objects, labels and necessary return/branch corridors, with a small clean perimeter. A shallow path needs a shallow figure; do not leave a slide-sized empty area above or below it.
+The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.
+Use the requested palette: {"background": "#FFFFFF", "ink": "#263238", "primary": "#EDF2F5", "secondary": "#E8EEE8", "muted": "#F7F8F9"}. If it is monochrome, keep the final image in neutral grayscale even when reference roles use muted hues.
+Functional hardware/process grammar: preserve one symbol per actual source resource and trace the real fork, merge and same-resource return. Buffers/storage are shallow or wider than computation; interfaces are compact endpoints. Keep forward payload and reverse ready/control on separate corridors.
+Every reverse ready/control connection has distinct departure and arrival ports at the resources. Adjacent return paths must not share an outside vertical leg or create a T-junction bypassing the stage; only an actual source junction may merge wires.
+Spatial sequence expresses dependency only. FIFO entries are capacity, not stage latency. Do not infer a cycle schedule, insert stages, merge independent operand streams or convert feedback/control into data.
+"Byte Source"; source detail "Produces ready/valid bytes"
+"Header Decode"; source detail "Functional stage 0"
+"CRC Update"; source detail "Functional stage 1"
+"Elastic FIFO"; source detail "2 entries; absorption capacity, not 2-cycle latency"
+"Frame Assembly"; source detail "Functional stage 2"
+"Frame Sink"; source detail "May apply backpressure"
+Exact directed relations, one connector per source relation, including loops:
+"Byte Source" → "Header Decode": "byte + valid"
+"Header Decode" → "CRC Update": "payload + valid"
+"CRC Update" → "Elastic FIFO": "updated CRC + valid"
+"Elastic FIFO" → "Frame Assembly": "byte + valid"
+"Frame Assembly" → "Frame Sink": "frame + valid"
+"Header Decode" → "Byte Source": "ready"
+"CRC Update" → "Header Decode": "ready"
+"Elastic FIFO" → "CRC Update": "ready"
+"Frame Assembly" → "Elastic FIFO": "ready"
+"Frame Sink" → "Frame Assembly": "ready"
+Closed outgoing-target contract: these are the ONLY arrow destinations allowed from each named object. Every listed source relation appears once, with one target head; no adjacency shortcut or duplicate route.
+"Byte Source" may point only to "Header Decode".
+"Header Decode" may point only to "CRC Update"; "Byte Source".
+"CRC Update" may point only to "Elastic FIFO"; "Header Decode".
+"Elastic FIFO" may point only to "Frame Assembly"; "CRC Update".
+"Frame Assembly" may point only to "Frame Sink"; "Elastic FIFO".
+"Frame Sink" may point only to "Frame Assembly".
+Source conventions (keep essential conditions near their source, ordinary explanation in caption):
+No stage latency, initiation interval or cycle schedule has been supplied. Do not invent a timing grid.
+Give comparable functional stages a stable progression, with branch lanes and return corridors when supplied. Stage order is distinct from cycle latency; draw registers or handshake interfaces only when given.
+Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.
+Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics.
+Review the generated bitmap against the source: sample values, transition predicates, state outputs, loop directions and logical links. A source guide is not an image-quality certificate.

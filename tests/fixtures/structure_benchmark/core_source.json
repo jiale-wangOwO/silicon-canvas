@@ -1,0 +1,470 @@
+{
+  "description": "Synthetic Compute Engine for containment and route regression tests.",
+  "spec": {
+    "title": "Synthetic Compute Engine",
+    "summary": "Independent test-only design: three task workers, a representative local arithmetic pipeline, and shared transport and storage services.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "engine",
+        "label": "Compute Engine",
+        "parent": "",
+        "evidence": "",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "worker0",
+        "label": "Worker0 private resources",
+        "parent": "engine",
+        "evidence": "",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "services",
+        "label": "Shared services",
+        "parent": "engine",
+        "evidence": "",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "command",
+        "label": "Command source",
+        "kind": "io",
+        "group": "engine",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "entry",
+        "label": "Task entry",
+        "kind": "control",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "schedule",
+        "label": "Work scheduler",
+        "kind": "control",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "dot",
+        "label": "Dot engine",
+        "kind": "compute",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "reshape",
+        "label": "Pack engine",
+        "kind": "compute",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "scratch",
+        "label": "Local scratchpad",
+        "kind": "memory",
+        "group": "worker0",
+        "detail": "Private workspace; capacity intentionally unspecified.",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "linebuf",
+        "label": "Line buffer",
+        "kind": "memory",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "inbox",
+        "label": "Message queue",
+        "kind": "memory",
+        "group": "worker0",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "worker1",
+        "label": "Worker1",
+        "kind": "compute",
+        "group": "engine",
+        "detail": "Same resources as worker0",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "worker2",
+        "label": "Worker2",
+        "kind": "compute",
+        "group": "engine",
+        "detail": "Same resources as worker0",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "coordinator",
+        "label": "Shared arbiter",
+        "kind": "control",
+        "group": "services",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "assist",
+        "label": "Shared lookup",
+        "kind": "compute",
+        "group": "services",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "bridge",
+        "label": "Shared link",
+        "kind": "io",
+        "group": "services",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "loader",
+        "label": "Shared unpack",
+        "kind": "compute",
+        "group": "services",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "staging",
+        "label": "Shared staging",
+        "kind": "memory",
+        "group": "services",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sharedram",
+        "label": "Memory interface",
+        "kind": "memory",
+        "group": "engine",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "external",
+        "label": "External storage",
+        "kind": "memory",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "command",
+        "target": "entry",
+        "kind": "control",
+        "label": "task descriptor",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "command",
+        "target": "worker1",
+        "kind": "control",
+        "label": "task descriptor",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "command",
+        "target": "worker2",
+        "kind": "control",
+        "label": "task descriptor",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "entry",
+        "target": "schedule",
+        "kind": "control",
+        "label": "decoded task",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "schedule",
+        "target": "dot",
+        "kind": "control",
+        "label": "start dot",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "schedule",
+        "target": "reshape",
+        "kind": "control",
+        "label": "start pack",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "schedule",
+        "target": "coordinator",
+        "kind": "control",
+        "label": "request slot",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "coordinator",
+        "target": "schedule",
+        "kind": "control",
+        "label": "slot grant",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sharedram",
+        "target": "schedule",
+        "kind": "feedback",
+        "label": "fill ready",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scratch",
+        "target": "dot",
+        "kind": "data",
+        "label": "operands",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "dot",
+        "target": "scratch",
+        "kind": "data",
+        "label": "partials",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scratch",
+        "target": "reshape",
+        "kind": "data",
+        "label": "tiles",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "reshape",
+        "target": "linebuf",
+        "kind": "data",
+        "label": "packed samples",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "linebuf",
+        "target": "scratch",
+        "kind": "data",
+        "label": "packed words",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scratch",
+        "target": "inbox",
+        "kind": "data",
+        "label": "outgoing messages",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "inbox",
+        "target": "bridge",
+        "kind": "data",
+        "label": "send",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bridge",
+        "target": "inbox",
+        "kind": "data",
+        "label": "receive",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scratch",
+        "target": "assist",
+        "kind": "data",
+        "label": "lookup keys",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "assist",
+        "target": "scratch",
+        "kind": "data",
+        "label": "lookup values",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sharedram",
+        "target": "scratch",
+        "kind": "data",
+        "label": "fill",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scratch",
+        "target": "sharedram",
+        "kind": "data",
+        "label": "evict",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sharedram",
+        "target": "worker1",
+        "kind": "data",
+        "label": "payload",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sharedram",
+        "target": "worker2",
+        "kind": "data",
+        "label": "payload",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "external",
+        "target": "sharedram",
+        "kind": "data",
+        "label": "bulk data",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sharedram",
+        "target": "loader",
+        "kind": "data",
+        "label": "encoded stream",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "loader",
+        "target": "staging",
+        "kind": "data",
+        "label": "unpacked stream",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "staging",
+        "target": "scratch",
+        "kind": "data",
+        "label": "loaded block",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Three equal worker instances; keep each local resource inside Worker0. Shared services retain their stated owner. External storage stays outside the engine.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [
+      "Entire architecture is a synthetic test fixture. No real chip, ISA, bank count, capacity, or timing is specified."
+    ],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "high",
+    "completion_mode": "auto",
+    "labels": "",
+    "notes": ""
+  }
+}

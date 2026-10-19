@@ -1,0 +1,402 @@
+{
+  "metadata_only": true,
+  "notice": "Source images are not redistributed. Metadata informs visual grammar only.",
+  "items": [
+    {
+      "path": "architecture/nvidia-study-20261018-rtx-blackwell-p08-fig03-full-chip.png",
+      "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf#page=8",
+      "category": "architecture",
+      "diagram_type": "organization",
+      "focus": ["regular-array", "shared-resource-bands", "private-shared-hierarchy", "boundary-interface"],
+      "features": [
+        "Repeated compute owners form aligned arrays around a broad shared-cache band.",
+        "Management and external interfaces occupy separate perimeter regions.",
+        "Containment explains organization; the diagram does not assert complete datapath wiring or a measured floorplan."
+      ],
+      "width": 2048,
+      "height": 687
+    },
+    {
+      "path": "dataflow/nvidia-study-20261018-hopper-p30-fig15-dsmem.png",
+      "source_url": "https://dam-cdn.nvd.orangelogic.com/AssetLink/705n6ur546g0uk43w0117r17n8042d73.pdf#page=30",
+      "category": "dataflow",
+      "diagram_type": "flow",
+      "focus": ["before-after", "matched-layout", "memory-paths", "short-connectors"],
+      "features": [
+        "Comparable memory endpoints stay in matched before/after views; only the changed access mechanism receives emphasis.",
+        "A cluster boundary explains the cooperation domain; short local paths contrast with the original external-memory detour.",
+        "Learn the comparison grammar without importing hardware counts, bandwidths or source topology."
+      ],
+      "width": 1671,
+      "height": 360
+    },
+    {
+      "path": "dataflow/nvidia-study-20261018-hopper-p34-fig19-tma.png",
+      "source_url": "https://dam-cdn.nvd.orangelogic.com/AssetLink/705n6ur546g0uk43w0117r17n8042d73.pdf#page=34",
+      "category": "dataflow",
+      "diagram_type": "flow",
+      "focus": ["before-after", "matched-layout", "memory-paths", "control-versus-data"],
+      "features": [
+        "Keep common context stable while emphasizing the changed copy mechanism.",
+        "Explanatory leaders use a different treatment from technical request and data paths.",
+        "Choose straight, curved or orthogonal paths for readability and endpoint meaning rather than a universal bend style."
+      ],
+      "width": 989,
+      "height": 439
+    },
+    {
+      "path": "architecture/nvidia-hopper-sm-official.png",
+      "source_url": "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
+    },
+    {
+      "path": "architecture/amd-cdna2-cu-official.png",
+      "source_url": "https://www.amd.com/content/dam/amd/en/documents/instinct-business-docs/white-papers/amd-cdna2-white-paper.pdf"
+    },
+    {
+      "path": "architecture/nvidia-gh100-overview-official.png",
+      "source_url": "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
+    },
+    {
+      "path": "architecture/amd-epyc9005-fig2-zen5-ccd.png",
+      "source_url": "https://docs.amd.com/v/u/en-US/5th-gen-amd-epyc-processor-architecture-white-paper",
+      "category": "architecture",
+      "features": [
+        "八个核与各自 L2 两侧镜像排列",
+        "共享 L3 居中，归属由空间组织表达",
+        "不添加多余箭头，适合资源组织总览"
+      ],
+      "focus": [
+        "private-shared-hierarchy",
+        "repeated-resource-array"
+      ],
+      "width": 555,
+      "height": 284
+    },
+    {
+      "path": "architecture/amd-epyc9005-fig4-io-die.png",
+      "source_url": "https://docs.amd.com/v/u/en-US/5th-gen-amd-epyc-processor-architecture-white-paper",
+      "category": "architecture",
+      "features": [
+        "中央管理与安全模块，SERDES 和内存接口围绕边界布置",
+        "重复 GMI 端口用小符号表达，主体没有被端口淹没",
+        "外围信号方向与带宽文字置于图外空隙"
+      ],
+      "focus": [
+        "io-boundary",
+        "interface-organization"
+      ],
+      "width": 751,
+      "height": 888
+    },
+    {
+      "path": "architecture/amd-epyc9005-fig7-dual-socket.png",
+      "source_url": "https://docs.amd.com/v/u/en-US/5th-gen-amd-epyc-processor-architecture-white-paper",
+      "category": "architecture",
+      "features": [
+        "两个相同 Socket 并列，独立 DIMM 资源保持在对应一侧",
+        "跨 Socket 连接从上方绕行，避免穿过芯片内部",
+        "局部 CPU Die 与共享 I/O Die 在同一尺度内区分"
+      ],
+      "focus": [
+        "multi-socket",
+        "repeated-system",
+        "outer-route"
+      ],
+      "width": 1080,
+      "height": 685
+    },
+    {
+      "path": "architecture/amd-epyc9005-fig8-numa-domains.png",
+      "source_url": "https://docs.amd.com/v/u/en-US/5th-gen-amd-epyc-processor-architecture-white-paper",
+      "category": "architecture",
+      "features": [
+        "四个逻辑域用一致编号和颜色对应 CPU Die 与 DIMM",
+        "色彩承担亲和归属含义，连接线保持中性",
+        "说明一种拓扑切分，适合机制图而非面积准确布局"
+      ],
+      "focus": [
+        "memory-domain",
+        "semantic-color",
+        "affinity"
+      ],
+      "width": 859,
+      "height": 592
+    },
+    {
+      "path": "architecture/arm-rdv2-fig3-2-interconnect-blocks.png",
+      "source_url": "https://documentation-service.arm.com/static/641a84c08df5201251bf37e0",
+      "category": "architecture",
+      "features": [
+        "CMN 与 NI 互联形成横向公共带，端点按功能上下排列",
+        "黄色只强调互联角色，其余模块保持灰白",
+        "协议标签靠近独立线路，长返回路径从外围绕行",
+        "小图例与原图边界完整保留"
+      ],
+      "focus": [
+        "interconnect-backbone",
+        "protocol-routing",
+        "semantic-color"
+      ],
+      "width": 1985,
+      "height": 1718
+    },
+    {
+      "path": "architecture/arm-rdv2-fig3-4-cmn700-mesh.png",
+      "source_url": "https://documentation-service.arm.com/static/641a84c08df5201251bf37e0",
+      "category": "architecture",
+      "features": [
+        "网络节点保持规则二维网格，链路使用细直线",
+        "不同端点类别用同一套小色块编码",
+        "完整图例在右侧独立对齐，不混入网络",
+        "适合互联拓扑，不能作为普通模块图的全连接模板"
+      ],
+      "focus": [
+        "mesh-topology",
+        "typed-endpoints",
+        "compact-legend"
+      ],
+      "width": 1985,
+      "height": 1389
+    },
+    {
+      "path": "architecture/nvidia-grace-fig3-scalable-coherency-fabric.jpg",
+      "source_url": "https://developer.nvidia.com/blog/nvidia-grace-cpu-superchip-architecture-in-depth/",
+      "category": "architecture",
+      "features": [
+        "计算与缓存节点重复排列成清楚的 Mesh 阵列",
+        "内存和片间接口位于边缘，与计算资源分开",
+        "引出注释放在图外，不占用阵列内部标签位置",
+        "原图是组织示意，观察布局时不继承参数和比例"
+      ],
+      "focus": [
+        "repeated-resource-array",
+        "boundary-interface",
+        "external-callout"
+      ],
+      "width": 1846,
+      "height": 1046
+    },
+    {
+      "path": "architecture/nvidia-blackwell-ultra-sm-official.png",
+      "source_url": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/",
+      "category": "architecture",
+      "features": [
+        "四个相同计算分区构成规整的2×2网格",
+        "每个分区依次排列调度、寄存器、Tensor Memory、计算资源",
+        "共享指令缓存置顶，数据缓存与TMA置底",
+        "借鉴资源层级和重复分区，不要求照搬品牌饱和配色"
+      ],
+      "focus": [
+        "repeated-partitions",
+        "shared-resources",
+        "cache-hierarchy"
+      ],
+      "width": 1475,
+      "height": 2039,
+      "diagram_type": "microarchitecture"
+    },
+    {
+      "path": "architecture/nvidia-rtx-blackwell-gpc-official.png",
+      "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "category": "architecture",
+      "features": [
+        "大容器GPC内部重复排列八个TPC",
+        "每个TPC只用缩略SM表示，避免重复展开细节",
+        "共享Raster Engine跨顶层形成水平带",
+        "借鉴嵌套、节奏和对齐，不要求复制绿黑配色"
+      ],
+      "focus": [
+        "nested-containers",
+        "repeat-resources",
+        "detail-abstraction"
+      ],
+      "width": 2136,
+      "height": 1449
+    },
+    {
+      "path": "architecture/nvidia-rtx-blackwell-sm-official.png",
+      "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "category": "architecture",
+      "features": [
+        "执行分区构成2×2主体，跨分区缓存独立成带",
+        "FP32/INT32与Tensor Core使用并列区域表达资源关系",
+        "专用RT Core作为单独功能区域，内部只列主要引擎",
+        "适合学习密集资源图的层级，而非复制原图数量和颜色"
+      ],
+      "focus": [
+        "functional-zones",
+        "repeated-partitions",
+        "specialized-engine"
+      ],
+      "width": 1520,
+      "height": 2457,
+      "diagram_type": "microarchitecture"
+    },
+    {
+      "path": "architecture/amd-mi300-chiplet-comparison-official.png",
+      "source_url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf",
+      "category": "architecture",
+      "features": [
+        "两个产品保持相同外框、网格和阅读顺序",
+        "计算XCD与CPU CCD用不同填充形成对照",
+        "互联置于相同底部位置，强调共同骨架",
+        "借鉴相同拓扑上的变化表达，不照搬品牌色"
+      ],
+      "focus": [
+        "small-multiples",
+        "chiplet-comparison",
+        "fixed-layout"
+      ],
+      "width": 2049,
+      "height": 1716
+    },
+    {
+      "path": "architecture/amd-cdna3-xcd-official.png",
+      "source_url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf",
+      "category": "architecture",
+      "features": [
+        "全局资源与调度器占左侧独立竖区",
+        "四个ACE与对应队列按列对齐",
+        "CU以首尾代表和省略号表示重复资源",
+        "共享计算系统横带与L2侧带保持层级关系"
+      ],
+      "focus": [
+        "resource-columns",
+        "repeat-ellipsis",
+        "shared-bands"
+      ],
+      "width": 2224,
+      "height": 674
+    },
+    {
+      "path": "architecture/amd-cdna3-memory-hierarchy-official.png",
+      "source_url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf",
+      "category": "architecture",
+      "features": [
+        "堆叠层将计算die、I/O die、缓存与外部存储分开",
+        "三条少量高亮路径与左侧图例逐一对应",
+        "局部层级与片外存储同时可见，避免单纯平铺",
+        "仅在解释堆叠封装关系时借鉴轻量立体视角"
+      ],
+      "focus": [
+        "layered-package",
+        "memory-paths",
+        "semantic-legend"
+      ],
+      "width": 2099,
+      "height": 1132,
+      "diagram_type": "memory"
+    },
+    {
+      "path": "architecture/intel-xe-hpg-render-slice-official.png",
+      "source_url": "https://www.intel.com/content/www/us/en/content-details/758302/introduction-to-the-xe-hpg-architecture.html",
+      "category": "architecture",
+      "features": [
+        "四个Xe Core以等宽列构成主体",
+        "每列内矩阵和向量资源保持固定位置",
+        "光追和采样功能与对应Core纵向对齐",
+        "底部共享图形流水资源通过跨列横带表达"
+      ],
+      "focus": [
+        "aligned-columns",
+        "fixed-function-bands",
+        "nested-cores"
+      ],
+      "width": 1515,
+      "height": 1095
+    },
+    {
+      "path": "architecture/intel-xe-lp-hpg-vector-engine-comparison-official.png",
+      "source_url": "https://www.intel.com/content/www/us/en/content-details/758302/introduction-to-the-xe-hpg-architecture.html",
+      "category": "architecture",
+      "features": [
+        "两个执行单元共用相同的Thread Control与寄存器骨架",
+        "端口和计算引擎按列对应，突出新增XMX资源",
+        "虚线淡化邻接单元，主单元边框保持清晰",
+        "蓝、紫、灰少量角色色彩支持区域识别"
+      ],
+      "focus": [
+        "before-after",
+        "matched-layout",
+        "port-resources"
+      ],
+      "width": 2111,
+      "height": 782,
+      "diagram_type": "microarchitecture"
+    },
+    {
+      "path": "architecture/intel-xe-lp-hpg-memory-paths-official.png",
+      "source_url": "https://www.intel.com/content/www/us/en/content-details/758302/introduction-to-the-xe-hpg-architecture.html",
+      "category": "architecture",
+      "features": [
+        "计算阵列置顶，L2置底，局部资源位于中间",
+        "左、右代际对照共用同一层级坐标",
+        "短直角箭头明确读写路径与共享关系",
+        "相同语义使用相同颜色，结构变化容易比较"
+      ],
+      "focus": [
+        "memory-paths",
+        "matched-layout",
+        "short-connectors"
+      ],
+      "width": 2125,
+      "height": 903,
+      "diagram_type": "memory"
+    },
+    {
+      "path": "architecture/google-tpu-v4-chip-official.png",
+      "source_url": "https://docs.cloud.google.com/tpu/docs/v4",
+      "category": "architecture",
+      "features": [
+        "两个TensorCore形成对称布局，共用Virtual Core虚线范围",
+        "Scalar、Vector与四个MXU按功能分组",
+        "HBM位于左右边缘，双向箭头表达交互",
+        "层级少而清晰，适合入门级系统总览"
+      ],
+      "focus": [
+        "symmetric-layout",
+        "functional-groups",
+        "boundary-memory"
+      ],
+      "width": 802,
+      "height": 300
+    },
+    {
+      "path": "architecture/tenstorrent-tensix-core-official.png",
+      "source_url": "https://github.com/tenstorrent/tt-llk/blob/main/docs/llk/l2/top_level_overview.md",
+      "category": "architecture",
+      "features": [
+        "左侧小阵列与右侧单核放大通过引线关联",
+        "五个RISC-V控制核成排，计算与路由分区清楚",
+        "内部存储用整条横带表示共享资源",
+        "低饱和粉彩支持容器层级，不依赖密集标签"
+      ],
+      "focus": [
+        "representative-detail",
+        "controller-row",
+        "shared-memory-band"
+      ],
+      "width": 1090,
+      "height": 640
+    },
+    {
+      "path": "dataflow/tenstorrent-tensix-engine-official.png",
+      "source_url": "https://github.com/tenstorrent/tt-llk/blob/main/docs/llk/l2/top_level_overview.md",
+      "category": "dataflow",
+      "features": [
+        "两个输入解包通道并排，向下汇入计算单元",
+        "Source、Destination寄存器使用相同角色色彩",
+        "Special FPU嵌套于FPU，边界体现归属",
+        "入口与返回存储路径留在外围，主路径顺序明确"
+      ],
+      "focus": [
+        "dual-input-flow",
+        "nested-function",
+        "register-colors",
+        "return-path"
+      ],
+      "width": 2405,
+      "height": 2800
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "spec": {
+    "title": "Generic SoC System Overview",
+    "summary": "面向“完整的 SoC 系统”的通用示意：以片上总线/互联为中心，左侧为计算子系统（CPU 集群、加速器），右侧为存储层次与片外 DRAM，下方为外设与安全/调试子系统，顶部为时钟复位与电源管理。所有模块与连接均为按常见工程实践补入的通用示例，可按实际设计增删。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_compute",
+        "label": "Compute Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "SoC 通常以计算子系统为核心，先建立功能分区"
+      },
+      {
+        "id": "g_mem",
+        "label": "Memory Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "区分片上存储层次与片外 DRAM 归属"
+      },
+      {
+        "id": "g_periph",
+        "label": "Peripheral & IO Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设与对外接口通常独立成区"
+      },
+      {
+        "id": "g_sys",
+        "label": "System Management",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位、电源与安全调试属于全局支撑功能"
+      },
+      {
+        "id": "g_offchip",
+        "label": "Off-Chip",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外器件应置于芯片边界之外"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_cpu",
+        "label": "CPU Cluster",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Application cores + private caches",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "通用 SoC 的主控计算单元"
+      },
+      {
+        "id": "n_accel",
+        "label": "Accelerator / DSP",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Domain-specific compute engine",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "现代 SoC 常含专用加速器"
+      },
+      {
+        "id": "n_dma",
+        "label": "DMA Engine",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Bulk data mover",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "负责外设与存储间批量搬运"
+      },
+      {
+        "id": "n_noc",
+        "label": "On-Chip Interconnect",
+        "kind": "control",
+        "group": "",
+        "detail": "Shared bus / NoC fabric",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为全片共享互联主干"
+      },
+      {
+        "id": "n_sram",
+        "label": "On-Chip SRAM",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Shared scratchpad / last-level buffer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片上共享存储层次"
+      },
+      {
+        "id": "n_memctl",
+        "label": "DRAM Controller",
+        "kind": "control",
+        "group": "g_mem",
+        "detail": "External memory interface",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片上控制器，连接片外 DRAM"
+      },
+      {
+        "id": "n_dram",
+        "label": "External DRAM",
+        "kind": "memory",
+        "group": "g_offchip",
+        "detail": "Off-chip main memory",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外主存，位于芯片边界之外"
+      },
+      {
+        "id": "n_periph",
+        "label": "Peripheral Controllers",
+        "kind": "io",
+        "group": "g_periph",
+        "detail": "UART / SPI / I2C / GPIO",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "常见低速外设集合"
+      },
+      {
+        "id": "n_hsio",
+        "label": "High-Speed IO",
+        "kind": "io",
+        "group": "g_periph",
+        "detail": "PCIe / Ethernet / USB",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "对外高速接口"
+      },
+      {
+        "id": "n_host",
+        "label": "Host / External Device",
+        "kind": "io",
+        "group": "g_offchip",
+        "detail": "Off-chip peer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外主机或设备"
+      },
+      {
+        "id": "n_clk",
+        "label": "Clock & Reset",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "PLL / clock gating / reset tree",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "全片时钟与复位源"
+      },
+      {
+        "id": "n_pwr",
+        "label": "Power Management",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "DVFS / power domains",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源域与功耗管理"
+      },
+      {
+        "id": "n_sec",
+        "label": "Security & Debug",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "Secure boot / JTAG / trace",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "安全启动与调试通道"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_cpu",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "read/write",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "CPU 经互联访问存储与外设"
+      },
+      {
+        "source": "n_accel",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "read/write",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "加速器共享同一互联"
+      },
+      {
+        "source": "n_dma",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "burst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "DMA 通过互联搬运数据"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_sram",
+        "kind": "data",
+        "label": "access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "互联到片上 SRAM 的访问路径"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_memctl",
+        "kind": "data",
+        "label": "access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "互联到 DRAM 控制器的访问路径"
+      },
+      {
+        "source": "n_memctl",
+        "target": "n_dram",
+        "kind": "data",
+        "label": "DQ/DQS",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外存储接口"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_periph",
+        "kind": "data",
+        "label": "MMIO",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设寄存器访问"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_hsio",
+        "kind": "data",
+        "label": "DMA path",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "高速接口数据通路"
+      },
+      {
+        "source": "n_hsio",
+        "target": "n_host",
+        "kind": "data",
+        "label": "link",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "对外链路"
+      },
+      {
+        "source": "n_clk",
+        "target": "n_cpu",
+        "kind": "clock",
+        "label": "clk/rst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位分发"
+      },
+      {
+        "source": "n_clk",
+        "target": "n_noc",
+        "kind": "clock",
+        "label": "clk/rst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位分发"
+      },
+      {
+        "source": "n_pwr",
+        "target": "n_cpu",
+        "kind": "control",
+        "label": "pwr ctrl",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源域控制"
+      },
+      {
+        "source": "n_sec",
+        "target": "n_cpu",
+        "kind": "control",
+        "label": "debug",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "调试与安全控制"
+      },
+      {
+        "source": "n_periph",
+        "target": "n_dma",
+        "kind": "control",
+        "label": "req",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设请求 DMA 搬运"
+      },
+      {
+        "source": "n_memctl",
+        "target": "n_noc",
+        "kind": "feedback",
+        "label": "resp",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "存储返回数据/响应"
+      }
+    ],
+    "layout": "Main view left-to-right: g_compute on the left, n_noc as the central vertical spine, g_mem on the right, g_offchip (n_dram, n_host) at the far right outside the chip boundary. g_periph sits bottom-center below the interconnect; g_sys spans the top as a shallow band. Reading order: compute -> interconnect -> memory/peripherals -> off-chip. Reserve a lower corridor for the n_memctl->n_noc response and a top corridor for clock/power/security control lines.",
+    "steps": [],
+    "annotations": [
+      "Chip boundary encloses all groups except g_offchip.",
+      "All blocks and links are generic illustrative choices, not a specific product."
+    ],
+    "assumptions": [
+      "按通用 SoC 参考设计补入 CPU 集群、加速器、DMA、片上 SRAM、DRAM 控制器、外设、高速 IO、时钟复位、电源管理与安全调试等模块。",
+      "片外 DRAM 与主机/外部设备置于芯片边界之外，仅由片上控制器/接口连接。",
+      "互联被抽象为单一共享主干，未指定协议、位宽、拓扑或仲裁策略。",
+      "未给出具体容量、频率、核数等数值，图中不标注此类参数。"
+    ],
+    "questions": [
+      "是否需要把互联展开为多主多从的拓扑（如 crossbar/NoC）？",
+      "是否需要补充中断控制器或低功耗域划分等子系统？"
+    ],
+    "checks": [
+      "确认计算子系统与存储子系统的边界是否符合目标芯片的物理归属。",
+      "确认外设与高速接口清单是否覆盖实际需求。",
+      "确认时钟/电源/安全控制线是否需要单独成图。"
+    ]
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "labels": "",
+    "notes": ""
+  },
+  "description": "完整的 SoC 系统"
+}

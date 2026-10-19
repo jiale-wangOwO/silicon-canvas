@@ -1,0 +1,267 @@
+{
+  "version": "4.0",
+  "families": [
+    {
+      "id": "structure",
+      "name": "架构与互联",
+      "description": "系统、模块内部、存储层级与互联拓扑"
+    },
+    {
+      "id": "flow",
+      "name": "数据路径与流水",
+      "description": "数据搬运、计算依赖、阶段与反压"
+    },
+    {
+      "id": "behavior",
+      "name": "逻辑与状态",
+      "description": "算法步骤、条件分支与状态转移"
+    },
+    {
+      "id": "timing",
+      "name": "时序与交互",
+      "description": "周期波形、采样事件与协议交互"
+    }
+  ],
+  "categories": [
+    {
+      "id": "architecture",
+      "family": "structure",
+      "name": "系统架构",
+      "subtitle": "SoC · 子系统 · IP 边界",
+      "description": "说明系统由什么组成、模块归属与对外接口。先建立层级，再展示关键连接。",
+      "rules": [
+        "Use nested labeled containers for system, subsystem and IP boundaries, with at most two visible hierarchy levels in one view. Keep boundaries thin and close to their actual members.",
+        "Align peers by function; match dimensions only for equivalent hardware. Shallow shared-resource bands and compact internal blocks convey structure. Distinguish containment from an actual connection.",
+        "Show shared fabrics as explicit buses or hubs only when present in the supplied facts. Label external interfaces on the perimeter. Do not add connection arrows merely because two functional regions are adjacent.",
+        "Do not invent cache sizes, core counts, bandwidth, protocol names or coherent links."
+      ],
+      "example": "画一个边缘 AI SoC 的系统架构。SoC 内包含 CPU 子系统、NPU、共享 SRAM、NoC、DDR 控制器和 PCIe 控制器。CPU 子系统含 2 个 CPU 核与共享 L2。CPU 子系统、NPU、共享 SRAM、DDR 控制器、PCIe 控制器分别连接 NoC。DDR 控制器连接片外 DDR，PCIe 控制器连接 Host。未指定位宽、容量和一致性协议，不要补充。"
+    },
+    {
+      "id": "microarchitecture",
+      "family": "structure",
+      "name": "微架构",
+      "subtitle": "CPU · 执行单元 · 队列",
+      "description": "展开模块内部的存储、队列、执行单元及控制反馈，突出功能分区。",
+      "rules": [
+        "Group structures by function, such as front end, scheduling, execution and retirement, only if supplied.",
+        "Distinguish queue/storage blocks from compute blocks using restrained shape or fill changes.",
+        "Keep the primary path left to right and route explicitly supplied feedback around the outer margin.",
+        "Do not confuse issue order with completion or retirement order. Do not infer bypass, wakeup or flush connections."
+      ],
+      "example": "展示一个简化乱序 CPU 微架构。Fetch → Decode → Rename → Dispatch → Issue Queue → ALU → Writeback。Dispatch 同时将指令信息写入 ROB，Writeback 更新 ROB 完成状态，ROB 按程序顺序 Commit。分支错误恢复从 ROB 返回 Fetch 和 Rename，用控制虚线。不要扩展 LSU、物理寄存器和旁路。"
+    },
+    {
+      "id": "dataflow",
+      "family": "flow",
+      "name": "数据流",
+      "subtitle": "搬运 · 变换 · 数据依赖",
+      "description": "沿数据生命周期展现生产、搬运、计算与消费，区分数据与控制。",
+      "rules": [
+        "Use one dominant reading direction. Represent each producer, transformation, storage and consumer explicitly.",
+        "Draw data edges solid, control edges dashed, and label directions. Preserve all stated fan-out and fan-in.",
+        "Place edge labels in free space, keeping units and tensor shapes exactly as supplied.",
+        "Feedback and return paths use outer lanes. Do not imply temporal sequencing from a dependency unless specified."
+      ],
+      "example": "画一个 NPU 数据流：DDR → DMA → Input Buffer → MAC Array → Accumulator → Output Buffer → DMA → DDR。DMA 是同一个模块，可以放在图左侧，读入与写回分开走线。Controller 分别控制 DMA 和 MAC Array，控制线用虚线。不要补充带宽、量化位数和时钟。"
+    },
+    {
+      "id": "pipeline",
+      "family": "flow",
+      "name": "流水线",
+      "subtitle": "阶段 · 寄存 · 握手",
+      "description": "表达阶段边界、跨级传递与阻塞反馈；只在明确给定时表示周期。",
+      "rules": [
+        "First choose a spatial pipeline of stage columns or a time schedule with fixed operation lanes according to the input; do not silently mix the two views.",
+        "In a spatial view, place stages in equal-width columns with aligned labels. In a schedule, share one time axis and show overlap only when supplied.",
+        "Show register boundaries only when specified. Differentiate a functional stage from a guaranteed one-cycle latency.",
+        "Place forward payload/valid above or through stages; route ready/backpressure below in the reverse direction when provided.",
+        "Never assume one stage per cycle, throughput, stall behavior or bypass paths."
+      ],
+      "example": "展示四级流式处理流水线：Read、Decode、Execute、Write。相邻阶段之间各有一个寄存器。data 和 valid 从左向右，ready 从右向左逐级传递。每级延迟为一拍；当下游 ready 为 0 时，本级保持 data 和 valid。不要添加跨级旁路。"
+    },
+    {
+      "id": "algorithm",
+      "family": "behavior",
+      "name": "算法 / 逻辑",
+      "subtitle": "条件 · 分支 · 迭代",
+      "description": "将行为转成可读的决策步骤，保留条件、运算和循环的准确语义。",
+      "rules": [
+        "Choose a procedural flowchart for decisions and iteration, or an operator dependency graph for tensor/mathematical computation, according to the input.",
+        "For procedural flowcharts use rounded start/end, rectangular operations and diamonds only for actual decisions. For computation graphs use explicit operator nodes and merge operators; never replace mathematical addition with an ambiguous wire junction.",
+        "Label every decision branch with its exact predicate or Yes/No meaning. Route loopbacks, residuals and skip connections outside the main column.",
+        "Keep equations, inequalities, variable names, tensor dimensions and operation order verbatim; do not fabricate a default branch or operator.",
+        "Split a long algorithm into overview and detail panels rather than shrinking labels."
+      ],
+      "example": "画 round-robin 仲裁算法流程图。输入 4 位 req[3:0] 和上次授权位置 last。从 (last+1) mod 4 开始循环扫描最多 4 个位置。遇到 req[i]=1 时输出 one-hot grant[i]=1 并更新 last=i，然后结束。若都为 0，则 grant=0，last 保持不变。"
+    },
+    {
+      "id": "fsm",
+      "family": "behavior",
+      "name": "状态机",
+      "subtitle": "状态 · 条件 · 输出",
+      "description": "描述合法状态和带条件的转移，明确复位入口与自循环。",
+      "rules": [
+        "Use one node per state; write state names exactly and label each transition condition.",
+        "Show a reset/initial arrow only when specified. Preserve self-loops and return transitions explicitly.",
+        "Separate transition conditions from state outputs; do not silently reinterpret Moore behavior as Mealy behavior.",
+        "Do not invent priority, missing transitions or reset polarity. Mark underspecified behavior for confirmation outside the image."
+      ],
+      "example": "画 DMA 控制状态机。复位后进入 IDLE。IDLE 收到 start 进入 READ；READ 收到 rd_done 进入 WRITE；WRITE 收到 wr_done 进入 DONE；DONE 下一拍无条件返回 IDLE。READ 遇到 error 进入 ERROR；WRITE 遇到 error 也进入 ERROR；ERROR 收到 clear 返回 IDLE。error 优先于 done，其他情况保持当前状态。"
+    },
+    {
+      "id": "timing",
+      "family": "timing",
+      "name": "时序 / 交互",
+      "subtitle": "周期 · 信号 · 协议交互",
+      "description": "沿统一时间轴对齐事件或信号，精确表达采样点和握手。",
+      "rules": [
+        "Choose either signal lanes on a shared cycle axis or participants with message arrows, depending on the supplied semantics; never mix these conventions.",
+        "Align all given events to the same time reference. Mark sampling edges explicitly when specified.",
+        "Preserve exact signal values, durations and ordering; never invent setup/hold time or unsupplied cycles.",
+        "For vague timing, draw an explicitly illustrative event sequence, not a cycle-accurate waveform. Use few lanes and generous label space."
+      ],
+      "example": "画 valid/ready 的同步握手时序，按上升沿 C0、C1、C2、C3 采样。C0: valid=0, ready=1；C1: valid=1, ready=0, data=A；C2: valid=1, ready=0, data=A；C3: valid=1, ready=1, data=A。仅 C3 完成一次传输。C1 到 C3 data 保持 A，C0 data 无效。不要推断 C3 之后的值。"
+    },
+    {
+      "id": "memory",
+      "family": "structure",
+      "name": "存储 / 互联",
+      "subtitle": "层级 · 缓存 · NoC 拓扑",
+      "description": "区分包含关系、访问路径和互联拓扑，表达共享边界。",
+      "rules": [
+        "Use a layered hierarchy for memory access or a spatial grid for an explicitly supplied interconnect topology.",
+        "Keep private/shared ownership boundaries explicit. Do not use physical proximity to imply coherence.",
+        "Distinguish requests, responses and snoops only when supplied; do not invent all-to-all links.",
+        "Do not invent capacities, associativity, latency, arbitration, routing policy or physical placement."
+      ],
+      "example": "画双核存储层级。Core 0 与 Core 1 各有独立 L1 I-cache 和 L1 D-cache。四个 L1 连接共享 L2；共享 L2 连接 Memory Controller，再连接 DDR。只表示逻辑访问路径，不描述一致性协议、容量、延迟和物理布局。"
+    }
+  ],
+  "styles": [
+    {
+      "id": "paper",
+      "name": "白皮书 · 明净",
+      "subtitle": "角色分明 / 清楚有序",
+      "description": "白底深蓝灰文字，浅蓝计算、暖金存储与少量淡紫控制，轻边界组织层级。适合技术白皮书与架构文档。",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#17324D",
+        "primary": "#DCEAFF",
+        "secondary": "#FFF0BE",
+        "muted": "#F7FAFF",
+        "control": "#EEE5FF",
+        "outline": "#6E8BAB",
+        "container": "#BFCFE0"
+      },
+      "rules": [
+        "A compact publication figure on pure white, like an architecture-paper hardware diagram. No shadows, glow, depth, texture or gradients.",
+        "Geometry follows hardware role: shallow queue/register bars, tight compute rectangles, interfaces with aligned ports, taller banked memories only when supported by their specification. Do not use uniform square cards.",
+        "Use clear light blue for computation, warm light gold for storage and a smaller amount of pale violet for actual control resources. Interfaces stay white. Repeat each role color consistently; do not assign a different hue to every module or flood the page with tinted containers.",
+        "Use deep blue-gray text, restrained blue-gray outlines and very light unfilled ownership boundaries. Containers and same-hardware expansions have white bodies and light headings, never black or charcoal title banners. Shared storage bands and aligned compute peers establish hierarchy before color.",
+        "One neutral sans-serif family: medium-weight short resource names, regular signal labels and smaller subordinate scope headings. Avoid heavy bold text throughout. Thin data lines, finer dashed control lines and small arrowheads retain a technical information density without dashboard cards or large padded boxes."
+      ]
+    },
+    {
+      "id": "blueprint",
+      "name": "技术蓝 · 精确",
+      "subtitle": "边界鲜明 / 评审演示",
+      "description": "白底深蓝线框，强调模块边界、端口与分区，适合技术评审。",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#153759",
+        "primary": "#DBECFC",
+        "secondary": "#E4E9F3",
+        "muted": "#F4F8FC"
+      },
+      "rules": [
+        "Compact technical figure on white, normal-weight dark text, tight hardware symbols with role-dependent proportions. Navy is a restrained accent, not a page-wide theme.",
+        "Ownership boundaries are thin light-gray unfilled containers, at most two visible levels and little padding. No blue page tint or decorative grid.",
+        "Compute may use pale blue, storage pale lavender; interfaces and control stay white. Narrow data strokes, smaller arrowheads and lighter dashed control. Uniform aligned port marks only where helpful.",
+        "One neutral sans-serif family. No uniform square cards, gradients, shadows, perspective, chip pictures or metallic effects."
+      ]
+    },
+    {
+      "id": "signal",
+      "name": "数据路径 · 聚焦",
+      "subtitle": "主线突出 / 讲解友好",
+      "description": "柔和青绿标记计算，暖杏色标记存储，让主数据路径容易跟随。",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#203833",
+        "primary": "#DCF0E9",
+        "secondary": "#F8E8D4",
+        "muted": "#F1F4F3"
+      },
+      "rules": [
+        "Use pale teal for computation and pale amber for storage; peripheral/control blocks remain neutral gray.",
+        "Keep data lines narrow and continuous, control lines slightly finer and dashed, with small destination arrowheads. Emphasize the main path through reading order and alignment, not heavy arrows.",
+        "Use compact role-dependent symbols with square corners, shallow storage bars, tight labeled signal corridors and a small semantic legend only for encodings actually present.",
+        "Use one neutral sans-serif family with normal-weight technical labels. Keep background pure white and fills perfectly solid; no gradients, texture, ornamental icons, glow, shadows or dramatic lighting."
+      ]
+    },
+    {
+      "id": "monochrome",
+      "name": "黑白 · 印刷",
+      "subtitle": "灰度可读 / 论文报告",
+      "description": "用线型与结构表达语义，无须依赖颜色，适合打印与黑白文档。",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#202020",
+        "primary": "#FFFFFF",
+        "secondary": "#ECECEC",
+        "muted": "#F6F6F6"
+      },
+      "rules": [
+        "Crisp rasterized-CAD/publication line drawing in white, black and neutral grays. Compute is white; storage is lightly gray. Containers are unfilled.",
+        "Use narrow solid data lines and finer dashed control, small arrowheads, straight continuous attachment at each block boundary.",
+        "Use role-dependent compact hardware shapes, minimal padding and normal-weight technical typography. Buffers are shallow bars; banks are explicit internal subdivisions only when their count is supplied.",
+        "Pure flat high-contrast line art, with no gradients, shadows, lighting, photo texture, decorative hatching, fuzzy edges or large card rectangles."
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "auto",
+      "name": "自动选择",
+      "subtitle": "按内容和用途判断",
+      "description": "根据输入判断读者需要先理解整体产品、系统层级、数据过程还是实现细节。"
+    },
+    {
+      "id": "concept",
+      "name": "产品概念",
+      "subtitle": "商业展示 · BP · 方案介绍",
+      "question": "What is the complete product or solution, and what are its major capabilities and interfaces?",
+      "granularity": "whole-system functional regions; do not expand internal queues, ports or per-unit wiring",
+      "visual_language": "a complete hero system silhouette, compact capability regions, generous separation and a few source-proven interfaces",
+      "annex_policy": "the first image stands alone as a whole-system concept; exact source inventory and all implementation relations remain in captions and optional technical companions"
+    },
+    {
+      "id": "system",
+      "name": "系统架构",
+      "subtitle": "白皮书 · 产品架构 · 技术文档",
+      "question": "How are the real subsystems, shared resources and external interfaces organized?",
+      "granularity": "subsystem boundaries plus selected visible internal resources; retain logical hierarchy and shared/private ownership",
+      "visual_language": "flat nested ownership diagram with compact internal resource inventory and aligned interface boundaries",
+      "annex_policy": "lead with subsystem organization; expand a representative real owner only when needed; complete wiring is an optional exact companion"
+    },
+    {
+      "id": "flow",
+      "name": "数据流讲解",
+      "subtitle": "工作原理 · 数据路径 · 阶段演示",
+      "question": "Where does the input come from, what transforms it, and where do the outputs or returns go?",
+      "granularity": "source, transfer or buffering, transformations and destinations along one explained lifecycle",
+      "visual_language": "a dominant left-to-right path with aligned operations, separate return lanes and compact supporting control",
+      "annex_policy": "lead with the actual payload or dependency lifecycle; retain secondary control and complete source relationships in separate exact companions"
+    },
+    {
+      "id": "detail",
+      "name": "实现细节",
+      "subtitle": "设计评审 · 微架构 · 精确行为",
+      "question": "How do the specified resources, signals, conditions and return paths actually implement this design?",
+      "granularity": "exact original resource and edge scope; no product-level folding in the primary view",
+      "visual_language": "compact engineering schematic with role-shaped resources, exact endpoint attachments and explicit conditions",
+      "annex_policy": "start with an exact selected technical scope; split large designs by real source ownership and retain every source relation"
+    }
+  ]
+}

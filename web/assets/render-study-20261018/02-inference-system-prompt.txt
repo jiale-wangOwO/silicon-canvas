@@ -1,0 +1,42 @@
+Create a finished dimensional semiconductor system illustration with Image Gen.
+Reader question: How do the system's objects, shared resources and interfaces work together?
+Treatment: assembly. A coherent whole-system assembly with source-backed objects and quantities. Choose staging that reveals ownership, shared resources and principal interfaces; mechanical detail remains secondary to the explanation.
+Subject: a coherent system-scale ensemble of the supplied peer devices and shared resources. Use restrained dimensional role objects when exterior geometry is unknown. Never place these separate system nodes on one chip base or turn them into dies. Keep the selected source topology visible
+Source title: AI Inference System
+Camera: An elevated three-quarter system view with a shared horizon and consistent scale. Arrange equivalent devices as peers around the supplied shared hub, keeping physical silhouettes distinct and the principal links traceable.
+Materials: Use credible matte chassis, board and module finishes at system scale, with restrained variation in roughness. Do not cover system devices in die texture or gold package pins.
+Lighting: Use broad controlled studio illumination and one selective edge highlight. Preserve readable dark surfaces rather than crushing them to black. Separate metal, ceramic and board finishes by roughness and restrained reflections; contact shadows establish assembly. Avoid a halo on every edge, glowing rims on every module, heavy bloom or a mirror-floor spectacle.
+Background: A quiet dark charcoal studio field with tonal depth and controlled contrast; no neon grid, cosmic scenery or sci-fi circuits.
+Composition: Compose one legible system ensemble using the actual source objects. Give the shared hub a clear position, preserve equivalent peers and route links in open space. Group membership is conveyed by proximity and a concise heading, not a chip slab or arbitrary mechanical enclosure.
+Canvas: 16:9
+Typography: Use only source-authorized labels that help this view. Prefer short labels beside the actual object with quiet unheaded leaders, or a few discrete direct labels; choose one treatment per object. Do not repeat the same inventory on surfaces and in perimeter bullet lists. No invented applications, marketing subtitle, specifications, labels or decorative disclosure badge. Required text is exact and legible, with strong contrast against the actual surface.
+Color: Build contrast from material value and one restrained accent family. Equivalent objects retain the same finish and accent. Reserve a second accent for a source-backed distinction or one emphasized path, not a different bright color for every logical module. Graphic diagram palettes do not paint all physical surfaces.
+Build hierarchy before surface detail: one dominant whole-product silhouette, a few meaningful functional roles and subordinate context. Keep objects under one camera and lighting system; texture remains subtle.
+Artwork language: English. Translate optional source-title prose into this language; keep explicitly required verbatim labels unchanged. Original-language source evidence and user intent below are context, not additional artwork text.
+Explanatory geometry: Stage the source-supplied physical objects as one coherent assembly, with readable ownership and relative hierarchy. Preserve explicit quantities and membership. Objects share one camera, scale convention, material family and lighting system; do not separate layers into an exploded view unless requested.
+Repeated source components share the same orientation, scale, material and light; show source-specified multiplicity consistently without turning logical instances into physical dies. Place each concise label near its source-backed part or region in open space, keeping text horizontal and high-contrast. Neutral part-identification leaders are unheaded; only the listed source relationships carry direction. Align main-route endpoints before adding bends, and do not route through labels or unrelated parts.
+Only include a small source-title heading when it helps the requested view. Do not add a marketing subtitle, slogan, tagline or a default 'Functional concept' badge. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.
+Functional content (exact headings and concise members; place them according to this treatment, once each):
+- Clients
+- High-speed switch
+- Inference node 1
+- Inference node 2
+- Inference node 3
+- Inference node 4
+- Shared storage
+Each quoted member is one source item. Preserve compound labels such as 'Accelerator / DSP' as one member, not separate invented instances. Keep individual system devices visible; logical functions are not independent physical dies.
+Source membership, expressed by staging and concise group headings rather than invented physical enclosures:
+- Inference system: ["High-speed switch", "Inference node 1", "Inference node 2", "Inference node 3", "Inference node 4"]
+Do not collapse the system into a single chip, convert device roles into package parts, or duplicate the inventory in peripheral bullet lists. A system device's exact exterior is illustrative unless supplied; keep its source identity and selected connections readable.
+Routing instructions, not a text panel or legend: draw only these selected source-backed interface links.
+- Clients ~ High-speed switch
+- High-speed switch ~ Inference node 1
+- High-speed switch ~ Inference node 2
+- High-speed switch ~ Inference node 3
+- High-speed switch ~ Inference node 4
+- High-speed switch ~ Shared storage
+Use listed source directions for selected data, control, feedback and clock relationships, with discreet small target arrowheads. Keep opposite directed flows separately traceable. Association/interface relationships use quiet unheaded lines. The selected scope stays sparse; deferred engineering details do not become extra visible wiring. Use fine restrained lines, following explicit user path colors when given; otherwise use neutral contrast. Association links have no direction arrows; never add a reverse arrow for symmetry. Do not add luminous cables to every interface. Aggregate repeated links. Do not print link-kind words, a 'Key Relationships' section or an explanatory relation legend. Shared memory retains its common ownership.
+User art direction takes precedence over defaults. Complete original intent and latest visual revision: {"description": "为商业计划书画一张AI推理系统概念展示图：四个推理节点连接中央高速交换节点，交换节点再连接外部客户端和共享存储。希望像商业芯片发布会的系统展示插图，能看清系统组成与连接，深色背景、冰蓝与少量橙色、少量英文标签，不做传统平面框图。四个推理节点是等价的，不要变成一串处理步骤。不写性能数字，也不宣称是真实产品外观。", "notes": ""}
+Keep explicit labels, logical ownership, quantities and source relationships. Functional overlays are not proof of physical dies, chiplets or HBM stacks. Exterior and context geometry remain illustrative. Avoid fabricated branding, measured specifications, ornamental circuit wallpaper, unrelated application props and cluttered copy.
+The text brief is sufficient. An optional composition reference only suggests scale, negative space and framing. Freely organize the explanatory regions using the source projection. Guide shapes carry no physical placement, object-count or wiring authority.
+Return one coherent finished image. The full engineering ledger remains in the brief and precise technical companions; do not force every secondary source signal onto this image.

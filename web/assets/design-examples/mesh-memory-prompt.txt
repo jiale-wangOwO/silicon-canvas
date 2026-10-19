@@ -1,0 +1,76 @@
+Create one polished technical figure with Image Gen using the supplied semantic target guide.
+Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.
+Prioritize the reader's task: Which real endpoints attach to each source-coordinate router, and which links connect them?
+Use crisp sans-serif type, compact labels and purposeful whitespace. Dark neutral text; sparse role-based accents. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale.
+The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.
+Use the requested palette: {"background": "#FFFFFF", "ink": "#263238", "primary": "#EDF2F5", "secondary": "#E8EEE8", "muted": "#F7F8F9"}. If it is monochrome, keep the final image in neutral grayscale even when reference roles use muted hues.
+Topology grammar: use the supplied logical coordinates as a compact regular map. Keep actual attached endpoints near their named router, distinguish storage from routing, and trace every physical-looking line back to an explicit source link.
+Coordinates describe logical topology only, not a measured die floorplan. Do not replace the network with subsystem cards, invent a common bus or infer bandwidth from line width.
+"Router 0" at supplied logical coordinate [0, 0]
+"Router 1" at supplied logical coordinate [1, 0]
+"Router 2" at supplied logical coordinate [0, 1]
+"Router 3" at supplied logical coordinate [1, 1]
+"Router 0"; "Nearest-neighbor logical router"
+"Router 1"; "Nearest-neighbor logical router"
+"Router 2"; "Nearest-neighbor logical router"
+"Router 3"; "Nearest-neighbor logical router"
+"Endpoint 0"; "Private local endpoint"
+"Endpoint 1"; "Private local endpoint"
+"Endpoint 2"; "Private local endpoint"
+"Endpoint 3"; "Private local endpoint"
+"Shared Bank 0"; ""
+"Shared Bank 1"; ""
+"Memory Controller"; ""
+"External Memory"; ""
+Exact directed relations, one connector per source relation, including loops:
+"Router 0" → "Router 1": "east/south traffic"
+"Router 1" → "Router 0": "west/north traffic"
+"Router 0" → "Router 2": "east/south traffic"
+"Router 2" → "Router 0": "west/north traffic"
+"Router 1" → "Router 3": "east/south traffic"
+"Router 3" → "Router 1": "west/north traffic"
+"Router 2" → "Router 3": "east/south traffic"
+"Router 3" → "Router 2": "west/north traffic"
+"Endpoint 0" → "Router 0": "request"
+"Router 0" → "Endpoint 0": "response"
+"Endpoint 1" → "Router 1": "request"
+"Router 1" → "Endpoint 1": "response"
+"Endpoint 2" → "Router 2": "request"
+"Router 2" → "Endpoint 2": "response"
+"Endpoint 3" → "Router 3": "request"
+"Router 3" → "Endpoint 3": "response"
+"Router 2" → "Shared Bank 0": "request"
+"Shared Bank 0" → "Router 2": "response"
+"Router 3" → "Shared Bank 1": "request"
+"Shared Bank 1" → "Router 3": "response"
+"Shared Bank 0" → "Memory Controller": "miss"
+"Shared Bank 1" → "Memory Controller": "miss"
+"Memory Controller" → "External Memory": "command"
+"External Memory" → "Memory Controller": "read data"
+Closed outgoing-target contract: these are the ONLY arrow destinations allowed from each named object. Every listed source relation appears once, with one target head; no adjacency shortcut or duplicate route.
+"Router 0" may point only to "Router 1"; "Router 2"; "Endpoint 0".
+"Router 1" may point only to "Router 0"; "Router 3"; "Endpoint 1".
+"Router 2" may point only to "Router 0"; "Router 3"; "Endpoint 2"; "Shared Bank 0".
+"Router 3" may point only to "Router 1"; "Router 2"; "Endpoint 3"; "Shared Bank 1".
+"Endpoint 0" may point only to "Router 0".
+"Endpoint 1" may point only to "Router 1".
+"Endpoint 2" may point only to "Router 2".
+"Endpoint 3" may point only to "Router 3".
+"Shared Bank 0" may point only to "Router 2"; "Memory Controller".
+"Shared Bank 1" may point only to "Router 3"; "Memory Controller".
+"Memory Controller" may point only to "External Memory".
+"External Memory" may point only to "Memory Controller".
+Real scope "2×2 Router Mesh" has exactly these members: "Router 0", "Router 1", "Router 2", "Router 3". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Shared Memory Access" has exactly these members: "Shared Bank 0", "Shared Bank 1", "Memory Controller". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Off-Chip" has exactly these members: "External Memory". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Endpoint Tile 0" has exactly these members: "Endpoint 0". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Endpoint Tile 1" has exactly these members: "Endpoint 1". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Endpoint Tile 2" has exactly these members: "Endpoint 2". Do not absorb resources from another scope; a visual lane is not ownership.
+Real scope "Endpoint Tile 3" has exactly these members: "Endpoint 3". Do not absorb resources from another scope; a visual lane is not ownership.
+Source conventions (keep essential conditions near their source, ordinary explanation in caption):
+The mesh has exactly four routers and four local endpoints. No diagonal r0-r3 or r1-r2 edge.
+No coherence guarantee, capacity, arbitration policy or physical floorplan is supplied.
+Organize real ownership levels and source-backed common services. Centrality follows adjacency, not name or visual prominence; functional alignment bands never create ownership or shared hardware.
+Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.
+Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics.
+Review the generated bitmap against the source: sample values, transition predicates, state outputs, loop directions and logical links. A source guide is not an image-quality certificate.

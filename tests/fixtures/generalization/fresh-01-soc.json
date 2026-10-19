@@ -1,0 +1,191 @@
+{
+  "id": "fresh-01-soc",
+  "split": "development",
+  "natural_input": {
+    "description": "画一个完整的通用 SoC 系统，面向架构文档。",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "auto",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [],
+    "relations": [],
+    "ownership": {
+      "cpu": "soc",
+      "fabric": "soc",
+      "rom": "soc",
+      "sram": "soc",
+      "dma": "soc",
+      "mc": "soc"
+    },
+    "closed_inventory": false,
+    "minimum_nodes": 5,
+    "representation": "diagram",
+    "assumptions_required": true,
+    "numeric_claims_not_supplied": true
+  },
+  "manual_payload": {
+    "description": "画一个完整的通用 SoC 系统，面向架构文档。",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-01-soc",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "soc",
+          "label": "SoC",
+          "parent": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "cpu",
+          "label": "CPU",
+          "kind": "compute",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "fabric",
+          "label": "Interconnect",
+          "kind": "io",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "rom",
+          "label": "Boot ROM",
+          "kind": "memory",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "sram",
+          "label": "SRAM",
+          "kind": "memory",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "dma",
+          "label": "DMA",
+          "kind": "io",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "mc",
+          "label": "Memory Controller",
+          "kind": "control",
+          "group": "soc",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "id": "dram",
+          "label": "External DRAM",
+          "kind": "memory",
+          "group": "",
+          "detail": "",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        }
+      ],
+      "edges": [
+        {
+          "source": "cpu",
+          "target": "fabric",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "source": "dma",
+          "target": "fabric",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "source": "fabric",
+          "target": "rom",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "source": "fabric",
+          "target": "sram",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "source": "fabric",
+          "target": "mc",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        },
+        {
+          "source": "mc",
+          "target": "dram",
+          "label": "",
+          "kind": "data",
+          "origin": "assumed",
+          "evidence": "",
+          "rationale": "通用架构建议"
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [
+        "通用示意，未给定的模块与连接为建议。"
+      ],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

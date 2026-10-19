@@ -1,0 +1,238 @@
+{
+  "description": "Explain this residual tensor computation with parallel parameter operands and a long identity skip from X into the final addition. Distinguish matrix multiply, broadcast bias addition and residual addition; show each tensor shape once.",
+  "spec": {
+    "title": "Two-Layer Residual Projection",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "algorithm",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "x",
+        "label": "X",
+        "kind": "compute",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B×T×D"
+      },
+      {
+        "id": "w1",
+        "label": "W1",
+        "kind": "compute",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "D×H"
+      },
+      {
+        "id": "mm1",
+        "label": "Projection 1",
+        "kind": "compute",
+        "group": "",
+        "detail": "U = X W1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B×T×H"
+      },
+      {
+        "id": "b1",
+        "label": "b1",
+        "kind": "compute",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "H"
+      },
+      {
+        "id": "bias",
+        "label": "Bias Add",
+        "kind": "compute",
+        "group": "",
+        "detail": "Z = U + b1; broadcast over B and T",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B×T×H"
+      },
+      {
+        "id": "relu",
+        "label": "ReLU",
+        "kind": "compute",
+        "group": "",
+        "detail": "A = max(Z, 0)",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B×T×H"
+      },
+      {
+        "id": "w2",
+        "label": "W2",
+        "kind": "compute",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "H×D"
+      },
+      {
+        "id": "mm2",
+        "label": "Projection 2",
+        "kind": "compute",
+        "group": "",
+        "detail": "F = A W2",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B×T×D"
+      },
+      {
+        "id": "res",
+        "label": "Residual Add",
+        "kind": "compute",
+        "group": "",
+        "detail": "Y = F + X",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B×T×D"
+      },
+      {
+        "id": "y",
+        "label": "Y",
+        "kind": "compute",
+        "group": "",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B×T×D"
+      }
+    ],
+    "edges": [
+      {
+        "source": "x",
+        "target": "mm1",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w1",
+        "target": "mm1",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "mm1",
+        "target": "bias",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "b1",
+        "target": "bias",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bias",
+        "target": "relu",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "relu",
+        "target": "mm2",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "w2",
+        "target": "mm2",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "mm2",
+        "target": "res",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "x",
+        "target": "res",
+        "kind": "data",
+        "label": "identity skip",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "res",
+        "target": "y",
+        "kind": "data",
+        "label": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Operator chain horizontally with parameter operands above their consuming operator, residual skip below. No hardware buffers or clock stages.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

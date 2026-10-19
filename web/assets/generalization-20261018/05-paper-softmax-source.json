@@ -1,0 +1,222 @@
+{
+  "description": "给论文画一张数值稳定 softmax 的数据流图。输入是一行向量 x，先求 m=max_i x_i，再逐元素计算 z_i=x_i-m、e_i=exp(z_i)，求 s=sum_i e_i，最后 y_i=e_i/s。请保留 x 与 m 到减法、e 到求和及归一化两处的依赖，使用英文标签；不展开并行归约树，也不引入存储器或硬件流水级。",
+  "requested_settings": {
+    "style": "paper",
+    "language": "en"
+  },
+  "settings": {
+    "category": "dataflow",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "flow",
+    "resolved_representation": "diagram"
+  },
+  "spec": {
+    "title": "Numerically Stable Softmax Dataflow",
+    "summary": "该图按论文描述展示数值稳定 softmax 的算子依赖：输入行向量 x 先经行最大值归约得到 m，x 与 m 共同进入逐元素减法得到 z_i，再经指数运算得到 e_i；e_i 同时送往求和归约得到 s，并与 s 一起进入逐元素归一化得到输出 y_i。图中保留 x 与 m 到减法的依赖、e 到求和与归一化两处的扇出；不展开并行归约树，也不引入存储器或硬件流水级。",
+    "category": "dataflow",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_reduce",
+        "label": "Reductions",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "把两个归约算子（max 与 sum）归为同一功能分区，便于阅读但不表示硬件共享"
+      },
+      {
+        "id": "g_elementwise",
+        "label": "Elementwise Ops",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "把逐元素减法、指数与归一化归为同一功能分区"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_x",
+        "label": "x (row vector)",
+        "kind": "io",
+        "group": "",
+        "detail": "Input row vector x",
+        "evidence": "输入是一行向量 x",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "row vector"
+      },
+      {
+        "id": "n_max",
+        "label": "m = max_i x_i",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "Row-wise maximum over i",
+        "evidence": "先求 m=max_i x_i",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "reduction_axis": "i"
+      },
+      {
+        "id": "n_sub",
+        "label": "z_i = x_i - m",
+        "kind": "compute",
+        "group": "g_elementwise",
+        "detail": "Elementwise subtraction of m from x",
+        "evidence": "逐元素计算 z_i=x_i-m",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "n_exp",
+        "label": "e_i = exp(z_i)",
+        "kind": "compute",
+        "group": "g_elementwise",
+        "detail": "Elementwise exponential",
+        "evidence": "e_i=exp(z_i)",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "n_sum",
+        "label": "s = sum_i e_i",
+        "kind": "compute",
+        "group": "g_reduce",
+        "detail": "Sum over i",
+        "evidence": "求 s=sum_i e_i",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "reduction_axis": "i"
+      },
+      {
+        "id": "n_div",
+        "label": "y_i = e_i / s",
+        "kind": "compute",
+        "group": "g_elementwise",
+        "detail": "Elementwise normalization",
+        "evidence": "最后 y_i=e_i/s",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator"
+      },
+      {
+        "id": "n_y",
+        "label": "y (output vector)",
+        "kind": "io",
+        "group": "",
+        "detail": "Softmax output row vector",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "输出端点为通用示意补入，对应公式左端 y_i",
+        "diagram_role": "tensor",
+        "tensor_shape": "row vector"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_x",
+        "target": "n_max",
+        "kind": "data",
+        "label": "x",
+        "evidence": "先求 m=max_i x_i",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_x",
+        "target": "n_sub",
+        "kind": "data",
+        "label": "x_i",
+        "evidence": "z_i=x_i-m",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_max",
+        "target": "n_sub",
+        "kind": "data",
+        "label": "m",
+        "evidence": "z_i=x_i-m",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_sub",
+        "target": "n_exp",
+        "kind": "data",
+        "label": "z_i",
+        "evidence": "e_i=exp(z_i)",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_exp",
+        "target": "n_sum",
+        "kind": "data",
+        "label": "e_i",
+        "evidence": "求 s=sum_i e_i",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_exp",
+        "target": "n_div",
+        "kind": "data",
+        "label": "e_i",
+        "evidence": "最后 y_i=e_i/s",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_sum",
+        "target": "n_div",
+        "kind": "data",
+        "label": "s",
+        "evidence": "最后 y_i=e_i/s",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_div",
+        "target": "n_y",
+        "kind": "data",
+        "label": "y_i",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "归一化结果输出到输出向量，属通用示意补入"
+      }
+    ],
+    "layout": "Left-to-right dependency flow. Column 1: n_x (input). Column 2: n_max (top, in g_reduce) and n_sub (bottom, in g_elementwise). Column 3: n_exp. Column 4: n_sum (top, in g_reduce) and n_div (bottom, in g_elementwise). Column 5: n_y (output). Group g_reduce encloses n_max and n_sum as a top band; group g_elementwise encloses n_sub, n_exp and n_div as a bottom band. The x→n_sub edge and m→n_sub edge converge at n_sub; the e_i fan-out from n_exp splits to n_sum and n_div. No reduction tree, storage or pipeline stages are drawn.",
+    "steps": [],
+    "annotations": [
+      "x and m both feed the subtraction z_i = x_i - m",
+      "e_i fans out to both the sum reduction and the normalization",
+      "No parallel reduction tree, memory or pipeline stage is shown"
+    ],
+    "assumptions": [
+      "输出端点 y 为通用示意补入，对应公式左端 y_i。",
+      "归约算子仅以单个算子节点表示，不展开并行归约树，符合用户约束。"
+    ],
+    "questions": [
+      "是否需要在图中标注向量长度或索引范围 i 的具体取值？",
+      "是否希望把 max 与 sum 两个归约算子合并为一个视觉分组以强调共享？"
+    ],
+    "checks": [
+      "核对 x→减法 与 m→减法 两条依赖是否都清晰可见。",
+      "核对 e_i 到求和与归一化两处的扇出是否都保留。",
+      "确认图中未出现并行归约树、存储器或流水级。"
+    ]
+  }
+}

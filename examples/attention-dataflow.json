@@ -1,0 +1,234 @@
+{
+  "spec": {
+    "title": "Scaled Dot-Product Attention",
+    "summary": "One-head causal self-attention with parallel Q/K/V inputs, row-wise probability normalization and an independent value path.",
+    "category": "dataflow",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_inputs",
+        "label": "Inputs",
+        "parent": "",
+        "evidence": "三路输入并行",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_ops",
+        "label": "Attention computation",
+        "parent": "",
+        "evidence": "三路输入并行",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "q",
+        "label": "Q",
+        "kind": "io",
+        "group": "g_inputs",
+        "detail": "Query tensor; N × d_k",
+        "evidence": "输入 Q 和 K 的形状都是 N × d_k",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "N × d_k"
+      },
+      {
+        "id": "k",
+        "label": "K",
+        "kind": "io",
+        "group": "g_inputs",
+        "detail": "Key tensor; N × d_k",
+        "evidence": "输入 Q 和 K 的形状都是 N × d_k",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "N × d_k"
+      },
+      {
+        "id": "v",
+        "label": "V",
+        "kind": "io",
+        "group": "g_inputs",
+        "detail": "Value tensor; N × d_v",
+        "evidence": "V 是 N × d_v",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "N × d_v"
+      },
+      {
+        "id": "mask",
+        "label": "Causal mask M",
+        "kind": "io",
+        "group": "g_inputs",
+        "detail": "N × N; M_ij = 0 for j <= i, otherwise -inf",
+        "evidence": "M 在允许位置为 0，未来位置为 -inf",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "N × N"
+      },
+      {
+        "id": "scores",
+        "label": "QK^T",
+        "kind": "compute",
+        "group": "g_ops",
+        "detail": "S = QK^T; contraction over d_k",
+        "evidence": "Q、K 汇入 QK^T 得到 N × N 分数",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "N × N"
+      },
+      {
+        "id": "scale_mask",
+        "label": "Scale + mask",
+        "kind": "compute",
+        "group": "g_ops",
+        "detail": "Z = S / sqrt(d_k) + M",
+        "evidence": "除以 sqrt(d_k) 并加上 causal mask M",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "N × N"
+      },
+      {
+        "id": "softmax",
+        "label": "Row-wise softmax",
+        "kind": "compute",
+        "group": "g_ops",
+        "detail": "P = softmax(Z), normalized across key positions",
+        "evidence": "逐行 softmax 得到 P",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "tensor_shape": "N × N"
+      },
+      {
+        "id": "weighted",
+        "label": "PV",
+        "kind": "compute",
+        "group": "g_ops",
+        "detail": "Weighted value sum; contraction over key positions",
+        "evidence": "P 与旁路传入的 V 做 PV",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "N × d_v"
+      },
+      {
+        "id": "output",
+        "label": "O",
+        "kind": "io",
+        "group": "",
+        "detail": "Output tensor",
+        "evidence": "输出 O，形状 N × d_v",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "N × d_v"
+      }
+    ],
+    "edges": [
+      {
+        "source": "q",
+        "target": "scores",
+        "label": "Q",
+        "kind": "data",
+        "evidence": "Q、K 汇入 QK^T 得到 N × N 分数",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "k",
+        "target": "scores",
+        "label": "K (transposed in matmul)",
+        "kind": "data",
+        "evidence": "Q、K 汇入 QK^T 得到 N × N 分数",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scores",
+        "target": "scale_mask",
+        "label": "S",
+        "kind": "data",
+        "evidence": "除以 sqrt(d_k) 并加上 causal mask M",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "mask",
+        "target": "scale_mask",
+        "label": "M",
+        "kind": "data",
+        "evidence": "除以 sqrt(d_k) 并加上 causal mask M",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scale_mask",
+        "target": "softmax",
+        "label": "Z",
+        "kind": "data",
+        "evidence": "逐行 softmax 得到 P",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "softmax",
+        "target": "weighted",
+        "label": "P",
+        "kind": "data",
+        "evidence": "P 与旁路传入的 V 做 PV",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "v",
+        "target": "weighted",
+        "label": "V",
+        "kind": "data",
+        "evidence": "P 与旁路传入的 V 做 PV",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "weighted",
+        "target": "output",
+        "label": "O",
+        "kind": "data",
+        "evidence": "输出 O，形状 N × d_v",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Parallel Q and K inputs meet at QK^T. A compact mask side input meets the scale/mask operator. Scores proceed to row-wise softmax; the independent V lane bypasses the score path and joins P only at PV. O is the rightmost sink. Shapes belong to tensors, not decorative badges. Grouping is explanatory, not a hardware containment claim.",
+    "steps": [],
+    "annotations": [
+      "Batch and head dimensions are omitted.",
+      "Additive mask precedes softmax; V does not enter score normalization."
+    ],
+    "assumptions": [
+      "Single attention head, causal self-attention, no dropout."
+    ],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "category": "dataflow",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "strict",
+    "scene": "flow",
+    "representation": "diagram",
+    "labels": "",
+    "notes": ""
+  },
+  "description": "画一张用于算法讲解的单头 causal self-attention 数据流图。输入 Q 和 K 的形状都是 N × d_k，V 是 N × d_v，三路输入并行。Q、K 汇入 QK^T 得到 N × N 分数，然后除以 sqrt(d_k) 并加上 causal mask M；M 在允许位置为 0，未来位置为 -inf。逐行 softmax 得到 P，P 与旁路传入的 V 做 PV，输出 O，形状 N × d_v。请让读者看清张量、算子和汇合关系，V 不经过 softmax，不把三路输入串起来。省略 batch、head 维度和 dropout。"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "pass_scoped",
+  "summary": "浅蓝输入输出与暖金算子形成清楚对比，主计算路径和两处归约依赖完整；英文、公式和分组可读。当前检查限于这张数值稳定 Softmax 图。",
+  "strengths": ["八条源依赖均可跟随，两个归约与逐元素操作分开", "公式 m、z、e、s、y 保持源含义，没有引入硬件模块", "深蓝文字和技术线配合明亮浅色，避免旧灰绿色的混浊感"],
+  "issues": ["色块带轻微渐变，仍可进一步趋向严格平面表达", "未验证缩放到具体论文栏宽后的可读性"],
+  "image_iterations": 1,
+  "prompt_edited_after_tool": false,
+  "source_changed": false
+}

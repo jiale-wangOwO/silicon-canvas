@@ -1,0 +1,190 @@
+{
+  "description": "给低速链路的发送握手控制器画状态图。IDLE 收到 send_req 后进入 SEND，接口接受请求后进入 WAIT_ACK，收到 ack 就报告完成并回到 IDLE；WAIT_ACK 超时则进入 BACKOFF，等待 backoff_done 后重新 SEND，同一事务最多重试两次，第三次超时进入 FAIL，clear 才返回 IDLE。SEND 在未被接受时保持，WAIT_ACK 在没有 ack 或 timeout 时保持，BACKOFF 在等待期间保持；ack 和 timeout 同时出现时 ack 优先，复位优先于所有条件并回到 IDLE、清零重试计数。希望用黑白打印也能看懂这些条件和返回路径。",
+  "settings": {
+    "category": "fsm",
+    "style": "monochrome",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "detail",
+    "resolved_representation": "diagram"
+  },
+  "spec": {
+    "title": "Low-Speed TX Handshake FSM",
+    "summary": "低速链路发送握手控制器的状态图：IDLE→SEND→WAIT_ACK，ack 完成回 IDLE，超时进入 BACKOFF 重试，最多重试两次，第三次超时进入 FAIL，clear 返回 IDLE。复位优先于所有条件。所有状态、条件与返回路径均来自用户描述，属给定设计。",
+    "category": "fsm",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "IDLE",
+        "label": "IDLE",
+        "kind": "state",
+        "group": "",
+        "detail": "Reset target; retry counter cleared",
+        "evidence": "IDLE 收到 send_req 后进入 SEND",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "SEND",
+        "label": "SEND",
+        "kind": "state",
+        "group": "",
+        "detail": "Holds while request not accepted",
+        "evidence": "SEND 在未被接受时保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "WAIT_ACK",
+        "label": "WAIT_ACK",
+        "kind": "state",
+        "group": "",
+        "detail": "Holds without ack or timeout",
+        "evidence": "WAIT_ACK 在没有 ack 或 timeout 时保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "BACKOFF",
+        "label": "BACKOFF",
+        "kind": "state",
+        "group": "",
+        "detail": "Holds while waiting for backoff_done",
+        "evidence": "BACKOFF 在等待期间保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "FAIL",
+        "label": "FAIL",
+        "kind": "state",
+        "group": "",
+        "detail": "Third timeout; exits only on clear",
+        "evidence": "第三次超时进入 FAIL，clear 才返回 IDLE",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "IDLE",
+        "target": "SEND",
+        "kind": "control",
+        "label": "send_req",
+        "evidence": "IDLE 收到 send_req 后进入 SEND",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "SEND",
+        "target": "WAIT_ACK",
+        "kind": "control",
+        "label": "request accepted",
+        "evidence": "接口接受请求后进入 WAIT_ACK",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "SEND",
+        "target": "SEND",
+        "kind": "control",
+        "label": "!accepted",
+        "evidence": "SEND 在未被接受时保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "WAIT_ACK",
+        "target": "IDLE",
+        "kind": "control",
+        "label": "ack (priority over timeout) / report done",
+        "evidence": "收到 ack 就报告完成并回到 IDLE",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "WAIT_ACK",
+        "target": "WAIT_ACK",
+        "kind": "control",
+        "label": "!ack && !timeout",
+        "evidence": "WAIT_ACK 在没有 ack 或 timeout 时保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "WAIT_ACK",
+        "target": "BACKOFF",
+        "kind": "control",
+        "label": "!ack && timeout && retry < 2",
+        "evidence": "WAIT_ACK 超时则进入 BACKOFF",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "WAIT_ACK",
+        "target": "FAIL",
+        "kind": "control",
+        "label": "!ack && timeout && retry == 2 (third timeout)",
+        "evidence": "第三次超时进入 FAIL",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "BACKOFF",
+        "target": "SEND",
+        "kind": "control",
+        "label": "backoff_done",
+        "evidence": "等待 backoff_done 后重新 SEND",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "BACKOFF",
+        "target": "BACKOFF",
+        "kind": "control",
+        "label": "!backoff_done",
+        "evidence": "BACKOFF 在等待期间保持",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "FAIL",
+        "target": "IDLE",
+        "kind": "control",
+        "label": "clear",
+        "evidence": "clear 才返回 IDLE",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "State machine layout: IDLE at left, SEND to its right, WAIT_ACK further right as the main forward path. BACKOFF placed below WAIT_ACK with the retry arc returning left to SEND along a lower corridor. FAIL placed at bottom-right, reached from WAIT_ACK by a downward arc; clear returns from FAIL to IDLE along the bottom edge. Self-loops drawn as small loops above SEND, WAIT_ACK and BACKOFF. Reset entry arrow into IDLE from top-left. Priority note (ack over timeout) placed near the WAIT_ACK→IDLE arc. Monochrome-safe: distinguish paths by line style and labels, not color.",
+    "steps": [],
+    "annotations": [
+      "Reset has priority over all conditions: returns to IDLE and clears the retry counter.",
+      "ack and timeout simultaneous: ack wins.",
+      "Retry limit: at most two retries; the third timeout goes to FAIL.",
+      "FAIL exits only on clear."
+    ],
+    "assumptions": [
+      "重试计数在进入 BACKOFF 时递增，第三次超时（retry == 2 时再次超时）进入 FAIL；计数在复位时清零。",
+      "SEND 的“未被接受”条件以 !accepted 表示，具体接受信号名未给出。",
+      "复位为异步高有效，仅作为外部入口标记，不画成状态节点。"
+    ],
+    "questions": [
+      "是否需要把重试计数器与复位清零逻辑作为独立控制块画出？",
+      "是否需要补充 SEND 中“接口接受请求”的具体信号名（如 req_grant）？"
+    ],
+    "checks": [
+      "确认 WAIT_ACK 的 ack 与 timeout 分支互斥写法（ack 优先）符合实现。",
+      "确认第三次超时的判定边界（retry 计数初值与递增时机）。",
+      "确认 FAIL 仅由 clear 退出，无其他隐式返回。"
+    ]
+  }
+}

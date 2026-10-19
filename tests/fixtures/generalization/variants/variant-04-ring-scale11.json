@@ -1,0 +1,372 @@
+{
+  "id": "variant-04-ring-scale11",
+  "split": "development",
+  "natural_input": {
+    "description": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "memory"
+    ],
+    "required_concepts": [
+      {
+        "concept": "r0",
+        "pattern": "Router 0"
+      },
+      {
+        "concept": "r1",
+        "pattern": "Router 1"
+      },
+      {
+        "concept": "r2",
+        "pattern": "Router 2"
+      },
+      {
+        "concept": "r3",
+        "pattern": "Router 3"
+      },
+      {
+        "concept": "r4",
+        "pattern": "Router 4"
+      },
+      {
+        "concept": "r5",
+        "pattern": "Router 5"
+      },
+      {
+        "concept": "r6",
+        "pattern": "Router 6"
+      },
+      {
+        "concept": "r7",
+        "pattern": "Router 7"
+      },
+      {
+        "concept": "r8",
+        "pattern": "Router 8"
+      },
+      {
+        "concept": "r9",
+        "pattern": "Router 9"
+      },
+      {
+        "concept": "r10",
+        "pattern": "Router 10"
+      }
+    ],
+    "relations": [
+      [
+        "r0",
+        "r1",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r1",
+        "r2",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r2",
+        "r3",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r3",
+        "r4",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r4",
+        "r5",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r5",
+        "r6",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r6",
+        "r7",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r7",
+        "r8",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r8",
+        "r9",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r9",
+        "r10",
+        "ring hop",
+        "data"
+      ],
+      [
+        "r10",
+        "r0",
+        "ring hop",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 11,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-08-directed-ring",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "memory",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "r0",
+          "label": "Router 0",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r1",
+          "label": "Router 1",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r2",
+          "label": "Router 2",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r3",
+          "label": "Router 3",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r4",
+          "label": "Router 4",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r5",
+          "label": "Router 5",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r6",
+          "label": "Router 6",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r7",
+          "label": "Router 7",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r8",
+          "label": "Router 8",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r9",
+          "label": "Router 9",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        },
+        {
+          "id": "r10",
+          "label": "Router 10",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "r0",
+          "target": "r1",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r1",
+          "target": "r2",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r2",
+          "target": "r3",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r3",
+          "target": "r4",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r4",
+          "target": "r5",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r5",
+          "target": "r6",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r6",
+          "target": "r7",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r7",
+          "target": "r8",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r8",
+          "target": "r9",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r9",
+          "target": "r10",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        },
+        {
+          "source": "r10",
+          "target": "r0",
+          "label": "ring hop",
+          "kind": "data",
+          "evidence": "Topology diagram with only Router 0, Router 1, Router 2, Router 3, Router 4, Router 5, Router 6, Router 7, Router 8, Router 9, Router 10. A unidirectional ring has exactly Router 0 -> Router 1 -> Router 2 -> Router 3 -> Router 4 -> Router 5 -> Router 6 -> Router 7 -> Router 8 -> Router 9 -> Router 10 -> Router 0. No reverse or diagonal links, no shared bus and no implicit coherence guarantee.",
+          "origin": "given",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  },
+  "parent_case_sha256": "5509f916263ee34986e3789ce826a57ae0f04388fdd7e599b991ba2559c02df4",
+  "transformation": "scale_topology_5_to_11"
+}

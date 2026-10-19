@@ -1,0 +1,12 @@
+{
+  "route": "current-source STDIO MCP silicon_prepare -> host canonical source -> silicon_compile; exact prompt to built-in ImageGen",
+  "prompt_sha256": "bd6cb0f40354550fbcff970568ea076b6d597ae24117cad7d5dfc1f9e5b90b32",
+  "source_hash": "6d1d91db5d0a0d75c85894a287bc09e66db16e984ddf889e3df2c77b92208da9",
+  "image_sha256": "da6f17b0423252dffc247e85f4bb59da91381eb70998a47d194a6ca4a5c49d95",
+  "imagegen": "built-in",
+  "prompt_unchanged": true,
+  "reference_images": [],
+  "rerolls": 0,
+  "pixel_edits": false,
+  "semantic_source": "reuse the previously reviewed canonical facts, without changing labels, ownership, numbers or edges"
+}

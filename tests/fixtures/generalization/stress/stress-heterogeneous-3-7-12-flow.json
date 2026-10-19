@@ -1,0 +1,848 @@
+{
+  "id": "stress-heterogeneous-3-7-12-flow",
+  "split": "post_freeze_stress",
+  "natural_input": {
+    "description": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+    "scene": "flow",
+    "representation": "diagram",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "dataflow"
+    ],
+    "required_concepts": [
+      {
+        "concept": "in",
+        "pattern": "External Source"
+      },
+      {
+        "concept": "n0_0",
+        "pattern": "Channel 0 Resource 0"
+      },
+      {
+        "concept": "n0_1",
+        "pattern": "Channel 0 Resource 1"
+      },
+      {
+        "concept": "n0_2",
+        "pattern": "Channel 0 Resource 2"
+      },
+      {
+        "concept": "n1_0",
+        "pattern": "Channel 1 Resource 0"
+      },
+      {
+        "concept": "n1_1",
+        "pattern": "Channel 1 Resource 1"
+      },
+      {
+        "concept": "n1_2",
+        "pattern": "Channel 1 Resource 2"
+      },
+      {
+        "concept": "n1_3",
+        "pattern": "Channel 1 Resource 3"
+      },
+      {
+        "concept": "n1_4",
+        "pattern": "Channel 1 Resource 4"
+      },
+      {
+        "concept": "n1_5",
+        "pattern": "Channel 1 Resource 5"
+      },
+      {
+        "concept": "n1_6",
+        "pattern": "Channel 1 Resource 6"
+      },
+      {
+        "concept": "n2_0",
+        "pattern": "Channel 2 Resource 0"
+      },
+      {
+        "concept": "n2_1",
+        "pattern": "Channel 2 Resource 1"
+      },
+      {
+        "concept": "n2_2",
+        "pattern": "Channel 2 Resource 2"
+      },
+      {
+        "concept": "n2_3",
+        "pattern": "Channel 2 Resource 3"
+      },
+      {
+        "concept": "n2_4",
+        "pattern": "Channel 2 Resource 4"
+      },
+      {
+        "concept": "n2_5",
+        "pattern": "Channel 2 Resource 5"
+      },
+      {
+        "concept": "n2_6",
+        "pattern": "Channel 2 Resource 6"
+      },
+      {
+        "concept": "n2_7",
+        "pattern": "Channel 2 Resource 7"
+      },
+      {
+        "concept": "n2_8",
+        "pattern": "Channel 2 Resource 8"
+      },
+      {
+        "concept": "n2_9",
+        "pattern": "Channel 2 Resource 9"
+      },
+      {
+        "concept": "n2_10",
+        "pattern": "Channel 2 Resource 10"
+      },
+      {
+        "concept": "n2_11",
+        "pattern": "Channel 2 Resource 11"
+      },
+      {
+        "concept": "merge",
+        "pattern": "Shared Collector"
+      },
+      {
+        "concept": "out",
+        "pattern": "External Sink"
+      }
+    ],
+    "relations": [
+      [
+        "in",
+        "n0_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n0_0",
+        "n0_1",
+        "samples",
+        "data"
+      ],
+      [
+        "n0_1",
+        "n0_2",
+        "samples",
+        "data"
+      ],
+      [
+        "in",
+        "n1_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_0",
+        "n1_1",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_1",
+        "n1_2",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_2",
+        "n1_3",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_3",
+        "n1_4",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_4",
+        "n1_5",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_5",
+        "n1_6",
+        "samples",
+        "data"
+      ],
+      [
+        "in",
+        "n2_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_0",
+        "n2_1",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_1",
+        "n2_2",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_2",
+        "n2_3",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_3",
+        "n2_4",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_4",
+        "n2_5",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_5",
+        "n2_6",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_6",
+        "n2_7",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_7",
+        "n2_8",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_8",
+        "n2_9",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_9",
+        "n2_10",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_10",
+        "n2_11",
+        "samples",
+        "data"
+      ],
+      [
+        "n0_2",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "n1_6",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "n2_11",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "merge",
+        "out",
+        "result",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "n0_0": "g0",
+      "n0_1": "g0",
+      "n0_2": "g0",
+      "n1_0": "g1",
+      "n1_1": "g1",
+      "n1_2": "g1",
+      "n1_3": "g1",
+      "n1_4": "g1",
+      "n1_5": "g1",
+      "n1_6": "g1",
+      "n2_0": "g2",
+      "n2_1": "g2",
+      "n2_2": "g2",
+      "n2_3": "g2",
+      "n2_4": "g2",
+      "n2_5": "g2",
+      "n2_6": "g2",
+      "n2_7": "g2",
+      "n2_8": "g2",
+      "n2_9": "g2",
+      "n2_10": "g2",
+      "n2_11": "g2",
+      "merge": "device"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 25,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+    "settings": {
+      "scene": "flow",
+      "representation": "diagram",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "stress-heterogeneous-3-7-12-flow",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "dataflow",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "device",
+          "label": "Device",
+          "parent": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g0",
+          "label": "Front End 0",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g1",
+          "label": "Front End 1",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g2",
+          "label": "Front End 2",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "in",
+          "label": "External Source",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n0_0",
+          "label": "Channel 0 Resource 0",
+          "kind": "compute",
+          "group": "g0",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n0_1",
+          "label": "Channel 0 Resource 1",
+          "kind": "memory",
+          "group": "g0",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n0_2",
+          "label": "Channel 0 Resource 2",
+          "kind": "compute",
+          "group": "g0",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_0",
+          "label": "Channel 1 Resource 0",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_1",
+          "label": "Channel 1 Resource 1",
+          "kind": "memory",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_2",
+          "label": "Channel 1 Resource 2",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_3",
+          "label": "Channel 1 Resource 3",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_4",
+          "label": "Channel 1 Resource 4",
+          "kind": "memory",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_5",
+          "label": "Channel 1 Resource 5",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_6",
+          "label": "Channel 1 Resource 6",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_0",
+          "label": "Channel 2 Resource 0",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_1",
+          "label": "Channel 2 Resource 1",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_2",
+          "label": "Channel 2 Resource 2",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_3",
+          "label": "Channel 2 Resource 3",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_4",
+          "label": "Channel 2 Resource 4",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_5",
+          "label": "Channel 2 Resource 5",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_6",
+          "label": "Channel 2 Resource 6",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_7",
+          "label": "Channel 2 Resource 7",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_8",
+          "label": "Channel 2 Resource 8",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_9",
+          "label": "Channel 2 Resource 9",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_10",
+          "label": "Channel 2 Resource 10",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_11",
+          "label": "Channel 2 Resource 11",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "merge",
+          "label": "Shared Collector",
+          "kind": "compute",
+          "group": "device",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "out",
+          "label": "External Sink",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "in",
+          "target": "n0_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n0_0",
+          "target": "n0_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n0_1",
+          "target": "n0_2",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "in",
+          "target": "n1_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_0",
+          "target": "n1_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_1",
+          "target": "n1_2",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_2",
+          "target": "n1_3",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_3",
+          "target": "n1_4",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_4",
+          "target": "n1_5",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_5",
+          "target": "n1_6",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "in",
+          "target": "n2_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_0",
+          "target": "n2_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_1",
+          "target": "n2_2",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_2",
+          "target": "n2_3",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_3",
+          "target": "n2_4",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_4",
+          "target": "n2_5",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_5",
+          "target": "n2_6",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_6",
+          "target": "n2_7",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_7",
+          "target": "n2_8",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_8",
+          "target": "n2_9",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_9",
+          "target": "n2_10",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_10",
+          "target": "n2_11",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n0_2",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_6",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_11",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "merge",
+          "target": "out",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact producer/transform/collector mechanism and all supplied endpoint paths. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

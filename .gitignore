@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.venv*/
+*.log
+.local/
+build/
+dist/
+/silicon_canvas-*/
+*.egg-info/
+node_modules/
+.pytest_cache/
+/reference_images/

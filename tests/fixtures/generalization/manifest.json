@@ -1,0 +1,67 @@
+{
+  "schema": "SC-GEN1",
+  "status": "expectations_frozen_before_core_changes",
+  "cases": [
+    {
+      "id": "fresh-01-soc",
+      "split": "development",
+      "sha256": "b347cc28dfcf4772384e34c4530cb3fdbd6fdc1eefb16d622964b8d953558d15"
+    },
+    {
+      "id": "fresh-02-camera",
+      "split": "development",
+      "sha256": "7e5c8ffce22749f4047fc7df0d4b207e48c97311f3f1ad4c0abd3fb848c2dc01"
+    },
+    {
+      "id": "fresh-03-softmax",
+      "split": "development",
+      "sha256": "27a1b3fa517044f15317525335c18cf472217bd4479bb4bf437b6d7a6e72d193"
+    },
+    {
+      "id": "fresh-04-filter-state",
+      "split": "development",
+      "sha256": "d928b4ee13ac9210cbcf30fd91c34da8f7107df4d3f855808cb799b76bfd1171"
+    },
+    {
+      "id": "fresh-05-request-fsm",
+      "split": "development",
+      "sha256": "9339b8ffc172a8ae6a6dac16e0daddbcb0cbb85d671386d28cfca78865b097d0"
+    },
+    {
+      "id": "fresh-06-credit-pipeline",
+      "split": "development",
+      "sha256": "4995575ee68e3642c4696fb175b93aa816742fd3c317a8c40858da0c737ae1a8"
+    },
+    {
+      "id": "fresh-07-storage-product",
+      "split": "development",
+      "sha256": "a57b90fdfc1aa059b1e1195d650770956da3c2d652d5b7a8883b7543fce1f8c8"
+    },
+    {
+      "id": "fresh-08-directed-ring",
+      "split": "development",
+      "sha256": "5509f916263ee34986e3789ce826a57ae0f04388fdd7e599b991ba2559c02df4"
+    },
+    {
+      "id": "sealed-09-reduction",
+      "split": "holdout",
+      "sha256": "33023e3a4c226f6aa5e63710f124fbbba7a365eb24b798c9c1e78027f254f11e"
+    },
+    {
+      "id": "sealed-10-chinese-control",
+      "split": "holdout",
+      "sha256": "0ab3f83efc0ff296e8c4f3cda2d779aa751d3b5025bd44c3af6152518600ebbf"
+    },
+    {
+      "id": "sealed-11-mixed-ownership",
+      "split": "holdout",
+      "sha256": "88fb334b6d7f46d8beddfe1bc4eef54507825ccbdf3c25647ddfd9a1d2cb3fc1"
+    },
+    {
+      "id": "sealed-12-commercial-override",
+      "split": "holdout",
+      "sha256": "92a424084953dcff1637c65178749e9071592b653e15310145f2dee5caf04d4b"
+    }
+  ],
+  "hash_basis": "sha256 of UTF-8 canonical JSON object: ensure_ascii=false, sort_keys=true, separators comma/colon; independent of file line endings"
+}

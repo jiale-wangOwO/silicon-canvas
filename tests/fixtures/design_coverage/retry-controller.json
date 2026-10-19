@@ -1,0 +1,200 @@
+{
+  "description": "Draw the command controller FSM, including its reset and retry rules. Keep each transition condition attached to its own arrow. Make the normal success route obvious and route the retry and error branches separately.",
+  "spec": {
+    "title": "One-Retry Command Controller",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "fsm",
+    "verbatim_labels": [],
+    "groups": [],
+    "nodes": [
+      {
+        "id": "idle",
+        "label": "IDLE",
+        "kind": "state",
+        "group": "",
+        "detail": "Initial state; busy=0",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "issue",
+        "label": "ISSUE",
+        "kind": "state",
+        "group": "",
+        "detail": "Present command; busy=1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "wait",
+        "label": "WAIT",
+        "kind": "state",
+        "group": "",
+        "detail": "Await response; busy=1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "retry",
+        "label": "RETRY",
+        "kind": "state",
+        "group": "",
+        "detail": "Prepare the single permitted retry; busy=1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "done",
+        "label": "DONE",
+        "kind": "state",
+        "group": "",
+        "detail": "done=1 for one cycle",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "error",
+        "label": "ERROR",
+        "kind": "state",
+        "group": "",
+        "detail": "error=1 until clear",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "idle",
+        "target": "issue",
+        "kind": "control",
+        "label": "start",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "idle",
+        "target": "idle",
+        "kind": "control",
+        "label": "!start",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "issue",
+        "target": "wait",
+        "kind": "control",
+        "label": "accepted",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "issue",
+        "target": "issue",
+        "kind": "control",
+        "label": "!accepted",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "wait",
+        "target": "done",
+        "kind": "control",
+        "label": "ok",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "wait",
+        "target": "retry",
+        "kind": "control",
+        "label": "!ok && timeout && !retried",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "wait",
+        "target": "error",
+        "kind": "control",
+        "label": "!ok && timeout && retried",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "wait",
+        "target": "wait",
+        "kind": "control",
+        "label": "!ok && !timeout",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "retry",
+        "target": "issue",
+        "kind": "control",
+        "label": "next cycle; retried=1",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "done",
+        "target": "idle",
+        "kind": "control",
+        "label": "next cycle",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "error",
+        "target": "idle",
+        "kind": "control",
+        "label": "clear",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "error",
+        "target": "error",
+        "kind": "control",
+        "label": "!clear",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Use six state circles. Reset is one global note and one initial-state entry marker, not six duplicate reset arrows. The retry path returns to ISSUE, not IDLE.",
+    "steps": [],
+    "annotations": [
+      "Synchronous reset has highest priority and sends every state to IDLE; retried=0.",
+      "On IDLE -> ISSUE, retried=0. ok has priority over timeout in WAIT.",
+      "RETRY and DONE have unconditional next-cycle exits; neither has a hold loop."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

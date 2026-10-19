@@ -1,0 +1,187 @@
+{
+  "description": "Show the two parallel tile-processing branches, their explicit join and return to the same frame bank. The shared histogram service must sit outside the private channel. Keep 2x4 tile selection and 6 banks; 64-B tile visible.",
+  "spec": {
+    "title": "Tile Filter with Shared Statistics",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "dataflow",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "private",
+        "label": "Private Tile Channel",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "shared",
+        "label": "Shared Service",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "bank",
+        "label": "Frame Tile Bank",
+        "kind": "memory",
+        "group": "private",
+        "detail": "6 banks; 64-B tile",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "gather",
+        "label": "Tile Gather Buffer",
+        "kind": "memory",
+        "group": "private",
+        "detail": "Coalesce pixel operands",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "filter",
+        "label": "Spatial Filter",
+        "kind": "compute",
+        "group": "private",
+        "detail": "Private filter path",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "hist",
+        "label": "Shared Histogram Service",
+        "kind": "compute",
+        "group": "shared",
+        "detail": "Shared statistics path",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "join",
+        "label": "Filtered Tile / Statistics Join",
+        "kind": "compute",
+        "group": "private",
+        "detail": "Join both results by tile ID",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ret",
+        "label": "Writeback Buffer",
+        "kind": "memory",
+        "group": "private",
+        "detail": "Return updates to the same tile bank",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sink",
+        "label": "Frame Output",
+        "kind": "io",
+        "group": "",
+        "detail": "Export filtered tiles",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "bank",
+        "target": "gather",
+        "kind": "data",
+        "label": "2x4 tile selection",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "gather",
+        "target": "filter",
+        "kind": "data",
+        "label": "pixels",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "gather",
+        "target": "hist",
+        "kind": "data",
+        "label": "pixels + tile ID",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "filter",
+        "target": "join",
+        "kind": "data",
+        "label": "filtered tile",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "hist",
+        "target": "join",
+        "kind": "data",
+        "label": "statistics",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "join",
+        "target": "ret",
+        "kind": "data",
+        "label": "tile update",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ret",
+        "target": "bank",
+        "kind": "data",
+        "label": "writeback",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "join",
+        "target": "sink",
+        "kind": "data",
+        "label": "filtered tile",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Gather branches to filter and histogram in parallel; both feed join. Writeback returns to the original bank through an outer corridor; sink is a distinct output.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "flow",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

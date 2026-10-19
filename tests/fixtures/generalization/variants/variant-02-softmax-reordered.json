@@ -1,0 +1,282 @@
+{
+  "id": "variant-02-softmax-reordered",
+  "split": "development",
+  "natural_input": {
+    "description": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "algorithm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "x",
+        "pattern": "X"
+      },
+      {
+        "concept": "max",
+        "pattern": "Reduce Max"
+      },
+      {
+        "concept": "sub",
+        "pattern": "Subtract"
+      },
+      {
+        "concept": "exp",
+        "pattern": "Exponential"
+      },
+      {
+        "concept": "sum",
+        "pattern": "Reduce Sum"
+      },
+      {
+        "concept": "div",
+        "pattern": "Divide"
+      },
+      {
+        "concept": "y",
+        "pattern": "Y"
+      }
+    ],
+    "relations": [
+      [
+        "x",
+        "max",
+        "X",
+        "data"
+      ],
+      [
+        "x",
+        "sub",
+        "X",
+        "data"
+      ],
+      [
+        "max",
+        "sub",
+        "m",
+        "data"
+      ],
+      [
+        "sub",
+        "exp",
+        "Z",
+        "data"
+      ],
+      [
+        "exp",
+        "sum",
+        "E",
+        "data"
+      ],
+      [
+        "exp",
+        "div",
+        "E",
+        "data"
+      ],
+      [
+        "sum",
+        "div",
+        "s",
+        "data"
+      ],
+      [
+        "div",
+        "y",
+        "Y",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 7,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-03-softmax",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "algorithm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "x",
+          "label": "X",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "tensor",
+          "tensor_shape": "N"
+        },
+        {
+          "id": "max",
+          "label": "Reduce Max",
+          "kind": "compute",
+          "group": "",
+          "detail": "m=max_i X_i",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "reduction",
+          "reduction_axis": "i"
+        },
+        {
+          "id": "sub",
+          "label": "Subtract",
+          "kind": "compute",
+          "group": "",
+          "detail": "Z_i=X_i-m",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "exp",
+          "label": "Exponential",
+          "kind": "compute",
+          "group": "",
+          "detail": "E_i=exp(Z_i)",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "sum",
+          "label": "Reduce Sum",
+          "kind": "compute",
+          "group": "",
+          "detail": "s=sum_i E_i",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "reduction",
+          "reduction_axis": "i"
+        },
+        {
+          "id": "div",
+          "label": "Divide",
+          "kind": "compute",
+          "group": "",
+          "detail": "Y_i=E_i/s",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": "",
+          "diagram_role": "tensor",
+          "tensor_shape": "N"
+        }
+      ],
+      "edges": [
+        {
+          "source": "x",
+          "target": "max",
+          "label": "X",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "x",
+          "target": "sub",
+          "label": "X",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "max",
+          "target": "sub",
+          "label": "m",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "sub",
+          "target": "exp",
+          "label": "Z",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "exp",
+          "target": "sum",
+          "label": "E",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "exp",
+          "target": "div",
+          "label": "E",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "sum",
+          "target": "div",
+          "label": "s",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        },
+        {
+          "source": "div",
+          "target": "y",
+          "label": "Y",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Draw the stable softmax algorithm dependency graph, with no hardware mapping. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. Divide produces Y_i=E_i/s from Exponential E_i and Reduce Sum s. Reduce Sum computes s=sum_i E_i from Exponential. Exponential computes E_i=exp(Z_i) from Subtract. Subtract computes Z_i=X_i-m from both X and Reduce Max. Reduce Max computes m=max_i X_i from X. X is a vector N.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  },
+  "parent_case_sha256": "27a1b3fa517044f15317525335c18cf472217bd4479bb4bf437b6d7a6e72d193",
+  "transformation": "equivalent_input_sentence_reorder"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "02-inference-system",
+  "title": "AI 推理系统：独立设备与共享交换节点",
+  "status": "partial",
+  "summary": "新版把同一源规格正确组织成系统尺度的独立设备群，四推理节点、交换机、客户端与共享存储可辨；仍存在把无向关联扩画为发光双向流线的生成错误。",
+  "review_method": "Direct first-pixel inspection against unchanged canonical source, original description, exact RENDER3 prompt, and the previous generated image. No reroll or bitmap editing.",
+  "strengths": [
+    "四个推理节点独立可见、同级排列，没有被放在一块芯片底座上，也没有被串成处理步骤。",
+    "High-speed switch作为共同连接点清楚，Shared storage和Clients与四个推理节点的角色可区分。",
+    "六组源关系都能在画面中沿交换节点跟随，未发现绕开交换机的额外节点间捷径。",
+    "统一镜头、地面、暗色机箱与光照建立整体感，设备表面细节可读；英文标注贴近对象，没有旧图的外围重复功能清单或Functional concept标签。",
+    "保持暗背景、冰蓝和少量橙色的原始偏好，没有伪性能数字或厂商标志。"
+  ],
+  "issues": [
+    {
+      "attribution": "imagegen_pixels",
+      "severity": "technical",
+      "detail": "六条源边均为无向关联的可视化契约，提示词明确要求quiet unheaded lines；实际多数关系画成两条蓝/橙流线并出现箭头和反向箭头，暗示未给定的双向数据传输或通道。不能把可见六组端点关系等同于精确六线通过。"
+    },
+    {
+      "attribution": "imagegen_pixels",
+      "severity": "appearance",
+      "detail": "每条接口都使用高亮发光线，仍比提示词的克制接口表达更强，连接装饰与硬件材质争夺注意力。"
+    },
+    {
+      "attribution": "illustrative_appearance",
+      "severity": "scope",
+      "detail": "Clients被具体化为多台电脑与显示器；客户端确为复数角色，但具体终端类型和数量不是原始工程参数。机箱盘位、端口与设备表面也只是示意。"
+    }
+  ],
+  "comparison": {
+    "previous_image": "../generalization-host-20261018/08-inference-pod.png",
+    "same_description": true,
+    "same_canonical_spec": true,
+    "change": "旧首图把交换机与四节点贴在单块芯片上；新版遵循system-scale ensemble，把各节点作为独立设备，并去掉大段重复清单。",
+    "limit": "这是同一源规格的单次前后观察，不证明随机生成的普遍稳定性；线条方向问题尚未解决。"
+  },
+  "scope": "可作系统组成的概念展示草图；不是实际产品外观、BOM、端口数量、部署尺寸、协议或流量方向的依据。"
+}

@@ -1,0 +1,167 @@
+{
+  "id": "stress-forkjoin-2",
+  "split": "post_freeze_stress",
+  "natural_input": {
+    "description": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+    "scene": "flow",
+    "representation": "diagram",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "dataflow"
+    ],
+    "required_concepts": [
+      {
+        "concept": "in",
+        "pattern": "Input"
+      },
+      {
+        "concept": "b0",
+        "pattern": "Parallel Transform 0"
+      },
+      {
+        "concept": "b1",
+        "pattern": "Parallel Transform 1"
+      },
+      {
+        "concept": "join",
+        "pattern": "Operand Join"
+      }
+    ],
+    "relations": [
+      [
+        "in",
+        "b0",
+        "operand",
+        "data"
+      ],
+      [
+        "in",
+        "b1",
+        "operand",
+        "data"
+      ],
+      [
+        "b0",
+        "join",
+        "term 0",
+        "data"
+      ],
+      [
+        "b1",
+        "join",
+        "term 1",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 4,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+    "settings": {
+      "scene": "flow",
+      "representation": "diagram",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "stress-forkjoin-2",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "dataflow",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "in",
+          "label": "Input",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "id": "b0",
+          "label": "Parallel Transform 0",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "id": "b1",
+          "label": "Parallel Transform 1",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "id": "join",
+          "label": "Operand Join",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "in",
+          "target": "b0",
+          "label": "operand",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "source": "in",
+          "target": "b1",
+          "label": "operand",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "source": "b0",
+          "target": "join",
+          "label": "term 0",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        },
+        {
+          "source": "b1",
+          "target": "join",
+          "label": "term 1",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain an exact parallel operand dependency graph. Each branch consumes Input and independently feeds Operand Join. The join is not specified as addition; dependency is not serialization.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

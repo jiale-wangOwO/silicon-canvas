@@ -1,0 +1,454 @@
+{
+  "description": "帮我画一张用于介绍智能音频 SoC 的系统架构图。它面向有语音交互的小设备，希望软硬件团队能快速理解整体。",
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "system",
+    "resolved_representation": "diagram"
+  },
+  "spec": {
+    "title": "Smart Audio SoC — System Architecture",
+    "summary": "面向带语音交互的小型设备的智能音频 SoC 系统架构通用示意：芯片内包含应用处理、音频/语音处理、无线连接、电源时钟管理与共享存储子系统，对外连接麦克风、扬声器、外部存储、主机与电池。用户仅给出目标场景，具体模块划分与连接为按常见工程实践补全的通用示例，供软硬件团队快速建立整体认知。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "soc",
+        "label": "Smart Audio SoC",
+        "parent": "",
+        "evidence": "智能音频 SoC 的系统架构图",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_app",
+        "label": "Application Processing",
+        "parent": "soc",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音交互设备通常需要应用层处理与协议栈"
+      },
+      {
+        "id": "g_audio",
+        "label": "Audio & Voice Subsystem",
+        "parent": "soc",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音交互的核心通路，单独成子系统便于软硬件分工"
+      },
+      {
+        "id": "g_conn",
+        "label": "Connectivity",
+        "parent": "soc",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "小设备通常需要无线连接与主机接口"
+      },
+      {
+        "id": "g_sys",
+        "label": "Shared Resources & System Control",
+        "parent": "soc",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "共享存储与电源时钟作为公共资源带"
+      },
+      {
+        "id": "g_ext",
+        "label": "Off-Chip Devices",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外部器件位于芯片边界之外"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_mic",
+        "label": "Microphone Array",
+        "kind": "io",
+        "group": "g_ext",
+        "detail": "Off-chip voice capture",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音交互设备的典型输入器件"
+      },
+      {
+        "id": "n_spk",
+        "label": "Speaker",
+        "kind": "io",
+        "group": "g_ext",
+        "detail": "Off-chip audio output",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音交互设备的典型输出器件"
+      },
+      {
+        "id": "n_flash",
+        "label": "External Flash",
+        "kind": "memory",
+        "group": "g_ext",
+        "detail": "Code and voice model storage",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "小设备常用片外非易失存储"
+      },
+      {
+        "id": "n_host",
+        "label": "Host / Cloud Link",
+        "kind": "io",
+        "group": "g_ext",
+        "detail": "Companion device or network peer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音交互常需与主机或云端协同"
+      },
+      {
+        "id": "n_batt",
+        "label": "Battery",
+        "kind": "io",
+        "group": "g_ext",
+        "detail": "Power source",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "便携小设备的供电来源"
+      },
+      {
+        "id": "n_cpu",
+        "label": "Application CPU",
+        "kind": "compute",
+        "group": "g_app",
+        "detail": "Runs application and protocol stack",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "应用处理子系统的主控单元"
+      },
+      {
+        "id": "n_sram",
+        "label": "On-Chip SRAM",
+        "kind": "memory",
+        "group": "g_app",
+        "detail": "Working memory for CPU and DSP",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片内共享工作存储"
+      },
+      {
+        "id": "n_codec",
+        "label": "Audio Codec / ADC-DAC",
+        "kind": "compute",
+        "group": "g_audio",
+        "detail": "Analog front end and playback conversion",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "连接麦克风与扬声器的模拟接口"
+      },
+      {
+        "id": "n_dsp",
+        "label": "Audio DSP",
+        "kind": "compute",
+        "group": "g_audio",
+        "detail": "Front-end processing: AEC, noise suppression, beamforming",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "语音前处理的典型执行单元"
+      },
+      {
+        "id": "n_kws",
+        "label": "Voice Trigger / KWS",
+        "kind": "compute",
+        "group": "g_audio",
+        "detail": "Always-on keyword detection",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "低功耗唤醒是语音交互设备的关键功能"
+      },
+      {
+        "id": "n_asr",
+        "label": "Speech Recognition Engine",
+        "kind": "compute",
+        "group": "g_audio",
+        "detail": "On-device command recognition",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "本地语音识别单元"
+      },
+      {
+        "id": "n_wifi",
+        "label": "Wi-Fi / BT Modem",
+        "kind": "io",
+        "group": "g_conn",
+        "detail": "Wireless link to host or cloud",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "小设备常见的无线连接方式"
+      },
+      {
+        "id": "n_usb",
+        "label": "USB / UART Interface",
+        "kind": "io",
+        "group": "g_conn",
+        "detail": "Wired host and debug interface",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "调试与主机通信接口"
+      },
+      {
+        "id": "n_bus",
+        "label": "System Bus / Interconnect",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "Shared fabric among subsystems",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "各子系统共享的总线互联"
+      },
+      {
+        "id": "n_pmu",
+        "label": "PMU & Clock Reset",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "Power domains, clocks, reset",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "低功耗小设备的公共电源时钟管理"
+      },
+      {
+        "id": "n_dma",
+        "label": "DMA Controller",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "Audio and storage data movement",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "减轻 CPU 搬运音频数据负担"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_mic",
+        "target": "n_codec",
+        "kind": "data",
+        "label": "Analog audio in",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "麦克风到片内音频接口的采集通路"
+      },
+      {
+        "source": "n_codec",
+        "target": "n_spk",
+        "kind": "data",
+        "label": "Analog audio out",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "播放通路"
+      },
+      {
+        "source": "n_codec",
+        "target": "n_dsp",
+        "kind": "data",
+        "label": "PCM samples",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "采集数据进入前处理"
+      },
+      {
+        "source": "n_dsp",
+        "target": "n_kws",
+        "kind": "data",
+        "label": "Enhanced stream",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "前处理结果用于唤醒检测"
+      },
+      {
+        "source": "n_dsp",
+        "target": "n_asr",
+        "kind": "data",
+        "label": "Enhanced stream",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "前处理结果用于识别"
+      },
+      {
+        "source": "n_kws",
+        "target": "n_cpu",
+        "kind": "control",
+        "label": "Wake event",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "唤醒事件通知应用处理器"
+      },
+      {
+        "source": "n_asr",
+        "target": "n_cpu",
+        "kind": "data",
+        "label": "Recognition result",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "识别结果交给应用层"
+      },
+      {
+        "source": "n_cpu",
+        "target": "n_dsp",
+        "kind": "control",
+        "label": "Config / model load",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "应用层配置语音算法"
+      },
+      {
+        "source": "n_cpu",
+        "target": "n_bus",
+        "kind": "data",
+        "label": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "CPU 通过总线访问共享资源"
+      },
+      {
+        "source": "n_dsp",
+        "target": "n_bus",
+        "kind": "data",
+        "label": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "DSP 通过总线访问共享存储"
+      },
+      {
+        "source": "n_bus",
+        "target": "n_sram",
+        "kind": "data",
+        "label": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "共享工作存储访问"
+      },
+      {
+        "source": "n_bus",
+        "target": "n_flash",
+        "kind": "data",
+        "label": "Code / model fetch",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外存储访问"
+      },
+      {
+        "source": "n_dma",
+        "target": "n_bus",
+        "kind": "data",
+        "label": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "DMA 搬运数据经总线"
+      },
+      {
+        "source": "n_dma",
+        "target": "n_codec",
+        "kind": "data",
+        "label": "Audio buffer transfer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "音频数据搬运"
+      },
+      {
+        "source": "n_cpu",
+        "target": "n_wifi",
+        "kind": "data",
+        "label": "Network stack",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "应用协议栈驱动无线连接"
+      },
+      {
+        "source": "n_wifi",
+        "target": "n_host",
+        "kind": "data",
+        "label": "Wireless link",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "与主机或云端通信"
+      },
+      {
+        "source": "n_cpu",
+        "target": "n_usb",
+        "kind": "data",
+        "label": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "有线主机与调试通路"
+      },
+      {
+        "source": "n_usb",
+        "target": "n_host",
+        "kind": "data",
+        "label": "Wired link",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "有线主机连接"
+      },
+      {
+        "source": "n_pmu",
+        "target": "n_cpu",
+        "kind": "clock",
+        "label": "Clocks / power",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源时钟分发"
+      },
+      {
+        "source": "n_pmu",
+        "target": "n_dsp",
+        "kind": "clock",
+        "label": "Clocks / power",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源时钟分发"
+      },
+      {
+        "source": "n_pmu",
+        "target": "n_kws",
+        "kind": "clock",
+        "label": "Always-on domain",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "唤醒单元常开供电域"
+      },
+      {
+        "source": "n_batt",
+        "target": "n_pmu",
+        "kind": "data",
+        "label": "Power in",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电池供电输入"
+      }
+    ],
+    "layout": "Chip boundary group soc occupies the center as a large rounded container. Inside, three functional columns left to right: g_audio (n_codec, n_dsp, n_kws, n_asr) on the left, g_app (n_cpu, n_sram) in the middle, g_conn (n_wifi, n_usb) on the right. A horizontal shared-resource band g_sys (n_bus, n_dma, n_pmu) runs along the bottom inside the chip. Off-chip group g_ext surrounds the perimeter: n_mic and n_spk at the left edge, n_flash at the bottom-left outside, n_host at the right edge, n_batt at the bottom-right. Reading order: external inputs → audio subsystem → application processing → connectivity → external host; shared band read last. Clock edges from n_pmu route along the bottom corridor.",
+    "steps": [],
+    "annotations": [
+      "Chip boundary separates on-chip subsystems from off-chip devices.",
+      "Shared bus, DMA and PMU are common resources used by multiple subsystems."
+    ],
+    "assumptions": [
+      "用户仅给出目标场景，未指定具体模块；应用处理、音频/语音、无线连接、共享资源四类子系统为按常见智能音频 SoC 实践补全的通用示例。",
+      "麦克风阵列、扬声器、外部 Flash、主机/云端、电池作为典型外部器件补入，可按实际产品裁剪。",
+      "未指定总线协议、核数、存储容量与时钟频率，图中不标注这些数值。"
+    ],
+    "questions": [
+      "是否需要展开音频/语音子系统，显示前处理、唤醒与识别的内部数据通路？",
+      "实际产品是否包含屏幕、传感器或本地大模型加速等额外子系统需要加入？"
+    ],
+    "checks": [
+      "确认片外器件（麦克风、扬声器、Flash、主机、电池）均位于 SoC 边界之外。",
+      "确认共享总线与 DMA 的连接仅表示逻辑访问关系，不代表物理布局或带宽。"
+    ]
+  }
+}

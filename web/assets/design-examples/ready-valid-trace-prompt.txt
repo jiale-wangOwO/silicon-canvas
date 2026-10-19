@@ -1,0 +1,24 @@
+Create one polished technical figure with Image Gen using the supplied semantic target guide.
+Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.
+Prioritize the reader's task: How do the specified resources, signals, conditions and return paths actually implement this design?
+Use crisp sans-serif type, compact labels and purposeful whitespace. Dark neutral text; sparse role-based accents. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale.
+The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.
+Use the requested palette: {"background": "#FFFFFF", "ink": "#263238", "primary": "#EDF2F5", "secondary": "#E8EEE8", "muted": "#F7F8F9"}. If it is monochrome, keep the final image in neutral grayscale even when reference roles use muted hues.
+Timing grammar: align all source signal rows under the SAME named sampling columns. Use a clean sample-value timing table or discrete trace; do not draw a chain of signal boxes or a procedural flowchart.
+These are sampled values, not exact continuous waveforms. Clock row shows rising sample markers, never fabricated duty cycle. A data token at a sample belongs to that column. Preserve stalled values and adjacent transfer events; do not infer an extra delay or transaction.
+Sampling columns: c0, c1, c2, c3, c4, c5, c6, c7
+"clk": rising sample markers
+"rst_n": 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1
+"valid": 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0
+"ready": 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1
+"data": - | - | A | A | A | B | C | -
+"transfer": 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0
+Source conventions (keep essential conditions near their source, ordinary explanation in caption):
+Each column describes signal values sampled immediately before that rising edge. Changes after an edge belong to the next column.
+transfer = rst_n && valid && ready. A remains stable during c2 and c3 stall and through its c4 acceptance.
+This is one generic ready/valid channel, not an AXI bus or measured waveform.
+Aligned signal rows share one supplied time/event axis; preserve edge instants, levels and intervals. Missing cycle information permits an illustrative event sequence, never invented waveforms or latency.
+Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.
+Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics.
+Presentation request: Exact supplied timing trace. Keep all six signal rows and c0..c7 sample values.
+Review the generated bitmap against the source: sample values, transition predicates, state outputs, loop directions and logical links. A source guide is not an image-quality certificate.

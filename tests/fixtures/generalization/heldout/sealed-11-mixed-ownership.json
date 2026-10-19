@@ -1,0 +1,241 @@
+{
+  "id": "sealed-11-mixed-ownership",
+  "split": "holdout",
+  "natural_input": {
+    "description": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [
+      {
+        "concept": "pd",
+        "pattern": "Photodiode"
+      },
+      {
+        "concept": "adc",
+        "pattern": "Optical ADC"
+      },
+      {
+        "concept": "therm",
+        "pattern": "Thermistor"
+      },
+      {
+        "concept": "dsp",
+        "pattern": "Shared DSP"
+      },
+      {
+        "concept": "rec",
+        "pattern": "Shared Recorder"
+      },
+      {
+        "concept": "pc",
+        "pattern": "External PC"
+      }
+    ],
+    "relations": [
+      [
+        "pd",
+        "adc",
+        "",
+        "data"
+      ],
+      [
+        "adc",
+        "dsp",
+        "",
+        "data"
+      ],
+      [
+        "therm",
+        "dsp",
+        "",
+        "data"
+      ],
+      [
+        "dsp",
+        "rec",
+        "",
+        "data"
+      ],
+      [
+        "rec",
+        "pc",
+        "",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "pd": "opt",
+      "adc": "opt",
+      "therm": "thermal",
+      "dsp": "inst",
+      "rec": "inst"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "sealed-11-mixed-ownership",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "inst",
+          "label": "Instrument",
+          "parent": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "opt",
+          "label": "Optical Front End",
+          "parent": "inst",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "thermal",
+          "label": "Thermal Front End",
+          "parent": "inst",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "pd",
+          "label": "Photodiode",
+          "kind": "io",
+          "group": "opt",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "adc",
+          "label": "Optical ADC",
+          "kind": "compute",
+          "group": "opt",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "therm",
+          "label": "Thermistor",
+          "kind": "io",
+          "group": "thermal",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "dsp",
+          "label": "Shared DSP",
+          "kind": "compute",
+          "group": "inst",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "rec",
+          "label": "Shared Recorder",
+          "kind": "memory",
+          "group": "inst",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "id": "pc",
+          "label": "External PC",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "pd",
+          "target": "adc",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "source": "adc",
+          "target": "dsp",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "source": "therm",
+          "target": "dsp",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "source": "dsp",
+          "target": "rec",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        },
+        {
+          "source": "rec",
+          "target": "pc",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview: inside Instrument, Optical Front End contains Photodiode and Optical ADC; Thermal Front End contains Thermistor. Shared DSP and Shared Recorder belong directly to Instrument. External PC is outside Instrument. Only Photodiode -> Optical ADC -> Shared DSP, Thermistor -> Shared DSP, Shared DSP -> Shared Recorder, Shared Recorder -> External PC. Do not assume the front ends contain equal hardware.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

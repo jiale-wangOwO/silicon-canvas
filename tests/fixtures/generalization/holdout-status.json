@@ -1,0 +1,8 @@
+{
+  "status": "retired_first_run_holdout_now_public_regression",
+  "first_run_core_files_sha256": "6ced92b8227d95089c8bf883edd23244863747760b5d4e095f5e8d37226a7454",
+  "first_run_drawable": 3,
+  "first_run_cases": 4,
+  "failure": "strict provenance failure after bounded repair",
+  "policy": "Any subsequent tuning using these cases is regression work, not unseen evaluation. Frozen original facts and hashes remain unchanged."
+}

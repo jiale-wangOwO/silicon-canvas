@@ -1,0 +1,424 @@
+{
+  "description": "Show the exact 2x2 mesh adjacency, four private endpoint attachments, two shared memory banks and off-chip memory. A physical router position is logical topology only. Preserve forward and reverse traffic meanings; do not turn this into a linear bus.",
+  "spec": {
+    "title": "2×2 Mesh and Shared Memory Access",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "memory",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "fabric",
+        "label": "2×2 Router Mesh",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory",
+        "label": "Shared Memory Access",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "external",
+        "label": "Off-Chip",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "epgroup0",
+        "label": "Endpoint Tile 0",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "epgroup1",
+        "label": "Endpoint Tile 1",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "epgroup2",
+        "label": "Endpoint Tile 2",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "epgroup3",
+        "label": "Endpoint Tile 3",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "r0",
+        "label": "Router 0",
+        "kind": "control",
+        "group": "fabric",
+        "detail": "Nearest-neighbor logical router",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "r1",
+        "label": "Router 1",
+        "kind": "control",
+        "group": "fabric",
+        "detail": "Nearest-neighbor logical router",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "r2",
+        "label": "Router 2",
+        "kind": "control",
+        "group": "fabric",
+        "detail": "Nearest-neighbor logical router",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "r3",
+        "label": "Router 3",
+        "kind": "control",
+        "group": "fabric",
+        "detail": "Nearest-neighbor logical router",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ep0",
+        "label": "Endpoint 0",
+        "kind": "compute",
+        "group": "epgroup0",
+        "detail": "Private local endpoint",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ep1",
+        "label": "Endpoint 1",
+        "kind": "compute",
+        "group": "epgroup1",
+        "detail": "Private local endpoint",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ep2",
+        "label": "Endpoint 2",
+        "kind": "compute",
+        "group": "epgroup2",
+        "detail": "Private local endpoint",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ep3",
+        "label": "Endpoint 3",
+        "kind": "compute",
+        "group": "epgroup3",
+        "detail": "Private local endpoint",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "bank0",
+        "label": "Shared Bank 0",
+        "kind": "memory",
+        "group": "memory",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "bank1",
+        "label": "Shared Bank 1",
+        "kind": "memory",
+        "group": "memory",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "ctl",
+        "label": "Memory Controller",
+        "kind": "control",
+        "group": "memory",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "dram",
+        "label": "External Memory",
+        "kind": "memory",
+        "group": "external",
+        "detail": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "r0",
+        "target": "r1",
+        "kind": "data",
+        "label": "east/south traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r1",
+        "target": "r0",
+        "kind": "data",
+        "label": "west/north traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r0",
+        "target": "r2",
+        "kind": "data",
+        "label": "east/south traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r2",
+        "target": "r0",
+        "kind": "data",
+        "label": "west/north traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r1",
+        "target": "r3",
+        "kind": "data",
+        "label": "east/south traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r3",
+        "target": "r1",
+        "kind": "data",
+        "label": "west/north traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r2",
+        "target": "r3",
+        "kind": "data",
+        "label": "east/south traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r3",
+        "target": "r2",
+        "kind": "data",
+        "label": "west/north traffic",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ep0",
+        "target": "r0",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r0",
+        "target": "ep0",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ep1",
+        "target": "r1",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r1",
+        "target": "ep1",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ep2",
+        "target": "r2",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r2",
+        "target": "ep2",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ep3",
+        "target": "r3",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r3",
+        "target": "ep3",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r2",
+        "target": "bank0",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bank0",
+        "target": "r2",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "r3",
+        "target": "bank1",
+        "kind": "data",
+        "label": "request",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bank1",
+        "target": "r3",
+        "kind": "data",
+        "label": "response",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bank0",
+        "target": "ctl",
+        "kind": "data",
+        "label": "miss",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "bank1",
+        "target": "ctl",
+        "kind": "data",
+        "label": "miss",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "ctl",
+        "target": "dram",
+        "kind": "data",
+        "label": "command",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "dram",
+        "target": "ctl",
+        "kind": "data",
+        "label": "read data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "",
+    "steps": [],
+    "annotations": [
+      "The mesh has exactly four routers and four local endpoints. No diagonal r0-r3 or r1-r2 edge.",
+      "No coherence guarantee, capacity, arbitration policy or physical floorplan is supplied."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

@@ -1,0 +1,1 @@
+给低速链路的发送握手控制器画状态图。IDLE 收到 send_req 后进入 SEND，接口接受请求后进入 WAIT_ACK，收到 ack 就报告完成并回到 IDLE；WAIT_ACK 超时则进入 BACKOFF，等待 backoff_done 后重新 SEND，同一事务最多重试两次，第三次超时进入 FAIL，clear 才返回 IDLE。SEND 在未被接受时保持，WAIT_ACK 在没有 ack 或 timeout 时保持，BACKOFF 在等待期间保持；ack 和 timeout 同时出现时 ack 优先，复位优先于所有条件并回到 IDLE、清零重试计数。希望用黑白打印也能看懂这些条件和返回路径。

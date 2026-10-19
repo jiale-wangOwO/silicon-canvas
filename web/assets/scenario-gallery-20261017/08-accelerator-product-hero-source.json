@@ -1,0 +1,127 @@
+{
+  "description": "为一款通用推理加速器制作 BP 封面的商业产品主视觉：产品是一颗完整的芯片封装，内部提供矩阵计算、片上存储和主机接口能力，但这张图不要展开内部结构、数据连线或功能标注。主体放在画面右侧，左侧留出干净的文案空间，使用克制的深色背景、精细金属与陶瓷质感和柔和轮廓光，镜头有适度透视。不要虚构商标、型号、工艺节点、带宽、算力或封装尺寸，不加营销口号。",
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "concept",
+    "resolved_representation": "product_render"
+  },
+  "spec": {
+    "title": "Inference Accelerator — Packaged Chip Product Visual",
+    "summary": "通用推理加速器的商业产品主视觉：一颗完整封装芯片作为唯一主体，置于画面右侧，左侧留出干净文案空间；深色背景、精细金属与陶瓷质感、柔和轮廓光、适度透视镜头。按用户要求不展开内部结构、不画数据连线、不加功能标注，也不虚构商标、型号、工艺节点、带宽、算力或封装尺寸。图中仅以封装本体与基板/焊球等通用封装形态表达“完整芯片封装”这一事实，属通用示意。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_pkg",
+        "label": "Complete Chip Package",
+        "parent": "",
+        "evidence": "产品是一颗完整的芯片封装",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_pkg",
+        "label": "Packaged Inference Accelerator",
+        "kind": "compute",
+        "group": "g_pkg",
+        "detail": "Single sealed package shown as one object; interior not expanded",
+        "evidence": "产品是一颗完整的芯片封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_lid",
+        "label": "Ceramic / Metal Lid",
+        "kind": "stage",
+        "group": "g_pkg",
+        "detail": "Exterior surface with fine ceramic and metal finish",
+        "evidence": "精细金属与陶瓷质感",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_substrate",
+        "label": "Package Substrate",
+        "kind": "stage",
+        "group": "g_pkg",
+        "detail": "Generic carrier body under the lid; no dimensions or layer count implied",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "以通用封装基板形态呈现“完整封装”，不涉及具体尺寸或工艺"
+      },
+      {
+        "id": "n_balls",
+        "label": "Solder Ball Array",
+        "kind": "io",
+        "group": "g_pkg",
+        "detail": "Generic underside contact array; count and pitch not specified",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "用通用焊球阵列暗示封装对外接口，不声明引脚数或封装类型"
+      },
+      {
+        "id": "n_cap_matrix",
+        "label": "Matrix Compute Capability",
+        "kind": "compute",
+        "group": "",
+        "detail": "Capability only; not drawn as internal blocks or wiring",
+        "evidence": "内部提供矩阵计算",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cap_mem",
+        "label": "On-Chip Storage Capability",
+        "kind": "memory",
+        "group": "",
+        "detail": "Capability only; capacity not stated",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cap_host",
+        "label": "Host Interface Capability",
+        "kind": "io",
+        "group": "",
+        "detail": "Capability only; protocol and width not stated",
+        "evidence": "主机接口",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [],
+    "layout": "Single dominant product object on the right two-thirds of the canvas: n_pkg (with n_lid on top, n_substrate beneath, n_balls at the lower edge) rendered in three-quarter perspective with a soft rim light. Left third kept as clean empty copy space with a dark gradient field. Capability nodes n_cap_matrix, n_cap_mem, n_cap_host are not drawn as boxes or arrows in this hero image; they remain in the specification as caption/companion text only. No internal structure, no connection lines, no functional callouts on the package surface.",
+    "steps": [],
+    "annotations": [
+      "Hero image only: package exterior, no interior expansion, no data links, no functional labels on the chip.",
+      "Left side reserved as clean copy space; no slogan or marketing text added.",
+      "No trademark, model number, process node, bandwidth, throughput or package dimension is shown."
+    ],
+    "assumptions": [
+      "封装形态（盖板+基板+焊球阵列）为通用示意，用户未指定封装类型、引脚数或尺寸。",
+      "矩阵计算、片上存储、主机接口三项能力仅作为文案/图注素材保留，不在主视觉中展开或连线。",
+      "画面比例与透视角度为艺术指导选择，不代表真实封装几何。"
+    ],
+    "questions": [
+      "是否需要在后续技术配图中以独立示意图展开矩阵计算、片上存储与主机接口的功能分区？",
+      "左侧文案区是否需要预留特定版式（如标题+副标题两行）以便排版？"
+    ],
+    "checks": [
+      "确认主视觉中未出现任何商标、型号、工艺节点、带宽、算力或封装尺寸文字。",
+      "确认芯片内部结构、数据连线与功能标注均未出现在画面中。",
+      "确认主体位于右侧、左侧文案空间干净无遮挡。"
+    ]
+  }
+}

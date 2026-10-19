@@ -1,0 +1,261 @@
+{
+  "description": "我需要一张 Chiplet 封装的空间装配说明图，用在架构方案介绍里。两个计算 Chiplet、一个 I/O Die 和两组 HBM 安装在同一中介层上，中介层安装在封装基板上，上方是一整块散热盖。计算 Chiplet 通过中介层与 I/O Die、HBM 连接。适度拉开散热盖、中介层和基板，让人能看懂部件数量、上下层次和装配归属，保持同一视角，不是把逻辑功能画成更多独立芯片。偏技术蓝的冷色主体配少量暖色 HBM，英文标签简短。这是概念空间示意，不是实际封装设计，不给尺寸、走线密度、工艺、引脚数或热阻参数。",
+  "requested_settings": {
+    "representation": "system_illustration",
+    "scene": "system",
+    "style": "blueprint",
+    "density": "medium",
+    "language": "en",
+    "aspect": "4:3",
+    "explanatory_mode": "assembly"
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "blueprint",
+    "aspect": "4:3",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "system",
+    "representation": "system_illustration",
+    "explanatory_mode": "assembly",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "system",
+    "resolved_representation": "system_illustration"
+  },
+  "spec": {
+    "title": "Chiplet Package Spatial Assembly (Conceptual)",
+    "summary": "概念性空间装配示意：两块计算 Chiplet、一颗 I/O Die 与两组 HBM 共同安装在同一中介层上，中介层置于封装基板之上，最上方为整块散热盖。图中适度拉开散热盖、中介层与基板以显示部件数量、上下层次与装配归属；计算 Chiplet 经中介层与 I/O Die、HBM 连接。仅表达空间组织与归属，不代表实际封装设计、尺寸、走线密度、工艺、引脚数或热阻。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_lid",
+        "label": "Lid Level",
+        "parent": "",
+        "evidence": "上方是一整块散热盖",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_interposer",
+        "label": "Interposer Level",
+        "parent": "",
+        "evidence": "安装在同一中介层上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_substrate",
+        "label": "Substrate Level",
+        "parent": "",
+        "evidence": "中介层安装在封装基板上",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_lid",
+        "label": "Integrated Heat Spreader (Lid)",
+        "kind": "control",
+        "group": "g_lid",
+        "detail": "One single lid covering the assembly",
+        "evidence": "上方是一整块散热盖",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cd1",
+        "label": "Compute Chiplet 1",
+        "kind": "compute",
+        "group": "g_interposer",
+        "detail": "Compute die mounted on interposer",
+        "evidence": "两个计算 Chiplet",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cd2",
+        "label": "Compute Chiplet 2",
+        "kind": "compute",
+        "group": "g_interposer",
+        "detail": "Compute die mounted on interposer",
+        "evidence": "两个计算 Chiplet",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_iod",
+        "label": "I/O Die",
+        "kind": "io",
+        "group": "g_interposer",
+        "detail": "I/O die mounted on interposer",
+        "evidence": "一个 I/O Die",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_hbm1",
+        "label": "HBM Stack 1",
+        "kind": "memory",
+        "group": "g_interposer",
+        "detail": "Memory stack mounted on interposer",
+        "evidence": "两组 HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_hbm2",
+        "label": "HBM Stack 2",
+        "kind": "memory",
+        "group": "g_interposer",
+        "detail": "Memory stack mounted on interposer",
+        "evidence": "两组 HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_interposer",
+        "label": "Interposer",
+        "kind": "stage",
+        "group": "g_interposer",
+        "detail": "Shared mounting and connection layer for all dies",
+        "evidence": "安装在同一中介层上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_substrate",
+        "label": "Package Substrate",
+        "kind": "stage",
+        "group": "g_substrate",
+        "detail": "Base carrying the interposer",
+        "evidence": "中介层安装在封装基板上",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_cd1",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cd2",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_iod",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "安装在同一中介层上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_hbm1",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "安装在同一中介层上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_hbm2",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "安装在同一中介层上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_interposer",
+        "target": "n_substrate",
+        "kind": "relation",
+        "label": "mounted on",
+        "evidence": "中介层安装在封装基板上",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_lid",
+        "target": "n_interposer",
+        "kind": "relation",
+        "label": "covers",
+        "evidence": "上方是一整块散热盖",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cd1",
+        "target": "n_iod",
+        "kind": "data",
+        "label": "via interposer",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cd2",
+        "target": "n_iod",
+        "kind": "data",
+        "label": "via interposer",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cd1",
+        "target": "n_hbm1",
+        "kind": "data",
+        "label": "via interposer",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cd2",
+        "target": "n_hbm2",
+        "kind": "data",
+        "label": "via interposer",
+        "evidence": "计算 Chiplet 通过中介层与 I/O Die、HBM 连接",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Single 4:3 exploded side-perspective view, same viewing angle throughout, stacked bottom-to-top: g_substrate (n_substrate) at bottom, g_interposer (n_interposer as the shared plane with n_cd1, n_cd2, n_iod, n_hbm1, n_hbm2 placed on it) above it, g_lid (n_lid) at top. Vertical gaps between the three levels are exaggerated to show layering and assembly ownership. On the interposer plane, place n_iod centrally, n_cd1 and n_cd2 flanking it, and n_hbm1 / n_hbm2 at the outer edges. HBM nodes use a warm accent while the rest stays cool technical blue. Short English labels only; no dimensions or routing detail.",
+    "steps": [],
+    "annotations": [
+      "Exploded vertical spacing is for readability only, not a measured stack height.",
+      "Conceptual spatial illustration, not an actual package design."
+    ],
+    "assumptions": [
+      "计算 Chiplet 与 HBM 的具体配对（CD1↔HBM1、CD2↔HBM2）为示意性对应，用户仅说明经中介层连接。",
+      "I/O Die 置于中介层中央、计算 Chiplet 分列两侧、HBM 位于外侧边缘为常见布局示意，非用户给定。",
+      "散热盖、中介层、基板三层垂直拉开仅为可读性，不代表实际间距。"
+    ],
+    "questions": [
+      "是否需要标注计算 Chiplet 与 I/O Die、HBM 之间的具体接口名称（如未给定可保持通用）？"
+    ],
+    "checks": [
+      "确认图中仅出现两块计算 Chiplet、一颗 I/O Die、两组 HBM、一个中介层、一个基板与一整块散热盖，无额外芯片。",
+      "确认未出现尺寸、走线密度、工艺节点、引脚数或热阻等参数。",
+      "确认散热盖、中介层、基板三层上下顺序与装配归属清晰可读。"
+    ]
+  }
+}

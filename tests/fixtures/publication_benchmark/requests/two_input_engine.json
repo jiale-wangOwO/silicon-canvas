@@ -1,0 +1,9 @@
+{
+  "description": "做一张通用双输入张量计算引擎的微架构示意。一个独立DMA从片外Memory读取A和B两路数据，分别送到Unpacker A和Unpacker B，各自写入Source Registers A和Source Registers B；FPU接收两组源值，内部有常规Arithmetic Unit和Special Function Unit两条可选择的执行路径，算术与特殊函数不要求互相串联。计算结果写入Result Registers，经Packer送回同一个DMA，再写回同一片外Memory；独立Control Unit负责解包、计算和打包的发起与协调。除片外Memory外，这些资源都属于该计算引擎，FPU内部包含关系要准确。按概念示意补齐必要的普通协调细节即可，不指定容量、精度、带宽或周期数。",
+  "category": "auto",
+  "style": "paper",
+  "language": "en",
+  "aspect": "auto",
+  "density": "medium",
+  "completion_mode": "auto"
+}

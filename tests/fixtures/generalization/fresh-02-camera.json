@@ -1,0 +1,225 @@
+{
+  "id": "fresh-02-camera",
+  "split": "development",
+  "natural_input": {
+    "description": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [
+      {
+        "concept": "sensor",
+        "pattern": "Sensor Port"
+      },
+      {
+        "concept": "isp",
+        "pattern": "ISP"
+      },
+      {
+        "concept": "enc",
+        "pattern": "Encoder"
+      },
+      {
+        "concept": "sram",
+        "pattern": "SRAM"
+      },
+      {
+        "concept": "dma",
+        "pattern": "DMA"
+      },
+      {
+        "concept": "host",
+        "pattern": "Host"
+      }
+    ],
+    "relations": [
+      [
+        "sensor",
+        "isp",
+        "pixels",
+        "data"
+      ],
+      [
+        "isp",
+        "sram",
+        "frames",
+        "data"
+      ],
+      [
+        "sram",
+        "enc",
+        "frames",
+        "data"
+      ],
+      [
+        "enc",
+        "dma",
+        "bitstream",
+        "data"
+      ],
+      [
+        "dma",
+        "host",
+        "bitstream",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "sensor": "chip",
+      "isp": "chip",
+      "enc": "chip",
+      "sram": "chip",
+      "dma": "chip"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-02-camera",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "chip",
+          "label": "Chip",
+          "parent": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "sensor",
+          "label": "Sensor Port",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "id": "isp",
+          "label": "ISP",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "id": "enc",
+          "label": "Encoder",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "id": "sram",
+          "label": "SRAM",
+          "kind": "memory",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "id": "dma",
+          "label": "DMA",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "id": "host",
+          "label": "Host",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "sensor",
+          "target": "isp",
+          "label": "pixels",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "source": "isp",
+          "target": "sram",
+          "label": "frames",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "source": "sram",
+          "target": "enc",
+          "label": "frames",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "source": "enc",
+          "target": "dma",
+          "label": "bitstream",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        },
+        {
+          "source": "dma",
+          "target": "host",
+          "label": "bitstream",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "System overview. Only these resources: on-chip Sensor Port, ISP, Encoder, SRAM, DMA; off-chip Host. Sensor Port sends pixels to ISP; ISP writes frames to SRAM; Encoder reads SRAM; Encoder sends bitstream to DMA; DMA sends bitstream to Host. Do not add resources or connections.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "description": "Independent synthetic guide fixture.",
+  "spec": {
+    "title": "Synthetic branched signal processor",
+    "summary": "A generic decoding and two-branch processing example with a shared reference input.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "processing",
+        "label": "Processing stage",
+        "parent": "",
+        "evidence": "",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "inputs",
+        "label": "Input resources",
+        "parent": "",
+        "evidence": "",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "samples",
+        "label": "Sample store",
+        "kind": "memory",
+        "group": "inputs",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "decode",
+        "label": "Decode",
+        "kind": "compute",
+        "group": "processing",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "gain",
+        "label": "Gain transform",
+        "kind": "compute",
+        "group": "processing",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "filter",
+        "label": "Filter transform",
+        "kind": "compute",
+        "group": "processing",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "join",
+        "label": "Combine",
+        "kind": "compute",
+        "group": "processing",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "output",
+        "label": "Output queue",
+        "kind": "memory",
+        "group": "processing",
+        "detail": "",
+        "evidence": "Synthetic test design; not derived from a product.",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "samples",
+        "target": "decode",
+        "kind": "data",
+        "label": "sample block",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "decode",
+        "target": "gain",
+        "kind": "data",
+        "label": "branch A",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "decode",
+        "target": "filter",
+        "kind": "data",
+        "label": "branch B",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "gain",
+        "target": "join",
+        "kind": "data",
+        "label": "scaled samples",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "filter",
+        "target": "join",
+        "kind": "data",
+        "label": "filtered samples",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "samples",
+        "target": "join",
+        "kind": "data",
+        "label": "reference samples",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "join",
+        "target": "output",
+        "kind": "data",
+        "label": "combined samples",
+        "evidence": "Synthetic test relation.",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [
+      "Independent synthetic graph for safe guide export tests."
+    ],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "density": "high",
+    "language": "en",
+    "aspect": "16:9"
+  }
+}

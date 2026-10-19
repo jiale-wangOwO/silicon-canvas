@@ -1,0 +1,498 @@
+{
+  "description": "Explain this four-lane packet ingress engine to design reviewers. Show repeated private lane structure and the shared path clearly. A representative lane may be enlarged in a separate detail view, but retain the count and all four lane endpoints in the overview.",
+  "spec": {
+    "title": "Four-Lane Packet Ingress Engine",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "engine",
+        "label": "Packet Ingress Engine",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "common",
+        "label": "Shared Services",
+        "parent": "engine",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "offchip",
+        "label": "Outside Engine",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "lane0",
+        "label": "Ingress Lane 0",
+        "parent": "engine",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "lane1",
+        "label": "Ingress Lane 1",
+        "parent": "engine",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "lane2",
+        "label": "Ingress Lane 2",
+        "parent": "engine",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "lane3",
+        "label": "Ingress Lane 3",
+        "parent": "engine",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "rx0",
+        "label": "RX 0",
+        "kind": "io",
+        "group": "lane0",
+        "detail": "Independent input",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "parse0",
+        "label": "Parser 0",
+        "kind": "compute",
+        "group": "lane0",
+        "detail": "Extract header metadata",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "q0",
+        "label": "Queue 0",
+        "kind": "memory",
+        "group": "lane0",
+        "detail": "Private packet descriptors",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "tag0",
+        "label": "Tagger 0",
+        "kind": "compute",
+        "group": "lane0",
+        "detail": "Attach lane tag",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "rx1",
+        "label": "RX 1",
+        "kind": "io",
+        "group": "lane1",
+        "detail": "Independent input",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "parse1",
+        "label": "Parser 1",
+        "kind": "compute",
+        "group": "lane1",
+        "detail": "Extract header metadata",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "q1",
+        "label": "Queue 1",
+        "kind": "memory",
+        "group": "lane1",
+        "detail": "Private packet descriptors",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "tag1",
+        "label": "Tagger 1",
+        "kind": "compute",
+        "group": "lane1",
+        "detail": "Attach lane tag",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "rx2",
+        "label": "RX 2",
+        "kind": "io",
+        "group": "lane2",
+        "detail": "Independent input",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "parse2",
+        "label": "Parser 2",
+        "kind": "compute",
+        "group": "lane2",
+        "detail": "Extract header metadata",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "q2",
+        "label": "Queue 2",
+        "kind": "memory",
+        "group": "lane2",
+        "detail": "Private packet descriptors",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "tag2",
+        "label": "Tagger 2",
+        "kind": "compute",
+        "group": "lane2",
+        "detail": "Attach lane tag",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "rx3",
+        "label": "RX 3",
+        "kind": "io",
+        "group": "lane3",
+        "detail": "Independent input",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "parse3",
+        "label": "Parser 3",
+        "kind": "compute",
+        "group": "lane3",
+        "detail": "Extract header metadata",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "q3",
+        "label": "Queue 3",
+        "kind": "memory",
+        "group": "lane3",
+        "detail": "Private packet descriptors",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "tag3",
+        "label": "Tagger 3",
+        "kind": "compute",
+        "group": "lane3",
+        "detail": "Attach lane tag",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "arb",
+        "label": "Shared Arbiter",
+        "kind": "control",
+        "group": "common",
+        "detail": "Select among four ingress lanes",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "table",
+        "label": "Shared Route Table",
+        "kind": "memory",
+        "group": "common",
+        "detail": "Read-only lookup for this example",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "classifier",
+        "label": "Shared Classifier",
+        "kind": "compute",
+        "group": "common",
+        "detail": "Route-table lookup + lane metadata",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "outputq",
+        "label": "Shared Output Queue",
+        "kind": "memory",
+        "group": "common",
+        "detail": "Retain packet ordering per lane",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "manage",
+        "label": "Configuration & Counter Aggregation",
+        "kind": "control",
+        "group": "common",
+        "detail": "Control-plane updates and 64-bit event totals",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "host",
+        "label": "Management Host",
+        "kind": "io",
+        "group": "offchip",
+        "detail": "External software control",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "rx0",
+        "target": "parse0",
+        "kind": "data",
+        "label": "packet",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "parse0",
+        "target": "q0",
+        "kind": "data",
+        "label": "descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "q0",
+        "target": "tag0",
+        "kind": "data",
+        "label": "dequeue",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "tag0",
+        "target": "arb",
+        "kind": "data",
+        "label": "tagged descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "rx1",
+        "target": "parse1",
+        "kind": "data",
+        "label": "packet",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "parse1",
+        "target": "q1",
+        "kind": "data",
+        "label": "descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "q1",
+        "target": "tag1",
+        "kind": "data",
+        "label": "dequeue",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "tag1",
+        "target": "arb",
+        "kind": "data",
+        "label": "tagged descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "rx2",
+        "target": "parse2",
+        "kind": "data",
+        "label": "packet",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "parse2",
+        "target": "q2",
+        "kind": "data",
+        "label": "descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "q2",
+        "target": "tag2",
+        "kind": "data",
+        "label": "dequeue",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "tag2",
+        "target": "arb",
+        "kind": "data",
+        "label": "tagged descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "rx3",
+        "target": "parse3",
+        "kind": "data",
+        "label": "packet",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "parse3",
+        "target": "q3",
+        "kind": "data",
+        "label": "descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "q3",
+        "target": "tag3",
+        "kind": "data",
+        "label": "dequeue",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "tag3",
+        "target": "arb",
+        "kind": "data",
+        "label": "tagged descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "arb",
+        "target": "classifier",
+        "kind": "data",
+        "label": "selected descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "table",
+        "target": "classifier",
+        "kind": "data",
+        "label": "lookup result",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "classifier",
+        "target": "outputq",
+        "kind": "data",
+        "label": "classified descriptor",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "host",
+        "target": "manage",
+        "kind": "control",
+        "label": "configuration",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "manage",
+        "target": "table",
+        "kind": "control",
+        "label": "table update",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Four aligned repeated lanes feed the single shared arbiter. Shared classification path is readable left to right. Host remains outside.",
+    "steps": [],
+    "annotations": [
+      "Exactly four independent ingress lanes (0, 1, 2, 3); each has its own RX, parser, queue and tagger.",
+      "Arbiter, route table, classifier, output queue and management are shared once.",
+      "The management host is outside the engine boundary. No cache/coherence protocol is implied."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

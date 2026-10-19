@@ -1,0 +1,160 @@
+{
+  "metadata_only": true,
+  "notice": "Source images are not redistributed. Metadata informs visual grammar only.",
+  "items": [
+    {
+      "path": "architecture/eyeriss-2016-fig1-general-cnn-accelerator.png",
+      "source_url": "https://dspace.mit.edu/entities/publication/f6342515-2b7d-411c-a8ad-a9edb23dd394",
+      "category": "architecture",
+      "focus": [
+        "overview-plus-detail",
+        "memory-compute-hierarchy",
+        "repeated-pe-array"
+      ],
+      "width": 1096,
+      "height": 762
+    },
+    {
+      "path": "dataflow/eyeriss-2016-fig6-row-stationary-dataflow.png",
+      "source_url": "https://dspace.mit.edu/entities/publication/f6342515-2b7d-411c-a8ad-a9edb23dd394",
+      "category": "dataflow",
+      "focus": [
+        "small-multiples",
+        "directional-reuse",
+        "semantic-stream-colors"
+      ],
+      "width": 2178,
+      "height": 562
+    },
+    {
+      "path": "architecture/tpu-2017-fig1-block-diagram.png",
+      "source_url": "https://arxiv.org/abs/1704.04760",
+      "category": "architecture",
+      "focus": [
+        "functional-role-colors",
+        "main-datapath",
+        "compact-legend"
+      ],
+      "width": 1089,
+      "height": 1067
+    },
+    {
+      "path": "dataflow/tpu-2017-fig4-systolic-dataflow.png",
+      "source_url": "https://arxiv.org/abs/1704.04760",
+      "category": "dataflow",
+      "focus": [
+        "systolic-direction",
+        "partial-sum-flow",
+        "array-abbreviation"
+      ],
+      "width": 1162,
+      "height": 999
+    },
+    {
+      "path": "architecture/scnn-2017-fig5-complete-architecture.png",
+      "source_url": "https://research.nvidia.com/publication/2017-06_scnn-accelerator-compressed-sparse-convolutional-neural-networks",
+      "category": "architecture",
+      "focus": [
+        "representative-center-tile",
+        "array-context",
+        "edge-resources"
+      ],
+      "width": 1082,
+      "height": 787
+    },
+    {
+      "path": "dataflow/scnn-2017-fig6-pe-sparse-dataflow.png",
+      "source_url": "https://research.nvidia.com/publication/2017-06_scnn-accelerator-compressed-sparse-convolutional-neural-networks",
+      "category": "dataflow",
+      "focus": [
+        "named-streams",
+        "sparse-index-path",
+        "compute-accumulate-separation"
+      ],
+      "width": 1087,
+      "height": 970
+    },
+    {
+      "path": "architecture/plasticine-2017-fig3-pcu-architecture.png",
+      "source_url": "https://mast.stanford.edu/pubs/plasticine_a_reconfigurable_accelerator_for_parallel_patterns/",
+      "category": "architecture",
+      "focus": [
+        "simd-lanes",
+        "pipeline-grid",
+        "boundary-io"
+      ],
+      "width": 2074,
+      "height": 891
+    },
+    {
+      "path": "architecture/plasticine-2017-fig4-pmu-architecture.png",
+      "source_url": "https://mast.stanford.edu/pubs/plasticine_a_reconfigurable_accelerator_for_parallel_patterns/",
+      "category": "architecture",
+      "focus": [
+        "control-datapath-memory-zones",
+        "repeated-units",
+        "semantic-color"
+      ],
+      "width": 2008,
+      "height": 778
+    },
+    {
+      "path": "architecture/plasticine-2017-fig5-chip-topology.png",
+      "source_url": "https://mast.stanford.edu/pubs/plasticine_a_reconfigurable_accelerator_for_parallel_patterns/",
+      "category": "architecture",
+      "focus": [
+        "regular-array",
+        "edge-controllers",
+        "multi-network-topology"
+      ],
+      "width": 2078,
+      "height": 887
+    },
+    {
+      "path": "logic/flexminer-2021-fig2-system-overview.png",
+      "source_url": "https://people.csail.mit.edu/shuotao/papers/isca2021.pdf",
+      "category": "algorithm",
+      "focus": [
+        "intent-to-hardware-flow",
+        "software-hardware-boundary",
+        "short-main-chain"
+      ]
+    },
+    {
+      "path": "architecture/flexminer-2021-fig8-hardware-architecture.png",
+      "source_url": "https://people.csail.mit.edu/shuotao/papers/isca2021.pdf",
+      "category": "architecture",
+      "focus": [
+        "system-and-pe-detail",
+        "numbered-flow",
+        "memory-hierarchy"
+      ],
+      "width": 942,
+      "height": 1016
+    },
+    {
+      "path": "logic/gpu-proxy-2022-fig1-scope-vs-proxy.png",
+      "source_url": "https://kar.kent.ac.uk/96841/",
+      "category": "algorithm",
+      "focus": [
+        "paired-comparison",
+        "tree-vs-lattice",
+        "stable-semantic-shapes"
+      ],
+      "width": 1087,
+      "height": 1787
+    },
+    {
+      "path": "architecture/gpu-proxy-2022-fig3-cache-proxies.png",
+      "source_url": "https://kar.kent.ac.uk/96841/",
+      "category": "memory",
+      "focus": [
+        "aligned-cache-levels",
+        "proxy-labels",
+        "address-semantics"
+      ],
+      "width": 1083,
+      "height": 895
+    }
+  ]
+}

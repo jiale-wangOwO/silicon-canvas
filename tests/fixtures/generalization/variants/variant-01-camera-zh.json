@@ -1,0 +1,227 @@
+{
+  "id": "variant-01-camera-zh",
+  "split": "development",
+  "natural_input": {
+    "description": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [
+      {
+        "concept": "sensor",
+        "pattern": "Sensor Port"
+      },
+      {
+        "concept": "isp",
+        "pattern": "ISP"
+      },
+      {
+        "concept": "enc",
+        "pattern": "Encoder"
+      },
+      {
+        "concept": "sram",
+        "pattern": "SRAM"
+      },
+      {
+        "concept": "dma",
+        "pattern": "DMA"
+      },
+      {
+        "concept": "host",
+        "pattern": "Host"
+      }
+    ],
+    "relations": [
+      [
+        "sensor",
+        "isp",
+        "pixels",
+        "data"
+      ],
+      [
+        "isp",
+        "sram",
+        "frames",
+        "data"
+      ],
+      [
+        "sram",
+        "enc",
+        "frames",
+        "data"
+      ],
+      [
+        "enc",
+        "dma",
+        "bitstream",
+        "data"
+      ],
+      [
+        "dma",
+        "host",
+        "bitstream",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "sensor": "chip",
+      "isp": "chip",
+      "enc": "chip",
+      "sram": "chip",
+      "dma": "chip"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-02-camera",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "chip",
+          "label": "Chip",
+          "parent": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "sensor",
+          "label": "Sensor Port",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "id": "isp",
+          "label": "ISP",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "id": "enc",
+          "label": "Encoder",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "id": "sram",
+          "label": "SRAM",
+          "kind": "memory",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "id": "dma",
+          "label": "DMA",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "id": "host",
+          "label": "Host",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "sensor",
+          "target": "isp",
+          "label": "pixels",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "source": "isp",
+          "target": "sram",
+          "label": "frames",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "source": "sram",
+          "target": "enc",
+          "label": "frames",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "source": "enc",
+          "target": "dma",
+          "label": "bitstream",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        },
+        {
+          "source": "dma",
+          "target": "host",
+          "label": "bitstream",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "系统架构总览，只包含以下资源：芯片内有 Sensor Port、ISP、Encoder、SRAM、DMA；Host 在芯片外。Sensor Port 把 pixels 送入 ISP；ISP 把 frames 写入 SRAM；Encoder 从 SRAM 读取 frames；Encoder 把 bitstream 送给 DMA；DMA 将 bitstream 送给 Host。不要添加资源或者连接。",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  },
+  "parent_case_sha256": "7e5c8ffce22749f4047fc7df0d4b207e48c97311f3f1ad4c0abd3fb848c2dc01",
+  "transformation": "equivalent_chinese_punctuation"
+}

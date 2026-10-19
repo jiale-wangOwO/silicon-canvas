@@ -1,0 +1,280 @@
+{
+  "id": "fresh-03-softmax",
+  "split": "development",
+  "natural_input": {
+    "description": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "algorithm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "x",
+        "pattern": "X"
+      },
+      {
+        "concept": "max",
+        "pattern": "Reduce Max"
+      },
+      {
+        "concept": "sub",
+        "pattern": "Subtract"
+      },
+      {
+        "concept": "exp",
+        "pattern": "Exponential"
+      },
+      {
+        "concept": "sum",
+        "pattern": "Reduce Sum"
+      },
+      {
+        "concept": "div",
+        "pattern": "Divide"
+      },
+      {
+        "concept": "y",
+        "pattern": "Y"
+      }
+    ],
+    "relations": [
+      [
+        "x",
+        "max",
+        "X",
+        "data"
+      ],
+      [
+        "x",
+        "sub",
+        "X",
+        "data"
+      ],
+      [
+        "max",
+        "sub",
+        "m",
+        "data"
+      ],
+      [
+        "sub",
+        "exp",
+        "Z",
+        "data"
+      ],
+      [
+        "exp",
+        "sum",
+        "E",
+        "data"
+      ],
+      [
+        "exp",
+        "div",
+        "E",
+        "data"
+      ],
+      [
+        "sum",
+        "div",
+        "s",
+        "data"
+      ],
+      [
+        "div",
+        "y",
+        "Y",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 7,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-03-softmax",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "algorithm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "x",
+          "label": "X",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "tensor",
+          "tensor_shape": "N"
+        },
+        {
+          "id": "max",
+          "label": "Reduce Max",
+          "kind": "compute",
+          "group": "",
+          "detail": "m=max_i X_i",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "reduction",
+          "reduction_axis": "i"
+        },
+        {
+          "id": "sub",
+          "label": "Subtract",
+          "kind": "compute",
+          "group": "",
+          "detail": "Z_i=X_i-m",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "exp",
+          "label": "Exponential",
+          "kind": "compute",
+          "group": "",
+          "detail": "E_i=exp(Z_i)",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "sum",
+          "label": "Reduce Sum",
+          "kind": "compute",
+          "group": "",
+          "detail": "s=sum_i E_i",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "reduction",
+          "reduction_axis": "i"
+        },
+        {
+          "id": "div",
+          "label": "Divide",
+          "kind": "compute",
+          "group": "",
+          "detail": "Y_i=E_i/s",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "y",
+          "label": "Y",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": "",
+          "diagram_role": "tensor",
+          "tensor_shape": "N"
+        }
+      ],
+      "edges": [
+        {
+          "source": "x",
+          "target": "max",
+          "label": "X",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "x",
+          "target": "sub",
+          "label": "X",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "max",
+          "target": "sub",
+          "label": "m",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "sub",
+          "target": "exp",
+          "label": "Z",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "exp",
+          "target": "sum",
+          "label": "E",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "exp",
+          "target": "div",
+          "label": "E",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "sum",
+          "target": "div",
+          "label": "s",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        },
+        {
+          "source": "div",
+          "target": "y",
+          "label": "Y",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Algorithm dataflow for stable softmax. Only X, Reduce Max, Subtract, Exponential, Reduce Sum, Divide, Y. X is a vector N; m=max_i X_i; Z_i=X_i-m; E_i=exp(Z_i); s=sum_i E_i; Y_i=E_i/s. Both X and Reduce Max feed Subtract, Exponential feeds both Reduce Sum and Divide, and Reduce Sum also feeds Divide. Divide produces Y. No hardware mapping.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

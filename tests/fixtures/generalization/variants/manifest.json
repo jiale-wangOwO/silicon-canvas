@@ -1,0 +1,27 @@
+{
+  "schema": "SC-GEN1-VARIANTS",
+  "status": "expectations_frozen_before_core_comparison",
+  "cases": [
+    {
+      "id": "variant-01-camera-zh",
+      "split": "development",
+      "sha256": "9371ffade03e8a7cf1be0d524ed4954c389ba1d53c68b28bdeb44c27aa54a937"
+    },
+    {
+      "id": "variant-02-softmax-reordered",
+      "split": "development",
+      "sha256": "b23c28d17e61005a577015ce79f04d814677690f4ecf07cd4305ec800fba4843"
+    },
+    {
+      "id": "variant-03-product-override",
+      "split": "development",
+      "sha256": "4f36245610ad845849eb80ad385a269ef99b49020e053ee17e40ee17eb7bf90e"
+    },
+    {
+      "id": "variant-04-ring-scale11",
+      "split": "development",
+      "sha256": "2ac9093530a0a3873c5db73febf4a3280ccf9a3aefa7a9f4e6430866235976b3"
+    }
+  ],
+  "hash_basis": "sha256 of UTF-8 canonical JSON object: ensure_ascii=false, sort_keys=true, separators comma/colon; independent of file line endings"
+}

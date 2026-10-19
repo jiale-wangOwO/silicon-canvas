@@ -1,0 +1,31 @@
+{
+  "id": "gpu",
+  "route": "current-source STDIO MCP silicon_prepare -> host canonical source -> silicon_compile; exact prompt to built-in ImageGen",
+  "provider": "built-in image_gen",
+  "attempt": 1,
+  "rerolls": 0,
+  "prompt_file": "gpu-prompt.txt",
+  "guide_file": "gpu-guide.png",
+  "image_file": "gpu.png",
+  "artifact_id": "50b33e5c421047ee8e204863f2460dad",
+  "source_hash": "35ecdd3131bc91a9bc09db170054633ad1cfe9a16aa969493a7ea7135d197b43",
+  "prompt_sha256": "0b4f10a9f73d6c7bcee269784ff38491d5c71aad4ce867eea0a581f862fa9e5e",
+  "guide_sha256": "1ed384ab77f31fc2abf87295b6a31bcbf8abcc8b7fef7cf29477281ced7d0a14",
+  "image_sha256": "15761bd5384af83463dd458ec672ef5f7d61a8743f467df662f40f463927c7d2",
+  "dimensions": [
+    1243,
+    1266
+  ],
+  "generation_inputs": {
+    "exact_tool_prompt": true,
+    "required_reference_count": 1,
+    "optional_reference_count": 0,
+    "transparent_background": false,
+    "manual_prompt_additions": false
+  },
+  "transport_validation": {
+    "actual_string_equals_packet": true,
+    "replacement_characters": 0
+  },
+  "source_facts_changed_for_this_generation": false
+}

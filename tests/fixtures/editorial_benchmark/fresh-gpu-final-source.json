@@ -1,0 +1,5458 @@
+{
+  "description": "我想做一张 GPU 架构图给同事介绍。主机接口接到命令处理器，任务分发到四个计算簇。每簇有 warp 调度、SIMD、张量单元和片上存储，簇之间共享 L2，并经内存控制器访问显存。总体层级要清楚，别把每条内部控制信号都展开。",
+  "style_prompt": "STYLE CONTRACT CPS6-paper-2a026e31fb\nKeep this same visual system across every figure in the document.\nPalette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9.\nA compact publication figure on pure white, like an architecture-paper hardware diagram. No shadows, glow, depth, texture or gradients.\nGeometry follows hardware role: shallow queue/register bars, tight compute rectangles, interfaces with aligned ports, taller banked memories only when supported by their specification. Do not use uniform square cards.\nUse subdued blue-gray for compute and pale sage for storage; control and interfaces stay white. Color is sparse and follows role; at most three fill roles plus neutral gray.\nOne neutral sans-serif family, normal/medium-weight module names and regular signal labels. Thin dark data lines, slightly thinner gray dashed control lines, small arrowheads. Group titles are subordinate and boundaries do not create large empty panels.\nDesign for insertion at 160 mm width: module labels 9 pt and signal labels 8.5 pt, approximately 32 px and 30 px at 1600 px width. Derive pixels from the actual canvas width. Keep this type scale; when space is insufficient, redesign the projection or orientation rather than shrink letters. Use medium-weight names and regular signal labels.\nA small 3% white perimeter and compact signal corridors. Containers have very thin neutral outlines with little padding, never large empty blue frames. Solid fills only; no page texture. Use Noto Sans CJK / Microsoft YaHei-like sans-serif for Chinese.\nUse narrow engineering strokes and small arrowheads; primary paths may be slightly stronger but never thick flowchart arrows. Labels sit in open gaps. A crossing without a dot is not a connection.\nUse a concise legend only for conventions actually used. No ornamental page furniture.",
+  "spec": {
+    "title": "GPU Architecture Overview",
+    "summary": "面向同事介绍的通用 GPU 系统架构示意：主机接口接入命令处理器，任务分发到四个计算簇；每簇含 warp 调度、SIMD、张量单元与片上存储；四簇共享 L2，经内存控制器访问显存。图中只保留层级与关键连接，不展开簇内每条控制信号。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_host",
+        "label": "Host Interface",
+        "parent": "",
+        "evidence": "主机接口接到命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_front",
+        "label": "Command Front End",
+        "parent": "",
+        "evidence": "命令处理器，任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster",
+        "label": "Compute Cluster (x4)",
+        "parent": "",
+        "evidence": "每簇有 warp 调度、SIMD、张量单元和片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_mem",
+        "label": "Memory Subsystem",
+        "parent": "",
+        "evidence": "簇之间共享 L2，并经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_host",
+        "label": "Host Interface",
+        "kind": "io",
+        "group": "g_host",
+        "detail": "PCIe / host link",
+        "evidence": "主机接口",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cmd",
+        "label": "Command Processor",
+        "kind": "control",
+        "group": "g_front",
+        "detail": "Decode & dispatch",
+        "evidence": "命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_disp",
+        "label": "Task Dispatcher",
+        "kind": "control",
+        "group": "g_front",
+        "detail": "Fan-out to 4 clusters",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_warp",
+        "label": "Warp Scheduler",
+        "kind": "control",
+        "group": "g_cluster",
+        "detail": "Warp issue & scoreboard",
+        "evidence": "warp 调度",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_simd",
+        "label": "SIMD Unit",
+        "kind": "compute",
+        "group": "g_cluster",
+        "detail": "Vector ALU lanes",
+        "evidence": "SIMD",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_tensor",
+        "label": "Tensor Unit",
+        "kind": "compute",
+        "group": "g_cluster",
+        "detail": "Matrix / MMA datapath",
+        "evidence": "张量单元",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_smem",
+        "label": "On-Chip Storage",
+        "kind": "memory",
+        "group": "g_cluster",
+        "detail": "Shared memory / register file",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_l2",
+        "label": "Shared L2 Cache",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Shared across clusters",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_mc",
+        "label": "Memory Controller",
+        "kind": "control",
+        "group": "g_mem",
+        "detail": "DRAM scheduling",
+        "evidence": "内存控制器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_dram",
+        "label": "DRAM (Device Memory)",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Off-chip frame buffer",
+        "evidence": "显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_host",
+        "target": "n_cmd",
+        "kind": "control",
+        "label": "commands",
+        "evidence": "主机接口接到命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cmd",
+        "target": "n_disp",
+        "kind": "control",
+        "label": "kernel launch",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_disp",
+        "target": "n_warp",
+        "kind": "control",
+        "label": "workgroups x4",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_warp",
+        "target": "n_simd",
+        "kind": "control",
+        "label": "issue",
+        "evidence": "warp 调度、SIMD",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_warp",
+        "target": "n_tensor",
+        "kind": "control",
+        "label": "issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_smem",
+        "target": "n_simd",
+        "kind": "data",
+        "label": "operands",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_smem",
+        "target": "n_tensor",
+        "kind": "data",
+        "label": "operands",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_simd",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "results",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_tensor",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "results",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_smem",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "miss / spill",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_l2",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "fill",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_l2",
+        "target": "n_mc",
+        "kind": "data",
+        "label": "miss",
+        "evidence": "经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_mc",
+        "target": "n_dram",
+        "kind": "data",
+        "label": "read / write",
+        "evidence": "访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_dram",
+        "target": "n_mc",
+        "kind": "data",
+        "label": "data return",
+        "evidence": "访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_mc",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "fill",
+        "evidence": "经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Left-to-right main path: g_host (n_host) -> g_front (n_cmd, n_disp) -> g_cluster (n_warp, n_simd, n_tensor, n_smem) -> g_mem (n_l2, n_mc, n_dram). g_cluster is drawn as one populated template cluster with a 'x4' multiplicity label; the other three clusters are implied by the fan-out from n_disp, not drawn as separate blocks. Inside g_cluster, n_warp sits at the top as the control lane, n_simd and n_tensor in the middle as parallel compute lanes, n_smem at the bottom as the storage lane. g_mem is a horizontal band below the cluster, with n_l2 on the left, n_mc in the middle and n_dram on the right. Reserve a lower corridor for the L2 <-> memory-controller <-> DRAM round trip. Do not expand internal control signals inside the cluster.",
+    "steps": [],
+    "annotations": [
+      "Cluster is shown once as a template; the dispatcher fans out to four identical clusters.",
+      "Only key data and control paths are drawn; per-warp control signals are intentionally omitted."
+    ],
+    "assumptions": [
+      "四个计算簇按同构处理，图中只画一个模板簇并标注 x4。",
+      "主机接口按通用 PCIe 类主机链路示意，未指定具体协议版本。",
+      "片上存储合并表示共享内存与寄存器文件，未区分具体容量。",
+      "L2 与显存之间只画一条经内存控制器的往返路径，未展开多通道与仲裁细节。"
+    ],
+    "questions": [
+      "是否需要把四个计算簇分别画出并标注各自的连接？",
+      "是否需要补充主机接口的具体协议或带宽标注？"
+    ],
+    "checks": [
+      "确认模板簇 x4 的表示方式是否满足介绍需求。",
+      "确认 L2 共享关系是否需要在图中显式画出四条簇到 L2 的连接。"
+    ]
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "labels": "",
+    "notes": ""
+  },
+  "figures": [
+    {
+      "id": "organization",
+      "kind": "overview",
+      "abstract": true,
+      "primary": true,
+      "technical_annex": false,
+      "title": "GPU Architecture Overview",
+      "summary": "按真实子系统归属组织主图，展开必要资源清单；内部接线与全局控制在图注及精确附图中保留。",
+      "macro_nodes": [
+        {
+          "id": "n_host",
+          "label": "Host Interface",
+          "kind": "io",
+          "members": [
+            "n_host"
+          ],
+          "original_group": "g_host",
+          "children": [],
+          "detail": "PCIe / host link"
+        },
+        {
+          "id": "g_front",
+          "label": "Command Front End",
+          "kind": "io",
+          "members": [
+            "n_cmd",
+            "n_disp"
+          ],
+          "original_group": "",
+          "source_group": "g_front",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_cmd",
+              "label": "Command Processor",
+              "kind": "control"
+            },
+            {
+              "id": "n_disp",
+              "label": "Task Dispatcher",
+              "kind": "control"
+            }
+          ]
+        },
+        {
+          "id": "g_cluster",
+          "label": "Compute Cluster (x4)",
+          "kind": "compute",
+          "members": [
+            "n_warp",
+            "n_simd",
+            "n_tensor",
+            "n_smem"
+          ],
+          "original_group": "",
+          "source_group": "g_cluster",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_warp",
+              "label": "Warp Scheduler",
+              "kind": "control"
+            },
+            {
+              "id": "n_simd",
+              "label": "SIMD Unit",
+              "kind": "compute"
+            },
+            {
+              "id": "n_tensor",
+              "label": "Tensor Unit",
+              "kind": "compute"
+            },
+            {
+              "id": "n_smem",
+              "label": "On-Chip Storage",
+              "kind": "memory"
+            }
+          ]
+        },
+        {
+          "id": "g_mem",
+          "label": "Memory Subsystem",
+          "kind": "io",
+          "members": [
+            "n_l2",
+            "n_mc",
+            "n_dram"
+          ],
+          "original_group": "",
+          "source_group": "g_mem",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_l2",
+              "label": "Shared L2 Cache",
+              "kind": "memory"
+            },
+            {
+              "id": "n_mc",
+              "label": "Memory Controller",
+              "kind": "control"
+            },
+            {
+              "id": "n_dram",
+              "label": "DRAM (Device Memory)",
+              "kind": "memory"
+            }
+          ]
+        }
+      ],
+      "macro_edges": [
+        {
+          "source": "n_host",
+          "target": "g_front",
+          "kind": "control",
+          "label": "commands",
+          "members": [
+            0
+          ],
+          "meanings_in_caption": [],
+          "id": "p1"
+        },
+        {
+          "source": "g_front",
+          "target": "g_cluster",
+          "kind": "control",
+          "label": "workgroups x4",
+          "members": [
+            2
+          ],
+          "meanings_in_caption": [],
+          "id": "p2"
+        },
+        {
+          "source": "g_cluster",
+          "target": "g_mem",
+          "kind": "data",
+          "label": "miss / spill / fill",
+          "members": [
+            9,
+            10
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "g_cluster",
+              "target": "g_mem",
+              "label": "miss / spill"
+            },
+            {
+              "source": "g_mem",
+              "target": "g_cluster",
+              "label": "fill"
+            }
+          ],
+          "id": "p3"
+        }
+      ],
+      "edge_indices": [],
+      "node_ids": [],
+      "source_edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "view_role": "organization",
+      "steps": [],
+      "annotations": [],
+      "projection": {
+        "source_node_to_macro": {
+          "n_host": "n_host",
+          "n_cmd": "g_front",
+          "n_disp": "g_front",
+          "n_warp": "g_cluster",
+          "n_simd": "g_cluster",
+          "n_tensor": "g_cluster",
+          "n_smem": "g_cluster",
+          "n_l2": "g_mem",
+          "n_mc": "g_mem",
+          "n_dram": "g_mem"
+        },
+        "internal_edges": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14
+        ],
+        "deferred_edges": [
+          {
+            "index": 1,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 3,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 4,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 5,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 6,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 7,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 8,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 11,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 12,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 13,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 14,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          }
+        ],
+        "folded_groups": [
+          "g_front",
+          "g_cluster",
+          "g_mem"
+        ],
+        "ownership_unchanged": true,
+        "meaning": "True group boundaries summarize only their source inventory and external relationships. A supplied xN group denotes that inventory's original multiplicity; no new instances or internal wiring are invented."
+      },
+      "design_contract": {
+        "grammar": "ownership-flow",
+        "question": "Which real subsystems own these resources, and how do those subsystems interact?",
+        "claim": "Source ownership and the main inter-subsystem relationships are explicit; internal operation is a separate technical view.",
+        "scope": "display projection",
+        "target_width_mm": 160,
+        "body_pt": 9,
+        "signal_pt": 8.5,
+        "source_invariants": [
+          "source ownership",
+          "directed source relations",
+          "explicit quantities and conditions",
+          "required verbatim text"
+        ],
+        "editorial_decisions": [
+          "projection",
+          "positions",
+          "line bends",
+          "which optional prose stays in caption"
+        ],
+        "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+        "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+        "symbol_profile": "ink-header"
+      },
+      "required_verbatim_labels": [],
+      "composition_diagnostics": {
+        "grammar": "ownership-flow",
+        "candidates": [
+          {
+            "id": "ownership-hub-2",
+            "accepted": false,
+            "reasons": [
+              "No single existing data hub establishes this organization"
+            ]
+          },
+          {
+            "id": "ownership-hub-1",
+            "accepted": false,
+            "reasons": [
+              "No single existing data hub establishes this organization"
+            ]
+          },
+          {
+            "id": "top-to-bottom-1",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 9,
+              "longest_route_px": 683.5,
+              "total_route_px": 1721.5
+            },
+            "deferred_label_count": 0,
+            "natural_aspect": 0.769889,
+            "document_height_mm": 207.8
+          },
+          {
+            "id": "left-to-right-1",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 11,
+              "longest_route_px": 479.0,
+              "total_route_px": 937.0
+            },
+            "deferred_label_count": 1,
+            "natural_aspect": 1.778656,
+            "document_height_mm": 90.0
+          },
+          {
+            "id": "top-to-bottom-2",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 7,
+              "longest_route_px": 575.0,
+              "total_route_px": 1536.0
+            },
+            "deferred_label_count": 0,
+            "natural_aspect": 0.940439,
+            "document_height_mm": 170.1
+          },
+          {
+            "id": "left-to-right-2",
+            "accepted": false,
+            "reasons": [
+              "Horizontal subsystem inventories exceed the fixed-font document width"
+            ]
+          }
+        ],
+        "selection_policy": "Hard route/typography/crossover/boundary gates, then document height before optional prose for subsystem organization; no beauty score"
+      },
+      "layout_scene": {
+        "width": 1800,
+        "height": 1012,
+        "routes": [
+          {
+            "source": "n_host",
+            "target": "g_front",
+            "kind": "control",
+            "label": "commands",
+            "members": [
+              0
+            ],
+            "meanings_in_caption": [],
+            "id": "p1",
+            "family": "forward",
+            "routing": {
+              "source_side": "bottom",
+              "target_side": "left",
+              "target_fraction": 0.23417721518987342
+            },
+            "source_side": "bottom",
+            "target_side": "left",
+            "points": [
+              [
+                0.1575,
+                0.166008
+              ],
+              [
+                0.1575,
+                0.185771
+              ],
+              [
+                0.035556,
+                0.185771
+              ],
+              [
+                0.035556,
+                0.40415
+              ],
+              [
+                0.045833,
+                0.40415
+              ]
+            ]
+          },
+          {
+            "source": "g_front",
+            "target": "g_cluster",
+            "kind": "control",
+            "label": "workgroups x4",
+            "members": [
+              2
+            ],
+            "meanings_in_caption": [],
+            "id": "p2",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.23417721518987342,
+              "target_fraction": 0.2003610108303249
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.269166,
+                0.40415
+              ],
+              [
+                0.28,
+                0.40415
+              ],
+              [
+                0.28,
+                0.403162
+              ],
+              [
+                0.431111,
+                0.403162
+              ],
+              [
+                0.431111,
+                0.40415
+              ],
+              [
+                0.440278,
+                0.40415
+              ]
+            ]
+          },
+          {
+            "source": "g_cluster",
+            "target": "g_mem",
+            "kind": "data",
+            "label": "miss / spill / fill",
+            "members": [
+              9,
+              10
+            ],
+            "meanings_in_caption": [],
+            "bidirectional": true,
+            "directional_labels": [
+              {
+                "source": "g_cluster",
+                "target": "g_mem",
+                "label": "miss / spill"
+              },
+              {
+                "source": "g_mem",
+                "target": "g_cluster",
+                "label": "fill"
+              }
+            ],
+            "id": "p3",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.2003610108303249,
+              "target_fraction": 0.1781609195402299
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.666945,
+                0.40415
+              ],
+              [
+                0.677778,
+                0.40415
+              ],
+              [
+                0.677778,
+                0.387352
+              ],
+              [
+                0.728889,
+                0.387352
+              ],
+              [
+                0.728889,
+                0.386363
+              ],
+              [
+                0.739167,
+                0.386363
+              ]
+            ]
+          }
+        ],
+        "line_legend": {},
+        "quality": {
+          "routes_complete": true,
+          "failed_routes": [],
+          "route_count": 3,
+          "requested_routes": 3,
+          "no_common_bus_inferred": true,
+          "owner_scope_entries": {
+            "clear": true,
+            "failures": [],
+            "meaning": "Boundary entry is scope-level, not a fabricated child-to-child mapping."
+          },
+          "organization_traces": {
+            "clear": true,
+            "contacts": [],
+            "geometry_is_not_new_junctions": true
+          },
+          "body_font_pt": 9.0,
+          "signal_font_pt": 8.5,
+          "target_width_mm": 160.0,
+          "publication_typography": true,
+          "geometry_is_not_raster_acceptance": true,
+          "input_traces": {
+            "clear": true,
+            "owners": [],
+            "failures": []
+          },
+          "labels_placed": 2,
+          "deferred_labels": [
+            {
+              "text": "miss / spill / fill",
+              "source_edge_indices": [
+                9,
+                10
+              ],
+              "reason": "No unobstructed region at signal font size"
+            }
+          ],
+          "typography_measured": true,
+          "deferred_scope_titles": [],
+          "document_fit": {
+            "height_mm": 90.0,
+            "default_limit_mm": 140,
+            "status": "pass",
+            "no_font_shrink": true,
+            "meaning": "Native source routing and typography do not certify a tall figure as publication-ready."
+          }
+        }
+      },
+      "label_layout": {
+        "width": 1800,
+        "height": 1012,
+        "body_font_px": 36,
+        "signal_font_px": 34,
+        "target_width_mm": 160.0,
+        "labels": [
+          {
+            "text": "commands",
+            "box": {
+              "x": 0.042223,
+              "y": 0.219872,
+              "width": 0.100556,
+              "height": 0.040988
+            },
+            "color": "#263238",
+            "source_edge_indices": [
+              0
+            ]
+          },
+          {
+            "text": "workgroups x4",
+            "box": {
+              "x": 0.287782,
+              "y": 0.350316,
+              "width": 0.135547,
+              "height": 0.040988
+            },
+            "color": "#263238",
+            "source_edge_indices": [
+              2
+            ]
+          }
+        ],
+        "deferred_labels": [
+          {
+            "text": "miss / spill / fill",
+            "source_edge_indices": [
+              9,
+              10
+            ],
+            "reason": "No unobstructed region at signal font size"
+          }
+        ]
+      },
+      "structure_layout": {
+        "type": "publication",
+        "version": "CPS6",
+        "abstract": true,
+        "view_type": "publication-ownership-flow",
+        "view_role": "organization",
+        "title": "GPU Architecture Overview",
+        "macro_nodes": [
+          {
+            "id": "n_host",
+            "label": "Host Interface",
+            "kind": "io",
+            "members": [
+              "n_host"
+            ],
+            "original_group": "g_host",
+            "children": [],
+            "detail": "PCIe / host link"
+          },
+          {
+            "id": "g_front",
+            "label": "Command Front End",
+            "kind": "io",
+            "members": [
+              "n_cmd",
+              "n_disp"
+            ],
+            "original_group": "",
+            "source_group": "g_front",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_cmd",
+                "label": "Command Processor",
+                "kind": "control"
+              },
+              {
+                "id": "n_disp",
+                "label": "Task Dispatcher",
+                "kind": "control",
+                "required_detail": "Fan-out to 4 clusters"
+              }
+            ],
+            "entry_sources": [],
+            "boundary_port_count": 2
+          },
+          {
+            "id": "g_cluster",
+            "label": "Compute Cluster (x4)",
+            "kind": "compute",
+            "members": [
+              "n_warp",
+              "n_simd",
+              "n_tensor",
+              "n_smem"
+            ],
+            "original_group": "",
+            "source_group": "g_cluster",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_warp",
+                "label": "Warp Scheduler",
+                "kind": "control"
+              },
+              {
+                "id": "n_simd",
+                "label": "SIMD Unit",
+                "kind": "compute"
+              },
+              {
+                "id": "n_tensor",
+                "label": "Tensor Unit",
+                "kind": "compute"
+              },
+              {
+                "id": "n_smem",
+                "label": "On-Chip Storage",
+                "kind": "memory"
+              }
+            ],
+            "entry_sources": [
+              "g_mem"
+            ],
+            "boundary_port_count": 2
+          },
+          {
+            "id": "g_mem",
+            "label": "Memory Subsystem",
+            "kind": "io",
+            "members": [
+              "n_l2",
+              "n_mc",
+              "n_dram"
+            ],
+            "original_group": "",
+            "source_group": "g_mem",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_l2",
+                "label": "Shared L2 Cache",
+                "kind": "memory"
+              },
+              {
+                "id": "n_mc",
+                "label": "Memory Controller",
+                "kind": "control"
+              },
+              {
+                "id": "n_dram",
+                "label": "DRAM (Device Memory)",
+                "kind": "memory"
+              }
+            ],
+            "entry_sources": [
+              "g_cluster"
+            ],
+            "boundary_port_count": 1
+          }
+        ],
+        "macro_edges": [
+          {
+            "source": "n_host",
+            "target": "g_front",
+            "kind": "control",
+            "label": "commands",
+            "members": [
+              0
+            ],
+            "meanings_in_caption": [],
+            "id": "p1",
+            "family": "forward",
+            "routing": {
+              "source_side": "bottom",
+              "target_side": "left",
+              "target_fraction": 0.23417721518987342
+            }
+          },
+          {
+            "source": "g_front",
+            "target": "g_cluster",
+            "kind": "control",
+            "label": "workgroups x4",
+            "members": [
+              2
+            ],
+            "meanings_in_caption": [],
+            "id": "p2",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.23417721518987342,
+              "target_fraction": 0.2003610108303249
+            }
+          },
+          {
+            "source": "g_cluster",
+            "target": "g_mem",
+            "kind": "data",
+            "label": "miss / spill / fill",
+            "members": [
+              9,
+              10
+            ],
+            "meanings_in_caption": [],
+            "bidirectional": true,
+            "directional_labels": [
+              {
+                "source": "g_cluster",
+                "target": "g_mem",
+                "label": "miss / spill"
+              },
+              {
+                "source": "g_mem",
+                "target": "g_cluster",
+                "label": "fill"
+              }
+            ],
+            "id": "p3",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.2003610108303249,
+              "target_fraction": 0.1781609195402299
+            }
+          }
+        ],
+        "boxes": {
+          "g_front": {
+            "x": 0.045833,
+            "y": 0.294466,
+            "width": 0.223333,
+            "height": 0.468379
+          },
+          "g_cluster": {
+            "x": 0.440278,
+            "y": 0.294466,
+            "width": 0.226667,
+            "height": 0.547431
+          },
+          "g_mem": {
+            "x": 0.739167,
+            "y": 0.294466,
+            "width": 0.215,
+            "height": 0.51581
+          },
+          "n_host": {
+            "x": 0.077778,
+            "y": 0.098814,
+            "width": 0.159444,
+            "height": 0.067194
+          }
+        },
+        "containers": [],
+        "system_frame": {
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1
+          },
+          "label": "",
+          "display_only": true
+        },
+        "canvas": {
+          "coordinate_system": "normalized",
+          "natural_aspect": 1.778656,
+          "reading_direction": "left-to-right",
+          "target_width_mm": 160.0
+        },
+        "typography": {
+          "target_width_mm": 160.0,
+          "body_pt": 9.0,
+          "signal_pt": 8.5,
+          "body_px": 36,
+          "signal_px": 34,
+          "no_font_shrink": true,
+          "symbol_profile": "ink-header"
+        },
+        "symbol_metrics": {
+          "n_host": {
+            "width": 287,
+            "height": 68,
+            "lines": [
+              "Host Interface"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 0,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": []
+          },
+          "g_front": {
+            "width": 402,
+            "height": 474,
+            "lines": [
+              "Command Front End"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 90,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_cmd",
+                "label": "Command Processor",
+                "kind": "control",
+                "lines": [
+                  "Command",
+                  "Processor"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 166,
+                  "width": 300,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_disp",
+                "label": "Task Dispatcher",
+                "kind": "control",
+                "lines": [
+                  "Task Dispatcher",
+                  "Fan-out to",
+                  "4 clusters"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 294,
+                  "width": 300,
+                  "height": 156
+                }
+              }
+            ]
+          },
+          "g_cluster": {
+            "width": 408,
+            "height": 554,
+            "lines": [
+              "Compute Cluster (x4)"
+            ],
+            "detail_lines": [],
+            "ink_header": true,
+            "header_height": 66,
+            "entry_gutter_height": 90,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_warp",
+                "label": "Warp Scheduler",
+                "kind": "control",
+                "lines": [
+                  "Warp Scheduler"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 166,
+                  "width": 300,
+                  "height": 68
+                }
+              },
+              {
+                "id": "n_simd",
+                "label": "SIMD Unit",
+                "kind": "compute",
+                "lines": [
+                  "SIMD Unit"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 250,
+                  "width": 300,
+                  "height": 68
+                }
+              },
+              {
+                "id": "n_tensor",
+                "label": "Tensor Unit",
+                "kind": "compute",
+                "lines": [
+                  "Tensor Unit"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 334,
+                  "width": 300,
+                  "height": 68
+                }
+              },
+              {
+                "id": "n_smem",
+                "label": "On-Chip Storage",
+                "kind": "memory",
+                "lines": [
+                  "On-Chip",
+                  "Storage"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 418,
+                  "width": 300,
+                  "height": 112
+                }
+              }
+            ]
+          },
+          "g_mem": {
+            "width": 387,
+            "height": 522,
+            "lines": [
+              "Memory Subsystem"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 54,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_l2",
+                "label": "Shared L2 Cache",
+                "kind": "memory",
+                "lines": [
+                  "Shared",
+                  "L2 Cache"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 130,
+                  "width": 300,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_mc",
+                "label": "Memory Controller",
+                "kind": "control",
+                "lines": [
+                  "Memory",
+                  "Controller"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 258,
+                  "width": 300,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_dram",
+                "label": "DRAM (Device Memory)",
+                "kind": "memory",
+                "lines": [
+                  "DRAM (Device",
+                  "Memory)"
+                ],
+                "box_px": {
+                  "x": 18,
+                  "y": 386,
+                  "width": 300,
+                  "height": 112
+                }
+              }
+            ]
+          }
+        },
+        "candidate_id": "left-to-right-1",
+        "source_ownership": {
+          "n_host": "g_host",
+          "n_cmd": "g_front",
+          "n_disp": "g_front",
+          "n_warp": "g_cluster",
+          "n_simd": "g_cluster",
+          "n_tensor": "g_cluster",
+          "n_smem": "g_cluster",
+          "n_l2": "g_mem",
+          "n_mc": "g_mem",
+          "n_dram": "g_mem"
+        },
+        "source_group_parents": {
+          "g_host": "",
+          "g_front": "",
+          "g_cluster": "",
+          "g_mem": ""
+        },
+        "source_group_labels": {
+          "g_host": "Host Interface",
+          "g_front": "Command Front End",
+          "g_cluster": "Compute Cluster (x4)",
+          "g_mem": "Memory Subsystem"
+        },
+        "node_to_macro": {
+          "n_host": "n_host",
+          "n_cmd": "g_front",
+          "n_disp": "g_front",
+          "n_warp": "g_cluster",
+          "n_simd": "g_cluster",
+          "n_tensor": "g_cluster",
+          "n_smem": "g_cluster",
+          "n_l2": "g_mem",
+          "n_mc": "g_mem",
+          "n_dram": "g_mem"
+        },
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "projection": {
+          "source_node_to_macro": {
+            "n_host": "n_host",
+            "n_cmd": "g_front",
+            "n_disp": "g_front",
+            "n_warp": "g_cluster",
+            "n_simd": "g_cluster",
+            "n_tensor": "g_cluster",
+            "n_smem": "g_cluster",
+            "n_l2": "g_mem",
+            "n_mc": "g_mem",
+            "n_dram": "g_mem"
+          },
+          "internal_edges": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            11,
+            12,
+            13,
+            14
+          ],
+          "deferred_edges": [
+            {
+              "index": 1,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 3,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 4,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 5,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 6,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 7,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 8,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 11,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 12,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 13,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 14,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            }
+          ],
+          "folded_groups": [
+            "g_front",
+            "g_cluster",
+            "g_mem"
+          ],
+          "ownership_unchanged": true,
+          "meaning": "True group boundaries summarize only their source inventory and external relationships. A supplied xN group denotes that inventory's original multiplicity; no new instances or internal wiring are invented."
+        },
+        "insets": [],
+        "layout_scene": {
+          "width": 1800,
+          "height": 1012,
+          "routes": [
+            {
+              "source": "n_host",
+              "target": "g_front",
+              "kind": "control",
+              "label": "commands",
+              "members": [
+                0
+              ],
+              "meanings_in_caption": [],
+              "id": "p1",
+              "family": "forward",
+              "routing": {
+                "source_side": "bottom",
+                "target_side": "left",
+                "target_fraction": 0.23417721518987342
+              },
+              "source_side": "bottom",
+              "target_side": "left",
+              "points": [
+                [
+                  0.1575,
+                  0.166008
+                ],
+                [
+                  0.1575,
+                  0.185771
+                ],
+                [
+                  0.035556,
+                  0.185771
+                ],
+                [
+                  0.035556,
+                  0.40415
+                ],
+                [
+                  0.045833,
+                  0.40415
+                ]
+              ]
+            },
+            {
+              "source": "g_front",
+              "target": "g_cluster",
+              "kind": "control",
+              "label": "workgroups x4",
+              "members": [
+                2
+              ],
+              "meanings_in_caption": [],
+              "id": "p2",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "left",
+                "source_fraction": 0.23417721518987342,
+                "target_fraction": 0.2003610108303249
+              },
+              "source_side": "right",
+              "target_side": "left",
+              "points": [
+                [
+                  0.269166,
+                  0.40415
+                ],
+                [
+                  0.28,
+                  0.40415
+                ],
+                [
+                  0.28,
+                  0.403162
+                ],
+                [
+                  0.431111,
+                  0.403162
+                ],
+                [
+                  0.431111,
+                  0.40415
+                ],
+                [
+                  0.440278,
+                  0.40415
+                ]
+              ]
+            },
+            {
+              "source": "g_cluster",
+              "target": "g_mem",
+              "kind": "data",
+              "label": "miss / spill / fill",
+              "members": [
+                9,
+                10
+              ],
+              "meanings_in_caption": [],
+              "bidirectional": true,
+              "directional_labels": [
+                {
+                  "source": "g_cluster",
+                  "target": "g_mem",
+                  "label": "miss / spill"
+                },
+                {
+                  "source": "g_mem",
+                  "target": "g_cluster",
+                  "label": "fill"
+                }
+              ],
+              "id": "p3",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "left",
+                "source_fraction": 0.2003610108303249,
+                "target_fraction": 0.1781609195402299
+              },
+              "source_side": "right",
+              "target_side": "left",
+              "points": [
+                [
+                  0.666945,
+                  0.40415
+                ],
+                [
+                  0.677778,
+                  0.40415
+                ],
+                [
+                  0.677778,
+                  0.387352
+                ],
+                [
+                  0.728889,
+                  0.387352
+                ],
+                [
+                  0.728889,
+                  0.386363
+                ],
+                [
+                  0.739167,
+                  0.386363
+                ]
+              ]
+            }
+          ],
+          "line_legend": {},
+          "quality": {
+            "routes_complete": true,
+            "failed_routes": [],
+            "route_count": 3,
+            "requested_routes": 3,
+            "no_common_bus_inferred": true,
+            "owner_scope_entries": {
+              "clear": true,
+              "failures": [],
+              "meaning": "Boundary entry is scope-level, not a fabricated child-to-child mapping."
+            },
+            "organization_traces": {
+              "clear": true,
+              "contacts": [],
+              "geometry_is_not_new_junctions": true
+            },
+            "body_font_pt": 9.0,
+            "signal_font_pt": 8.5,
+            "target_width_mm": 160.0,
+            "publication_typography": true,
+            "geometry_is_not_raster_acceptance": true,
+            "input_traces": {
+              "clear": true,
+              "owners": [],
+              "failures": []
+            },
+            "labels_placed": 2,
+            "deferred_labels": [
+              {
+                "text": "miss / spill / fill",
+                "source_edge_indices": [
+                  9,
+                  10
+                ],
+                "reason": "No unobstructed region at signal font size"
+              }
+            ],
+            "typography_measured": true,
+            "deferred_scope_titles": [],
+            "document_fit": {
+              "height_mm": 90.0,
+              "default_limit_mm": 140,
+              "status": "pass",
+              "no_font_shrink": true,
+              "meaning": "Native source routing and typography do not certify a tall figure as publication-ready."
+            }
+          }
+        },
+        "composition_diagnostics": {
+          "grammar": "ownership-flow",
+          "candidates": [
+            {
+              "id": "ownership-hub-2",
+              "accepted": false,
+              "reasons": [
+                "No single existing data hub establishes this organization"
+              ]
+            },
+            {
+              "id": "ownership-hub-1",
+              "accepted": false,
+              "reasons": [
+                "No single existing data hub establishes this organization"
+              ]
+            },
+            {
+              "id": "top-to-bottom-1",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 9,
+                "longest_route_px": 683.5,
+                "total_route_px": 1721.5
+              },
+              "deferred_label_count": 0,
+              "natural_aspect": 0.769889,
+              "document_height_mm": 207.8
+            },
+            {
+              "id": "left-to-right-1",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 11,
+                "longest_route_px": 479.0,
+                "total_route_px": 937.0
+              },
+              "deferred_label_count": 1,
+              "natural_aspect": 1.778656,
+              "document_height_mm": 90.0
+            },
+            {
+              "id": "top-to-bottom-2",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 7,
+                "longest_route_px": 575.0,
+                "total_route_px": 1536.0
+              },
+              "deferred_label_count": 0,
+              "natural_aspect": 0.940439,
+              "document_height_mm": 170.1
+            },
+            {
+              "id": "left-to-right-2",
+              "accepted": false,
+              "reasons": [
+                "Horizontal subsystem inventories exceed the fixed-font document width"
+              ]
+            }
+          ],
+          "selection_policy": "Hard route/typography/crossover/boundary gates, then document height before optional prose for subsystem organization; no beauty score",
+          "selected": "left-to-right-1"
+        }
+      },
+      "layout_strategy": "publication-candidates",
+      "requires_layout_guide": true,
+      "node_count": 4,
+      "edge_count": 3,
+      "generation_inputs": [
+        {
+          "image_index": 1,
+          "role": "target_structure",
+          "source": "layout-guide",
+          "instruction": "This is the reviewed target plate. Make a clean faithful redraw: keep the module boxes, ownership, spacing, text placements, all connection paths and their source/target boundary attachments. Preserve every arrowhead at its existing endpoint. Improve only crisp typography, line weight and uniform flat fills; do not re-layout, reroute, duplicate or reinterpret the graph.",
+          "technical_revision": "If a generated image has a technical error, regenerate from the source specification and a clean corrected guide; do not continue a chain of local edits to the failed bitmap.",
+          "connection_contract": {
+            "visible_connections": 3,
+            "single_headed_connections": 2,
+            "double_headed_connections": 1,
+            "arrowheads": 4,
+            "counts_source": "reviewed layout_scene.routes, not canonical source edges",
+            "print_in_artwork": false
+          }
+        }
+      ],
+      "revision_mode": "local-appearance-edit",
+      "negative_prompt": "No invented hardware, parameters or connections. No gradients, shadows, texture, branding, decorative chip artwork, tiny type, dangling connectors, or text masking a wire."
+    },
+    {
+      "id": "overview",
+      "kind": "overview",
+      "abstract": false,
+      "title": "GPU Architecture Overview",
+      "summary": "完整结构在一张图内呈现。",
+      "node_ids": [
+        "n_cmd",
+        "n_dram",
+        "n_host",
+        "n_mc",
+        "n_smem",
+        "n_l2",
+        "n_simd",
+        "n_disp",
+        "n_tensor",
+        "n_warp"
+      ],
+      "edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "context_nodes": [],
+      "positions": {
+        "n_host": {
+          "column": 1,
+          "row": 1
+        },
+        "n_cmd": {
+          "column": 2,
+          "row": 1
+        },
+        "n_disp": {
+          "column": 3,
+          "row": 1
+        },
+        "n_warp": {
+          "column": 4,
+          "row": 1
+        },
+        "n_simd": {
+          "column": 5,
+          "row": 1
+        },
+        "n_smem": {
+          "column": 1,
+          "row": 3.5
+        },
+        "n_l2": {
+          "column": 2,
+          "row": 3
+        },
+        "n_tensor": {
+          "column": 2,
+          "row": 4
+        },
+        "n_mc": {
+          "column": 3,
+          "row": 3
+        },
+        "n_dram": {
+          "column": 4,
+          "row": 3
+        }
+      },
+      "outer_routes": [
+        5,
+        8,
+        10,
+        13,
+        14
+      ],
+      "node_count": 10,
+      "edge_count": 15,
+      "label_characters": 147,
+      "glyphs": {
+        "n_cmd": {
+          "shape": "compact-control-block"
+        },
+        "n_dram": {
+          "shape": "storage-bar"
+        },
+        "n_host": {
+          "shape": "interface-block"
+        },
+        "n_mc": {
+          "shape": "compact-control-block"
+        },
+        "n_smem": {
+          "shape": "storage-bar"
+        },
+        "n_l2": {
+          "shape": "storage-bar"
+        },
+        "n_simd": {
+          "shape": "compact-functional-block"
+        },
+        "n_disp": {
+          "shape": "compact-control-block"
+        },
+        "n_tensor": {
+          "shape": "compact-functional-block"
+        },
+        "n_warp": {
+          "shape": "compact-control-block"
+        }
+      },
+      "dimensions": {
+        "n_cmd": {
+          "width_f": 10.8,
+          "height_f": 2.2
+        },
+        "n_dram": {
+          "width_f": 11.3,
+          "height_f": 2.2
+        },
+        "n_host": {
+          "width_f": 9.1,
+          "height_f": 2.2
+        },
+        "n_mc": {
+          "width_f": 10.8,
+          "height_f": 2.2
+        },
+        "n_smem": {
+          "width_f": 9.65,
+          "height_f": 2.2
+        },
+        "n_l2": {
+          "width_f": 9.65,
+          "height_f": 2.2
+        },
+        "n_simd": {
+          "width_f": 6.3,
+          "height_f": 2.2
+        },
+        "n_disp": {
+          "width_f": 9.7,
+          "height_f": 2.2
+        },
+        "n_tensor": {
+          "width_f": 7.5,
+          "height_f": 2.2
+        },
+        "n_warp": {
+          "width_f": 9.1,
+          "height_f": 2.2
+        }
+      },
+      "attachment_points": [
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary upper",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary lower",
+          "target": "left boundary upper",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        },
+        {
+          "source": "right boundary lower",
+          "target": "left boundary lower",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        },
+        {
+          "source": "right boundary upper",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        }
+      ],
+      "structure_layout": {
+        "type": "directed_flow",
+        "view_type": "graph-led-datapath",
+        "abstract": false,
+        "flow_basis": "data",
+        "feedback_source_nodes": [],
+        "title": "GPU Architecture Overview",
+        "main_group": null,
+        "macro_nodes": [
+          {
+            "id": "n_cmd",
+            "label": "Command Processor",
+            "kind": "control",
+            "type": "resource",
+            "detail": "Decode & dispatch",
+            "members": [
+              "n_cmd"
+            ],
+            "source_node_index": 1,
+            "source_group": "g_front",
+            "source_owner": "g_front",
+            "source_ancestry": [
+              "g_front"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.038984,
+              "y": 0.479602,
+              "width": 0.161998,
+              "height": 0.050358
+            },
+            "slot_box": {
+              "x": 0.038984,
+              "y": 0.479602,
+              "width": 0.161998,
+              "height": 0.050358
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_dram",
+            "label": "DRAM (Device Memory)",
+            "kind": "memory",
+            "type": "resource",
+            "detail": "Off-chip frame buffer",
+            "members": [
+              "n_dram"
+            ],
+            "source_node_index": 9,
+            "source_group": "g_mem",
+            "source_owner": "g_mem",
+            "source_ancestry": [
+              "g_mem"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.774762,
+              "y": 0.74698,
+              "width": 0.186255,
+              "height": 0.045562
+            },
+            "slot_box": {
+              "x": 0.774762,
+              "y": 0.74698,
+              "width": 0.186255,
+              "height": 0.045562
+            },
+            "zone": "flow",
+            "visual_role": "storage-bar",
+            "stage_rank": 4,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_host",
+            "label": "Host Interface",
+            "kind": "io",
+            "type": "resource",
+            "detail": "PCIe / host link",
+            "members": [
+              "n_host"
+            ],
+            "source_node_index": 0,
+            "source_group": "g_host",
+            "source_owner": "g_host",
+            "source_ancestry": [
+              "g_host"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.051112,
+              "y": 0.155871,
+              "width": 0.137742,
+              "height": 0.055154
+            },
+            "slot_box": {
+              "x": 0.051112,
+              "y": 0.155871,
+              "width": 0.137742,
+              "height": 0.055154
+            },
+            "zone": "control",
+            "visual_role": "interface-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_mc",
+            "label": "Memory Controller",
+            "kind": "control",
+            "type": "resource",
+            "detail": "DRAM scheduling",
+            "members": [
+              "n_mc"
+            ],
+            "source_node_index": 8,
+            "source_group": "g_mem",
+            "source_owner": "g_mem",
+            "source_ancestry": [
+              "g_mem"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.576668,
+              "y": 0.744582,
+              "width": 0.161998,
+              "height": 0.050358
+            },
+            "slot_box": {
+              "x": 0.576668,
+              "y": 0.744582,
+              "width": 0.161998,
+              "height": 0.050358
+            },
+            "zone": "flow",
+            "visual_role": "control-block",
+            "stage_rank": 3,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_smem",
+            "label": "On-Chip Storage",
+            "kind": "memory",
+            "type": "resource",
+            "detail": "Shared memory / register file",
+            "members": [
+              "n_smem"
+            ],
+            "source_node_index": 6,
+            "source_group": "g_cluster",
+            "source_owner": "g_cluster",
+            "source_ancestry": [
+              "g_cluster"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.212821,
+              "y": 0.74698,
+              "width": 0.145827,
+              "height": 0.045562
+            },
+            "slot_box": {
+              "x": 0.212821,
+              "y": 0.74698,
+              "width": 0.145827,
+              "height": 0.045562
+            },
+            "zone": "flow",
+            "visual_role": "storage-bar",
+            "stage_rank": 1,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_l2",
+            "label": "Shared L2 Cache",
+            "kind": "memory",
+            "type": "resource",
+            "detail": "Shared across clusters",
+            "members": [
+              "n_l2"
+            ],
+            "source_node_index": 7,
+            "source_group": "g_mem",
+            "source_owner": "g_mem",
+            "source_ancestry": [
+              "g_mem"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.394744,
+              "y": 0.74698,
+              "width": 0.145827,
+              "height": 0.045562
+            },
+            "slot_box": {
+              "x": 0.394744,
+              "y": 0.74698,
+              "width": 0.145827,
+              "height": 0.045562
+            },
+            "zone": "flow",
+            "visual_role": "storage-bar",
+            "stage_rank": 2,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_simd",
+            "label": "SIMD Unit",
+            "kind": "compute",
+            "type": "resource",
+            "detail": "Vector ALU lanes",
+            "members": [
+              "n_simd"
+            ],
+            "source_node_index": 4,
+            "source_group": "g_cluster",
+            "source_owner": "g_cluster",
+            "source_ancestry": [
+              "g_cluster"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.071325,
+              "y": 0.676238,
+              "width": 0.097314,
+              "height": 0.062348
+            },
+            "slot_box": {
+              "x": 0.071325,
+              "y": 0.676238,
+              "width": 0.097314,
+              "height": 0.062348
+            },
+            "zone": "flow",
+            "visual_role": "functional-block",
+            "stage_rank": 0,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_disp",
+            "label": "Task Dispatcher",
+            "kind": "control",
+            "type": "resource",
+            "detail": "Fan-out to 4 clusters",
+            "members": [
+              "n_disp"
+            ],
+            "source_node_index": 2,
+            "source_group": "g_front",
+            "source_owner": "g_front",
+            "source_ancestry": [
+              "g_front"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.047069,
+              "y": 0.376487,
+              "width": 0.145827,
+              "height": 0.050358
+            },
+            "slot_box": {
+              "x": 0.047069,
+              "y": 0.376487,
+              "width": 0.145827,
+              "height": 0.050358
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_tensor",
+            "label": "Tensor Unit",
+            "kind": "compute",
+            "type": "resource",
+            "detail": "Matrix / MMA datapath",
+            "members": [
+              "n_tensor"
+            ],
+            "source_node_index": 5,
+            "source_group": "g_cluster",
+            "source_owner": "g_cluster",
+            "source_ancestry": [
+              "g_cluster"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.06324,
+              "y": 0.800935,
+              "width": 0.113485,
+              "height": 0.062348
+            },
+            "slot_box": {
+              "x": 0.06324,
+              "y": 0.800935,
+              "width": 0.113485,
+              "height": 0.062348
+            },
+            "zone": "flow",
+            "visual_role": "functional-block",
+            "stage_rank": 0,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_warp",
+            "label": "Warp Scheduler",
+            "kind": "control",
+            "type": "resource",
+            "detail": "Warp issue & scoreboard",
+            "members": [
+              "n_warp"
+            ],
+            "source_node_index": 3,
+            "source_group": "g_cluster",
+            "source_owner": "g_cluster",
+            "source_ancestry": [
+              "g_cluster"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.051112,
+              "y": 0.273373,
+              "width": 0.137742,
+              "height": 0.050358
+            },
+            "slot_box": {
+              "x": 0.051112,
+              "y": 0.273373,
+              "width": 0.137742,
+              "height": 0.050358
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          }
+        ],
+        "macro_edges": [
+          {
+            "id": "E1",
+            "source": "n_host",
+            "target": "n_cmd",
+            "kind": "control",
+            "label": "commands",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_host"
+            ],
+            "target_nodes": [
+              "n_cmd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.077913,
+              "track_fraction": 0.1
+            }
+          },
+          {
+            "id": "E2",
+            "source": "n_cmd",
+            "target": "n_disp",
+            "kind": "control",
+            "label": "kernel launch",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_cmd"
+            ],
+            "target_nodes": [
+              "n_disp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.089908,
+              "track_fraction": 0.3
+            }
+          },
+          {
+            "id": "E3",
+            "source": "n_disp",
+            "target": "n_warp",
+            "kind": "control",
+            "label": "workgroups x4",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_disp"
+            ],
+            "target_nodes": [
+              "n_warp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 2,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.101903,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E4",
+            "source": "n_warp",
+            "target": "n_simd",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 3,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.113898,
+              "track_fraction": 0.7
+            }
+          },
+          {
+            "id": "E5",
+            "source": "n_warp",
+            "target": "n_tensor",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125893,
+              "track_fraction": 0.9
+            }
+          },
+          {
+            "id": "E6",
+            "source": "n_smem",
+            "target": "n_simd",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 0,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.910052,
+              "track_fraction": 0.1
+            }
+          },
+          {
+            "id": "E7",
+            "source": "n_smem",
+            "target": "n_tensor",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 1,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.922047,
+              "track_fraction": 0.3
+            }
+          },
+          {
+            "id": "E8",
+            "source": "n_simd",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_simd"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E9",
+            "source": "n_tensor",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_tensor"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E10",
+            "source": "n_smem",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "miss / spill",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E11",
+            "source": "n_l2",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 2,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.934042,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E12",
+            "source": "n_l2",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "miss",
+            "members": [
+              11
+            ],
+            "source_edge_index": 11,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E13",
+            "source": "n_mc",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "read / write",
+            "members": [
+              12
+            ],
+            "source_edge_index": 12,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-3",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E14",
+            "source": "n_dram",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "data return",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_dram"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 3,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.946037,
+              "track_fraction": 0.7
+            }
+          },
+          {
+            "id": "E15",
+            "source": "n_mc",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 4,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.958032,
+              "track_fraction": 0.9
+            }
+          }
+        ],
+        "projected_links": [
+          {
+            "id": "E1",
+            "source": "n_host",
+            "target": "n_cmd",
+            "kind": "control",
+            "label": "commands",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_host"
+            ],
+            "target_nodes": [
+              "n_cmd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.077913,
+              "track_fraction": 0.1
+            }
+          },
+          {
+            "id": "E2",
+            "source": "n_cmd",
+            "target": "n_disp",
+            "kind": "control",
+            "label": "kernel launch",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_cmd"
+            ],
+            "target_nodes": [
+              "n_disp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.089908,
+              "track_fraction": 0.3
+            }
+          },
+          {
+            "id": "E3",
+            "source": "n_disp",
+            "target": "n_warp",
+            "kind": "control",
+            "label": "workgroups x4",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_disp"
+            ],
+            "target_nodes": [
+              "n_warp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 2,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.101903,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E4",
+            "source": "n_warp",
+            "target": "n_simd",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 3,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.113898,
+              "track_fraction": 0.7
+            }
+          },
+          {
+            "id": "E5",
+            "source": "n_warp",
+            "target": "n_tensor",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125893,
+              "track_fraction": 0.9
+            }
+          },
+          {
+            "id": "E6",
+            "source": "n_smem",
+            "target": "n_simd",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 0,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.910052,
+              "track_fraction": 0.1
+            }
+          },
+          {
+            "id": "E7",
+            "source": "n_smem",
+            "target": "n_tensor",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 1,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.922047,
+              "track_fraction": 0.3
+            }
+          },
+          {
+            "id": "E8",
+            "source": "n_simd",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_simd"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E9",
+            "source": "n_tensor",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_tensor"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E10",
+            "source": "n_smem",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "miss / spill",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E11",
+            "source": "n_l2",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 2,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.934042,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E12",
+            "source": "n_l2",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "miss",
+            "members": [
+              11
+            ],
+            "source_edge_index": 11,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E13",
+            "source": "n_mc",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "read / write",
+            "members": [
+              12
+            ],
+            "source_edge_index": 12,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-3",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E14",
+            "source": "n_dram",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "data return",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_dram"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 3,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.946037,
+              "track_fraction": 0.7
+            }
+          },
+          {
+            "id": "E15",
+            "source": "n_mc",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 4,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.958032,
+              "track_fraction": 0.9
+            }
+          }
+        ],
+        "deferred_links": [],
+        "internal_edges": [],
+        "node_ids": [
+          "n_cmd",
+          "n_dram",
+          "n_host",
+          "n_mc",
+          "n_smem",
+          "n_l2",
+          "n_simd",
+          "n_disp",
+          "n_tensor",
+          "n_warp"
+        ],
+        "edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "boxes": {
+          "n_cmd": {
+            "x": 0.038984,
+            "y": 0.479602,
+            "width": 0.161998,
+            "height": 0.050358
+          },
+          "n_dram": {
+            "x": 0.774762,
+            "y": 0.74698,
+            "width": 0.186255,
+            "height": 0.045562
+          },
+          "n_host": {
+            "x": 0.051112,
+            "y": 0.155871,
+            "width": 0.137742,
+            "height": 0.055154
+          },
+          "n_mc": {
+            "x": 0.576668,
+            "y": 0.744582,
+            "width": 0.161998,
+            "height": 0.050358
+          },
+          "n_smem": {
+            "x": 0.212821,
+            "y": 0.74698,
+            "width": 0.145827,
+            "height": 0.045562
+          },
+          "n_l2": {
+            "x": 0.394744,
+            "y": 0.74698,
+            "width": 0.145827,
+            "height": 0.045562
+          },
+          "n_simd": {
+            "x": 0.071325,
+            "y": 0.676238,
+            "width": 0.097314,
+            "height": 0.062348
+          },
+          "n_disp": {
+            "x": 0.047069,
+            "y": 0.376487,
+            "width": 0.145827,
+            "height": 0.050358
+          },
+          "n_tensor": {
+            "x": 0.06324,
+            "y": 0.800935,
+            "width": 0.113485,
+            "height": 0.062348
+          },
+          "n_warp": {
+            "x": 0.051112,
+            "y": 0.273373,
+            "width": 0.137742,
+            "height": 0.050358
+          }
+        },
+        "slot_boxes": {
+          "n_cmd": {
+            "x": 0.038984,
+            "y": 0.479602,
+            "width": 0.161998,
+            "height": 0.050358
+          },
+          "n_dram": {
+            "x": 0.774762,
+            "y": 0.74698,
+            "width": 0.186255,
+            "height": 0.045562
+          },
+          "n_host": {
+            "x": 0.051112,
+            "y": 0.155871,
+            "width": 0.137742,
+            "height": 0.055154
+          },
+          "n_mc": {
+            "x": 0.576668,
+            "y": 0.744582,
+            "width": 0.161998,
+            "height": 0.050358
+          },
+          "n_smem": {
+            "x": 0.212821,
+            "y": 0.74698,
+            "width": 0.145827,
+            "height": 0.045562
+          },
+          "n_l2": {
+            "x": 0.394744,
+            "y": 0.74698,
+            "width": 0.145827,
+            "height": 0.045562
+          },
+          "n_simd": {
+            "x": 0.071325,
+            "y": 0.676238,
+            "width": 0.097314,
+            "height": 0.062348
+          },
+          "n_disp": {
+            "x": 0.047069,
+            "y": 0.376487,
+            "width": 0.145827,
+            "height": 0.050358
+          },
+          "n_tensor": {
+            "x": 0.06324,
+            "y": 0.800935,
+            "width": 0.113485,
+            "height": 0.062348
+          },
+          "n_warp": {
+            "x": 0.051112,
+            "y": 0.273373,
+            "width": 0.137742,
+            "height": 0.050358
+          }
+        },
+        "containers": [
+          {
+            "id": "g_host",
+            "label": "Host Interface",
+            "parent": "",
+            "source_group": "g_host",
+            "source_members": [
+              "n_host"
+            ],
+            "members": [
+              "n_host"
+            ],
+            "scope_source_members": [
+              "n_host"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": "g_host",
+            "continuation_of": null,
+            "box": {
+              "x": 0.039561,
+              "y": 0.10791,
+              "width": 0.160843,
+              "height": 0.122298
+            }
+          },
+          {
+            "id": "g_front",
+            "label": "Command Front End",
+            "parent": "",
+            "source_group": "g_front",
+            "source_members": [
+              "n_cmd",
+              "n_disp"
+            ],
+            "members": [
+              "n_cmd",
+              "n_disp"
+            ],
+            "scope_source_members": [
+              "n_cmd",
+              "n_disp"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.027433,
+              "y": 0.328527,
+              "width": 0.1851,
+              "height": 0.220617
+            }
+          },
+          {
+            "id": "@scope:g_cluster:1",
+            "label": "Compute Cluster (x4)",
+            "parent": "",
+            "source_group": "g_cluster",
+            "source_members": [
+              "n_warp"
+            ],
+            "members": [
+              "n_warp"
+            ],
+            "scope_source_members": [
+              "n_smem",
+              "n_simd",
+              "n_tensor",
+              "n_warp"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": "g_cluster",
+            "box": {
+              "x": 0.043171,
+              "y": 0.233806,
+              "width": 0.153624,
+              "height": 0.103114
+            }
+          },
+          {
+            "id": "@scope:g_cluster:2",
+            "label": "Compute Cluster (x4)",
+            "parent": "",
+            "source_group": "g_cluster",
+            "source_members": [
+              "n_tensor"
+            ],
+            "members": [
+              "n_tensor"
+            ],
+            "scope_source_members": [
+              "n_smem",
+              "n_simd",
+              "n_tensor",
+              "n_warp"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": "g_cluster",
+            "box": {
+              "x": 0.055299,
+              "y": 0.761368,
+              "width": 0.129368,
+              "height": 0.115104
+            }
+          },
+          {
+            "id": "@scope:g_cluster:3",
+            "label": "Compute Cluster (x4)",
+            "parent": "",
+            "source_group": "g_cluster",
+            "source_members": [
+              "n_simd"
+            ],
+            "members": [
+              "n_simd"
+            ],
+            "scope_source_members": [
+              "n_smem",
+              "n_simd",
+              "n_tensor",
+              "n_warp"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": "g_cluster",
+            "box": {
+              "x": 0.063384,
+              "y": 0.636671,
+              "width": 0.113197,
+              "height": 0.115104
+            }
+          },
+          {
+            "id": "@scope:g_cluster:4",
+            "label": "Compute Cluster (x4)",
+            "parent": "",
+            "source_group": "g_cluster",
+            "source_members": [
+              "n_smem"
+            ],
+            "members": [
+              "n_smem"
+            ],
+            "scope_source_members": [
+              "n_smem",
+              "n_simd",
+              "n_tensor",
+              "n_warp"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": "g_cluster",
+            "box": {
+              "x": 0.20488,
+              "y": 0.707413,
+              "width": 0.16171,
+              "height": 0.098318
+            }
+          },
+          {
+            "id": "g_mem",
+            "label": "Memory Subsystem",
+            "parent": "",
+            "source_group": "g_mem",
+            "source_members": [
+              "n_dram",
+              "n_mc",
+              "n_l2"
+            ],
+            "members": [
+              "n_dram",
+              "n_mc",
+              "n_l2"
+            ],
+            "scope_source_members": [
+              "n_dram",
+              "n_mc",
+              "n_l2"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.383194,
+              "y": 0.696622,
+              "width": 0.589373,
+              "height": 0.117502
+            }
+          }
+        ],
+        "system_frame": {
+          "id": "@flow",
+          "label": "GPU Architecture Overview",
+          "box": {
+            "x": 0.021658,
+            "y": 0.03597,
+            "width": 0.956685,
+            "height": 0.856089
+          },
+          "source_group": null,
+          "display_only": true,
+          "not_an_added_hardware_node": true,
+          "replaces_container": null
+        },
+        "role_lanes": [
+          {
+            "id": "peripheral-control",
+            "role": "peripheral-control",
+            "members": [
+              "n_host",
+              "n_cmd",
+              "n_disp",
+              "n_warp"
+            ],
+            "box": {
+              "x": 0.034652,
+              "y": 0.148677,
+              "width": 0.170661,
+              "height": 0.388477
+            },
+            "display_only": true
+          },
+          {
+            "id": "stage-0",
+            "role": "data-stage",
+            "rank": 0,
+            "members": [
+              "n_simd",
+              "n_tensor"
+            ],
+            "box": {
+              "x": 0.058908,
+              "y": 0.669044,
+              "width": 0.122148,
+              "height": 0.201433
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-1",
+            "role": "data-stage",
+            "rank": 1,
+            "members": [
+              "n_smem"
+            ],
+            "box": {
+              "x": 0.20849,
+              "y": 0.739786,
+              "width": 0.15449,
+              "height": 0.05995
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-2",
+            "role": "data-stage",
+            "rank": 2,
+            "members": [
+              "n_l2"
+            ],
+            "box": {
+              "x": 0.390413,
+              "y": 0.739786,
+              "width": 0.15449,
+              "height": 0.05995
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-3",
+            "role": "data-stage",
+            "rank": 3,
+            "members": [
+              "n_mc"
+            ],
+            "box": {
+              "x": 0.572336,
+              "y": 0.737388,
+              "width": 0.170661,
+              "height": 0.064746
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-4",
+            "role": "data-stage",
+            "rank": 4,
+            "members": [
+              "n_dram"
+            ],
+            "box": {
+              "x": 0.77043,
+              "y": 0.739786,
+              "width": 0.194918,
+              "height": 0.05995
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          }
+        ],
+        "region_slots": [],
+        "component_lanes": [],
+        "repeat_families": [],
+        "source_ownership": {
+          "n_cmd": "g_front",
+          "n_dram": "g_mem",
+          "n_host": "g_host",
+          "n_mc": "g_mem",
+          "n_smem": "g_cluster",
+          "n_l2": "g_mem",
+          "n_simd": "g_cluster",
+          "n_disp": "g_front",
+          "n_tensor": "g_cluster",
+          "n_warp": "g_cluster"
+        },
+        "node_to_macro": {
+          "n_cmd": "n_cmd",
+          "n_dram": "n_dram",
+          "n_host": "n_host",
+          "n_mc": "n_mc",
+          "n_smem": "n_smem",
+          "n_l2": "n_l2",
+          "n_simd": "n_simd",
+          "n_disp": "n_disp",
+          "n_tensor": "n_tensor",
+          "n_warp": "n_warp"
+        },
+        "context_nodes": [],
+        "source_nested_groups": [],
+        "scope_owner_nodes": [],
+        "flow_ranks": {
+          "n_simd": 0,
+          "n_tensor": 0,
+          "n_smem": 1,
+          "n_l2": 2,
+          "n_mc": 3,
+          "n_dram": 4
+        },
+        "forward_edge_indices": [
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "return_edge_indices": [
+          5,
+          6,
+          10,
+          13,
+          14
+        ],
+        "routing_corridors": [
+          {
+            "id": "control-outer",
+            "box": {
+              "x": 0.021658,
+              "y": 0.071915,
+              "width": 0.956685,
+              "height": 0.059976
+            },
+            "axis": "horizontal",
+            "track_count": 5,
+            "routing_is_not_a_hardware_bus": true
+          },
+          {
+            "id": "return-outer",
+            "box": {
+              "x": 0.021658,
+              "y": 0.904054,
+              "width": 0.956685,
+              "height": 0.059976
+            },
+            "axis": "horizontal",
+            "track_count": 5,
+            "routing_is_not_a_hardware_bus": true
+          }
+        ],
+        "canvas": {
+          "coordinate_system": "normalized",
+          "natural_aspect": 1.661,
+          "label_unit_pixels": 25.989027,
+          "reading_direction": "left-to-right"
+        },
+        "coverage": {
+          "source_nodes": 10,
+          "source_edges": 15,
+          "nodes_projected": 10,
+          "missing_nodes": [],
+          "missing_edges": [],
+          "duplicate_edge_indices": []
+        },
+        "warnings": [
+          "Source scope g_cluster uses continuation segments; source ownership is unchanged.",
+          "Dependency ranks are geometric positions, not clock cycles. Outer return routes retain their original kind and direction.",
+          "Source containment and context ownership are unchanged; no node, bus, port, parameter or hardware copy is introduced."
+        ],
+        "pair_data_relations": false
+      },
+      "layout_scene": {
+        "width": 1800,
+        "height": 1084,
+        "routes": [
+          {
+            "id": "E1",
+            "source": "n_host",
+            "target": "n_cmd",
+            "kind": "control",
+            "label": "commands",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_host"
+            ],
+            "target_nodes": [
+              "n_cmd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.077913,
+              "track_fraction": 0.1
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.119983,
+                0.155871
+              ],
+              [
+                0.119983,
+                0.140221
+              ],
+              [
+                0.12,
+                0.140221
+              ],
+              [
+                0.12,
+                0.077491
+              ],
+              [
+                0.028889,
+                0.077491
+              ],
+              [
+                0.028889,
+                0.461255
+              ],
+              [
+                0.092983,
+                0.461255
+              ],
+              [
+                0.092983,
+                0.479602
+              ]
+            ]
+          },
+          {
+            "id": "E2",
+            "source": "n_cmd",
+            "target": "n_disp",
+            "kind": "control",
+            "label": "kernel launch",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_cmd"
+            ],
+            "target_nodes": [
+              "n_disp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.089908,
+              "track_fraction": 0.3
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.146983,
+                0.479602
+              ],
+              [
+                0.146983,
+                0.461255
+              ],
+              [
+                0.2,
+                0.461255
+              ],
+              [
+                0.2,
+                0.088561
+              ],
+              [
+                0.026667,
+                0.088561
+              ],
+              [
+                0.026667,
+                0.361624
+              ],
+              [
+                0.095678,
+                0.361624
+              ],
+              [
+                0.095678,
+                0.376487
+              ]
+            ]
+          },
+          {
+            "id": "E3",
+            "source": "n_disp",
+            "target": "n_warp",
+            "kind": "control",
+            "label": "workgroups x4",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_disp"
+            ],
+            "target_nodes": [
+              "n_warp"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 2,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.101903,
+              "track_fraction": 0.5
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.144287,
+                0.376487
+              ],
+              [
+                0.144287,
+                0.361624
+              ],
+              [
+                0.195556,
+                0.361624
+              ],
+              [
+                0.195556,
+                0.103321
+              ],
+              [
+                0.044444,
+                0.103321
+              ],
+              [
+                0.044444,
+                0.258303
+              ],
+              [
+                0.085547,
+                0.258303
+              ],
+              [
+                0.085547,
+                0.273373
+              ]
+            ]
+          },
+          {
+            "id": "E4",
+            "source": "n_warp",
+            "target": "n_simd",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 3,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.113898,
+              "track_fraction": 0.7
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.119983,
+                0.273373
+              ],
+              [
+                0.119983,
+                0.258303
+              ],
+              [
+                0.197778,
+                0.258303
+              ],
+              [
+                0.197778,
+                0.114391
+              ],
+              [
+                0.206667,
+                0.114391
+              ],
+              [
+                0.206667,
+                0.660517
+              ],
+              [
+                0.119982,
+                0.660517
+              ],
+              [
+                0.119982,
+                0.676238
+              ]
+            ]
+          },
+          {
+            "id": "E5",
+            "source": "n_warp",
+            "target": "n_tensor",
+            "kind": "control",
+            "label": "issue",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_warp"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125893,
+              "track_fraction": 0.9
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.154418,
+                0.273373
+              ],
+              [
+                0.154418,
+                0.258303
+              ],
+              [
+                0.153333,
+                0.258303
+              ],
+              [
+                0.153333,
+                0.239852
+              ],
+              [
+                0.202222,
+                0.239852
+              ],
+              [
+                0.202222,
+                0.125461
+              ],
+              [
+                0.024444,
+                0.125461
+              ],
+              [
+                0.024444,
+                0.785978
+              ],
+              [
+                0.119983,
+                0.785978
+              ],
+              [
+                0.119983,
+                0.800935
+              ]
+            ]
+          },
+          {
+            "id": "E6",
+            "source": "n_smem",
+            "target": "n_simd",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_simd"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 0,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.910052,
+              "track_fraction": 0.1
+            },
+            "source_side": "bottom",
+            "target_side": "right",
+            "points": [
+              [
+                0.249278,
+                0.792542
+              ],
+              [
+                0.249278,
+                0.808118
+              ],
+              [
+                0.248889,
+                0.808118
+              ],
+              [
+                0.248889,
+                0.911439
+              ],
+              [
+                0.186667,
+                0.911439
+              ],
+              [
+                0.186667,
+                0.697417
+              ],
+              [
+                0.177778,
+                0.697417
+              ],
+              [
+                0.177778,
+                0.697021
+              ],
+              [
+                0.168639,
+                0.697021
+              ]
+            ]
+          },
+          {
+            "id": "E7",
+            "source": "n_smem",
+            "target": "n_tensor",
+            "kind": "data",
+            "label": "operands",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_tensor"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 1,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.922047,
+              "track_fraction": 0.3
+            },
+            "source_side": "bottom",
+            "target_side": "bottom",
+            "points": [
+              [
+                0.285735,
+                0.792542
+              ],
+              [
+                0.285735,
+                0.808118
+              ],
+              [
+                0.286667,
+                0.808118
+              ],
+              [
+                0.286667,
+                0.922509
+              ],
+              [
+                0.12,
+                0.922509
+              ],
+              [
+                0.12,
+                0.878229
+              ],
+              [
+                0.119983,
+                0.878229
+              ],
+              [
+                0.119983,
+                0.863283
+              ]
+            ]
+          },
+          {
+            "id": "E8",
+            "source": "n_simd",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_simd"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.168639,
+                0.717803
+              ],
+              [
+                0.177778,
+                0.717803
+              ],
+              [
+                0.177778,
+                0.719557
+              ],
+              [
+                0.202222,
+                0.719557
+              ],
+              [
+                0.202222,
+                0.762167
+              ],
+              [
+                0.212821,
+                0.762167
+              ]
+            ]
+          },
+          {
+            "id": "E9",
+            "source": "n_tensor",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "results",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_tensor"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.176725,
+                0.832109
+              ],
+              [
+                0.186667,
+                0.832109
+              ],
+              [
+                0.186667,
+                0.833948
+              ],
+              [
+                0.202222,
+                0.833948
+              ],
+              [
+                0.202222,
+                0.777355
+              ],
+              [
+                0.212821,
+                0.777355
+              ]
+            ]
+          },
+          {
+            "id": "E10",
+            "source": "n_smem",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "miss / spill",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_smem"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.358648,
+                0.769761
+              ],
+              [
+                0.368889,
+                0.769761
+              ],
+              [
+                0.368889,
+                0.771218
+              ],
+              [
+                0.384444,
+                0.771218
+              ],
+              [
+                0.384444,
+                0.769761
+              ],
+              [
+                0.394744,
+                0.769761
+              ]
+            ]
+          },
+          {
+            "id": "E11",
+            "source": "n_l2",
+            "target": "n_smem",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_smem"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 2,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.934042,
+              "track_fraction": 0.5
+            },
+            "source_side": "bottom",
+            "target_side": "bottom",
+            "points": [
+              [
+                0.443353,
+                0.792542
+              ],
+              [
+                0.443353,
+                0.808118
+              ],
+              [
+                0.444444,
+                0.808118
+              ],
+              [
+                0.444444,
+                0.933579
+              ],
+              [
+                0.322222,
+                0.933579
+              ],
+              [
+                0.322222,
+                0.808118
+              ],
+              [
+                0.322191,
+                0.808118
+              ],
+              [
+                0.322191,
+                0.792542
+              ]
+            ]
+          },
+          {
+            "id": "E12",
+            "source": "n_l2",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "miss",
+            "members": [
+              11
+            ],
+            "source_edge_index": 11,
+            "source_nodes": [
+              "n_l2"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.540571,
+                0.769761
+              ],
+              [
+                0.551111,
+                0.769761
+              ],
+              [
+                0.551111,
+                0.771218
+              ],
+              [
+                0.566667,
+                0.771218
+              ],
+              [
+                0.566667,
+                0.769761
+              ],
+              [
+                0.576668,
+                0.769761
+              ]
+            ]
+          },
+          {
+            "id": "E13",
+            "source": "n_mc",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "read / write",
+            "members": [
+              12
+            ],
+            "source_edge_index": 12,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-3",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.738666,
+                0.769761
+              ],
+              [
+                0.748889,
+                0.769761
+              ],
+              [
+                0.748889,
+                0.771218
+              ],
+              [
+                0.764444,
+                0.771218
+              ],
+              [
+                0.764444,
+                0.769761
+              ],
+              [
+                0.774762,
+                0.769761
+              ]
+            ]
+          },
+          {
+            "id": "E14",
+            "source": "n_dram",
+            "target": "n_mc",
+            "kind": "data",
+            "label": "data return",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_dram"
+            ],
+            "target_nodes": [
+              "n_mc"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 3,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.946037,
+              "track_fraction": 0.7
+            },
+            "source_side": "bottom",
+            "target_side": "bottom",
+            "points": [
+              [
+                0.867889,
+                0.792542
+              ],
+              [
+                0.867889,
+                0.808118
+              ],
+              [
+                0.868889,
+                0.808118
+              ],
+              [
+                0.868889,
+                0.944649
+              ],
+              [
+                0.631111,
+                0.944649
+              ],
+              [
+                0.631111,
+                0.811808
+              ],
+              [
+                0.630667,
+                0.811808
+              ],
+              [
+                0.630667,
+                0.79494
+              ]
+            ]
+          },
+          {
+            "id": "E15",
+            "source": "n_mc",
+            "target": "n_l2",
+            "kind": "data",
+            "label": "fill",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_mc"
+            ],
+            "target_nodes": [
+              "n_l2"
+            ],
+            "family": "return",
+            "routing": {
+              "corridor": "return-outer",
+              "track": 4,
+              "source_side": "bottom",
+              "target_side": "bottom",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.958032,
+              "track_fraction": 0.9
+            },
+            "source_side": "bottom",
+            "target_side": "bottom",
+            "points": [
+              [
+                0.684667,
+                0.79494
+              ],
+              [
+                0.684667,
+                0.811808
+              ],
+              [
+                0.684444,
+                0.811808
+              ],
+              [
+                0.684444,
+                0.95941
+              ],
+              [
+                0.491111,
+                0.95941
+              ],
+              [
+                0.491111,
+                0.808118
+              ],
+              [
+                0.491962,
+                0.808118
+              ],
+              [
+                0.491962,
+                0.792542
+              ]
+            ]
+          }
+        ],
+        "line_legend": {},
+        "quality": {
+          "routes_complete": true,
+          "failed_routes": [],
+          "route_count": 15,
+          "requested_routes": 15,
+          "no_common_bus_inferred": true
+        }
+      },
+      "primary": false,
+      "technical_annex": true,
+      "design_contract": {
+        "grammar": "exact-flow",
+        "question": "How do the selected source relationships operate?",
+        "claim": "Exact technical annex; only this selected source scope is drawn.",
+        "scope": "exact source scope",
+        "target_width_mm": 160,
+        "body_pt": 9,
+        "signal_pt": 8.5,
+        "source_invariants": [
+          "source ownership",
+          "directed source relations",
+          "explicit quantities and conditions",
+          "required verbatim text"
+        ],
+        "editorial_decisions": [
+          "projection",
+          "positions",
+          "line bends",
+          "which optional prose stays in caption"
+        ],
+        "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+        "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+        "symbol_profile": "ink-header",
+        "preflight_note": "This grammar uses the historical technical layout; the new physical type-scale preflight was not achieved."
+      },
+      "macro_nodes": [
+        {
+          "id": "n_host",
+          "label": "Host Interface",
+          "kind": "io",
+          "members": [
+            "n_host"
+          ],
+          "original_group": "g_host",
+          "children": [],
+          "detail": "PCIe / host link"
+        },
+        {
+          "id": "n_cmd",
+          "label": "Command Processor",
+          "kind": "control",
+          "members": [
+            "n_cmd"
+          ],
+          "original_group": "g_front",
+          "children": [],
+          "detail": "Decode & dispatch"
+        },
+        {
+          "id": "n_disp",
+          "label": "Task Dispatcher",
+          "kind": "control",
+          "members": [
+            "n_disp"
+          ],
+          "original_group": "g_front",
+          "children": [],
+          "detail": "Fan-out to 4 clusters"
+        },
+        {
+          "id": "n_warp",
+          "label": "Warp Scheduler",
+          "kind": "control",
+          "members": [
+            "n_warp"
+          ],
+          "original_group": "g_cluster",
+          "children": [],
+          "detail": "Warp issue & scoreboard"
+        },
+        {
+          "id": "n_simd",
+          "label": "SIMD Unit",
+          "kind": "compute",
+          "members": [
+            "n_simd"
+          ],
+          "original_group": "g_cluster",
+          "children": [],
+          "detail": "Vector ALU lanes"
+        },
+        {
+          "id": "n_tensor",
+          "label": "Tensor Unit",
+          "kind": "compute",
+          "members": [
+            "n_tensor"
+          ],
+          "original_group": "g_cluster",
+          "children": [],
+          "detail": "Matrix / MMA datapath"
+        },
+        {
+          "id": "n_smem",
+          "label": "On-Chip Storage",
+          "kind": "memory",
+          "members": [
+            "n_smem"
+          ],
+          "original_group": "g_cluster",
+          "children": [],
+          "detail": "Shared memory / register file"
+        },
+        {
+          "id": "n_l2",
+          "label": "Shared L2 Cache",
+          "kind": "memory",
+          "members": [
+            "n_l2"
+          ],
+          "original_group": "g_mem",
+          "children": [],
+          "detail": "Shared across clusters"
+        },
+        {
+          "id": "n_mc",
+          "label": "Memory Controller",
+          "kind": "control",
+          "members": [
+            "n_mc"
+          ],
+          "original_group": "g_mem",
+          "children": [],
+          "detail": "DRAM scheduling"
+        },
+        {
+          "id": "n_dram",
+          "label": "DRAM (Device Memory)",
+          "kind": "memory",
+          "members": [
+            "n_dram"
+          ],
+          "original_group": "g_mem",
+          "children": [],
+          "detail": "Off-chip frame buffer"
+        }
+      ],
+      "macro_edges": [
+        {
+          "source": "n_host",
+          "target": "n_cmd",
+          "kind": "control",
+          "label": "commands",
+          "members": [
+            0
+          ],
+          "meanings_in_caption": [],
+          "id": "p1"
+        },
+        {
+          "source": "n_cmd",
+          "target": "n_disp",
+          "kind": "control",
+          "label": "kernel launch",
+          "members": [
+            1
+          ],
+          "meanings_in_caption": [],
+          "id": "p2"
+        },
+        {
+          "source": "n_disp",
+          "target": "n_warp",
+          "kind": "control",
+          "label": "workgroups x4",
+          "members": [
+            2
+          ],
+          "meanings_in_caption": [],
+          "id": "p3"
+        },
+        {
+          "source": "n_warp",
+          "target": "n_simd",
+          "kind": "control",
+          "label": "issue",
+          "members": [
+            3
+          ],
+          "meanings_in_caption": [],
+          "id": "p4"
+        },
+        {
+          "source": "n_warp",
+          "target": "n_tensor",
+          "kind": "control",
+          "label": "issue",
+          "members": [
+            4
+          ],
+          "meanings_in_caption": [],
+          "id": "p5"
+        },
+        {
+          "source": "n_smem",
+          "target": "n_simd",
+          "kind": "data",
+          "label": "operands / results",
+          "members": [
+            5,
+            7
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "n_smem",
+              "target": "n_simd",
+              "label": "operands"
+            },
+            {
+              "source": "n_simd",
+              "target": "n_smem",
+              "label": "results"
+            }
+          ],
+          "id": "p6"
+        },
+        {
+          "source": "n_smem",
+          "target": "n_tensor",
+          "kind": "data",
+          "label": "operands / results",
+          "members": [
+            6,
+            8
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "n_smem",
+              "target": "n_tensor",
+              "label": "operands"
+            },
+            {
+              "source": "n_tensor",
+              "target": "n_smem",
+              "label": "results"
+            }
+          ],
+          "id": "p7"
+        },
+        {
+          "source": "n_smem",
+          "target": "n_l2",
+          "kind": "data",
+          "label": "miss / spill / fill",
+          "members": [
+            9,
+            10
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "n_smem",
+              "target": "n_l2",
+              "label": "miss / spill"
+            },
+            {
+              "source": "n_l2",
+              "target": "n_smem",
+              "label": "fill"
+            }
+          ],
+          "id": "p8"
+        },
+        {
+          "source": "n_l2",
+          "target": "n_mc",
+          "kind": "data",
+          "label": "miss / fill",
+          "members": [
+            11,
+            14
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "n_l2",
+              "target": "n_mc",
+              "label": "miss"
+            },
+            {
+              "source": "n_mc",
+              "target": "n_l2",
+              "label": "fill"
+            }
+          ],
+          "id": "p9"
+        },
+        {
+          "source": "n_mc",
+          "target": "n_dram",
+          "kind": "data",
+          "label": "read / write / data return",
+          "members": [
+            12,
+            13
+          ],
+          "meanings_in_caption": [],
+          "bidirectional": true,
+          "directional_labels": [
+            {
+              "source": "n_mc",
+              "target": "n_dram",
+              "label": "read / write"
+            },
+            {
+              "source": "n_dram",
+              "target": "n_mc",
+              "label": "data return"
+            }
+          ],
+          "id": "p10"
+        }
+      ],
+      "source_edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_verbatim_labels": [],
+      "composition_diagnostics": {
+        "grammar": "exact-flow",
+        "candidates": [
+          {
+            "id": "top-to-bottom-100",
+            "accepted": false,
+            "reasons": [
+              "A parallel stage is wider than the print canvas at fixed body type"
+            ]
+          },
+          {
+            "id": "left-to-right-80",
+            "accepted": false,
+            "reasons": [
+              "The horizontal circuit would require smaller body type than the print contract"
+            ]
+          }
+        ],
+        "selection_policy": "Hard route/typography/crossover/boundary gates, then fewer deferred labels, shorter longest/total routes and fewer bends; no beauty score"
+      },
+      "layout_strategy": "legacy-technical-annex",
+      "label_layout": {
+        "width": 1800,
+        "height": 1084,
+        "labels": [
+          {
+            "text": "commands",
+            "box": {
+              "x": 0.037778,
+              "y": 0.336901,
+              "width": 0.046667,
+              "height": 0.019373
+            },
+            "color": "#727E87"
+          },
+          {
+            "text": "kernel launch",
+            "box": {
+              "x": 0.208889,
+              "y": 0.265683,
+              "width": 0.057222,
+              "height": 0.019373
+            },
+            "color": "#727E87"
+          },
+          {
+            "text": "issue",
+            "box": {
+              "x": 0.215556,
+              "y": 0.378229,
+              "width": 0.020556,
+              "height": 0.019373
+            },
+            "color": "#727E87"
+          },
+          {
+            "text": "issue",
+            "box": {
+              "x": 0.033333,
+              "y": 0.578598,
+              "width": 0.020556,
+              "height": 0.019373
+            },
+            "color": "#727E87"
+          },
+          {
+            "text": "operands",
+            "box": {
+              "x": 0.195556,
+              "y": 0.838007,
+              "width": 0.039444,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "operands",
+            "box": {
+              "x": 0.183611,
+              "y": 0.937269,
+              "width": 0.039444,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "results",
+            "box": {
+              "x": 0.211111,
+              "y": 0.723115,
+              "width": 0.027222,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "results",
+            "box": {
+              "x": 0.211111,
+              "y": 0.796426,
+              "width": 0.027222,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "fill",
+            "box": {
+              "x": 0.378333,
+              "y": 0.899446,
+              "width": 0.01,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "miss",
+            "box": {
+              "x": 0.549722,
+              "y": 0.737085,
+              "width": 0.018333,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "data return",
+            "box": {
+              "x": 0.726111,
+              "y": 0.910516,
+              "width": 0.047778,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          },
+          {
+            "text": "fill",
+            "box": {
+              "x": 0.582778,
+              "y": 0.925277,
+              "width": 0.01,
+              "height": 0.019373
+            },
+            "color": "#263238"
+          }
+        ]
+      },
+      "requires_layout_guide": true,
+      "generation_inputs": [
+        {
+          "image_index": 1,
+          "role": "target_structure",
+          "source": "layout-guide",
+          "instruction": "Use the target guide for the visible inventory, ownership, relative organization and directed endpoints. Improve typography, spacing and clean bends without changing technical facts.",
+          "technical_revision": "If a generated image has a technical error, regenerate from the source specification and a clean corrected guide; do not continue a chain of local edits to the failed bitmap."
+        }
+      ],
+      "revision_mode": "local-appearance-edit",
+      "negative_prompt": "No invented hardware, parameters or connections. No gradients, shadows, texture, branding, decorative chip artwork, tiny type, dangling connectors, or text masking a wire."
+    }
+  ],
+  "render_plan": {
+    "policy_version": "CPS6",
+    "strategy": "atlas",
+    "summary": "主图先解释阅读重点；完整技术关系保存在源结构、图注和精确附图中。",
+    "figures": [
+      {
+        "id": "organization",
+        "kind": "overview",
+        "abstract": true,
+        "primary": true,
+        "technical_annex": false,
+        "title": "GPU Architecture Overview",
+        "summary": "按真实子系统归属组织主图，展开必要资源清单；内部接线与全局控制在图注及精确附图中保留。",
+        "edge_indices": [],
+        "node_ids": [],
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "view_role": "organization",
+        "design_contract": {
+          "grammar": "ownership-flow",
+          "question": "Which real subsystems own these resources, and how do those subsystems interact?",
+          "claim": "Source ownership and the main inter-subsystem relationships are explicit; internal operation is a separate technical view.",
+          "scope": "display projection",
+          "target_width_mm": 160,
+          "body_pt": 9,
+          "signal_pt": 8.5,
+          "source_invariants": [
+            "source ownership",
+            "directed source relations",
+            "explicit quantities and conditions",
+            "required verbatim text"
+          ],
+          "editorial_decisions": [
+            "projection",
+            "positions",
+            "line bends",
+            "which optional prose stays in caption"
+          ],
+          "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+          "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+          "symbol_profile": "ink-header"
+        },
+        "layout_strategy": "publication-candidates",
+        "node_count": 4,
+        "edge_count": 3
+      },
+      {
+        "id": "overview",
+        "kind": "overview",
+        "abstract": false,
+        "title": "GPU Architecture Overview",
+        "summary": "完整结构在一张图内呈现。",
+        "node_ids": [
+          "n_cmd",
+          "n_dram",
+          "n_host",
+          "n_mc",
+          "n_smem",
+          "n_l2",
+          "n_simd",
+          "n_disp",
+          "n_tensor",
+          "n_warp"
+        ],
+        "edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "context_nodes": [],
+        "node_count": 10,
+        "edge_count": 15,
+        "primary": false,
+        "technical_annex": true,
+        "design_contract": {
+          "grammar": "exact-flow",
+          "question": "How do the selected source relationships operate?",
+          "claim": "Exact technical annex; only this selected source scope is drawn.",
+          "scope": "exact source scope",
+          "target_width_mm": 160,
+          "body_pt": 9,
+          "signal_pt": 8.5,
+          "source_invariants": [
+            "source ownership",
+            "directed source relations",
+            "explicit quantities and conditions",
+            "required verbatim text"
+          ],
+          "editorial_decisions": [
+            "projection",
+            "positions",
+            "line bends",
+            "which optional prose stays in caption"
+          ],
+          "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+          "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+          "symbol_profile": "ink-header",
+          "preflight_note": "This grammar uses the historical technical layout; the new physical type-scale preflight was not achieved."
+        },
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "layout_strategy": "legacy-technical-annex"
+      }
+    ],
+    "coverage": {
+      "nodes_total": 10,
+      "edges_total": 15,
+      "nodes_covered": 10,
+      "edges_covered": 15,
+      "missing_nodes": [],
+      "missing_edges": []
+    },
+    "checks": [
+      "每张图最多 16 个可见模块、24 条关系；超出预算生成独立视图。",
+      "单图同一资源 ID 只绘制一次；跨图重现是同一资源的视图引用。",
+      "覆盖检查只针对结构清单，实际图片的文字、端点和方向仍需核对。"
+    ],
+    "quality": {
+      "node_budget": 16,
+      "edge_budget": 24,
+      "max_nodes_per_figure": 10,
+      "max_edges_per_figure": 15
+    },
+    "reading_plan": {
+      "source_hash": "3d0efd49f31f99f04924a777cafcedd1c9cbd198cf74414e8733e730c18b7da1",
+      "primary_figure_ids": [
+        "organization"
+      ],
+      "target_width_mm": 160,
+      "body_pt": 9,
+      "signal_pt": 8.5,
+      "selection_basis": "reader question, true containment and source relationships; not a provider aesthetic or fixed product template",
+      "full_source_retained": true
+    }
+  }
+}

@@ -1,0 +1,59 @@
+Use case: infographic-diagram. Create one finished raster engineering figure for an architecture document using Image Gen.
+Primary request: Make the structure understandable at normal document size. The reader should be able to answer: Which resources are private to each instance, and which services are shared?
+Input images:
+Image 1: target structure. This is the reviewed target plate. Make a clean faithful redraw: keep the module boxes, ownership, spacing, text placements, all connection paths and their source/target boundary attachments. Preserve every arrowhead at its existing endpoint. Improve only crisp typography, line weight and uniform flat fills; do not re-layout, reroute, duplicate or reinterpret the graph.
+Finishing task: The plate already supplies the composition. Preserve its exact module arrangement, box dimensions, ownership boundaries, spacing and planned label positions. Redraw the existing paths and arrowheads faithfully with crisp strokes and consistent typography. Add no direct shortcut, duplicate branch, floating stub, alternate endpoint or source arrowhead. Do not move an inlet from a group boundary onto an internal child, or reinterpret a group projection as new internal wiring.
+Layout changes belong to the upstream design stage. In this image, improve visual finish only: clean text, neutral line weights, solid flat fills and a pure background. Keep the plate's geometry, route corridors and directed connections intact.
+Verification metadata — never print these numbers in the artwork: 13 visible connections; 13 one-headed and 0 two-headed connectors; exactly 13 arrowheads total. Count the plate's visible routes, not the underlying source relationships.
+Document scale: Intended figure width 160 mm; module names 9 pt and signal labels 8.5 pt at that width. Choose a canvas that remains readable after insertion. Wrap a long exact name before reducing its size. Use one neutral sans-serif family, normal or medium weight, and subordinate scope names.
+Style: Clear white-paper technical drawing on #FFFFFF; deep blue-gray text #17324D, compute fill #DCEAFF, storage fill #FFF0BE, sparse control fill #EEE5FF; interfaces stay white. Repeat these role colors consistently, never one hue per module. Use restrained outlines #6E8BAB and very light unfilled ownership boundaries #BFCFE0. Containers and same-hardware details have white bodies with light headings, never black or charcoal title bars. Establish hierarchy with aligned peer arrays, shared-resource bands and concise medium-weight names; secondary labels are regular weight. Keep the technical information visible without dashboard cards, heavy all-bold text or a washed-out gray-green palette. No gradients, shadows, texture, decorative icons, vendor branding or heavy frames.
+Connections: Follow each planned stroke encoding: solid data or relation lines; dashed control, clock or recovery lines. Control feedback is also dashed. A feedback relationship explicitly carrying return data/payload is solid; returning direction by itself does not establish payload semantics. Preserve every source kind and its meaning. One-way relations have only a target arrowhead; two opposite heads require a supplied reverse pair. Keep paths traceable without crossing labels or unrelated modules. Crossings without junctions are not connections. Never create a bus, mux, operator or port to simplify routing.
+Selected visual grammar: Align source-proven peers as peers, retain actual instance names/count, and distinguish private contents from common services. A detail expansion is the same hardware, not another copy. Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards. Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics. Repetition follows the actual plate: preserve each shown expanded private inventory and each compact peer. A same-hardware inset is explanatory; its leader has no data arrowhead.
+Emphasis: Actual owners retain matching supplied private resource patterns; one real representative per family explains the internals. State, physical identity, behavior and external connections remain independent source facts.
+View scope: display projection
+Use the plate's resource array composition. This describes the visual organization, not extra circuitry or text to print.
+Projection: Group symbols summarize original members; macro arrows summarize only their mapped source relationships. Neither creates a physical bus, port, broadcast mechanism or additional hardware. Unshown wiring belongs to the detail view. Contents labels imply no execution order or internal connection.
+Visible inventory (quoted strings are the supplied names, not source IDs):
+"Cluster 0" — compute; belongs to "Compute Clusters".
+"Cluster 1" — compute; belongs to "Compute Clusters".
+It has the same explicitly supplied private inventory as "Cluster 0". Keep this peer compact as in the guide; do not repeat all of the representative's interior text or connect the peers in series.
+"Cluster 2" — compute; belongs to "Compute Clusters".
+It has the same explicitly supplied private inventory as "Cluster 0". Keep this peer compact as in the guide; do not repeat all of the representative's interior text or connect the peers in series.
+"Cluster 3" — compute; belongs to "Compute Clusters".
+It has the same explicitly supplied private inventory as "Cluster 0". Keep this peer compact as in the guide; do not repeat all of the representative's interior text or connect the peers in series.
+"Host" — io; belongs to "Host System".
+"Host Interface" — io; belongs to "GPU Accelerator".
+"Command Front End" — control; belongs to "GPU Accelerator".
+"Work Distributor" — control; belongs to "Command Front End".
+"Shared L2 Cache" — memory; belongs to "Memory Subsystem".
+"Memory Controller" — control; belongs to "Memory Subsystem"; supplied parameter or expression "Bridges L2 to off-chip HBM".
+"HBM" — memory; belongs to "Off-chip HBM".
+Same-hardware detail expansion of "Cluster 0" contains "Scheduler 0", "Compute Array 0", "Local Cache 0". This expands the same named source instance, not a new hardware copy; its explanatory leader has no data arrowhead.
+Edge text authority: Print only the planned edge text listed here, in its assigned open region in Image 1, plus any matching mandatory literal or numerical/conditional expression required below. Preserve the guide's association and placement; never add another label simply because the semantic relationship list contains its meaning.
+Planned edge text to print (this manifest is an instruction, not extra artwork):
+"Task submission" — for "Host" -> "Host Interface".
+"Commands" — for "Host Interface" -> "Command Front End".
+"Work" — for "Work Distributor" -> "Cluster 0".
+"Work" — for "Work Distributor" -> "Cluster 1".
+"Work" — for "Work Distributor" -> "Cluster 3".
+"Cache traffic" — for "Cluster 0" -> "Shared L2 Cache".
+"Cache traffic" — for "Cluster 1" -> "Shared L2 Cache".
+"Miss / fill" — for "Shared L2 Cache" -> "Memory Controller".
+"Same hardware detail" — at its placement in Image 1.
+Relationship meanings below are the full technical and caption contract, not a request to squeeze every phrase into the bitmap. Unplanned optional edge prose remains outside the image.
+Directed relationships (endpoint names identify the objects above; meanings preserve the full semantic contract):
+"Host" -> "Host Interface" [data]; planned stroke solid; meaning "Task submission".
+"Host Interface" -> "Command Front End" [data]; planned stroke solid; meaning "Commands".
+"Command Front End" -> "Work Distributor" [data]; planned stroke solid; meaning "Decoded work" (caption only; do not print as edge text).
+"Work Distributor" -> "Cluster 0" [data]; planned stroke solid; meaning "Work".
+"Work Distributor" -> "Cluster 1" [data]; planned stroke solid; meaning "Work".
+"Work Distributor" -> "Cluster 2" [data]; planned stroke solid; meaning "Work" (caption only; do not print as edge text).
+"Work Distributor" -> "Cluster 3" [data]; planned stroke solid; meaning "Work".
+"Cluster 0" -> "Shared L2 Cache" [data]; planned stroke solid; meaning "Cache traffic".
+"Cluster 1" -> "Shared L2 Cache" [data]; planned stroke solid; meaning "Cache traffic".
+"Cluster 2" -> "Shared L2 Cache" [data]; planned stroke solid; meaning "Cache traffic" (caption only; do not print as edge text).
+"Cluster 3" -> "Shared L2 Cache" [data]; planned stroke solid; meaning "Cache traffic" (caption only; do not print as edge text).
+"Shared L2 Cache" -> "Memory Controller" [data]; planned stroke solid; meaning "Miss / fill".
+"Memory Controller" -> "HBM" [data]; planned stroke solid; meaning "Memory access" (caption only; do not print as edge text).
+Text policy: Preserve names, identifiers, numerical parameters, equations and conditions. Edge labels belong in associated open gaps, never in white boxes over wires. Optional explanatory prose stays in the caption. Print no source IDs, grammar names, provenance or review notes. The title stays in the document caption unless explicitly required in the guide.
+Final review: Require legible names, coherent hierarchy, purposeful spacing and traceable directed paths. Add no facts, capacities, cycles or protocols. For technical failure, regenerate from the source specification and a clean corrected guide instead of repeatedly editing the failed bitmap.

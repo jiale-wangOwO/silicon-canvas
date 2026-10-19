@@ -1,0 +1,31 @@
+{
+  "id": "01-optical-package",
+  "artifact_type": "ImageGen branded edit derivative",
+  "is_original_mcp_first_image": false,
+  "status": "pass_for_requested_edit",
+  "summary": "首张品牌编辑版在较大Compute die的深灰上表面加入了低调淡银色Logo A与Silicon Canvas字标；拼写正确，标记随表面透视，没有白色卡片或外部水印。目视对照未发现设备、四个原标签或蓝色与青色路线的明显增减。保留首张，不再生成。",
+  "strengths": [
+    "Logo保留了正式A方案的开放圆角框与内嵌实心形，旁边准确写作Silicon Canvas。",
+    "银色印记位于Compute die内部，面积适中、没有遮住原有标签引线，视角随该表面倾斜。",
+    "原构图、浅色背景、Compute die和Optical I/O两个内部部件、左侧Host及右侧Remote device均保留。",
+    "Host、Compute die、Optical I/O、Remote device四个标签与各自引线仍在；原有蓝色主路径、内部蓝色箭头及右侧青色路径目视保留，没有主动修正技术内容。"
+  ],
+  "issues": [
+    "输出尺寸为1671×941，原图为1672×941；ImageGen发生了轻微重采样，不能声称Logo区域外逐像素完全不变。",
+    "Logo是ImageGen重绘的表面标记，目视形态与参考一致，但不是直接嵌入原生矢量，不能承诺品牌曲线的逐点几何相等。"
+  ],
+  "scope": "仅验收本次品牌局部编辑及原内容的目视保留，不重审或修正原图的设备、箭头方向、接口、电气关系或工程准确性。",
+  "checks": {
+    "logo_A_visual_identity": "pass_visually",
+    "exact_wordmark_spelling": "pass",
+    "silver_surface_mark_not_card_or_watermark": "pass",
+    "die_surface_perspective": "pass_visually",
+    "original_devices_and_two_internal_parts": "pass_visually",
+    "four_original_labels": "pass",
+    "original_routes_colors_and_endpoints": "pass_visually_no_obvious_change",
+    "pixel_identical_outside_edit_region": "not_claimed",
+    "original_technical_correctness": "outside_edit_scope"
+  },
+  "first_edit_attempt": true,
+  "rerolls": 0
+}

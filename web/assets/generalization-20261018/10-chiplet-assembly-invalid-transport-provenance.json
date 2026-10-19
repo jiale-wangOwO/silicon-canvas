@@ -1,0 +1,137 @@
+{
+  "id": "10-chiplet-assembly",
+  "title": "Chiplet 与 HBM 装配概念",
+  "description": "我需要一张 Chiplet 封装的空间装配说明图，用在架构方案介绍里。两个计算 Chiplet、一个 I/O Die 和两组 HBM 安装在同一中介层上，中介层安装在封装基板上，上方是一整块散热盖。计算 Chiplet 通过中介层与 I/O Die、HBM 连接。适度拉开散热盖、中介层和基板，让人能看懂部件数量、上下层次和装配归属，保持同一视角，不是把逻辑功能画成更多独立芯片。偏技术蓝的冷色主体配少量暖色 HBM，英文标签简短。这是概念空间示意，不是实际封装设计，不给尺寸、走线密度、工艺、引脚数或热阻参数。",
+  "requested_settings": {
+    "representation": "system_illustration",
+    "scene": "system",
+    "style": "blueprint",
+    "density": "medium",
+    "language": "en",
+    "aspect": "4:3",
+    "explanatory_mode": "assembly"
+  },
+  "status": "invalid_prompt_transport",
+  "commit": "119e1e8d6c037e71101191bebc45b19b72c2467c",
+  "tool": "silicon_generate",
+  "transport": "stdio",
+  "generation_inputs": {
+    "prompt": "exact selected tool prompt; no edits",
+    "references": "required guides only; optional framing references omitted",
+    "imagegen_attempts": 1,
+    "reference_files": [],
+    "tool": "built-in image_gen",
+    "transparent_background": false,
+    "prompt_sha256": "f8db0fc02b4eafef0cfb4a7df9abf2515cbac6857fa479252f692cc19d99985b",
+    "prompt_handoff": "Local file read through exec_command JSON; CP936 stdout decoding corrupted non-ASCII before JSON.parse. Invalid transport.",
+    "referenced_image_files": [],
+    "optional_composition_references_omitted": true,
+    "required_guide_inspected": false,
+    "prompt_modified": true,
+    "image_modified": false,
+    "num_last_images_to_include_omitted": true,
+    "transport_valid": false,
+    "canonical_prompt_file": "10-chiplet-assembly-prompt.txt",
+    "actual_invoked_prompt_file": "10-chiplet-assembly-invalid-transport-prompt.txt"
+  },
+  "review": {
+    "status": "invalid_test",
+    "summary": "本地中文提示词传输编码损坏，此图不构成工具原提示词效果的有效证据。",
+    "strengths": [],
+    "issues": [
+      "实际ImageGen入参含替换字符，与工具输出prompt的UTF8字节不一致。",
+      "保留首图和实际调用文本，撤回对此图进行产品/模型质量归因。"
+    ],
+    "scope": "无重新生成或覆盖；这是传输失败记录。"
+  },
+  "resolved_settings": {
+    "category": "architecture",
+    "style": "blueprint",
+    "aspect": "4:3",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "system",
+    "representation": "system_illustration",
+    "explanatory_mode": "assembly",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "system",
+    "resolved_representation": "system_illustration"
+  },
+  "representation": "system_illustration",
+  "grammar": "assembly",
+  "prompt_file": "10-chiplet-assembly-prompt.txt",
+  "source_file": "10-chiplet-assembly-source.json",
+  "guide_file": null,
+  "guide_sha256": null,
+  "source_hash": "392cd5a77be3e3cf113e631352a67c54006fe3ff8bcb797bc33a3c31e840e758",
+  "prompt_sha256": "4a87ab8ad173fd4d17636e0b45679cedec5a22ac391032cbc03e8bca9cb2b448",
+  "artifact_id": "158c4eb2566144cf936c7040e19916bd",
+  "selected_figure_id": "system-illustration",
+  "guide_optional": true,
+  "repaired": false,
+  "warnings": [
+    "连线集中在 Interposer，已要求预留端口和走线通道；成图需重点核对端点与方向。",
+    "除用户明确给出的外观条件外，相机、材质、光照、轮廓和表面细节是可调整的概念表现，不代表已制造产品。",
+    "通用芯片外形承载整个产品；逻辑功能区不是独立 die/chiplet，面积、位置与轮廓不是实测 floorplan。",
+    "功能分区、互联覆盖及外围器件符号用于解释源规格；它们不是实际封装结构、物理 BOM、引脚数量或接口线缆实物。",
+    "按需技术附图 Chiplet Package Spatial Assembly (Conceptual) 使用历史技术附图布局，尚未通过新版文档字号预检。",
+    "先生成主图；技术附图按需要展开。完整 8 个节点、11 条源关系始终保留，主图的概括与源映射可在图注查看。"
+  ],
+  "figure_strategy": {
+    "version": "FS1",
+    "figure_id": "system-illustration",
+    "purpose": "How do the system's objects, shared resources and interfaces work together?",
+    "representation": "system_illustration",
+    "grammar": "assembly",
+    "how_to_read": "Lid Level: Integrated Heat Spreader (Lid); Interposer Level: Compute Chiplet 1, Compute Chiplet 2, I/O Die, HBM Stack 1; Substrate Level: Package Substrate. source-backed explanatory projection; not physical implementation",
+    "planning_status": "planned",
+    "scope": {
+      "source_nodes": 8,
+      "source_relationships": 11,
+      "visible_objects": 3,
+      "top_level_objects": 3,
+      "nested_appearances": 6,
+      "leaf_appearances": 8,
+      "visible_relationships": 2,
+      "visible_source_relationships": [
+        5,
+        6
+      ],
+      "deferred_relationships": 9,
+      "relationship_accounting_status": "source_mapped",
+      "not_checked_source_relationships": [],
+      "deferred_primary_relationships": 0
+    },
+    "assumptions": {
+      "statements": [
+        "计算 Chiplet 与 HBM 的具体配对（CD1↔HBM1、CD2↔HBM2）为示意性对应，用户仅说明经中介层连接。",
+        "I/O Die 置于中介层中央、计算 Chiplet 分列两侧、HBM 位于外侧边缘为常见布局示意，非用户给定。",
+        "散热盖、中介层、基板三层垂直拉开仅为可读性，不代表实际间距。"
+      ],
+      "assumed_nodes": 0,
+      "assumed_relationships": 0
+    },
+    "limitations": [],
+    "alternatives": [],
+    "actual_scope_accounting_status": "source_mapped",
+    "document_size_status": "not_checked",
+    "guide_document_fit_status": "not_measured",
+    "actual_image_status": "not_reviewed",
+    "not_aesthetic_certification": true
+  },
+  "elapsed_seconds": 7.9,
+  "image_file": "10-chiplet-assembly-invalid-transport.png",
+  "error": null,
+  "image_sha256": "91d0a380c87ba1d2794d398910973924950847eb31d128619e85e4841f1eb16e",
+  "dimensions": [
+    1448,
+    1086
+  ],
+  "image_original_sha256": "91d0a380c87ba1d2794d398910973924950847eb31d128619e85e4841f1eb16e",
+  "invoked_prompt_file": "10-chiplet-assembly-invalid-transport-prompt.txt",
+  "invoked_prompt_sha256": "f8db0fc02b4eafef0cfb4a7df9abf2515cbac6857fa479252f692cc19d99985b",
+  "canonical_prompt_sha256": "4a87ab8ad173fd4d17636e0b45679cedec5a22ac391032cbc03e8bca9cb2b448",
+  "transport_error": "Local Windows Python stdout CP936 bytes were decoded as UTF8, replacing Chinese characters. Actual ImageGen prompt differs from exact tool prompt. This is an invalid test attempt, not model quality evidence."
+}

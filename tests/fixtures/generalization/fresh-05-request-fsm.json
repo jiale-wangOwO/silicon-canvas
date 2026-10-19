@@ -1,0 +1,170 @@
+{
+  "id": "fresh-05-request-fsm",
+  "split": "development",
+  "natural_input": {
+    "description": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "fsm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "idle",
+        "pattern": "IDLE"
+      },
+      {
+        "concept": "busy",
+        "pattern": "BUSY"
+      },
+      {
+        "concept": "done",
+        "pattern": "DONE"
+      }
+    ],
+    "relations": [
+      [
+        "idle",
+        "busy",
+        "start",
+        "control"
+      ],
+      [
+        "idle",
+        "idle",
+        "!start",
+        "control"
+      ],
+      [
+        "busy",
+        "done",
+        "ack",
+        "control"
+      ],
+      [
+        "busy",
+        "busy",
+        "!ack",
+        "control"
+      ],
+      [
+        "done",
+        "idle",
+        "",
+        "control"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 3,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-05-request-fsm",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "fsm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "idle",
+          "label": "IDLE",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "id": "busy",
+          "label": "BUSY",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "id": "done",
+          "label": "DONE",
+          "kind": "state",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "idle",
+          "target": "busy",
+          "label": "start",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "source": "idle",
+          "target": "idle",
+          "label": "!start",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "source": "busy",
+          "target": "done",
+          "label": "ack",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "source": "busy",
+          "target": "busy",
+          "label": "!ack",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        },
+        {
+          "source": "done",
+          "target": "idle",
+          "label": "",
+          "kind": "control",
+          "origin": "given",
+          "evidence": "Draw an exact state transition diagram with only IDLE, BUSY, DONE. Reset enters IDLE. IDLE goes to BUSY on start, holds on !start. BUSY goes to DONE on ack, holds on !ack. DONE unconditionally goes to IDLE. Events are transition labels, not resource nodes.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [
+        "Reset enters IDLE."
+      ],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

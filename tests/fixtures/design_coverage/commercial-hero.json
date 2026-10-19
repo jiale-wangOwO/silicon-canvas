@@ -1,0 +1,277 @@
+{
+  "description": "Create a restrained product launch cover image centered on an intact acquisition-chip package with premium material and quiet light. It is a cover hero, not a functional architecture explanation. Use only the source title; detailed roles remain in caption.",
+  "spec": {
+    "title": "Acquisition Processor",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "chip",
+        "label": "Acquisition Processor",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "compute",
+        "label": "Compute Functions",
+        "parent": "chip",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory",
+        "label": "Memory Functions",
+        "parent": "chip",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "io",
+        "label": "Interface Functions",
+        "parent": "chip",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "external",
+        "label": "External Context",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "vector",
+        "label": "Vector Analysis",
+        "kind": "compute",
+        "group": "compute",
+        "detail": "Feature extraction",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "control",
+        "label": "Controller",
+        "kind": "control",
+        "group": "compute",
+        "detail": "Acquisition sequencing",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sram",
+        "label": "Shared SRAM",
+        "kind": "memory",
+        "group": "memory",
+        "detail": "On-chip working data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fabric",
+        "label": "Shared Interconnect",
+        "kind": "control",
+        "group": "chip",
+        "detail": "Connect functions",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "mc",
+        "label": "Memory Controller",
+        "kind": "control",
+        "group": "memory",
+        "detail": "External-memory interface",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "link",
+        "label": "Host Link",
+        "kind": "io",
+        "group": "io",
+        "detail": "Command and result exchange",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sensor",
+        "label": "Sensor Interface",
+        "kind": "io",
+        "group": "io",
+        "detail": "Acquire external measurements",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "extmem",
+        "label": "External Memory",
+        "kind": "memory",
+        "group": "external",
+        "detail": "Data storage",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "host",
+        "label": "Analysis Host",
+        "kind": "io",
+        "group": "external",
+        "detail": "Configuration and results",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "device",
+        "label": "Measurement Front End",
+        "kind": "io",
+        "group": "external",
+        "detail": "Supplied sensor source",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "device",
+        "target": "sensor",
+        "kind": "data",
+        "label": "measurement data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sensor",
+        "target": "fabric",
+        "kind": "data",
+        "label": "sample stream",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "vector",
+        "kind": "data",
+        "label": "work items",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "vector",
+        "target": "fabric",
+        "kind": "data",
+        "label": "features",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "sram",
+        "kind": "data",
+        "label": "working data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "mc",
+        "kind": "data",
+        "label": "memory access",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "mc",
+        "target": "extmem",
+        "kind": "data",
+        "label": "command",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "extmem",
+        "target": "mc",
+        "kind": "data",
+        "label": "read data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "host",
+        "target": "link",
+        "kind": "data",
+        "label": "configuration",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "link",
+        "target": "host",
+        "kind": "data",
+        "label": "results",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "link",
+        "target": "fabric",
+        "kind": "data",
+        "label": "commands",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "control",
+        "target": "fabric",
+        "kind": "control",
+        "label": "sequencing",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "auto",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

@@ -1,0 +1,50 @@
+Use case: infographic-diagram. Create one finished raster engineering figure for an architecture document using Image Gen.
+Primary request: Make the structure understandable at normal document size. The reader should be able to answer: Where does the input come from, what transforms it, and where do the outputs or returns go?
+Input images:
+Image 1: target structure. This is the reviewed target plate. Make a clean faithful redraw: keep the module boxes, ownership, spacing, text placements, all connection paths and their source/target boundary attachments. Preserve every arrowhead at its existing endpoint. Improve only crisp typography, line weight and uniform flat fills; do not re-layout, reroute, duplicate or reinterpret the graph.
+Finishing task: The plate already supplies the composition. Preserve its exact module arrangement, box dimensions, ownership boundaries, spacing and planned label positions. Redraw the existing paths and arrowheads faithfully with crisp strokes and consistent typography. Add no direct shortcut, duplicate branch, floating stub, alternate endpoint or source arrowhead. Do not move an inlet from a group boundary onto an internal child, or reinterpret a group projection as new internal wiring.
+Layout changes belong to the upstream design stage. In this image, improve visual finish only: clean text, neutral line weights, solid flat fills and a pure background. Keep the plate's geometry, route corridors and directed connections intact.
+Verification metadata — never print these numbers in the artwork: 9 visible connections; 9 one-headed and 0 two-headed connectors; exactly 9 arrowheads total. Count the plate's visible routes, not the underlying source relationships.
+Document scale: Intended figure width 200 mm; module names 10 pt and signal labels 9 pt at that width. Choose a canvas that remains readable after insertion. Wrap a long exact name before reducing its size. Use one neutral sans-serif family, normal or medium weight, and subordinate scope names.
+Style: Flat drawing on #FFFFFF; text and neutral outlines #153759, compute fill #DBECFC, storage fill #E4E9F3; control and interfaces mostly unfilled. Color is sparse and meaningful. Use narrow crisp strokes, small arrowheads and unfilled ownership boundaries. No gradients, shadows, texture, decorative icons, vendor branding, heavy frames or empty padded cards. Make the supplied data journey visually dominant through continuous paths and a single reading direction; secondary controls belong in their separate view. Do not number dependency edges as clock cycles or create unsupplied processing stages.
+Connections: Follow each planned stroke encoding: solid data or relation lines; dashed control, clock or recovery lines. Control feedback is also dashed. A feedback relationship explicitly carrying return data/payload is solid; returning direction by itself does not establish payload semantics. Preserve every source kind and its meaning. One-way relations have only a target arrowhead; two opposite heads require a supplied reverse pair. Keep paths traceable without crossing labels or unrelated modules. Crossings without junctions are not connections. Never create a bus, mux, operator or port to simplify routing.
+Selected visual grammar: Keep independent producer paths and joins traceable and place supplied returns in a separate corridor. Preserve the same resource at both ends of a return instead of duplicating it for a tidy row. Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards. Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics.
+Emphasis: The actual lifecycle, forks, returns and merge endpoints are preserved; secondary controls are a separate exact view.
+View scope: display projection
+Use the plate's exact flow composition. This describes the visual organization, not extra circuitry or text to print.
+Projection: Group symbols summarize original members; macro arrows summarize only their mapped source relationships. Neither creates a physical bus, port, broadcast mechanism or additional hardware. Unshown wiring belongs to the detail view. Contents labels imply no execution order or internal connection.
+Visible inventory (quoted strings are the supplied names, not source IDs):
+"Camera Image" — io; belongs to "Camera Pipeline".
+"Undistortion" — compute; belongs to "Camera Pipeline".
+"Feature Extraction" — compute; belongs to "Camera Pipeline".
+"IMU Raw Data" — io; belongs to "IMU Pipeline".
+"Bias Correction" — compute; belongs to "IMU Pipeline".
+"Pre-integration" — compute; belongs to "IMU Pipeline".
+"Temporal Alignment" — compute; belongs to "Fusion Backend".
+"Fusion Estimator" — compute; belongs to "Fusion Backend".
+"Pose Output" — io; belongs to "Fusion Backend".
+"Position Output" — io; belongs to "Fusion Backend".
+Edge text authority: Print only the planned edge text listed here, in its assigned open region in Image 1, plus any matching mandatory literal or numerical/conditional expression required below. Preserve the guide's association and placement; never add another label simply because the semantic relationship list contains its meaning.
+Planned edge text to print (this manifest is an instruction, not extra artwork):
+"image frames" — for "Camera Image" -> "Undistortion".
+"rectified image" — for "Undistortion" -> "Feature Extraction".
+"raw samples" — for "IMU Raw Data" -> "Bias Correction".
+"corrected samples" — for "Bias Correction" -> "Pre-integration".
+"timestamped features" — for "Feature Extraction" -> "Temporal Alignment".
+"timestamped pre-integration" — for "Pre-integration" -> "Temporal Alignment".
+"aligned measurements" — for "Temporal Alignment" -> "Fusion Estimator".
+"orientation" — for "Fusion Estimator" -> "Pose Output".
+"position" — for "Fusion Estimator" -> "Position Output".
+Relationship meanings below are the full technical and caption contract, not a request to squeeze every phrase into the bitmap. Unplanned optional edge prose remains outside the image.
+Directed relationships (endpoint names identify the objects above; meanings preserve the full semantic contract):
+"Camera Image" -> "Undistortion" [data]; planned stroke solid; meaning "image frames".
+"Undistortion" -> "Feature Extraction" [data]; planned stroke solid; meaning "rectified image".
+"IMU Raw Data" -> "Bias Correction" [data]; planned stroke solid; meaning "raw samples".
+"Bias Correction" -> "Pre-integration" [data]; planned stroke solid; meaning "corrected samples".
+"Feature Extraction" -> "Temporal Alignment" [data]; planned stroke solid; meaning "timestamped features".
+"Pre-integration" -> "Temporal Alignment" [data]; planned stroke solid; meaning "timestamped pre-integration".
+"Temporal Alignment" -> "Fusion Estimator" [data]; planned stroke solid; meaning "aligned measurements".
+"Fusion Estimator" -> "Pose Output" [data]; planned stroke solid; meaning "orientation".
+"Fusion Estimator" -> "Position Output" [data]; planned stroke solid; meaning "position".
+Text policy: Preserve names, identifiers, numerical parameters, equations and conditions. Edge labels belong in associated open gaps, never in white boxes over wires. Optional explanatory prose stays in the caption. Print no source IDs, grammar names, provenance or review notes. The title stays in the document caption unless explicitly required in the guide.
+Final review: Require legible names, coherent hierarchy, purposeful spacing and traceable directed paths. Add no facts, capacities, cycles or protocols. For technical failure, regenerate from the source specification and a clean corrected guide instead of repeatedly editing the failed bitmap.

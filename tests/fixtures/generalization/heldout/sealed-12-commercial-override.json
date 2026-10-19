@@ -1,0 +1,239 @@
+{
+  "id": "sealed-12-commercial-override",
+  "split": "holdout",
+  "natural_input": {
+    "description": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "architecture"
+    ],
+    "required_concepts": [
+      {
+        "concept": "mic",
+        "pattern": "Microphone"
+      },
+      {
+        "concept": "mi",
+        "pattern": "Microphone Interface"
+      },
+      {
+        "concept": "dsp",
+        "pattern": "Audio DSP"
+      },
+      {
+        "concept": "mem",
+        "pattern": "SRAM"
+      },
+      {
+        "concept": "si",
+        "pattern": "Speaker Interface"
+      },
+      {
+        "concept": "speaker",
+        "pattern": "Speaker"
+      }
+    ],
+    "relations": [
+      [
+        "mic",
+        "mi",
+        "",
+        "data"
+      ],
+      [
+        "mi",
+        "dsp",
+        "",
+        "data"
+      ],
+      [
+        "dsp",
+        "si",
+        "",
+        "data"
+      ],
+      [
+        "si",
+        "speaker",
+        "",
+        "data"
+      ],
+      [
+        "dsp",
+        "mem",
+        "",
+        "data"
+      ],
+      [
+        "mem",
+        "dsp",
+        "",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "mi": "chip",
+      "dsp": "chip",
+      "mem": "chip",
+      "si": "chip"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "sealed-12-commercial-override",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "architecture",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "chip",
+          "label": "SoC",
+          "parent": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "mic",
+          "label": "Microphone",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "id": "mi",
+          "label": "Microphone Interface",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "id": "dsp",
+          "label": "Audio DSP",
+          "kind": "compute",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "id": "mem",
+          "label": "SRAM",
+          "kind": "memory",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "id": "si",
+          "label": "Speaker Interface",
+          "kind": "io",
+          "group": "chip",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "id": "speaker",
+          "label": "Speaker",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "mic",
+          "target": "mi",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "source": "mi",
+          "target": "dsp",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "source": "dsp",
+          "target": "si",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "source": "si",
+          "target": "speaker",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "source": "dsp",
+          "target": "mem",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        },
+        {
+          "source": "mem",
+          "target": "dsp",
+          "label": "",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "为 BP 解释一个智能音频 SoC 的整体功能关系，不要产品封面，不要渲染，使用纯平面技术图。只包含芯片内的 Microphone Interface、Audio DSP、SRAM、Speaker Interface，以及芯片外的 Microphone、Speaker。仅有 Microphone -> Microphone Interface -> Audio DSP -> Speaker Interface -> Speaker，Audio DSP -> SRAM 和 SRAM -> Audio DSP。不要其它模块。",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

@@ -1,0 +1,488 @@
+{
+  "id": "stress-heterogeneous-2-3-5-system",
+  "split": "post_freeze_stress",
+  "natural_input": {
+    "description": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+    "scene": "system",
+    "representation": "diagram",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "dataflow"
+    ],
+    "required_concepts": [
+      {
+        "concept": "in",
+        "pattern": "External Source"
+      },
+      {
+        "concept": "n0_0",
+        "pattern": "Channel 0 Resource 0"
+      },
+      {
+        "concept": "n0_1",
+        "pattern": "Channel 0 Resource 1"
+      },
+      {
+        "concept": "n1_0",
+        "pattern": "Channel 1 Resource 0"
+      },
+      {
+        "concept": "n1_1",
+        "pattern": "Channel 1 Resource 1"
+      },
+      {
+        "concept": "n1_2",
+        "pattern": "Channel 1 Resource 2"
+      },
+      {
+        "concept": "n2_0",
+        "pattern": "Channel 2 Resource 0"
+      },
+      {
+        "concept": "n2_1",
+        "pattern": "Channel 2 Resource 1"
+      },
+      {
+        "concept": "n2_2",
+        "pattern": "Channel 2 Resource 2"
+      },
+      {
+        "concept": "n2_3",
+        "pattern": "Channel 2 Resource 3"
+      },
+      {
+        "concept": "n2_4",
+        "pattern": "Channel 2 Resource 4"
+      },
+      {
+        "concept": "merge",
+        "pattern": "Shared Collector"
+      },
+      {
+        "concept": "out",
+        "pattern": "External Sink"
+      }
+    ],
+    "relations": [
+      [
+        "in",
+        "n0_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n0_0",
+        "n0_1",
+        "samples",
+        "data"
+      ],
+      [
+        "in",
+        "n1_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_0",
+        "n1_1",
+        "samples",
+        "data"
+      ],
+      [
+        "n1_1",
+        "n1_2",
+        "samples",
+        "data"
+      ],
+      [
+        "in",
+        "n2_0",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_0",
+        "n2_1",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_1",
+        "n2_2",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_2",
+        "n2_3",
+        "samples",
+        "data"
+      ],
+      [
+        "n2_3",
+        "n2_4",
+        "samples",
+        "data"
+      ],
+      [
+        "n0_1",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "n1_2",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "n2_4",
+        "merge",
+        "result",
+        "data"
+      ],
+      [
+        "merge",
+        "out",
+        "result",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "n0_0": "g0",
+      "n0_1": "g0",
+      "n1_0": "g1",
+      "n1_1": "g1",
+      "n1_2": "g1",
+      "n2_0": "g2",
+      "n2_1": "g2",
+      "n2_2": "g2",
+      "n2_3": "g2",
+      "n2_4": "g2",
+      "merge": "device"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 13,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+    "settings": {
+      "scene": "system",
+      "representation": "diagram",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "stress-heterogeneous-2-3-5-system",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "dataflow",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "device",
+          "label": "Device",
+          "parent": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g0",
+          "label": "Front End 0",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g1",
+          "label": "Front End 1",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "g2",
+          "label": "Front End 2",
+          "parent": "device",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "in",
+          "label": "External Source",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n0_0",
+          "label": "Channel 0 Resource 0",
+          "kind": "compute",
+          "group": "g0",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n0_1",
+          "label": "Channel 0 Resource 1",
+          "kind": "memory",
+          "group": "g0",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_0",
+          "label": "Channel 1 Resource 0",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_1",
+          "label": "Channel 1 Resource 1",
+          "kind": "memory",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n1_2",
+          "label": "Channel 1 Resource 2",
+          "kind": "compute",
+          "group": "g1",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_0",
+          "label": "Channel 2 Resource 0",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_1",
+          "label": "Channel 2 Resource 1",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_2",
+          "label": "Channel 2 Resource 2",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_3",
+          "label": "Channel 2 Resource 3",
+          "kind": "compute",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "n2_4",
+          "label": "Channel 2 Resource 4",
+          "kind": "memory",
+          "group": "g2",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "merge",
+          "label": "Shared Collector",
+          "kind": "compute",
+          "group": "device",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "id": "out",
+          "label": "External Sink",
+          "kind": "io",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "in",
+          "target": "n0_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n0_0",
+          "target": "n0_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "in",
+          "target": "n1_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_0",
+          "target": "n1_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_1",
+          "target": "n1_2",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "in",
+          "target": "n2_0",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_0",
+          "target": "n2_1",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_1",
+          "target": "n2_2",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_2",
+          "target": "n2_3",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_3",
+          "target": "n2_4",
+          "label": "samples",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n0_1",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n1_2",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "n2_4",
+          "target": "merge",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        },
+        {
+          "source": "merge",
+          "target": "out",
+          "label": "result",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain subsystem ownership and principal interfaces. The three front ends intentionally contain unequal resource inventories. Shared Collector belongs directly to Device; source and sink are external. Do not duplicate hardware or treat front ends as identical.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "description": "做一张面向客户技术交流的光互连封装概念插图。一个封装内有计算裸片和光I/O模块，左边接主机的电接口，右边通过光纤连接远端设备；让读者能看懂电信号在哪里转成光信号。希望是有空间感的产品技术插图，浅色背景、银灰材料和青色光路，英文短标签，横幅。只表达这些功能关系，不假设实际的裸片面积、端口数、光源位置和制造结构，不写性能数字。",
+  "settings": {
+    "category": "architecture",
+    "style": "blueprint",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "low",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "explanatory_mode": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "concept",
+    "resolved_representation": "system_illustration"
+  },
+  "spec": {
+    "title": "Optical I/O Concept",
+    "summary": "通用光互连封装概念：计算裸片与光I/O在封装内，左侧主机电接口、右侧远端光纤链路。电到光的示例方向按讲解目的补充，不表示完整双向协议或实物制造结构。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "package",
+        "label": "Package",
+        "parent": "",
+        "evidence": "一个封装内有计算裸片和光I/O模块",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "host",
+        "label": "Host",
+        "kind": "io",
+        "group": "",
+        "detail": "Electrical interface",
+        "evidence": "左边接主机的电接口",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "compute",
+        "label": "Compute die",
+        "kind": "compute",
+        "group": "package",
+        "detail": "",
+        "evidence": "计算裸片",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "optical",
+        "label": "Optical I/O",
+        "kind": "io",
+        "group": "package",
+        "detail": "Electrical-to-optical conversion",
+        "evidence": "让读者能看懂电信号在哪里转成光信号",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "remote",
+        "label": "Remote device",
+        "kind": "io",
+        "group": "",
+        "detail": "Fiber link",
+        "evidence": "通过光纤连接远端设备",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "host",
+        "target": "compute",
+        "kind": "data",
+        "label": "Electrical",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "用从左向右的示例信号方向解释电到光路径，主机经计算裸片接光I/O；未声称完整协议。"
+      },
+      {
+        "source": "compute",
+        "target": "optical",
+        "kind": "data",
+        "label": "Electrical",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "按用户的电转光讲解目的选择封装内功能路径，非引脚或实物走线。"
+      },
+      {
+        "source": "optical",
+        "target": "remote",
+        "kind": "data",
+        "label": "Optical",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "按电转光讲解方向展示一条光链路，不排除真实产品中的反向通信。"
+      }
+    ],
+    "layout": "Host at the left perimeter, package in the center with compute and optical I/O in that reading order, remote device at the right perimeter. Keep the electrical-to-optical change at optical I/O. All positions explain logical relationships rather than a measured floorplan.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [
+      "从左向右展示一条电到光示例路径，不代表完整双向协议。",
+      "银灰外观和功能区域的位置仅用于概念说明，不确定裸片面积、端口数、光源或制造结构。"
+    ],
+    "questions": [],
+    "checks": [
+      "确认计算裸片与光I/O属于同一封装，主机与远端设备在外。",
+      "确认没有虚构速度、端口数量、光源位置或制造工艺。"
+    ]
+  }
+}

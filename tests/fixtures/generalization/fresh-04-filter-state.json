@@ -1,0 +1,216 @@
+{
+  "id": "fresh-04-filter-state",
+  "split": "development",
+  "natural_input": {
+    "description": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+    "scene": "auto",
+    "representation": "auto",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "algorithm"
+    ],
+    "required_concepts": [
+      {
+        "concept": "x",
+        "pattern": "X"
+      },
+      {
+        "concept": "prev",
+        "pattern": "Previous State"
+      },
+      {
+        "concept": "sx",
+        "pattern": "Scale Input"
+      },
+      {
+        "concept": "sh",
+        "pattern": "Scale State"
+      },
+      {
+        "concept": "add",
+        "pattern": "Add"
+      },
+      {
+        "concept": "next",
+        "pattern": "Next State"
+      }
+    ],
+    "relations": [
+      [
+        "x",
+        "sx",
+        "x[t]",
+        "data"
+      ],
+      [
+        "prev",
+        "sh",
+        "h[t-1]",
+        "data"
+      ],
+      [
+        "sx",
+        "add",
+        "a*x[t]",
+        "data"
+      ],
+      [
+        "sh",
+        "add",
+        "b*h[t-1]",
+        "data"
+      ],
+      [
+        "add",
+        "next",
+        "h[t]",
+        "data"
+      ]
+    ],
+    "ownership": {},
+    "closed_inventory": true,
+    "minimum_nodes": 6,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+    "settings": {
+      "scene": "auto",
+      "representation": "auto",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "fresh-04-filter-state",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "algorithm",
+      "verbatim_labels": [],
+      "groups": [],
+      "nodes": [
+        {
+          "id": "x",
+          "label": "X",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "tensor"
+        },
+        {
+          "id": "prev",
+          "label": "Previous State",
+          "kind": "memory",
+          "group": "",
+          "detail": "h[t-1]",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "state"
+        },
+        {
+          "id": "sx",
+          "label": "Scale Input",
+          "kind": "compute",
+          "group": "",
+          "detail": "a*x[t]",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "sh",
+          "label": "Scale State",
+          "kind": "compute",
+          "group": "",
+          "detail": "b*h[t-1]",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "add",
+          "label": "Add",
+          "kind": "compute",
+          "group": "",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "operator"
+        },
+        {
+          "id": "next",
+          "label": "Next State",
+          "kind": "memory",
+          "group": "",
+          "detail": "h[t]",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": "",
+          "diagram_role": "state"
+        }
+      ],
+      "edges": [
+        {
+          "source": "x",
+          "target": "sx",
+          "label": "x[t]",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "prev",
+          "target": "sh",
+          "label": "h[t-1]",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "sx",
+          "target": "add",
+          "label": "a*x[t]",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "sh",
+          "target": "add",
+          "label": "b*h[t-1]",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": ""
+        },
+        {
+          "source": "add",
+          "target": "next",
+          "label": "h[t]",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Show a one-step recurrent filter computation with only X, Previous State, Scale Input, Scale State, Add, Next State. Scale Input computes a*x[t]; Scale State computes b*h[t-1]; both terms feed Add; Add produces Next State h[t]. Previous State and Next State are different logical versions. No feedback control, no hardware, no cycle schedule.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}

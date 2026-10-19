@@ -1,0 +1,63 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #203833, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "8-Point Radix-2 DIT FFT: Staged Processing Flow".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #203833; primary #DCF0E9; secondary #F8E8D4; muted #F1F4F3. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Requested canvas proportions: 16:9. Adapt open spacing and the source-backed branch lanes to this canvas.
+Named spatial organization: left-to-right dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "x[0..7]", "W_8^k = exp(-j2πk/8)". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "Bit-Reversal Permutation". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "Stage 1: Span 2". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "Stage 2: Span 4". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 5: "Stage 3: Span 8". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 6: "X[0..7]". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: Left-to-right main chain: g_in (n_x -> n_bitrev) at left, g_stages (n_s1 -> n_s2 -> n_s3) in center as three equal-width stage columns, g_out (n_X) at right. Place n_tw above g_stages with short downward twiddle feeds into each stage. Reading order left to right; no full butterfly wiring drawn.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+Branch "W_8^k = exp(-j2πk/8)" into separate lanes toward "Stage 1: Span 2", "Stage 2: Span 4", "Stage 3: Span 8"; preserve each exact connector and shared source, without serialized arrows between those branches.
+At "Stage 1: Span 2", keep incoming operands from "Bit-Reversal Permutation", "W_8^k = exp(-j2πk/8)" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "Stage 2: Span 4", keep incoming operands from "Stage 1: Span 2", "W_8^k = exp(-j2πk/8)" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "Stage 3: Span 8", keep incoming operands from "Stage 2: Span 4", "W_8^k = exp(-j2πk/8)" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Supplied group "Input & Reordering" has exact members "x[0..7]", "Bit-Reversal Permutation". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "Stage 1: Span 2", "Stage 2: Span 4", "Stage 3: Span 8", "W_8^k = exp(-j2πk/8)", "X[0..7]". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Supplied group "Radix-2 DIT Butterfly Stages" has exact members "Stage 1: Span 2", "Stage 2: Span 4", "Stage 3: Span 8", "W_8^k = exp(-j2πk/8)". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "x[0..7]", "Bit-Reversal Permutation", "X[0..7]". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Supplied group "Output" has exact members "X[0..7]". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "x[0..7]", "Bit-Reversal Permutation", "Stage 1: Span 2", "Stage 2: Span 4", "Stage 3: Span 8", "W_8^k = exp(-j2πk/8)". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Required visible mathematical inventory:
+"x[0..7]" — tensor; supplied shape ONCE "[8]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Bit-Reversal Permutation" — index. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Stage 1: Span 2" — operator; essential exact equation(s) "Butterfly span N=2". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Stage 2: Span 4" — operator; essential exact equation(s) "Butterfly span N=4". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Stage 3: Span 8" — operator; essential exact equation(s) "Butterfly span N=8". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"W_8^k = exp(-j2πk/8)" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"X[0..7]" — tensor; supplied shape ONCE "[8]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"x[0..7]": "Bit-Reversal Permutation".
+"Bit-Reversal Permutation": "Stage 1: Span 2".
+"Stage 1: Span 2": "Stage 2: Span 4".
+"Stage 2: Span 4": "Stage 3: Span 8".
+"Stage 3: Span 8": "X[0..7]".
+"W_8^k = exp(-j2πk/8)": "Stage 1: Span 2", "Stage 2: Span 4", "Stage 3: Span 8".
+"X[0..7]": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "x[0..7]" → "Bit-Reversal Permutation": 1 connector; "Bit-Reversal Permutation" → "Stage 1: Span 2": 1 connector; "Stage 1: Span 2" → "Stage 2: Span 4": 1 connector; "Stage 2: Span 4" → "Stage 3: Span 8": 1 connector; "Stage 3: Span 8" → "X[0..7]": 1 connector; "W_8^k = exp(-j2πk/8)" → "Stage 1: Span 2": 1 connector; "W_8^k = exp(-j2πk/8)" → "Stage 2: Span 4": 1 connector; "W_8^k = exp(-j2πk/8)" → "Stage 3: Span 8": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"x[0..7]" → "Bit-Reversal Permutation"; supplied edge text "x[0..7]"; thin solid directed dependency.
+"Bit-Reversal Permutation" → "Stage 1: Span 2"; supplied edge text "reordered x"; thin solid directed dependency.
+"Stage 1: Span 2" → "Stage 2: Span 4"; supplied edge text "stage 1 result"; thin solid directed dependency.
+"Stage 2: Span 4" → "Stage 3: Span 8"; supplied edge text "stage 2 result"; thin solid directed dependency.
+"Stage 3: Span 8" → "X[0..7]"; supplied edge text "X[0..7]"; thin solid directed dependency.
+"W_8^k = exp(-j2πk/8)" → "Stage 1: Span 2"; supplied edge text "W_8^0, W_8^4"; thin solid directed dependency.
+"W_8^k = exp(-j2πk/8)" → "Stage 2: Span 4"; supplied edge text "W_8^0, W_8^2"; thin solid directed dependency.
+"W_8^k = exp(-j2πk/8)" → "Stage 3: Span 8"; supplied edge text "W_8^0..W_8^3"; thin solid directed dependency.
+Additional supplied mathematical expressions: show only beside the matching operator if not already printed there:
+"Twiddle factors W_8^k = exp(-j2πk/8) are shared across stages."
+Source context for interpretation ONLY; preserve its meaning through graph and equations, but DO NOT TYPESET this prose or add a footer:
+"Load natural-order input x[0..7]."
+"Apply bit-reversal permutation to obtain reordered samples."
+"Stage 1: radix-2 butterflies with span 2."
+"Stage 2: radix-2 butterflies with span 4."
+"Stage 3: radix-2 butterflies with span 8."
+"Emit X[0..7] in natural frequency order."
+"Each stage depends on the completed result of the previous stage."
+"Butterfly-level sample wiring is intentionally not expanded."
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

@@ -1,0 +1,32 @@
+{
+  "id": "gpu",
+  "status": "partial",
+  "review_method": "direct inspection of first generated pixels against the exact tool prompt and required guide",
+  "summary": "首图的角色配色与轻容器明显改善，四计算簇、共享缓存和片外显存的主路径能跟随；仍有源构图与生成细节需要后续迭代。",
+  "strengths": [
+    "浅蓝计算、暖金存储、淡紫控制可区分；原来的灰绿和黑色大标题块已消除。",
+    "四个并列计算簇保留，Host→接口→命令前端→分发→计算簇→共享L2→内存控制器→片外HBM可逐段跟随。",
+    "13条宏观有向连接的端点与方向肉眼检查吻合；HBM在加速器边界外。",
+    "Cluster 0局部仍是同一硬件的说明，三个内部资源名称可读，没有把局部说明画成新增簇。"
+  ],
+  "issues": [
+    {
+      "attribution": "compiled_guide",
+      "detail": "主图仍偏纵长，局部展开右侧留白较多；本轮没有改动几何。"
+    },
+    {
+      "attribution": "compiled_guide",
+      "detail": "Command Front End容器与内部节点名称重复，来自结构参考。"
+    },
+    {
+      "attribution": "imagegen_pixels",
+      "detail": "多数资源名与部分说明被加粗，字重仍比约定的普通/中等层级更重。"
+    },
+    {
+      "attribution": "imagegen_pixels",
+      "detail": "浅色填充有轻微不均匀纹理或渐变感，未完全遵循平坦纯色契约。"
+    }
+  ],
+  "scope": "本图是系统组织与共享服务主路径概览；簇内精确调度/访存机制、物理端口和全量连线不由此图认证。未重抽或编辑首图。",
+  "technical_review": "Selected macro path endpoints and directions appear preserved; this is visual inspection, not physical implementation or full graph certification."
+}

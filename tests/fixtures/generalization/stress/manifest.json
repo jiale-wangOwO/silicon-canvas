@@ -1,0 +1,59 @@
+{
+  "schema": "SC-GEN1-STRESS",
+  "status": "post_first_core_freeze_not_blind_not_in_first_run_score",
+  "cases": [
+    {
+      "id": "stress-chain-5",
+      "sha256": "9157c19c99085213429de1ada0d8f23287d3964e5860b2f3752e07d1b4fb9f1d"
+    },
+    {
+      "id": "stress-chain-9",
+      "sha256": "6c83d7994c99d61a3c405eb8ba4ec2b7326c0230136d4bb340d888377109242d"
+    },
+    {
+      "id": "stress-chain-16",
+      "sha256": "61815003b001637771d7b042a0d81db37927203ce5877f31615e09819c002ac3"
+    },
+    {
+      "id": "stress-chain-32",
+      "sha256": "d2d54a08a08e5e8f4f1221426920d6e1220131d6f9fefe7526f06c4e0be6cf86"
+    },
+    {
+      "id": "stress-forkjoin-2",
+      "sha256": "c8e86e635f30ac25d52dd8cd6a0f30b26f6b062e79ac160aea08a1ada3becca5"
+    },
+    {
+      "id": "stress-forkjoin-5",
+      "sha256": "53ce54912ddcbaf883341992a665cb9af3a58150619e4930ddca21ff84a9bbb5"
+    },
+    {
+      "id": "stress-forkjoin-10",
+      "sha256": "9cb443a9aef9e904c5d2d857435b8716c3c1e6f759fb4e64d947414e866addf3"
+    },
+    {
+      "id": "stress-dense-control-4",
+      "sha256": "0bb6e6c3cd0d7bbe3c96805686eed06253c913cfc9a0efc39102f98e42106c4d"
+    },
+    {
+      "id": "stress-dense-control-8",
+      "sha256": "0a1668ea713a393c4f232d52d270d3fde1105008b114c1cd599dbae48a829b4c"
+    },
+    {
+      "id": "stress-heterogeneous-2-3-5-system",
+      "sha256": "b893b85f357a9fc50d026c552612d2d2579d1023d5c319f88f3052cff24d4d7e"
+    },
+    {
+      "id": "stress-heterogeneous-2-3-5-flow",
+      "sha256": "3d885b077e632fb67afbd01be8621544f6ec06ea73933b0e93e425950665ed09"
+    },
+    {
+      "id": "stress-heterogeneous-3-7-12-system",
+      "sha256": "e578ea46b90a8fe28815b91dfe737c07ab9b0dc89266d2d0cd49a04eac2cbda0"
+    },
+    {
+      "id": "stress-heterogeneous-3-7-12-flow",
+      "sha256": "82b132362adb914c91ad456930c0e9e829208e9dda4d945aa4068494d8ae2312"
+    }
+  ],
+  "hash_basis": "sha256 of UTF-8 canonical JSON object: ensure_ascii=false, sort_keys=true, separators comma/colon; independent of file line endings"
+}

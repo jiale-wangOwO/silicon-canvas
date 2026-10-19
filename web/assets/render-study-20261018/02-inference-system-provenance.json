@@ -1,0 +1,60 @@
+{
+  "id": "02-inference-system",
+  "route": "current-source STDIO MCP silicon_prepare -> host reuse of unchanged canonical source -> silicon_compile -> exact prompt to built-in ImageGen",
+  "commit": "2c814978d2a07107635b5e1cc20ad3303ebc22f5",
+  "artifact_id": "98fa70b5e77a4ddd9af9372d3a791f67",
+  "source_hash": "f713d2920fa12924db838c26c6482516a047eed4a2ce4558b38d445d6a1e3f8e",
+  "comparison_source": "generalization-host-20261018/08-inference-pod-source.json",
+  "canonical_source_unchanged": true,
+  "input_file": "02-inference-system-input.txt",
+  "prompt_file": "02-inference-system-prompt.txt",
+  "source_file": "02-inference-system-source.json",
+  "image_file": "02-inference-system.png",
+  "review_file": "02-inference-system-review.json",
+  "representation": "system_illustration",
+  "grammar": "assembly",
+  "render_brief_version": "RENDER3",
+  "subject_scale": "system",
+  "mode": "assembly",
+  "source_nodes": 7,
+  "source_relations": 6,
+  "visible_relationship_families": 6,
+  "settings": {
+    "category": "architecture",
+    "style": "blueprint",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "low",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "explanatory_mode": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "concept",
+    "resolved_representation": "system_illustration"
+  },
+  "prompt_sha256": "364859cd453c1285a5e08f426c83e3f3d9a8d2c98f6668c86298b1ba54a23b86",
+  "image_sha256": "e938af0064ae42bc59c8395417af46f75fcc3cec08583930f693da195298578e",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "generation_inputs": {
+    "exact_tool_prompt": true,
+    "required_reference_count": 0,
+    "optional_reference_count": 0,
+    "transparent_background": false,
+    "manual_prompt_additions": false
+  },
+  "transport_validation": {
+    "actual_string_equals_packet": true,
+    "replacement_characters": 0,
+    "public_prompt_equals_actual": true
+  },
+  "first_output": true,
+  "imagegen_calls": 1,
+  "rerolls": 0,
+  "semantic_provider_api_calls": 0,
+  "source_snapshot_files": 31
+}

@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.otf binary
+*.ttf binary
+*.woff2 binary
+*.zip binary
+# Generated prompts and provenance retain the bytes used for their hashes.
+web/assets/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

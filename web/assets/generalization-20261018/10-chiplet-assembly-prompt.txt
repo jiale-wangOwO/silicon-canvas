@@ -1,0 +1,30 @@
+Create a finished dimensional semiconductor system illustration with Image Gen.
+Reader question: How do the system's objects, shared resources and interfaces work together?
+Treatment: assembly. A coherent whole-system assembly with source-backed objects and quantities. Choose staging that reveals ownership, shared resources and principal interfaces; mechanical detail remains secondary to the explanation.
+Subject: one coherent generic chip package exterior, standing for the supplied complete product without asserting how many internal dies it contains
+Source title: Chiplet Package Spatial Assembly (Conceptual)
+Camera: A controlled three-quarter product camera, approximately 30 degrees above the subject, a long lens with subtle perspective; choose the best orientation for its silhouette.
+Materials: Believable satin metal, matte technical ceramic or restrained silicon finish as appropriate to the subject; coherent edge thickness and restrained surface detail.
+Lighting: Large soft studio key, gentle fill and a narrow controlled rim highlight; reflections reveal form without hiding labels. Contact shadow should ground the object naturally.
+Background: A clean light neutral studio field with subtle tonal separation and generous empty space; transparent output only when explicitly requested by the user.
+Composition: One dominant coherent complete product or system assembly, deliberate scale and a strong overall silhouette. Explicit multiple physical objects may form that assembly. Organize functional roles into a few contiguous regions, give shared resources clear common ownership, and stage external context beyond the chip boundary. Leave real space for readable typography.
+Canvas: 4:3
+Typography: Required text is exact and legible. Use one consistent typographic hierarchy, strong contrast against the actual surface, concise member lists, and adequate spacing. Functional overlays may carry their own labels; surrounding callouts use tidy neutral leaders.
+Color: Use a quiet base and a small family of muted accents for semantic roles. Keep one hue per meaningful region and emphasize one main route; colors do not imply physical manufacturing boundaries.
+Build hierarchy before surface detail: one dominant whole-product silhouette, a few meaningful functional roles and subordinate context. Keep objects under one camera and lighting system; texture remains subtle.
+Use one source-title heading if needed, without an invented marketing subtitle, slogan or tagline. Keep the only in-image disclosure to a small 'Functional concept' note. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.
+Functional content (exact headings and concise members; place them according to this treatment, once each):
+- Lid Level: ["Integrated Heat Spreader (Lid)"]
+- Interposer Level: ["Compute Chiplet 1", "Compute Chiplet 2", "I/O Die", "HBM Stack 1", "HBM Stack 2"]
+- Substrate Level: ["Package Substrate"]
+Each quoted member is one source item. Preserve compound labels such as 'Accelerator / DSP' as one member, not separate invented instances. Group typography may summarize these members without drawing each as a physical part.
+Routing instructions, not a text panel or legend: draw only these selected source-backed interface links.
+- Interposer Level ~ Substrate Level
+- Lid Level ~ Interposer Level
+Use listed source directions for selected data, control, feedback and clock relationships, with discreet small target arrowheads. Keep opposite directed flows separately traceable. Association/interface relationships use quiet unheaded lines. The selected scope stays sparse; deferred engineering details do not become extra visible wiring. Use one unified fine neutral line treatment, or at most two subtle levels of contrast. Aggregate repeated links. Do not print link-kind words, a 'Key Relationships' section or an explanatory relation legend. Shared memory retains its common ownership.
+Stage the supplied objects as one understandable assembly; preserve explicitly supplied counts and physical membership. Functional overlays and symbolic interfaces may help show shared ownership. Unspecified mechanical geometry remains conceptual.
+Direct user physical input, supplied but not independently verified: 我需要一张 Chiplet 封装的空间装配说明图，用在架构方案介绍里。; 两个计算 Chiplet、一个 I/O Die 和两组 HBM 安装在同一中介层上，中介层安装在封装基板上，上方是一整块散热盖。; 计算 Chiplet 通过中介层与 I/O Die、HBM 连接。; 偏技术蓝的冷色主体配少量暖色 HBM，英文标签简短。
+User art direction takes precedence over defaults. Complete original intent and latest visual revision: {"description": "我需要一张 Chiplet 封装的空间装配说明图，用在架构方案介绍里。两个计算 Chiplet、一个 I/O Die 和两组 HBM 安装在同一中介层上，中介层安装在封装基板上，上方是一整块散热盖。计算 Chiplet 通过中介层与 I/O Die、HBM 连接。适度拉开散热盖、中介层和基板，让人能看懂部件数量、上下层次和装配归属，保持同一视角，不是把逻辑功能画成更多独立芯片。偏技术蓝的冷色主体配少量暖色 HBM，英文标签简短。这是概念空间示意，不是实际封装设计，不给尺寸、走线密度、工艺、引脚数或热阻参数。", "notes": ""}
+Keep explicit labels, logical ownership, quantities and source relationships. Functional overlays are not proof of physical dies, chiplets or HBM stacks. Exterior and context geometry remain illustrative. Avoid fabricated branding, measured specifications, ornamental circuit wallpaper, unrelated application props and cluttered copy.
+The text brief is sufficient. An optional composition reference only suggests scale, negative space and framing. Freely organize the explanatory regions using the source projection. Guide shapes carry no physical placement, object-count or wiring authority.
+Return one coherent finished image. The full engineering ledger remains in the brief and precise technical companions; do not force every secondary source signal onto this image.

@@ -1,0 +1,6146 @@
+{
+  "description": "完整的 SoC 系统",
+  "style_prompt": "STYLE CONTRACT CPS6-paper-2a026e31fb\nKeep this same visual system across every figure in the document.\nPalette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9.\nA compact publication figure on pure white, like an architecture-paper hardware diagram. No shadows, glow, depth, texture or gradients.\nGeometry follows hardware role: shallow queue/register bars, tight compute rectangles, interfaces with aligned ports, taller banked memories only when supported by their specification. Do not use uniform square cards.\nUse subdued blue-gray for compute and pale sage for storage; control and interfaces stay white. Color is sparse and follows role; at most three fill roles plus neutral gray.\nOne neutral sans-serif family, normal/medium-weight module names and regular signal labels. Thin dark data lines, slightly thinner gray dashed control lines, small arrowheads. Group titles are subordinate and boundaries do not create large empty panels.\nDesign for insertion at 160 mm width: module labels 9 pt and signal labels 8.5 pt, approximately 32 px and 30 px at 1600 px width. Derive pixels from the actual canvas width. Keep this type scale; when space is insufficient, redesign the projection or orientation rather than shrink letters. Use medium-weight names and regular signal labels.\nA small 3% white perimeter and compact signal corridors. Containers have very thin neutral outlines with little padding, never large empty blue frames. Solid fills only; no page texture. Use Noto Sans CJK / Microsoft YaHei-like sans-serif for Chinese.\nUse narrow engineering strokes and small arrowheads; primary paths may be slightly stronger but never thick flowchart arrows. Labels sit in open gaps. A crossing without a dot is not a connection.\nUse a concise legend only for conventions actually used. No ornamental page furniture.",
+  "spec": {
+    "title": "Generic SoC System Overview",
+    "summary": "面向“完整的 SoC 系统”的通用示意：以片上总线/互联为中心，左侧为计算子系统（CPU 集群、加速器），右侧为存储层次与片外 DRAM，下方为外设与安全/调试子系统，顶部为时钟复位与电源管理。所有模块与连接均为按常见工程实践补入的通用示例，可按实际设计增删。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_compute",
+        "label": "Compute Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "SoC 通常以计算子系统为核心，先建立功能分区"
+      },
+      {
+        "id": "g_mem",
+        "label": "Memory Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "区分片上存储层次与片外 DRAM 归属"
+      },
+      {
+        "id": "g_periph",
+        "label": "Peripheral & IO Subsystem",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设与对外接口通常独立成区"
+      },
+      {
+        "id": "g_sys",
+        "label": "System Management",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位、电源与安全调试属于全局支撑功能"
+      },
+      {
+        "id": "g_offchip",
+        "label": "Off-Chip",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外器件应置于芯片边界之外"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_cpu",
+        "label": "CPU Cluster",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Application cores + private caches",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "通用 SoC 的主控计算单元"
+      },
+      {
+        "id": "n_accel",
+        "label": "Accelerator / DSP",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Domain-specific compute engine",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "现代 SoC 常含专用加速器"
+      },
+      {
+        "id": "n_dma",
+        "label": "DMA Engine",
+        "kind": "compute",
+        "group": "g_compute",
+        "detail": "Bulk data mover",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "负责外设与存储间批量搬运"
+      },
+      {
+        "id": "n_noc",
+        "label": "On-Chip Interconnect",
+        "kind": "control",
+        "group": "",
+        "detail": "Shared bus / NoC fabric",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为全片共享互联主干"
+      },
+      {
+        "id": "n_sram",
+        "label": "On-Chip SRAM",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Shared scratchpad / last-level buffer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片上共享存储层次"
+      },
+      {
+        "id": "n_memctl",
+        "label": "DRAM Controller",
+        "kind": "control",
+        "group": "g_mem",
+        "detail": "External memory interface",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片上控制器，连接片外 DRAM"
+      },
+      {
+        "id": "n_dram",
+        "label": "External DRAM",
+        "kind": "memory",
+        "group": "g_offchip",
+        "detail": "Off-chip main memory",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外主存，位于芯片边界之外"
+      },
+      {
+        "id": "n_periph",
+        "label": "Peripheral Controllers",
+        "kind": "io",
+        "group": "g_periph",
+        "detail": "UART / SPI / I2C / GPIO",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "常见低速外设集合"
+      },
+      {
+        "id": "n_hsio",
+        "label": "High-Speed IO",
+        "kind": "io",
+        "group": "g_periph",
+        "detail": "PCIe / Ethernet / USB",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "对外高速接口"
+      },
+      {
+        "id": "n_host",
+        "label": "Host / External Device",
+        "kind": "io",
+        "group": "g_offchip",
+        "detail": "Off-chip peer",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外主机或设备"
+      },
+      {
+        "id": "n_clk",
+        "label": "Clock & Reset",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "PLL / clock gating / reset tree",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "全片时钟与复位源"
+      },
+      {
+        "id": "n_pwr",
+        "label": "Power Management",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "DVFS / power domains",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源域与功耗管理"
+      },
+      {
+        "id": "n_sec",
+        "label": "Security & Debug",
+        "kind": "control",
+        "group": "g_sys",
+        "detail": "Secure boot / JTAG / trace",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "安全启动与调试通道"
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_cpu",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "read/write",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "CPU 经互联访问存储与外设"
+      },
+      {
+        "source": "n_accel",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "read/write",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "加速器共享同一互联"
+      },
+      {
+        "source": "n_dma",
+        "target": "n_noc",
+        "kind": "data",
+        "label": "burst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "DMA 通过互联搬运数据"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_sram",
+        "kind": "data",
+        "label": "access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "互联到片上 SRAM 的访问路径"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_memctl",
+        "kind": "data",
+        "label": "access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "互联到 DRAM 控制器的访问路径"
+      },
+      {
+        "source": "n_memctl",
+        "target": "n_dram",
+        "kind": "data",
+        "label": "DQ/DQS",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "片外存储接口"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_periph",
+        "kind": "data",
+        "label": "MMIO",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设寄存器访问"
+      },
+      {
+        "source": "n_noc",
+        "target": "n_hsio",
+        "kind": "data",
+        "label": "DMA path",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "高速接口数据通路"
+      },
+      {
+        "source": "n_hsio",
+        "target": "n_host",
+        "kind": "data",
+        "label": "link",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "对外链路"
+      },
+      {
+        "source": "n_clk",
+        "target": "n_cpu",
+        "kind": "clock",
+        "label": "clk/rst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位分发"
+      },
+      {
+        "source": "n_clk",
+        "target": "n_noc",
+        "kind": "clock",
+        "label": "clk/rst",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "时钟复位分发"
+      },
+      {
+        "source": "n_pwr",
+        "target": "n_cpu",
+        "kind": "control",
+        "label": "pwr ctrl",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "电源域控制"
+      },
+      {
+        "source": "n_sec",
+        "target": "n_cpu",
+        "kind": "control",
+        "label": "debug",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "调试与安全控制"
+      },
+      {
+        "source": "n_periph",
+        "target": "n_dma",
+        "kind": "control",
+        "label": "req",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "外设请求 DMA 搬运"
+      },
+      {
+        "source": "n_memctl",
+        "target": "n_noc",
+        "kind": "feedback",
+        "label": "resp",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "存储返回数据/响应"
+      }
+    ],
+    "layout": "Main view left-to-right: g_compute on the left, n_noc as the central vertical spine, g_mem on the right, g_offchip (n_dram, n_host) at the far right outside the chip boundary. g_periph sits bottom-center below the interconnect; g_sys spans the top as a shallow band. Reading order: compute -> interconnect -> memory/peripherals -> off-chip. Reserve a lower corridor for the n_memctl->n_noc response and a top corridor for clock/power/security control lines.",
+    "steps": [],
+    "annotations": [
+      "Chip boundary encloses all groups except g_offchip.",
+      "All blocks and links are generic illustrative choices, not a specific product."
+    ],
+    "assumptions": [
+      "按通用 SoC 参考设计补入 CPU 集群、加速器、DMA、片上 SRAM、DRAM 控制器、外设、高速 IO、时钟复位、电源管理与安全调试等模块。",
+      "片外 DRAM 与主机/外部设备置于芯片边界之外，仅由片上控制器/接口连接。",
+      "互联被抽象为单一共享主干，未指定协议、位宽、拓扑或仲裁策略。",
+      "未给出具体容量、频率、核数等数值，图中不标注此类参数。"
+    ],
+    "questions": [
+      "是否需要把互联展开为多主多从的拓扑（如 crossbar/NoC）？",
+      "是否需要补充中断控制器或低功耗域划分等子系统？"
+    ],
+    "checks": [
+      "确认计算子系统与存储子系统的边界是否符合目标芯片的物理归属。",
+      "确认外设与高速接口清单是否覆盖实际需求。",
+      "确认时钟/电源/安全控制线是否需要单独成图。"
+    ]
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "labels": "",
+    "notes": ""
+  },
+  "figures": [
+    {
+      "id": "organization",
+      "kind": "overview",
+      "abstract": true,
+      "primary": true,
+      "technical_annex": false,
+      "title": "Generic SoC System Overview",
+      "summary": "按真实子系统归属组织主图，展开必要资源清单；内部接线与全局控制在图注及精确附图中保留。",
+      "macro_nodes": [
+        {
+          "id": "n_noc",
+          "label": "On-Chip Interconnect",
+          "kind": "control",
+          "members": [
+            "n_noc"
+          ],
+          "original_group": "",
+          "children": [],
+          "detail": "Shared bus / NoC fabric"
+        },
+        {
+          "id": "g_compute",
+          "label": "Compute Subsystem",
+          "kind": "compute",
+          "members": [
+            "n_cpu",
+            "n_accel",
+            "n_dma"
+          ],
+          "original_group": "",
+          "source_group": "g_compute",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_cpu",
+              "label": "CPU Cluster",
+              "kind": "compute"
+            },
+            {
+              "id": "n_accel",
+              "label": "Accelerator / DSP",
+              "kind": "compute"
+            },
+            {
+              "id": "n_dma",
+              "label": "DMA Engine",
+              "kind": "compute"
+            }
+          ]
+        },
+        {
+          "id": "g_mem",
+          "label": "Memory Subsystem",
+          "kind": "io",
+          "members": [
+            "n_sram",
+            "n_memctl"
+          ],
+          "original_group": "",
+          "source_group": "g_mem",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_sram",
+              "label": "On-Chip SRAM",
+              "kind": "memory"
+            },
+            {
+              "id": "n_memctl",
+              "label": "DRAM Controller",
+              "kind": "control"
+            }
+          ]
+        },
+        {
+          "id": "g_periph",
+          "label": "Peripheral & IO Subsystem",
+          "kind": "io",
+          "members": [
+            "n_periph",
+            "n_hsio"
+          ],
+          "original_group": "",
+          "source_group": "g_periph",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_periph",
+              "label": "Peripheral Controllers",
+              "kind": "io"
+            },
+            {
+              "id": "n_hsio",
+              "label": "High-Speed IO",
+              "kind": "io"
+            }
+          ]
+        },
+        {
+          "id": "g_sys",
+          "label": "System Management",
+          "kind": "io",
+          "members": [
+            "n_clk",
+            "n_pwr",
+            "n_sec"
+          ],
+          "original_group": "",
+          "source_group": "g_sys",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_clk",
+              "label": "Clock & Reset",
+              "kind": "control"
+            },
+            {
+              "id": "n_pwr",
+              "label": "Power Management",
+              "kind": "control"
+            },
+            {
+              "id": "n_sec",
+              "label": "Security & Debug",
+              "kind": "control"
+            }
+          ]
+        },
+        {
+          "id": "g_offchip",
+          "label": "Off-Chip",
+          "kind": "io",
+          "members": [
+            "n_dram",
+            "n_host"
+          ],
+          "original_group": "",
+          "source_group": "g_offchip",
+          "expanded": true,
+          "logical_group": true,
+          "children": [
+            {
+              "id": "n_dram",
+              "label": "External DRAM",
+              "kind": "memory"
+            },
+            {
+              "id": "n_host",
+              "label": "Host / External Device",
+              "kind": "io"
+            }
+          ]
+        }
+      ],
+      "macro_edges": [
+        {
+          "source": "g_compute",
+          "target": "n_noc",
+          "kind": "data",
+          "label": "",
+          "members": [
+            0,
+            1,
+            2
+          ],
+          "meanings_in_caption": [
+            "read/write",
+            "burst"
+          ],
+          "id": "p1"
+        },
+        {
+          "source": "n_noc",
+          "target": "g_mem",
+          "kind": "data",
+          "label": "access",
+          "members": [
+            3,
+            4
+          ],
+          "meanings_in_caption": [],
+          "id": "p2"
+        },
+        {
+          "source": "g_mem",
+          "target": "g_offchip",
+          "kind": "data",
+          "label": "DQ/DQS",
+          "members": [
+            5
+          ],
+          "meanings_in_caption": [],
+          "id": "p3"
+        },
+        {
+          "source": "n_noc",
+          "target": "g_periph",
+          "kind": "data",
+          "label": "",
+          "members": [
+            6,
+            7
+          ],
+          "meanings_in_caption": [
+            "MMIO",
+            "DMA path"
+          ],
+          "id": "p4"
+        },
+        {
+          "source": "g_periph",
+          "target": "g_offchip",
+          "kind": "data",
+          "label": "link",
+          "members": [
+            8
+          ],
+          "meanings_in_caption": [],
+          "id": "p5"
+        },
+        {
+          "source": "g_sys",
+          "target": "g_compute",
+          "kind": "control",
+          "label": "",
+          "members": [
+            11,
+            12
+          ],
+          "meanings_in_caption": [
+            "pwr ctrl",
+            "debug"
+          ],
+          "id": "p6"
+        },
+        {
+          "source": "g_periph",
+          "target": "g_compute",
+          "kind": "control",
+          "label": "req",
+          "members": [
+            13
+          ],
+          "meanings_in_caption": [],
+          "id": "p7"
+        },
+        {
+          "source": "g_mem",
+          "target": "n_noc",
+          "kind": "feedback",
+          "label": "resp",
+          "members": [
+            14
+          ],
+          "meanings_in_caption": [],
+          "id": "p8"
+        }
+      ],
+      "edge_indices": [],
+      "node_ids": [],
+      "source_edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14
+      ],
+      "view_role": "organization",
+      "steps": [],
+      "annotations": [],
+      "projection": {
+        "source_node_to_macro": {
+          "n_cpu": "g_compute",
+          "n_accel": "g_compute",
+          "n_dma": "g_compute",
+          "n_noc": "n_noc",
+          "n_sram": "g_mem",
+          "n_memctl": "g_mem",
+          "n_dram": "g_offchip",
+          "n_periph": "g_periph",
+          "n_hsio": "g_periph",
+          "n_host": "g_offchip",
+          "n_clk": "g_sys",
+          "n_pwr": "g_sys",
+          "n_sec": "g_sys"
+        },
+        "internal_edges": [],
+        "deferred_edges": [
+          {
+            "index": 9,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          },
+          {
+            "index": 10,
+            "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+          }
+        ],
+        "folded_groups": [
+          "g_compute",
+          "g_mem",
+          "g_periph",
+          "g_sys",
+          "g_offchip"
+        ],
+        "ownership_unchanged": true,
+        "meaning": "True group boundaries summarize only their source inventory and external relationships. A supplied xN group denotes that inventory's original multiplicity; no new instances or internal wiring are invented."
+      },
+      "design_contract": {
+        "grammar": "ownership-flow",
+        "question": "Which real subsystems own these resources, and how do those subsystems interact?",
+        "claim": "Source ownership and the main inter-subsystem relationships are explicit; internal operation is a separate technical view.",
+        "scope": "display projection",
+        "target_width_mm": 160,
+        "body_pt": 9,
+        "signal_pt": 8.5,
+        "source_invariants": [
+          "source ownership",
+          "directed source relations",
+          "explicit quantities and conditions",
+          "required verbatim text"
+        ],
+        "editorial_decisions": [
+          "projection",
+          "positions",
+          "line bends",
+          "which optional prose stays in caption"
+        ],
+        "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+        "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+        "symbol_profile": "ink-header"
+      },
+      "required_verbatim_labels": [],
+      "composition_diagnostics": {
+        "grammar": "ownership-flow",
+        "candidates": [
+          {
+            "id": "ownership-hub-2",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 26,
+              "longest_route_px": 2725.0,
+              "total_route_px": 4989.0
+            },
+            "deferred_label_count": 3,
+            "natural_aspect": 1.158301,
+            "document_height_mm": 138.1
+          },
+          {
+            "id": "ownership-hub-1",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 28,
+              "longest_route_px": 2896.5,
+              "total_route_px": 5604.5
+            },
+            "deferred_label_count": 3,
+            "natural_aspect": 0.972973,
+            "document_height_mm": 164.4
+          },
+          {
+            "id": "top-to-bottom-1",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 31,
+              "longest_route_px": 1181.5,
+              "total_route_px": 5506.0
+            },
+            "deferred_label_count": 0,
+            "natural_aspect": 0.58102,
+            "document_height_mm": 275.4
+          },
+          {
+            "id": "left-to-right-1",
+            "accepted": false,
+            "reasons": [
+              "Horizontal subsystem inventories exceed the fixed-font document width"
+            ]
+          },
+          {
+            "id": "top-to-bottom-2",
+            "accepted": true,
+            "reasons": [],
+            "geometry": {
+              "crossings": 0,
+              "bends": 27,
+              "longest_route_px": 1218.0,
+              "total_route_px": 5809.7
+            },
+            "deferred_label_count": 0,
+            "natural_aspect": 0.662252,
+            "document_height_mm": 241.6
+          },
+          {
+            "id": "left-to-right-2",
+            "accepted": false,
+            "reasons": [
+              "Horizontal subsystem inventories exceed the fixed-font document width"
+            ]
+          }
+        ],
+        "selection_policy": "Hard route/typography/crossover/boundary gates, then document height before optional prose for subsystem organization; no beauty score"
+      },
+      "layout_scene": {
+        "width": 1800,
+        "height": 1554,
+        "routes": [
+          {
+            "source": "g_compute",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "",
+            "members": [
+              0,
+              1,
+              2
+            ],
+            "meanings_in_caption": [
+              "read/write",
+              "burst"
+            ],
+            "id": "p1",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.35751295336787564,
+              "target_fraction": 0.7149425287356321
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.394444,
+                0.464607
+              ],
+              [
+                0.404444,
+                0.464607
+              ],
+              [
+                0.404444,
+                0.465894
+              ],
+              [
+                0.417778,
+                0.465894
+              ],
+              [
+                0.417778,
+                0.464608
+              ],
+              [
+                0.427778,
+                0.464608
+              ]
+            ]
+          },
+          {
+            "source": "n_noc",
+            "target": "g_mem",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              3,
+              4
+            ],
+            "meanings_in_caption": [],
+            "id": "p2",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.09655172413793103,
+              "target_fraction": 0.2781456953642384
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.572222,
+                0.118404
+              ],
+              [
+                0.582222,
+                0.118404
+              ],
+              [
+                0.582222,
+                0.118404
+              ],
+              [
+                0.595556,
+                0.118404
+              ],
+              [
+                0.595556,
+                0.118404
+              ],
+              [
+                0.605556,
+                0.118404
+              ]
+            ]
+          },
+          {
+            "source": "g_mem",
+            "target": "g_offchip",
+            "kind": "data",
+            "label": "DQ/DQS",
+            "members": [
+              5
+            ],
+            "meanings_in_caption": [],
+            "id": "p3",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "source_fraction": 0.3675496688741722,
+              "target_side": "right",
+              "target_fraction": 0.3816568047337278,
+              "organization_track": "outside-service-column"
+            },
+            "source_side": "right",
+            "target_side": "right",
+            "points": [
+              [
+                0.96,
+                0.135778
+              ],
+              [
+                0.975,
+                0.135778
+              ],
+              [
+                0.975,
+                0.743244
+              ],
+              [
+                0.96,
+                0.743244
+              ]
+            ]
+          },
+          {
+            "source": "n_noc",
+            "target": "g_periph",
+            "kind": "data",
+            "label": "",
+            "members": [
+              6,
+              7
+            ],
+            "meanings_in_caption": [
+              "MMIO",
+              "DMA path"
+            ],
+            "id": "p4",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.5471264367816092,
+              "target_fraction": 0.1891891891891892
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.572222,
+                0.370657
+              ],
+              [
+                0.582222,
+                0.370657
+              ],
+              [
+                0.582222,
+                0.370656
+              ],
+              [
+                0.595556,
+                0.370656
+              ],
+              [
+                0.595556,
+                0.370656
+              ],
+              [
+                0.605556,
+                0.370656
+              ]
+            ]
+          },
+          {
+            "source": "g_periph",
+            "target": "g_offchip",
+            "kind": "data",
+            "label": "link",
+            "members": [
+              8
+            ],
+            "meanings_in_caption": [],
+            "id": "p5",
+            "family": "forward",
+            "routing": {
+              "source_side": "left",
+              "target_side": "left",
+              "source_fraction": 0.43243243243243246,
+              "target_fraction": 0.3816568047337278
+            },
+            "source_side": "left",
+            "target_side": "left",
+            "points": [
+              [
+                0.605556,
+                0.440154
+              ],
+              [
+                0.595556,
+                0.440154
+              ],
+              [
+                0.595556,
+                0.743244
+              ],
+              [
+                0.605556,
+                0.743244
+              ]
+            ]
+          },
+          {
+            "source": "g_sys",
+            "target": "g_compute",
+            "kind": "control",
+            "label": "",
+            "members": [
+              11,
+              12
+            ],
+            "meanings_in_caption": [
+              "pwr ctrl",
+              "debug"
+            ],
+            "id": "p6",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "right",
+              "target_fraction": 0.21761658031088082,
+              "source_fraction": 0.23604060913705585
+            },
+            "source_side": "right",
+            "target_side": "right",
+            "points": [
+              [
+                0.394444,
+                0.124196
+              ],
+              [
+                0.404444,
+                0.124196
+              ],
+              [
+                0.404444,
+                0.429858
+              ],
+              [
+                0.394444,
+                0.429858
+              ]
+            ]
+          },
+          {
+            "source": "g_periph",
+            "target": "g_compute",
+            "kind": "control",
+            "label": "req",
+            "members": [
+              13
+            ],
+            "meanings_in_caption": [],
+            "id": "p7",
+            "family": "return",
+            "routing": {
+              "source_side": "left",
+              "source_fraction": 0.3108108108108108,
+              "target_side": "left",
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.9581724581724582,
+              "target_fraction": 0.28756476683937826
+            },
+            "source_side": "left",
+            "target_side": "left",
+            "points": [
+              [
+                0.605556,
+                0.405405
+              ],
+              [
+                0.588889,
+                0.405405
+              ],
+              [
+                0.588889,
+                0.9581724581724582
+              ],
+              [
+                0.025,
+                0.9581724581724582
+              ],
+              [
+                0.025,
+                0.447233
+              ],
+              [
+                0.04,
+                0.447233
+              ]
+            ]
+          },
+          {
+            "source": "g_mem",
+            "target": "n_noc",
+            "kind": "feedback",
+            "label": "resp",
+            "members": [
+              14
+            ],
+            "meanings_in_caption": [],
+            "id": "p8",
+            "family": "forward",
+            "routing": {
+              "source_side": "left",
+              "target_side": "right",
+              "source_fraction": 0.45695364238410596,
+              "target_fraction": 0.15862068965517243
+            },
+            "source_side": "left",
+            "target_side": "right",
+            "points": [
+              [
+                0.605556,
+                0.153153
+              ],
+              [
+                0.595556,
+                0.153153
+              ],
+              [
+                0.595556,
+                0.151866
+              ],
+              [
+                0.582222,
+                0.151866
+              ],
+              [
+                0.582222,
+                0.153153
+              ],
+              [
+                0.572222,
+                0.153153
+              ]
+            ]
+          }
+        ],
+        "line_legend": {},
+        "quality": {
+          "routes_complete": true,
+          "failed_routes": [],
+          "route_count": 8,
+          "requested_routes": 8,
+          "no_common_bus_inferred": true,
+          "owner_scope_entries": {
+            "clear": true,
+            "failures": [],
+            "meaning": "Boundary entry is scope-level, not a fabricated child-to-child mapping."
+          },
+          "organization_traces": {
+            "clear": true,
+            "contacts": [],
+            "geometry_is_not_new_junctions": true
+          },
+          "body_font_pt": 9.0,
+          "signal_font_pt": 8.5,
+          "target_width_mm": 160.0,
+          "publication_typography": true,
+          "geometry_is_not_raster_acceptance": true,
+          "input_traces": {
+            "clear": true,
+            "owners": [
+              {
+                "owner": "g_offchip",
+                "producer_count": 2,
+                "minimum_port_gap_px": 637.999,
+                "required_port_gap_px": 54,
+                "minimum_path_clearance_px": 637.999,
+                "paths_touch_or_share": false,
+                "target_width_mm": 160.0,
+                "geometry_is_not_new_hardware_ports": true
+              }
+            ],
+            "failures": []
+          },
+          "labels_placed": 2,
+          "deferred_labels": [
+            {
+              "text": "access",
+              "source_edge_indices": [
+                3,
+                4
+              ],
+              "reason": "No unobstructed region at signal font size"
+            },
+            {
+              "text": "link",
+              "source_edge_indices": [
+                8
+              ],
+              "reason": "No unobstructed region at signal font size"
+            },
+            {
+              "text": "resp",
+              "source_edge_indices": [
+                14
+              ],
+              "reason": "No unobstructed region at signal font size"
+            }
+          ],
+          "typography_measured": true,
+          "deferred_scope_titles": [],
+          "document_fit": {
+            "height_mm": 138.1,
+            "default_limit_mm": 140,
+            "status": "pass",
+            "no_font_shrink": true,
+            "meaning": "Native source routing and typography do not certify a tall figure as publication-ready."
+          }
+        }
+      },
+      "label_layout": {
+        "width": 1800,
+        "height": 1554,
+        "body_font_px": 36,
+        "signal_font_px": 34,
+        "target_width_mm": 160.0,
+        "labels": [
+          {
+            "text": "DQ/DQS",
+            "box": {
+              "x": 0.888889,
+              "y": 0.274298,
+              "width": 0.079444,
+              "height": 0.026692
+            },
+            "color": "#263238",
+            "source_edge_indices": [
+              5
+            ]
+          },
+          {
+            "text": "req",
+            "box": {
+              "x": 0.291944,
+              "y": 0.923758,
+              "width": 0.03,
+              "height": 0.026692
+            },
+            "color": "#263238",
+            "source_edge_indices": [
+              13
+            ]
+          }
+        ],
+        "deferred_labels": [
+          {
+            "text": "access",
+            "source_edge_indices": [
+              3,
+              4
+            ],
+            "reason": "No unobstructed region at signal font size"
+          },
+          {
+            "text": "link",
+            "source_edge_indices": [
+              8
+            ],
+            "reason": "No unobstructed region at signal font size"
+          },
+          {
+            "text": "resp",
+            "source_edge_indices": [
+              14
+            ],
+            "reason": "No unobstructed region at signal font size"
+          }
+        ]
+      },
+      "structure_layout": {
+        "type": "publication",
+        "version": "CPS6",
+        "abstract": true,
+        "view_type": "publication-ownership-flow",
+        "view_role": "organization",
+        "title": "Generic SoC System Overview",
+        "macro_nodes": [
+          {
+            "id": "n_noc",
+            "label": "On-Chip Interconnect",
+            "kind": "control",
+            "members": [
+              "n_noc"
+            ],
+            "original_group": "",
+            "children": [],
+            "detail": "Shared bus / NoC fabric"
+          },
+          {
+            "id": "g_compute",
+            "label": "Compute Subsystem",
+            "kind": "compute",
+            "members": [
+              "n_cpu",
+              "n_accel",
+              "n_dma"
+            ],
+            "original_group": "",
+            "source_group": "g_compute",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_cpu",
+                "label": "CPU Cluster",
+                "kind": "compute"
+              },
+              {
+                "id": "n_accel",
+                "label": "Accelerator / DSP",
+                "kind": "compute"
+              },
+              {
+                "id": "n_dma",
+                "label": "DMA Engine",
+                "kind": "compute"
+              }
+            ],
+            "entry_sources": [],
+            "boundary_port_count": 2,
+            "scope_ports_by_side": true
+          },
+          {
+            "id": "g_mem",
+            "label": "Memory Subsystem",
+            "kind": "io",
+            "members": [
+              "n_sram",
+              "n_memctl"
+            ],
+            "original_group": "",
+            "source_group": "g_mem",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_sram",
+                "label": "On-Chip SRAM",
+                "kind": "memory"
+              },
+              {
+                "id": "n_memctl",
+                "label": "DRAM Controller",
+                "kind": "control"
+              }
+            ],
+            "entry_sources": [
+              "n_noc"
+            ],
+            "boundary_port_count": 2,
+            "scope_ports_by_side": true
+          },
+          {
+            "id": "g_periph",
+            "label": "Peripheral & IO Subsystem",
+            "kind": "io",
+            "members": [
+              "n_periph",
+              "n_hsio"
+            ],
+            "original_group": "",
+            "source_group": "g_periph",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_periph",
+                "label": "Peripheral Controllers",
+                "kind": "io",
+                "required_detail": "UART / SPI / I2C / GPIO"
+              },
+              {
+                "id": "n_hsio",
+                "label": "High-Speed IO",
+                "kind": "io"
+              }
+            ],
+            "entry_sources": [
+              "n_noc"
+            ],
+            "boundary_port_count": 3,
+            "scope_ports_by_side": true
+          },
+          {
+            "id": "g_sys",
+            "label": "System Management",
+            "kind": "io",
+            "members": [
+              "n_clk",
+              "n_pwr",
+              "n_sec"
+            ],
+            "original_group": "",
+            "source_group": "g_sys",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_clk",
+                "label": "Clock & Reset",
+                "kind": "control"
+              },
+              {
+                "id": "n_pwr",
+                "label": "Power Management",
+                "kind": "control"
+              },
+              {
+                "id": "n_sec",
+                "label": "Security & Debug",
+                "kind": "control"
+              }
+            ],
+            "entry_sources": [],
+            "boundary_port_count": 1,
+            "scope_ports_by_side": true
+          },
+          {
+            "id": "g_offchip",
+            "label": "Off-Chip",
+            "kind": "io",
+            "members": [
+              "n_dram",
+              "n_host"
+            ],
+            "original_group": "",
+            "source_group": "g_offchip",
+            "expanded": true,
+            "logical_group": true,
+            "children": [
+              {
+                "id": "n_dram",
+                "label": "External DRAM",
+                "kind": "memory"
+              },
+              {
+                "id": "n_host",
+                "label": "Host / External Device",
+                "kind": "io"
+              }
+            ],
+            "entry_sources": [
+              "g_mem",
+              "g_periph"
+            ],
+            "boundary_port_count": 1,
+            "scope_ports_by_side": true
+          }
+        ],
+        "macro_edges": [
+          {
+            "source": "g_compute",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "",
+            "members": [
+              0,
+              1,
+              2
+            ],
+            "meanings_in_caption": [
+              "read/write",
+              "burst"
+            ],
+            "id": "p1",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.35751295336787564,
+              "target_fraction": 0.7149425287356321
+            }
+          },
+          {
+            "source": "n_noc",
+            "target": "g_mem",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              3,
+              4
+            ],
+            "meanings_in_caption": [],
+            "id": "p2",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.09655172413793103,
+              "target_fraction": 0.2781456953642384
+            }
+          },
+          {
+            "source": "g_mem",
+            "target": "g_offchip",
+            "kind": "data",
+            "label": "DQ/DQS",
+            "members": [
+              5
+            ],
+            "meanings_in_caption": [],
+            "id": "p3",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "source_fraction": 0.3675496688741722,
+              "target_side": "right",
+              "target_fraction": 0.3816568047337278,
+              "organization_track": "outside-service-column"
+            }
+          },
+          {
+            "source": "n_noc",
+            "target": "g_periph",
+            "kind": "data",
+            "label": "",
+            "members": [
+              6,
+              7
+            ],
+            "meanings_in_caption": [
+              "MMIO",
+              "DMA path"
+            ],
+            "id": "p4",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "left",
+              "source_fraction": 0.5471264367816092,
+              "target_fraction": 0.1891891891891892
+            }
+          },
+          {
+            "source": "g_periph",
+            "target": "g_offchip",
+            "kind": "data",
+            "label": "link",
+            "members": [
+              8
+            ],
+            "meanings_in_caption": [],
+            "id": "p5",
+            "family": "forward",
+            "routing": {
+              "source_side": "left",
+              "target_side": "left",
+              "source_fraction": 0.43243243243243246,
+              "target_fraction": 0.3816568047337278
+            }
+          },
+          {
+            "source": "g_sys",
+            "target": "g_compute",
+            "kind": "control",
+            "label": "",
+            "members": [
+              11,
+              12
+            ],
+            "meanings_in_caption": [
+              "pwr ctrl",
+              "debug"
+            ],
+            "id": "p6",
+            "family": "forward",
+            "routing": {
+              "source_side": "right",
+              "target_side": "right",
+              "target_fraction": 0.21761658031088082,
+              "source_fraction": 0.23604060913705585
+            }
+          },
+          {
+            "source": "g_periph",
+            "target": "g_compute",
+            "kind": "control",
+            "label": "req",
+            "members": [
+              13
+            ],
+            "meanings_in_caption": [],
+            "id": "p7",
+            "family": "return",
+            "routing": {
+              "source_side": "left",
+              "source_fraction": 0.3108108108108108,
+              "target_side": "left",
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.9581724581724582,
+              "target_fraction": 0.28756476683937826
+            }
+          },
+          {
+            "source": "g_mem",
+            "target": "n_noc",
+            "kind": "feedback",
+            "label": "resp",
+            "members": [
+              14
+            ],
+            "meanings_in_caption": [],
+            "id": "p8",
+            "family": "forward",
+            "routing": {
+              "source_side": "left",
+              "target_side": "right",
+              "source_fraction": 0.45695364238410596,
+              "target_fraction": 0.15862068965517243
+            }
+          }
+        ],
+        "boxes": {
+          "g_sys": {
+            "x": 0.04,
+            "y": 0.06435,
+            "width": 0.354444,
+            "height": 0.253539
+          },
+          "g_compute": {
+            "x": 0.04,
+            "y": 0.375804,
+            "width": 0.354444,
+            "height": 0.248391
+          },
+          "g_mem": {
+            "x": 0.605556,
+            "y": 0.06435,
+            "width": 0.354444,
+            "height": 0.194337
+          },
+          "g_periph": {
+            "x": 0.605556,
+            "y": 0.316602,
+            "width": 0.354444,
+            "height": 0.285714
+          },
+          "g_offchip": {
+            "x": 0.605556,
+            "y": 0.660232,
+            "width": 0.354444,
+            "height": 0.217503
+          },
+          "n_noc": {
+            "x": 0.427778,
+            "y": 0.06435,
+            "width": 0.144444,
+            "height": 0.559846
+          }
+        },
+        "containers": [],
+        "system_frame": {
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1
+          },
+          "label": "",
+          "display_only": true
+        },
+        "canvas": {
+          "coordinate_system": "normalized",
+          "natural_aspect": 1.158301,
+          "reading_direction": "existing-data-hub-with-owned-subsystems",
+          "target_width_mm": 160.0
+        },
+        "typography": {
+          "target_width_mm": 160.0,
+          "body_pt": 9.0,
+          "signal_pt": 8.5,
+          "body_px": 36,
+          "signal_px": 34,
+          "no_font_shrink": true,
+          "symbol_profile": "ink-header"
+        },
+        "symbol_metrics": {
+          "n_noc": {
+            "width": 260,
+            "height": 112,
+            "lines": [
+              "On-Chip",
+              "Interconnect"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 110,
+            "entry_gutter_height": 0,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": []
+          },
+          "g_compute": {
+            "width": 638,
+            "height": 386,
+            "lines": [
+              "Compute Subsystem"
+            ],
+            "detail_lines": [],
+            "ink_header": true,
+            "header_height": 66,
+            "entry_gutter_height": 90,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_cpu",
+                "label": "CPU Cluster",
+                "kind": "compute",
+                "lines": [
+                  "CPU Cluster"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 166,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_accel",
+                "label": "Accelerator / DSP",
+                "kind": "compute",
+                "lines": [
+                  "Accelerator",
+                  "/ DSP"
+                ],
+                "box_px": {
+                  "x": 328.0,
+                  "y": 166,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_dma",
+                "label": "DMA Engine",
+                "kind": "compute",
+                "lines": [
+                  "DMA Engine"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 294,
+                  "width": 292.0,
+                  "height": 68
+                }
+              }
+            ]
+          },
+          "g_mem": {
+            "width": 638,
+            "height": 302,
+            "lines": [
+              "Memory Subsystem"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 90,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_sram",
+                "label": "On-Chip SRAM",
+                "kind": "memory",
+                "lines": [
+                  "On-Chip SRAM"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 166,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_memctl",
+                "label": "DRAM Controller",
+                "kind": "control",
+                "lines": [
+                  "DRAM",
+                  "Controller"
+                ],
+                "box_px": {
+                  "x": 328.0,
+                  "y": 166,
+                  "width": 292.0,
+                  "height": 112
+                }
+              }
+            ]
+          },
+          "g_periph": {
+            "width": 638,
+            "height": 444,
+            "lines": [
+              "Peripheral & IO Subsystem"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 144,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_periph",
+                "label": "Peripheral Controllers",
+                "kind": "io",
+                "lines": [
+                  "Peripheral",
+                  "Controllers",
+                  "UART / SPI",
+                  "/ I2C / GPIO"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 220,
+                  "width": 292.0,
+                  "height": 200
+                }
+              },
+              {
+                "id": "n_hsio",
+                "label": "High-Speed IO",
+                "kind": "io",
+                "lines": [
+                  "High-Speed IO"
+                ],
+                "box_px": {
+                  "x": 328.0,
+                  "y": 220,
+                  "width": 292.0,
+                  "height": 200
+                }
+              }
+            ]
+          },
+          "g_sys": {
+            "width": 638,
+            "height": 394,
+            "lines": [
+              "System Management"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 54,
+            "entry_port_spacing_px": 0,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_clk",
+                "label": "Clock & Reset",
+                "kind": "control",
+                "lines": [
+                  "Clock & Reset"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 130,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_pwr",
+                "label": "Power Management",
+                "kind": "control",
+                "lines": [
+                  "Power",
+                  "Management"
+                ],
+                "box_px": {
+                  "x": 328.0,
+                  "y": 130,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_sec",
+                "label": "Security & Debug",
+                "kind": "control",
+                "lines": [
+                  "Security",
+                  "& Debug"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 258,
+                  "width": 292.0,
+                  "height": 112
+                }
+              }
+            ]
+          },
+          "g_offchip": {
+            "width": 638,
+            "height": 338,
+            "lines": [
+              "Off-Chip"
+            ],
+            "detail_lines": [],
+            "ink_header": false,
+            "header_height": 66,
+            "entry_gutter_height": 126,
+            "entry_port_spacing_px": 54,
+            "font_px": 36,
+            "line_height": 44,
+            "children": [
+              {
+                "id": "n_dram",
+                "label": "External DRAM",
+                "kind": "memory",
+                "lines": [
+                  "External DRAM"
+                ],
+                "box_px": {
+                  "x": 18.0,
+                  "y": 202,
+                  "width": 292.0,
+                  "height": 112
+                }
+              },
+              {
+                "id": "n_host",
+                "label": "Host / External Device",
+                "kind": "io",
+                "lines": [
+                  "Host / External",
+                  "Device"
+                ],
+                "box_px": {
+                  "x": 328.0,
+                  "y": 202,
+                  "width": 292.0,
+                  "height": 112
+                }
+              }
+            ]
+          }
+        },
+        "candidate_id": "ownership-hub-2",
+        "source_ownership": {
+          "n_cpu": "g_compute",
+          "n_accel": "g_compute",
+          "n_dma": "g_compute",
+          "n_noc": "",
+          "n_sram": "g_mem",
+          "n_memctl": "g_mem",
+          "n_dram": "g_offchip",
+          "n_periph": "g_periph",
+          "n_hsio": "g_periph",
+          "n_host": "g_offchip",
+          "n_clk": "g_sys",
+          "n_pwr": "g_sys",
+          "n_sec": "g_sys"
+        },
+        "source_group_parents": {
+          "g_compute": "",
+          "g_mem": "",
+          "g_periph": "",
+          "g_sys": "",
+          "g_offchip": ""
+        },
+        "source_group_labels": {
+          "g_compute": "Compute Subsystem",
+          "g_mem": "Memory Subsystem",
+          "g_periph": "Peripheral & IO Subsystem",
+          "g_sys": "System Management",
+          "g_offchip": "Off-Chip"
+        },
+        "node_to_macro": {
+          "n_cpu": "g_compute",
+          "n_accel": "g_compute",
+          "n_dma": "g_compute",
+          "n_noc": "n_noc",
+          "n_sram": "g_mem",
+          "n_memctl": "g_mem",
+          "n_dram": "g_offchip",
+          "n_periph": "g_periph",
+          "n_hsio": "g_periph",
+          "n_host": "g_offchip",
+          "n_clk": "g_sys",
+          "n_pwr": "g_sys",
+          "n_sec": "g_sys"
+        },
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14
+        ],
+        "projection": {
+          "source_node_to_macro": {
+            "n_cpu": "g_compute",
+            "n_accel": "g_compute",
+            "n_dma": "g_compute",
+            "n_noc": "n_noc",
+            "n_sram": "g_mem",
+            "n_memctl": "g_mem",
+            "n_dram": "g_offchip",
+            "n_periph": "g_periph",
+            "n_hsio": "g_periph",
+            "n_host": "g_offchip",
+            "n_clk": "g_sys",
+            "n_pwr": "g_sys",
+            "n_sec": "g_sys"
+          },
+          "internal_edges": [],
+          "deferred_edges": [
+            {
+              "index": 9,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            },
+            {
+              "index": 10,
+              "reason": "Internal operation or secondary global clock remains in the caption and exact annex."
+            }
+          ],
+          "folded_groups": [
+            "g_compute",
+            "g_mem",
+            "g_periph",
+            "g_sys",
+            "g_offchip"
+          ],
+          "ownership_unchanged": true,
+          "meaning": "True group boundaries summarize only their source inventory and external relationships. A supplied xN group denotes that inventory's original multiplicity; no new instances or internal wiring are invented."
+        },
+        "insets": [],
+        "layout_scene": {
+          "width": 1800,
+          "height": 1554,
+          "routes": [
+            {
+              "source": "g_compute",
+              "target": "n_noc",
+              "kind": "data",
+              "label": "",
+              "members": [
+                0,
+                1,
+                2
+              ],
+              "meanings_in_caption": [
+                "read/write",
+                "burst"
+              ],
+              "id": "p1",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "left",
+                "source_fraction": 0.35751295336787564,
+                "target_fraction": 0.7149425287356321
+              },
+              "source_side": "right",
+              "target_side": "left",
+              "points": [
+                [
+                  0.394444,
+                  0.464607
+                ],
+                [
+                  0.404444,
+                  0.464607
+                ],
+                [
+                  0.404444,
+                  0.465894
+                ],
+                [
+                  0.417778,
+                  0.465894
+                ],
+                [
+                  0.417778,
+                  0.464608
+                ],
+                [
+                  0.427778,
+                  0.464608
+                ]
+              ]
+            },
+            {
+              "source": "n_noc",
+              "target": "g_mem",
+              "kind": "data",
+              "label": "access",
+              "members": [
+                3,
+                4
+              ],
+              "meanings_in_caption": [],
+              "id": "p2",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "left",
+                "source_fraction": 0.09655172413793103,
+                "target_fraction": 0.2781456953642384
+              },
+              "source_side": "right",
+              "target_side": "left",
+              "points": [
+                [
+                  0.572222,
+                  0.118404
+                ],
+                [
+                  0.582222,
+                  0.118404
+                ],
+                [
+                  0.582222,
+                  0.118404
+                ],
+                [
+                  0.595556,
+                  0.118404
+                ],
+                [
+                  0.595556,
+                  0.118404
+                ],
+                [
+                  0.605556,
+                  0.118404
+                ]
+              ]
+            },
+            {
+              "source": "g_mem",
+              "target": "g_offchip",
+              "kind": "data",
+              "label": "DQ/DQS",
+              "members": [
+                5
+              ],
+              "meanings_in_caption": [],
+              "id": "p3",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "source_fraction": 0.3675496688741722,
+                "target_side": "right",
+                "target_fraction": 0.3816568047337278,
+                "organization_track": "outside-service-column"
+              },
+              "source_side": "right",
+              "target_side": "right",
+              "points": [
+                [
+                  0.96,
+                  0.135778
+                ],
+                [
+                  0.975,
+                  0.135778
+                ],
+                [
+                  0.975,
+                  0.743244
+                ],
+                [
+                  0.96,
+                  0.743244
+                ]
+              ]
+            },
+            {
+              "source": "n_noc",
+              "target": "g_periph",
+              "kind": "data",
+              "label": "",
+              "members": [
+                6,
+                7
+              ],
+              "meanings_in_caption": [
+                "MMIO",
+                "DMA path"
+              ],
+              "id": "p4",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "left",
+                "source_fraction": 0.5471264367816092,
+                "target_fraction": 0.1891891891891892
+              },
+              "source_side": "right",
+              "target_side": "left",
+              "points": [
+                [
+                  0.572222,
+                  0.370657
+                ],
+                [
+                  0.582222,
+                  0.370657
+                ],
+                [
+                  0.582222,
+                  0.370656
+                ],
+                [
+                  0.595556,
+                  0.370656
+                ],
+                [
+                  0.595556,
+                  0.370656
+                ],
+                [
+                  0.605556,
+                  0.370656
+                ]
+              ]
+            },
+            {
+              "source": "g_periph",
+              "target": "g_offchip",
+              "kind": "data",
+              "label": "link",
+              "members": [
+                8
+              ],
+              "meanings_in_caption": [],
+              "id": "p5",
+              "family": "forward",
+              "routing": {
+                "source_side": "left",
+                "target_side": "left",
+                "source_fraction": 0.43243243243243246,
+                "target_fraction": 0.3816568047337278
+              },
+              "source_side": "left",
+              "target_side": "left",
+              "points": [
+                [
+                  0.605556,
+                  0.440154
+                ],
+                [
+                  0.595556,
+                  0.440154
+                ],
+                [
+                  0.595556,
+                  0.743244
+                ],
+                [
+                  0.605556,
+                  0.743244
+                ]
+              ]
+            },
+            {
+              "source": "g_sys",
+              "target": "g_compute",
+              "kind": "control",
+              "label": "",
+              "members": [
+                11,
+                12
+              ],
+              "meanings_in_caption": [
+                "pwr ctrl",
+                "debug"
+              ],
+              "id": "p6",
+              "family": "forward",
+              "routing": {
+                "source_side": "right",
+                "target_side": "right",
+                "target_fraction": 0.21761658031088082,
+                "source_fraction": 0.23604060913705585
+              },
+              "source_side": "right",
+              "target_side": "right",
+              "points": [
+                [
+                  0.394444,
+                  0.124196
+                ],
+                [
+                  0.404444,
+                  0.124196
+                ],
+                [
+                  0.404444,
+                  0.429858
+                ],
+                [
+                  0.394444,
+                  0.429858
+                ]
+              ]
+            },
+            {
+              "source": "g_periph",
+              "target": "g_compute",
+              "kind": "control",
+              "label": "req",
+              "members": [
+                13
+              ],
+              "meanings_in_caption": [],
+              "id": "p7",
+              "family": "return",
+              "routing": {
+                "source_side": "left",
+                "source_fraction": 0.3108108108108108,
+                "target_side": "left",
+                "outer_route": true,
+                "waypoint_axis": "y",
+                "waypoint_value": 0.9581724581724582,
+                "target_fraction": 0.28756476683937826
+              },
+              "source_side": "left",
+              "target_side": "left",
+              "points": [
+                [
+                  0.605556,
+                  0.405405
+                ],
+                [
+                  0.588889,
+                  0.405405
+                ],
+                [
+                  0.588889,
+                  0.9581724581724582
+                ],
+                [
+                  0.025,
+                  0.9581724581724582
+                ],
+                [
+                  0.025,
+                  0.447233
+                ],
+                [
+                  0.04,
+                  0.447233
+                ]
+              ]
+            },
+            {
+              "source": "g_mem",
+              "target": "n_noc",
+              "kind": "feedback",
+              "label": "resp",
+              "members": [
+                14
+              ],
+              "meanings_in_caption": [],
+              "id": "p8",
+              "family": "forward",
+              "routing": {
+                "source_side": "left",
+                "target_side": "right",
+                "source_fraction": 0.45695364238410596,
+                "target_fraction": 0.15862068965517243
+              },
+              "source_side": "left",
+              "target_side": "right",
+              "points": [
+                [
+                  0.605556,
+                  0.153153
+                ],
+                [
+                  0.595556,
+                  0.153153
+                ],
+                [
+                  0.595556,
+                  0.151866
+                ],
+                [
+                  0.582222,
+                  0.151866
+                ],
+                [
+                  0.582222,
+                  0.153153
+                ],
+                [
+                  0.572222,
+                  0.153153
+                ]
+              ]
+            }
+          ],
+          "line_legend": {},
+          "quality": {
+            "routes_complete": true,
+            "failed_routes": [],
+            "route_count": 8,
+            "requested_routes": 8,
+            "no_common_bus_inferred": true,
+            "owner_scope_entries": {
+              "clear": true,
+              "failures": [],
+              "meaning": "Boundary entry is scope-level, not a fabricated child-to-child mapping."
+            },
+            "organization_traces": {
+              "clear": true,
+              "contacts": [],
+              "geometry_is_not_new_junctions": true
+            },
+            "body_font_pt": 9.0,
+            "signal_font_pt": 8.5,
+            "target_width_mm": 160.0,
+            "publication_typography": true,
+            "geometry_is_not_raster_acceptance": true,
+            "input_traces": {
+              "clear": true,
+              "owners": [
+                {
+                  "owner": "g_offchip",
+                  "producer_count": 2,
+                  "minimum_port_gap_px": 637.999,
+                  "required_port_gap_px": 54,
+                  "minimum_path_clearance_px": 637.999,
+                  "paths_touch_or_share": false,
+                  "target_width_mm": 160.0,
+                  "geometry_is_not_new_hardware_ports": true
+                }
+              ],
+              "failures": []
+            },
+            "labels_placed": 2,
+            "deferred_labels": [
+              {
+                "text": "access",
+                "source_edge_indices": [
+                  3,
+                  4
+                ],
+                "reason": "No unobstructed region at signal font size"
+              },
+              {
+                "text": "link",
+                "source_edge_indices": [
+                  8
+                ],
+                "reason": "No unobstructed region at signal font size"
+              },
+              {
+                "text": "resp",
+                "source_edge_indices": [
+                  14
+                ],
+                "reason": "No unobstructed region at signal font size"
+              }
+            ],
+            "typography_measured": true,
+            "deferred_scope_titles": [],
+            "document_fit": {
+              "height_mm": 138.1,
+              "default_limit_mm": 140,
+              "status": "pass",
+              "no_font_shrink": true,
+              "meaning": "Native source routing and typography do not certify a tall figure as publication-ready."
+            }
+          }
+        },
+        "composition_diagnostics": {
+          "grammar": "ownership-flow",
+          "candidates": [
+            {
+              "id": "ownership-hub-2",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 26,
+                "longest_route_px": 2725.0,
+                "total_route_px": 4989.0
+              },
+              "deferred_label_count": 3,
+              "natural_aspect": 1.158301,
+              "document_height_mm": 138.1
+            },
+            {
+              "id": "ownership-hub-1",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 28,
+                "longest_route_px": 2896.5,
+                "total_route_px": 5604.5
+              },
+              "deferred_label_count": 3,
+              "natural_aspect": 0.972973,
+              "document_height_mm": 164.4
+            },
+            {
+              "id": "top-to-bottom-1",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 31,
+                "longest_route_px": 1181.5,
+                "total_route_px": 5506.0
+              },
+              "deferred_label_count": 0,
+              "natural_aspect": 0.58102,
+              "document_height_mm": 275.4
+            },
+            {
+              "id": "left-to-right-1",
+              "accepted": false,
+              "reasons": [
+                "Horizontal subsystem inventories exceed the fixed-font document width"
+              ]
+            },
+            {
+              "id": "top-to-bottom-2",
+              "accepted": true,
+              "reasons": [],
+              "geometry": {
+                "crossings": 0,
+                "bends": 27,
+                "longest_route_px": 1218.0,
+                "total_route_px": 5809.7
+              },
+              "deferred_label_count": 0,
+              "natural_aspect": 0.662252,
+              "document_height_mm": 241.6
+            },
+            {
+              "id": "left-to-right-2",
+              "accepted": false,
+              "reasons": [
+                "Horizontal subsystem inventories exceed the fixed-font document width"
+              ]
+            }
+          ],
+          "selection_policy": "Hard route/typography/crossover/boundary gates, then document height before optional prose for subsystem organization; no beauty score",
+          "selected": "ownership-hub-2"
+        }
+      },
+      "layout_strategy": "publication-candidates",
+      "requires_layout_guide": true,
+      "node_count": 6,
+      "edge_count": 8,
+      "generation_inputs": [
+        {
+          "image_index": 1,
+          "role": "target_structure",
+          "source": "layout-guide",
+          "instruction": "This is the reviewed target plate. Make a clean faithful redraw: keep the module boxes, ownership, spacing, text placements, all connection paths and their source/target boundary attachments. Preserve every arrowhead at its existing endpoint. Improve only crisp typography, line weight and uniform flat fills; do not re-layout, reroute, duplicate or reinterpret the graph.",
+          "technical_revision": "If a generated image has a technical error, regenerate from the source specification and a clean corrected guide; do not continue a chain of local edits to the failed bitmap.",
+          "connection_contract": {
+            "visible_connections": 8,
+            "single_headed_connections": 8,
+            "double_headed_connections": 0,
+            "arrowheads": 8,
+            "counts_source": "reviewed layout_scene.routes, not canonical source edges",
+            "print_in_artwork": false
+          }
+        }
+      ],
+      "revision_mode": "local-appearance-edit",
+      "negative_prompt": "No invented hardware, parameters or connections. No gradients, shadows, texture, branding, decorative chip artwork, tiny type, dangling connectors, or text masking a wire."
+    },
+    {
+      "id": "overview",
+      "kind": "overview",
+      "abstract": false,
+      "title": "Generic SoC System Overview",
+      "summary": "完整结构在一张图内呈现。",
+      "node_ids": [
+        "n_accel",
+        "n_clk",
+        "n_cpu",
+        "n_dma",
+        "n_memctl",
+        "n_dram",
+        "n_hsio",
+        "n_host",
+        "n_noc",
+        "n_sram",
+        "n_periph",
+        "n_pwr",
+        "n_sec"
+      ],
+      "edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "context_nodes": [],
+      "positions": {
+        "n_accel": {
+          "column": 1,
+          "row": 1
+        },
+        "n_clk": {
+          "column": 1,
+          "row": 2
+        },
+        "n_pwr": {
+          "column": 1,
+          "row": 3
+        },
+        "n_sec": {
+          "column": 1,
+          "row": 4
+        },
+        "n_cpu": {
+          "column": 2,
+          "row": 3.5
+        },
+        "n_noc": {
+          "column": 3,
+          "row": 1
+        },
+        "n_memctl": {
+          "column": 4,
+          "row": 1
+        },
+        "n_hsio": {
+          "column": 4,
+          "row": 2
+        },
+        "n_sram": {
+          "column": 4,
+          "row": 3
+        },
+        "n_periph": {
+          "column": 4,
+          "row": 4
+        },
+        "n_dma": {
+          "column": 5,
+          "row": 1
+        },
+        "n_dram": {
+          "column": 5,
+          "row": 2
+        },
+        "n_host": {
+          "column": 5,
+          "row": 3
+        }
+      },
+      "outer_routes": [
+        2,
+        14
+      ],
+      "node_count": 13,
+      "edge_count": 13,
+      "label_characters": 200,
+      "glyphs": {
+        "n_accel": {
+          "shape": "compact-functional-block"
+        },
+        "n_clk": {
+          "shape": "compact-control-block"
+        },
+        "n_cpu": {
+          "shape": "compact-functional-block"
+        },
+        "n_dma": {
+          "shape": "compact-functional-block"
+        },
+        "n_memctl": {
+          "shape": "compact-control-block"
+        },
+        "n_dram": {
+          "shape": "storage-bar"
+        },
+        "n_hsio": {
+          "shape": "interface-block"
+        },
+        "n_host": {
+          "shape": "interface-block"
+        },
+        "n_noc": {
+          "shape": "compact-control-block"
+        },
+        "n_sram": {
+          "shape": "storage-bar"
+        },
+        "n_periph": {
+          "shape": "compact-control-block"
+        },
+        "n_pwr": {
+          "shape": "compact-control-block"
+        },
+        "n_sec": {
+          "shape": "compact-control-block"
+        }
+      },
+      "dimensions": {
+        "n_accel": {
+          "width_f": 7.5,
+          "height_f": 2.2
+        },
+        "n_clk": {
+          "width_f": 8.6,
+          "height_f": 2.2
+        },
+        "n_cpu": {
+          "width_f": 7.5,
+          "height_f": 2.2
+        },
+        "n_dma": {
+          "width_f": 6.9,
+          "height_f": 2.2
+        },
+        "n_memctl": {
+          "width_f": 9.7,
+          "height_f": 2.2
+        },
+        "n_dram": {
+          "width_f": 8.55,
+          "height_f": 2.2
+        },
+        "n_hsio": {
+          "width_f": 8.6,
+          "height_f": 2.2
+        },
+        "n_host": {
+          "width_f": 9.7,
+          "height_f": 3.1
+        },
+        "n_noc": {
+          "width_f": 11.3,
+          "height_f": 3.1
+        },
+        "n_sram": {
+          "width_f": 8,
+          "height_f": 2.2
+        },
+        "n_periph": {
+          "width_f": 11.3,
+          "height_f": 3.1
+        },
+        "n_pwr": {
+          "width_f": 10.2,
+          "height_f": 2.2
+        },
+        "n_sec": {
+          "width_f": 10.2,
+          "height_f": 2.2
+        }
+      },
+      "attachment_points": [
+        {
+          "source": "right boundary center",
+          "target": "left boundary distinct attachment 3 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary distinct attachment 1 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        },
+        {
+          "source": "right boundary distinct attachment 3 of 4",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary distinct attachment 1 of 4",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary distinct attachment 4 of 4",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary distinct attachment 2 of 4",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary lower",
+          "target": "left boundary distinct attachment 1 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary upper",
+          "target": "left boundary distinct attachment 2 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary distinct attachment 2 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary distinct attachment 3 of 3",
+          "lane": "forward"
+        },
+        {
+          "source": "right boundary center",
+          "target": "left boundary center",
+          "lane": "forward"
+        },
+        {
+          "source": "bottom boundary",
+          "target": "bottom boundary",
+          "lane": "outer return/control"
+        }
+      ],
+      "structure_layout": {
+        "type": "directed_flow",
+        "view_type": "graph-led-datapath",
+        "abstract": false,
+        "flow_basis": "data",
+        "feedback_source_nodes": [],
+        "title": "Generic SoC System Overview",
+        "main_group": null,
+        "macro_nodes": [
+          {
+            "id": "n_accel",
+            "label": "Accelerator / DSP",
+            "kind": "compute",
+            "type": "resource",
+            "detail": "Domain-specific compute engine",
+            "members": [
+              "n_accel"
+            ],
+            "source_node_index": 1,
+            "source_group": "g_compute",
+            "source_owner": "g_compute",
+            "source_ancestry": [
+              "g_compute"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.0415,
+              "y": 0.675197,
+              "width": 0.172456,
+              "height": 0.068241
+            },
+            "slot_box": {
+              "x": 0.0415,
+              "y": 0.675197,
+              "width": 0.172456,
+              "height": 0.068241
+            },
+            "zone": "flow",
+            "visual_role": "functional-block",
+            "stage_rank": 0,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_clk",
+            "label": "Clock & Reset",
+            "kind": "control",
+            "type": "resource",
+            "detail": "PLL / clock gating / reset tree",
+            "members": [
+              "n_clk"
+            ],
+            "source_node_index": 10,
+            "source_group": "g_sys",
+            "source_owner": "g_sys",
+            "source_ancestry": [
+              "g_sys"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.058715,
+              "y": 0.396325,
+              "width": 0.138026,
+              "height": 0.055118
+            },
+            "slot_box": {
+              "x": 0.058715,
+              "y": 0.396325,
+              "width": 0.138026,
+              "height": 0.055118
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_cpu",
+            "label": "CPU Cluster",
+            "kind": "compute",
+            "type": "resource",
+            "detail": "Application cores + private caches",
+            "members": [
+              "n_cpu"
+            ],
+            "source_node_index": 0,
+            "source_group": "g_compute",
+            "source_owner": "g_compute",
+            "source_ancestry": [
+              "g_compute"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.067322,
+              "y": 0.538714,
+              "width": 0.120812,
+              "height": 0.068241
+            },
+            "slot_box": {
+              "x": 0.067322,
+              "y": 0.538714,
+              "width": 0.120812,
+              "height": 0.068241
+            },
+            "zone": "flow",
+            "visual_role": "functional-block",
+            "stage_rank": 0,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_dma",
+            "label": "DMA Engine",
+            "kind": "compute",
+            "type": "resource",
+            "detail": "Bulk data mover",
+            "members": [
+              "n_dma"
+            ],
+            "source_node_index": 2,
+            "source_group": "g_compute",
+            "source_owner": "g_compute",
+            "source_ancestry": [
+              "g_compute"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.071626,
+              "y": 0.81168,
+              "width": 0.112204,
+              "height": 0.068241
+            },
+            "slot_box": {
+              "x": 0.071626,
+              "y": 0.81168,
+              "width": 0.112204,
+              "height": 0.068241
+            },
+            "zone": "flow",
+            "visual_role": "functional-block",
+            "stage_rank": 0,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_memctl",
+            "label": "DRAM Controller",
+            "kind": "control",
+            "type": "resource",
+            "detail": "External memory interface",
+            "members": [
+              "n_memctl"
+            ],
+            "source_node_index": 5,
+            "source_group": "g_mem",
+            "source_owner": "g_mem",
+            "source_ancestry": [
+              "g_mem"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.519213,
+              "y": 0.616798,
+              "width": 0.155241,
+              "height": 0.055118
+            },
+            "slot_box": {
+              "x": 0.519213,
+              "y": 0.616798,
+              "width": 0.155241,
+              "height": 0.055118
+            },
+            "zone": "flow",
+            "visual_role": "control-block",
+            "stage_rank": 2,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_dram",
+            "label": "External DRAM",
+            "kind": "memory",
+            "type": "resource",
+            "detail": "Off-chip main memory",
+            "members": [
+              "n_dram"
+            ],
+            "source_node_index": 6,
+            "source_group": "g_offchip",
+            "source_owner": "g_offchip",
+            "source_ancestry": [
+              "g_offchip"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.78174,
+              "y": 0.619423,
+              "width": 0.138026,
+              "height": 0.049869
+            },
+            "slot_box": {
+              "x": 0.78174,
+              "y": 0.619423,
+              "width": 0.138026,
+              "height": 0.049869
+            },
+            "zone": "flow",
+            "visual_role": "storage-bar",
+            "stage_rank": 3,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_hsio",
+            "label": "High-Speed IO",
+            "kind": "io",
+            "type": "resource",
+            "detail": "PCIe / Ethernet / USB",
+            "members": [
+              "n_hsio"
+            ],
+            "source_node_index": 8,
+            "source_group": "g_periph",
+            "source_owner": "g_periph",
+            "source_ancestry": [
+              "g_periph"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.52782,
+              "y": 0.868766,
+              "width": 0.138026,
+              "height": 0.060367
+            },
+            "slot_box": {
+              "x": 0.52782,
+              "y": 0.868766,
+              "width": 0.138026,
+              "height": 0.060367
+            },
+            "zone": "flow",
+            "visual_role": "interface-block",
+            "stage_rank": 2,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_host",
+            "label": "Host / External Device",
+            "kind": "io",
+            "type": "resource",
+            "detail": "Off-chip peer",
+            "members": [
+              "n_host"
+            ],
+            "source_node_index": 9,
+            "source_group": "g_offchip",
+            "source_owner": "g_offchip",
+            "source_ancestry": [
+              "g_offchip"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.743006,
+              "y": 0.868766,
+              "width": 0.215493,
+              "height": 0.060367
+            },
+            "slot_box": {
+              "x": 0.743006,
+              "y": 0.868766,
+              "width": 0.215493,
+              "height": 0.060367
+            },
+            "zone": "flow",
+            "visual_role": "interface-block",
+            "stage_rank": 3,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_noc",
+            "label": "On-Chip Interconnect",
+            "kind": "control",
+            "type": "resource",
+            "detail": "Shared bus / NoC fabric",
+            "members": [
+              "n_noc"
+            ],
+            "source_node_index": 3,
+            "source_group": "",
+            "source_owner": "",
+            "source_ancestry": [],
+            "context": false,
+            "box": {
+              "x": 0.252382,
+              "y": 0.681759,
+              "width": 0.198279,
+              "height": 0.055118
+            },
+            "slot_box": {
+              "x": 0.252382,
+              "y": 0.681759,
+              "width": 0.198279,
+              "height": 0.055118
+            },
+            "zone": "flow",
+            "visual_role": "control-block",
+            "stage_rank": 1,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_sram",
+            "label": "On-Chip SRAM",
+            "kind": "memory",
+            "type": "resource",
+            "detail": "Shared scratchpad / last-level buffer",
+            "members": [
+              "n_sram"
+            ],
+            "source_node_index": 4,
+            "source_group": "g_mem",
+            "source_owner": "g_mem",
+            "source_ancestry": [
+              "g_mem"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.532124,
+              "y": 0.498688,
+              "width": 0.129419,
+              "height": 0.049869
+            },
+            "slot_box": {
+              "x": 0.532124,
+              "y": 0.498688,
+              "width": 0.129419,
+              "height": 0.049869
+            },
+            "zone": "flow",
+            "visual_role": "storage-bar",
+            "stage_rank": 2,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_periph",
+            "label": "Peripheral Controllers",
+            "kind": "io",
+            "type": "resource",
+            "detail": "UART / SPI / I2C / GPIO",
+            "members": [
+              "n_periph"
+            ],
+            "source_node_index": 7,
+            "source_group": "g_periph",
+            "source_owner": "g_periph",
+            "source_ancestry": [
+              "g_periph"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.489087,
+              "y": 0.740157,
+              "width": 0.215493,
+              "height": 0.060367
+            },
+            "slot_box": {
+              "x": 0.489087,
+              "y": 0.740157,
+              "width": 0.215493,
+              "height": 0.060367
+            },
+            "zone": "flow",
+            "visual_role": "interface-block",
+            "stage_rank": 2,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_pwr",
+            "label": "Power Management",
+            "kind": "control",
+            "type": "resource",
+            "detail": "DVFS / power domains",
+            "members": [
+              "n_pwr"
+            ],
+            "source_node_index": 11,
+            "source_group": "g_sys",
+            "source_owner": "g_sys",
+            "source_ancestry": [
+              "g_sys"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.045804,
+              "y": 0.283465,
+              "width": 0.163849,
+              "height": 0.055118
+            },
+            "slot_box": {
+              "x": 0.045804,
+              "y": 0.283465,
+              "width": 0.163849,
+              "height": 0.055118
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          },
+          {
+            "id": "n_sec",
+            "label": "Security & Debug",
+            "kind": "control",
+            "type": "resource",
+            "detail": "Secure boot / JTAG / trace",
+            "members": [
+              "n_sec"
+            ],
+            "source_node_index": 12,
+            "source_group": "g_sys",
+            "source_owner": "g_sys",
+            "source_ancestry": [
+              "g_sys"
+            ],
+            "context": false,
+            "box": {
+              "x": 0.045804,
+              "y": 0.170604,
+              "width": 0.163849,
+              "height": 0.055118
+            },
+            "slot_box": {
+              "x": 0.045804,
+              "y": 0.170604,
+              "width": 0.163849,
+              "height": 0.055118
+            },
+            "zone": "control",
+            "visual_role": "control-block",
+            "stage_rank": null,
+            "not_a_new_hardware_instance": true
+          }
+        ],
+        "macro_edges": [
+          {
+            "id": "E1",
+            "source": "n_cpu",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_cpu"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.16666666666666666
+            }
+          },
+          {
+            "id": "E2",
+            "source": "n_accel",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_accel"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E3",
+            "source": "n_dma",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "burst",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_dma"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.8333333333333334
+            }
+          },
+          {
+            "id": "E4",
+            "source": "n_noc",
+            "target": "n_sram",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_sram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.125
+            }
+          },
+          {
+            "id": "E5",
+            "source": "n_noc",
+            "target": "n_memctl",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_memctl"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.375
+            }
+          },
+          {
+            "id": "E6",
+            "source": "n_memctl",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "DQ/DQS",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E7",
+            "source": "n_noc",
+            "target": "n_periph",
+            "kind": "data",
+            "label": "MMIO",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_periph"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.625
+            }
+          },
+          {
+            "id": "E8",
+            "source": "n_noc",
+            "target": "n_hsio",
+            "kind": "data",
+            "label": "DMA path",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_hsio"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 3,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.875
+            }
+          },
+          {
+            "id": "E9",
+            "source": "n_hsio",
+            "target": "n_host",
+            "kind": "data",
+            "label": "link",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_hsio"
+            ],
+            "target_nodes": [
+              "n_host"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E10",
+            "source": "n_clk",
+            "target": "n_cpu",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.073462,
+              "track_fraction": 0.08333333333333333
+            }
+          },
+          {
+            "id": "E11",
+            "source": "n_clk",
+            "target": "n_noc",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.086352,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E12",
+            "source": "n_pwr",
+            "target": "n_cpu",
+            "kind": "control",
+            "label": "pwr ctrl",
+            "members": [
+              11
+            ],
+            "source_edge_index": 11,
+            "source_nodes": [
+              "n_pwr"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 2,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.099242,
+              "track_fraction": 0.4166666666666667
+            }
+          },
+          {
+            "id": "E13",
+            "source": "n_sec",
+            "target": "n_cpu",
+            "kind": "control",
+            "label": "debug",
+            "members": [
+              12
+            ],
+            "source_edge_index": 12,
+            "source_nodes": [
+              "n_sec"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 3,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.112132,
+              "track_fraction": 0.5833333333333334
+            }
+          },
+          {
+            "id": "E14",
+            "source": "n_periph",
+            "target": "n_dma",
+            "kind": "control",
+            "label": "req",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_periph"
+            ],
+            "target_nodes": [
+              "n_dma"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125022,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E15",
+            "source": "n_memctl",
+            "target": "n_noc",
+            "kind": "feedback",
+            "label": "resp",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 5,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.137912,
+              "track_fraction": 0.9166666666666666
+            }
+          }
+        ],
+        "projected_links": [
+          {
+            "id": "E1",
+            "source": "n_cpu",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_cpu"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.16666666666666666
+            }
+          },
+          {
+            "id": "E2",
+            "source": "n_accel",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_accel"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            }
+          },
+          {
+            "id": "E3",
+            "source": "n_dma",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "burst",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_dma"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.8333333333333334
+            }
+          },
+          {
+            "id": "E4",
+            "source": "n_noc",
+            "target": "n_sram",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_sram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.125
+            }
+          },
+          {
+            "id": "E5",
+            "source": "n_noc",
+            "target": "n_memctl",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_memctl"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.375
+            }
+          },
+          {
+            "id": "E6",
+            "source": "n_memctl",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "DQ/DQS",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E7",
+            "source": "n_noc",
+            "target": "n_periph",
+            "kind": "data",
+            "label": "MMIO",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_periph"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.625
+            }
+          },
+          {
+            "id": "E8",
+            "source": "n_noc",
+            "target": "n_hsio",
+            "kind": "data",
+            "label": "DMA path",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_hsio"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 3,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.875
+            }
+          },
+          {
+            "id": "E9",
+            "source": "n_hsio",
+            "target": "n_host",
+            "kind": "data",
+            "label": "link",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_hsio"
+            ],
+            "target_nodes": [
+              "n_host"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E10",
+            "source": "n_clk",
+            "target": "n_cpu",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.073462,
+              "track_fraction": 0.08333333333333333
+            }
+          },
+          {
+            "id": "E11",
+            "source": "n_clk",
+            "target": "n_noc",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.086352,
+              "track_fraction": 0.25
+            }
+          },
+          {
+            "id": "E12",
+            "source": "n_pwr",
+            "target": "n_cpu",
+            "kind": "control",
+            "label": "pwr ctrl",
+            "members": [
+              11
+            ],
+            "source_edge_index": 11,
+            "source_nodes": [
+              "n_pwr"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 2,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.099242,
+              "track_fraction": 0.4166666666666667
+            }
+          },
+          {
+            "id": "E13",
+            "source": "n_sec",
+            "target": "n_cpu",
+            "kind": "control",
+            "label": "debug",
+            "members": [
+              12
+            ],
+            "source_edge_index": 12,
+            "source_nodes": [
+              "n_sec"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 3,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.112132,
+              "track_fraction": 0.5833333333333334
+            }
+          },
+          {
+            "id": "E14",
+            "source": "n_periph",
+            "target": "n_dma",
+            "kind": "control",
+            "label": "req",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_periph"
+            ],
+            "target_nodes": [
+              "n_dma"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125022,
+              "track_fraction": 0.75
+            }
+          },
+          {
+            "id": "E15",
+            "source": "n_memctl",
+            "target": "n_noc",
+            "kind": "feedback",
+            "label": "resp",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 5,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.137912,
+              "track_fraction": 0.9166666666666666
+            }
+          }
+        ],
+        "deferred_links": [],
+        "internal_edges": [],
+        "node_ids": [
+          "n_accel",
+          "n_clk",
+          "n_cpu",
+          "n_dma",
+          "n_memctl",
+          "n_dram",
+          "n_hsio",
+          "n_host",
+          "n_noc",
+          "n_sram",
+          "n_periph",
+          "n_pwr",
+          "n_sec"
+        ],
+        "edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "boxes": {
+          "n_accel": {
+            "x": 0.0415,
+            "y": 0.675197,
+            "width": 0.172456,
+            "height": 0.068241
+          },
+          "n_clk": {
+            "x": 0.058715,
+            "y": 0.396325,
+            "width": 0.138026,
+            "height": 0.055118
+          },
+          "n_cpu": {
+            "x": 0.067322,
+            "y": 0.538714,
+            "width": 0.120812,
+            "height": 0.068241
+          },
+          "n_dma": {
+            "x": 0.071626,
+            "y": 0.81168,
+            "width": 0.112204,
+            "height": 0.068241
+          },
+          "n_memctl": {
+            "x": 0.519213,
+            "y": 0.616798,
+            "width": 0.155241,
+            "height": 0.055118
+          },
+          "n_dram": {
+            "x": 0.78174,
+            "y": 0.619423,
+            "width": 0.138026,
+            "height": 0.049869
+          },
+          "n_hsio": {
+            "x": 0.52782,
+            "y": 0.868766,
+            "width": 0.138026,
+            "height": 0.060367
+          },
+          "n_host": {
+            "x": 0.743006,
+            "y": 0.868766,
+            "width": 0.215493,
+            "height": 0.060367
+          },
+          "n_noc": {
+            "x": 0.252382,
+            "y": 0.681759,
+            "width": 0.198279,
+            "height": 0.055118
+          },
+          "n_sram": {
+            "x": 0.532124,
+            "y": 0.498688,
+            "width": 0.129419,
+            "height": 0.049869
+          },
+          "n_periph": {
+            "x": 0.489087,
+            "y": 0.740157,
+            "width": 0.215493,
+            "height": 0.060367
+          },
+          "n_pwr": {
+            "x": 0.045804,
+            "y": 0.283465,
+            "width": 0.163849,
+            "height": 0.055118
+          },
+          "n_sec": {
+            "x": 0.045804,
+            "y": 0.170604,
+            "width": 0.163849,
+            "height": 0.055118
+          }
+        },
+        "slot_boxes": {
+          "n_accel": {
+            "x": 0.0415,
+            "y": 0.675197,
+            "width": 0.172456,
+            "height": 0.068241
+          },
+          "n_clk": {
+            "x": 0.058715,
+            "y": 0.396325,
+            "width": 0.138026,
+            "height": 0.055118
+          },
+          "n_cpu": {
+            "x": 0.067322,
+            "y": 0.538714,
+            "width": 0.120812,
+            "height": 0.068241
+          },
+          "n_dma": {
+            "x": 0.071626,
+            "y": 0.81168,
+            "width": 0.112204,
+            "height": 0.068241
+          },
+          "n_memctl": {
+            "x": 0.519213,
+            "y": 0.616798,
+            "width": 0.155241,
+            "height": 0.055118
+          },
+          "n_dram": {
+            "x": 0.78174,
+            "y": 0.619423,
+            "width": 0.138026,
+            "height": 0.049869
+          },
+          "n_hsio": {
+            "x": 0.52782,
+            "y": 0.868766,
+            "width": 0.138026,
+            "height": 0.060367
+          },
+          "n_host": {
+            "x": 0.743006,
+            "y": 0.868766,
+            "width": 0.215493,
+            "height": 0.060367
+          },
+          "n_noc": {
+            "x": 0.252382,
+            "y": 0.681759,
+            "width": 0.198279,
+            "height": 0.055118
+          },
+          "n_sram": {
+            "x": 0.532124,
+            "y": 0.498688,
+            "width": 0.129419,
+            "height": 0.049869
+          },
+          "n_periph": {
+            "x": 0.489087,
+            "y": 0.740157,
+            "width": 0.215493,
+            "height": 0.060367
+          },
+          "n_pwr": {
+            "x": 0.045804,
+            "y": 0.283465,
+            "width": 0.163849,
+            "height": 0.055118
+          },
+          "n_sec": {
+            "x": 0.045804,
+            "y": 0.170604,
+            "width": 0.163849,
+            "height": 0.055118
+          }
+        },
+        "containers": [
+          {
+            "id": "g_compute",
+            "label": "Compute Subsystem",
+            "parent": "",
+            "source_group": "g_compute",
+            "source_members": [
+              "n_accel",
+              "n_cpu",
+              "n_dma"
+            ],
+            "members": [
+              "n_accel",
+              "n_cpu",
+              "n_dma"
+            ],
+            "scope_source_members": [
+              "n_accel",
+              "n_cpu",
+              "n_dma"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.029204,
+              "y": 0.48622,
+              "width": 0.197049,
+              "height": 0.414698
+            }
+          },
+          {
+            "id": "g_mem",
+            "label": "Memory Subsystem",
+            "parent": "",
+            "source_group": "g_mem",
+            "source_members": [
+              "n_memctl",
+              "n_sram"
+            ],
+            "members": [
+              "n_memctl",
+              "n_sram"
+            ],
+            "scope_source_members": [
+              "n_memctl",
+              "n_sram"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.506917,
+              "y": 0.446194,
+              "width": 0.179834,
+              "height": 0.246719
+            }
+          },
+          {
+            "id": "g_periph",
+            "label": "Peripheral & IO Subsystem",
+            "parent": "",
+            "source_group": "g_periph",
+            "source_members": [
+              "n_hsio",
+              "n_periph"
+            ],
+            "members": [
+              "n_hsio",
+              "n_periph"
+            ],
+            "scope_source_members": [
+              "n_hsio",
+              "n_periph"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.476791,
+              "y": 0.687664,
+              "width": 0.240086,
+              "height": 0.262467
+            }
+          },
+          {
+            "id": "g_sys",
+            "label": "System Management",
+            "parent": "",
+            "source_group": "g_sys",
+            "source_members": [
+              "n_clk",
+              "n_pwr",
+              "n_sec"
+            ],
+            "members": [
+              "n_clk",
+              "n_pwr",
+              "n_sec"
+            ],
+            "scope_source_members": [
+              "n_clk",
+              "n_pwr",
+              "n_sec"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.033508,
+              "y": 0.11811,
+              "width": 0.188441,
+              "height": 0.354331
+            }
+          },
+          {
+            "id": "g_offchip",
+            "label": "Off-Chip",
+            "parent": "",
+            "source_group": "g_offchip",
+            "source_members": [
+              "n_dram",
+              "n_host"
+            ],
+            "members": [
+              "n_dram",
+              "n_host"
+            ],
+            "scope_source_members": [
+              "n_dram",
+              "n_host"
+            ],
+            "ownership_unchanged": true,
+            "replaces_region": null,
+            "continuation_of": null,
+            "box": {
+              "x": 0.73071,
+              "y": 0.566929,
+              "width": 0.240086,
+              "height": 0.383202
+            }
+          }
+        ],
+        "system_frame": {
+          "id": "@flow",
+          "label": "Generic SoC System Overview",
+          "box": {
+            "x": 0.023056,
+            "y": 0.03937,
+            "width": 0.953889,
+            "height": 0.92126
+          },
+          "source_group": null,
+          "display_only": true,
+          "not_an_added_hardware_node": true,
+          "replaces_container": null
+        },
+        "role_lanes": [
+          {
+            "id": "peripheral-control",
+            "role": "peripheral-control",
+            "members": [
+              "n_clk",
+              "n_pwr",
+              "n_sec"
+            ],
+            "box": {
+              "x": 0.041193,
+              "y": 0.16273,
+              "width": 0.173071,
+              "height": 0.296588
+            },
+            "display_only": true
+          },
+          {
+            "id": "stage-0",
+            "role": "data-stage",
+            "rank": 0,
+            "members": [
+              "n_cpu",
+              "n_accel",
+              "n_dma"
+            ],
+            "box": {
+              "x": 0.036889,
+              "y": 0.53084,
+              "width": 0.181678,
+              "height": 0.356955
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-1",
+            "role": "data-stage",
+            "rank": 1,
+            "members": [
+              "n_noc"
+            ],
+            "box": {
+              "x": 0.247771,
+              "y": 0.673885,
+              "width": 0.207501,
+              "height": 0.070866
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-2",
+            "role": "data-stage",
+            "rank": 2,
+            "members": [
+              "n_sram",
+              "n_memctl",
+              "n_periph",
+              "n_hsio"
+            ],
+            "box": {
+              "x": 0.484476,
+              "y": 0.490814,
+              "width": 0.224716,
+              "height": 0.446194
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          },
+          {
+            "id": "stage-3",
+            "role": "data-stage",
+            "rank": 3,
+            "members": [
+              "n_dram",
+              "n_host"
+            ],
+            "box": {
+              "x": 0.738395,
+              "y": 0.611549,
+              "width": 0.224716,
+              "height": 0.325459
+            },
+            "display_only": true,
+            "not_a_cycle_or_pipeline_stage_claim": true
+          }
+        ],
+        "region_slots": [],
+        "component_lanes": [],
+        "repeat_families": [],
+        "source_ownership": {
+          "n_accel": "g_compute",
+          "n_clk": "g_sys",
+          "n_cpu": "g_compute",
+          "n_dma": "g_compute",
+          "n_memctl": "g_mem",
+          "n_dram": "g_offchip",
+          "n_hsio": "g_periph",
+          "n_host": "g_offchip",
+          "n_noc": "",
+          "n_sram": "g_mem",
+          "n_periph": "g_periph",
+          "n_pwr": "g_sys",
+          "n_sec": "g_sys"
+        },
+        "node_to_macro": {
+          "n_accel": "n_accel",
+          "n_clk": "n_clk",
+          "n_cpu": "n_cpu",
+          "n_dma": "n_dma",
+          "n_memctl": "n_memctl",
+          "n_dram": "n_dram",
+          "n_hsio": "n_hsio",
+          "n_host": "n_host",
+          "n_noc": "n_noc",
+          "n_sram": "n_sram",
+          "n_periph": "n_periph",
+          "n_pwr": "n_pwr",
+          "n_sec": "n_sec"
+        },
+        "context_nodes": [],
+        "source_nested_groups": [],
+        "scope_owner_nodes": [],
+        "flow_ranks": {
+          "n_cpu": 0,
+          "n_accel": 0,
+          "n_dma": 0,
+          "n_noc": 1,
+          "n_sram": 2,
+          "n_memctl": 2,
+          "n_dram": 3,
+          "n_periph": 2,
+          "n_hsio": 2,
+          "n_host": 3
+        },
+        "forward_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "return_edge_indices": [],
+        "routing_corridors": [
+          {
+            "id": "control-outer",
+            "box": {
+              "x": 0.023056,
+              "y": 0.067017,
+              "width": 0.953889,
+              "height": 0.07734
+            },
+            "axis": "horizontal",
+            "track_count": 6,
+            "routing_is_not_a_hardware_bus": true
+          }
+        ],
+        "canvas": {
+          "coordinate_system": "normalized",
+          "natural_aspect": 1.785,
+          "label_unit_pixels": 27.666769,
+          "reading_direction": "left-to-right"
+        },
+        "coverage": {
+          "source_nodes": 13,
+          "source_edges": 15,
+          "nodes_projected": 13,
+          "missing_nodes": [],
+          "missing_edges": [],
+          "duplicate_edge_indices": []
+        },
+        "warnings": [
+          "Dependency ranks are geometric positions, not clock cycles. Outer return routes retain their original kind and direction.",
+          "Source containment and context ownership are unchanged; no node, bus, port, parameter or hardware copy is introduced."
+        ],
+        "pair_data_relations": false
+      },
+      "layout_scene": {
+        "width": 1800,
+        "height": 1008,
+        "routes": [
+          {
+            "id": "E1",
+            "source": "n_cpu",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              0
+            ],
+            "source_edge_index": 0,
+            "source_nodes": [
+              "n_cpu"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.16666666666666666
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.188134,
+                0.572835
+              ],
+              [
+                0.197778,
+                0.572835
+              ],
+              [
+                0.197778,
+                0.571429
+              ],
+              [
+                0.242222,
+                0.571429
+              ],
+              [
+                0.242222,
+                0.695538
+              ],
+              [
+                0.252382,
+                0.695538
+              ]
+            ]
+          },
+          {
+            "id": "E2",
+            "source": "n_accel",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "read/write",
+            "members": [
+              1
+            ],
+            "source_edge_index": 1,
+            "source_nodes": [
+              "n_accel"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.5
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.213956,
+                0.709318
+              ],
+              [
+                0.224444,
+                0.709318
+              ],
+              [
+                0.224444,
+                0.710317
+              ],
+              [
+                0.242222,
+                0.710317
+              ],
+              [
+                0.242222,
+                0.709318
+              ],
+              [
+                0.252382,
+                0.709318
+              ]
+            ]
+          },
+          {
+            "id": "E3",
+            "source": "n_dma",
+            "target": "n_noc",
+            "kind": "data",
+            "label": "burst",
+            "members": [
+              2
+            ],
+            "source_edge_index": 2,
+            "source_nodes": [
+              "n_dma"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-0",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.8333333333333334
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.18383,
+                0.8458
+              ],
+              [
+                0.193333,
+                0.8458
+              ],
+              [
+                0.193333,
+                0.845238
+              ],
+              [
+                0.242222,
+                0.845238
+              ],
+              [
+                0.242222,
+                0.723098
+              ],
+              [
+                0.252382,
+                0.723098
+              ]
+            ]
+          },
+          {
+            "id": "E4",
+            "source": "n_noc",
+            "target": "n_sram",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              3
+            ],
+            "source_edge_index": 3,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_sram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.125
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.450661,
+                0.692783
+              ],
+              [
+                0.46,
+                0.692783
+              ],
+              [
+                0.46,
+                0.52381
+              ],
+              [
+                0.522222,
+                0.52381
+              ],
+              [
+                0.522222,
+                0.523622
+              ],
+              [
+                0.532124,
+                0.523622
+              ]
+            ]
+          },
+          {
+            "id": "E5",
+            "source": "n_noc",
+            "target": "n_memctl",
+            "kind": "data",
+            "label": "access",
+            "members": [
+              4
+            ],
+            "source_edge_index": 4,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_memctl"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.375
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.450661,
+                0.703806
+              ],
+              [
+                0.46,
+                0.703806
+              ],
+              [
+                0.46,
+                0.702381
+              ],
+              [
+                0.477778,
+                0.702381
+              ],
+              [
+                0.477778,
+                0.642857
+              ],
+              [
+                0.508889,
+                0.642857
+              ],
+              [
+                0.508889,
+                0.644357
+              ],
+              [
+                0.519213,
+                0.644357
+              ]
+            ]
+          },
+          {
+            "id": "E6",
+            "source": "n_memctl",
+            "target": "n_dram",
+            "kind": "data",
+            "label": "DQ/DQS",
+            "members": [
+              5
+            ],
+            "source_edge_index": 5,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_dram"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 0,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.25
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.674454,
+                0.644357
+              ],
+              [
+                0.684444,
+                0.644357
+              ],
+              [
+                0.684444,
+                0.642857
+              ],
+              [
+                0.771111,
+                0.642857
+              ],
+              [
+                0.771111,
+                0.644357
+              ],
+              [
+                0.78174,
+                0.644357
+              ]
+            ]
+          },
+          {
+            "id": "E7",
+            "source": "n_noc",
+            "target": "n_periph",
+            "kind": "data",
+            "label": "MMIO",
+            "members": [
+              6
+            ],
+            "source_edge_index": 6,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_periph"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 2,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.625
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.450661,
+                0.71483
+              ],
+              [
+                0.46,
+                0.71483
+              ],
+              [
+                0.46,
+                0.769841
+              ],
+              [
+                0.48,
+                0.769841
+              ],
+              [
+                0.48,
+                0.77034
+              ],
+              [
+                0.489087,
+                0.77034
+              ]
+            ]
+          },
+          {
+            "id": "E8",
+            "source": "n_noc",
+            "target": "n_hsio",
+            "kind": "data",
+            "label": "DMA path",
+            "members": [
+              7
+            ],
+            "source_edge_index": 7,
+            "source_nodes": [
+              "n_noc"
+            ],
+            "target_nodes": [
+              "n_hsio"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-1",
+              "track": 3,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.875
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.450661,
+                0.725853
+              ],
+              [
+                0.46,
+                0.725853
+              ],
+              [
+                0.46,
+                0.72619
+              ],
+              [
+                0.482222,
+                0.72619
+              ],
+              [
+                0.482222,
+                0.900794
+              ],
+              [
+                0.517778,
+                0.900794
+              ],
+              [
+                0.517778,
+                0.89895
+              ],
+              [
+                0.52782,
+                0.89895
+              ]
+            ]
+          },
+          {
+            "id": "E9",
+            "source": "n_hsio",
+            "target": "n_host",
+            "kind": "data",
+            "label": "link",
+            "members": [
+              8
+            ],
+            "source_edge_index": 8,
+            "source_nodes": [
+              "n_hsio"
+            ],
+            "target_nodes": [
+              "n_host"
+            ],
+            "family": "forward",
+            "routing": {
+              "corridor": "forward-stage-2",
+              "track": 1,
+              "source_side": "right",
+              "target_side": "left",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": false,
+              "track_fraction": 0.75
+            },
+            "source_side": "right",
+            "target_side": "left",
+            "points": [
+              [
+                0.665846,
+                0.89895
+              ],
+              [
+                0.675556,
+                0.89895
+              ],
+              [
+                0.675556,
+                0.900794
+              ],
+              [
+                0.733333,
+                0.900794
+              ],
+              [
+                0.733333,
+                0.89895
+              ],
+              [
+                0.743006,
+                0.89895
+              ]
+            ]
+          },
+          {
+            "id": "E10",
+            "source": "n_clk",
+            "target": "n_cpu",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              9
+            ],
+            "source_edge_index": 9,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_cpu"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 0,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.073462,
+              "track_fraction": 0.08333333333333333
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.104724,
+                0.396325
+              ],
+              [
+                0.104724,
+                0.376984
+              ],
+              [
+                0.035556,
+                0.376984
+              ],
+              [
+                0.035556,
+                0.075397
+              ],
+              [
+                0.031111,
+                0.075397
+              ],
+              [
+                0.031111,
+                0.519841
+              ],
+              [
+                0.097525,
+                0.519841
+              ],
+              [
+                0.097525,
+                0.538714
+              ]
+            ]
+          },
+          {
+            "id": "E11",
+            "source": "n_clk",
+            "target": "n_noc",
+            "kind": "clock",
+            "label": "clk/rst",
+            "members": [
+              10
+            ],
+            "source_edge_index": 10,
+            "source_nodes": [
+              "n_clk"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 1,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.086352,
+              "track_fraction": 0.25
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.150732,
+                0.396325
+              ],
+              [
+                0.150732,
+                0.376984
+              ],
+              [
+                0.215556,
+                0.376984
+              ],
+              [
+                0.215556,
+                0.087302
+              ],
+              [
+                0.317778,
+                0.087302
+              ],
+              [
+                0.317778,
+                0.662698
+              ],
+              [
+                0.318475,
+                0.662698
+              ],
+              [
+                0.318475,
+                0.681759
+              ]
+            ]
+          },
+          {
+            "id": "E14",
+            "source": "n_periph",
+            "target": "n_dma",
+            "kind": "control",
+            "label": "req",
+            "members": [
+              13
+            ],
+            "source_edge_index": 13,
+            "source_nodes": [
+              "n_periph"
+            ],
+            "target_nodes": [
+              "n_dma"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 4,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.125022,
+              "track_fraction": 0.75
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.596833,
+                0.740157
+              ],
+              [
+                0.596833,
+                0.722222
+              ],
+              [
+                0.68,
+                0.722222
+              ],
+              [
+                0.68,
+                0.126984
+              ],
+              [
+                0.22,
+                0.126984
+              ],
+              [
+                0.22,
+                0.793651
+              ],
+              [
+                0.127728,
+                0.793651
+              ],
+              [
+                0.127728,
+                0.81168
+              ]
+            ]
+          },
+          {
+            "id": "E15",
+            "source": "n_memctl",
+            "target": "n_noc",
+            "kind": "feedback",
+            "label": "resp",
+            "members": [
+              14
+            ],
+            "source_edge_index": 14,
+            "source_nodes": [
+              "n_memctl"
+            ],
+            "target_nodes": [
+              "n_noc"
+            ],
+            "family": "control",
+            "routing": {
+              "corridor": "control-outer",
+              "track": 5,
+              "source_side": "top",
+              "target_side": "top",
+              "obstacle_aware_routing_required": true,
+              "no_broadcast_bus_is_inferred": true,
+              "outer_route": true,
+              "waypoint_axis": "y",
+              "waypoint_value": 0.137912,
+              "track_fraction": 0.9166666666666666
+            },
+            "source_side": "top",
+            "target_side": "top",
+            "points": [
+              [
+                0.596834,
+                0.616798
+              ],
+              [
+                0.596834,
+                0.599206
+              ],
+              [
+                0.666667,
+                0.599206
+              ],
+              [
+                0.666667,
+                0.138889
+              ],
+              [
+                0.384444,
+                0.138889
+              ],
+              [
+                0.384444,
+                0.662698
+              ],
+              [
+                0.384568,
+                0.662698
+              ],
+              [
+                0.384568,
+                0.681759
+              ]
+            ]
+          }
+        ],
+        "line_legend": {},
+        "quality": {
+          "routes_complete": false,
+          "failed_routes": [
+            {
+              "id": "E12",
+              "source": "n_pwr",
+              "target": "n_cpu",
+              "start": [
+                57,
+                67
+              ],
+              "goal": [
+                57,
+                131
+              ],
+              "source_side": "top",
+              "target_side": "top",
+              "start_neighbors_blocked": 0,
+              "goal_neighbors_blocked": 0
+            },
+            {
+              "id": "E13",
+              "source": "n_sec",
+              "target": "n_cpu",
+              "start": [
+                57,
+                38
+              ],
+              "goal": [
+                71,
+                131
+              ],
+              "source_side": "top",
+              "target_side": "top",
+              "start_neighbors_blocked": 0,
+              "goal_neighbors_blocked": 0
+            }
+          ],
+          "route_count": 13,
+          "requested_routes": 15,
+          "no_common_bus_inferred": true
+        }
+      },
+      "primary": false,
+      "technical_annex": true,
+      "design_contract": {
+        "grammar": "exact-flow",
+        "question": "How do the selected source relationships operate?",
+        "claim": "Exact technical annex; only this selected source scope is drawn.",
+        "scope": "exact source scope",
+        "target_width_mm": 160,
+        "body_pt": 9,
+        "signal_pt": 8.5,
+        "source_invariants": [
+          "source ownership",
+          "directed source relations",
+          "explicit quantities and conditions",
+          "required verbatim text"
+        ],
+        "editorial_decisions": [
+          "projection",
+          "positions",
+          "line bends",
+          "which optional prose stays in caption"
+        ],
+        "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+        "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+        "symbol_profile": "ink-header",
+        "preflight_note": "This grammar uses the historical technical layout; the new physical type-scale preflight was not achieved."
+      },
+      "macro_nodes": [
+        {
+          "id": "n_cpu",
+          "label": "CPU Cluster",
+          "kind": "compute",
+          "members": [
+            "n_cpu"
+          ],
+          "original_group": "g_compute",
+          "children": [],
+          "detail": "Application cores + private caches"
+        },
+        {
+          "id": "n_accel",
+          "label": "Accelerator / DSP",
+          "kind": "compute",
+          "members": [
+            "n_accel"
+          ],
+          "original_group": "g_compute",
+          "children": [],
+          "detail": "Domain-specific compute engine"
+        },
+        {
+          "id": "n_dma",
+          "label": "DMA Engine",
+          "kind": "compute",
+          "members": [
+            "n_dma"
+          ],
+          "original_group": "g_compute",
+          "children": [],
+          "detail": "Bulk data mover"
+        },
+        {
+          "id": "n_noc",
+          "label": "On-Chip Interconnect",
+          "kind": "control",
+          "members": [
+            "n_noc"
+          ],
+          "original_group": "",
+          "children": [],
+          "detail": "Shared bus / NoC fabric"
+        },
+        {
+          "id": "n_sram",
+          "label": "On-Chip SRAM",
+          "kind": "memory",
+          "members": [
+            "n_sram"
+          ],
+          "original_group": "g_mem",
+          "children": [],
+          "detail": "Shared scratchpad / last-level buffer"
+        },
+        {
+          "id": "n_memctl",
+          "label": "DRAM Controller",
+          "kind": "control",
+          "members": [
+            "n_memctl"
+          ],
+          "original_group": "g_mem",
+          "children": [],
+          "detail": "External memory interface"
+        },
+        {
+          "id": "n_dram",
+          "label": "External DRAM",
+          "kind": "memory",
+          "members": [
+            "n_dram"
+          ],
+          "original_group": "g_offchip",
+          "children": [],
+          "detail": "Off-chip main memory"
+        },
+        {
+          "id": "n_periph",
+          "label": "Peripheral Controllers",
+          "kind": "io",
+          "members": [
+            "n_periph"
+          ],
+          "original_group": "g_periph",
+          "children": [],
+          "detail": "UART / SPI / I2C / GPIO"
+        },
+        {
+          "id": "n_hsio",
+          "label": "High-Speed IO",
+          "kind": "io",
+          "members": [
+            "n_hsio"
+          ],
+          "original_group": "g_periph",
+          "children": [],
+          "detail": "PCIe / Ethernet / USB"
+        },
+        {
+          "id": "n_host",
+          "label": "Host / External Device",
+          "kind": "io",
+          "members": [
+            "n_host"
+          ],
+          "original_group": "g_offchip",
+          "children": [],
+          "detail": "Off-chip peer"
+        },
+        {
+          "id": "n_clk",
+          "label": "Clock & Reset",
+          "kind": "control",
+          "members": [
+            "n_clk"
+          ],
+          "original_group": "g_sys",
+          "children": [],
+          "detail": "PLL / clock gating / reset tree"
+        },
+        {
+          "id": "n_pwr",
+          "label": "Power Management",
+          "kind": "control",
+          "members": [
+            "n_pwr"
+          ],
+          "original_group": "g_sys",
+          "children": [],
+          "detail": "DVFS / power domains"
+        },
+        {
+          "id": "n_sec",
+          "label": "Security & Debug",
+          "kind": "control",
+          "members": [
+            "n_sec"
+          ],
+          "original_group": "g_sys",
+          "children": [],
+          "detail": "Secure boot / JTAG / trace"
+        }
+      ],
+      "macro_edges": [
+        {
+          "source": "n_cpu",
+          "target": "n_noc",
+          "kind": "data",
+          "label": "read/write",
+          "members": [
+            0
+          ],
+          "meanings_in_caption": [],
+          "id": "p1"
+        },
+        {
+          "source": "n_accel",
+          "target": "n_noc",
+          "kind": "data",
+          "label": "read/write",
+          "members": [
+            1
+          ],
+          "meanings_in_caption": [],
+          "id": "p2"
+        },
+        {
+          "source": "n_dma",
+          "target": "n_noc",
+          "kind": "data",
+          "label": "burst",
+          "members": [
+            2
+          ],
+          "meanings_in_caption": [],
+          "id": "p3"
+        },
+        {
+          "source": "n_noc",
+          "target": "n_sram",
+          "kind": "data",
+          "label": "access",
+          "members": [
+            3
+          ],
+          "meanings_in_caption": [],
+          "id": "p4"
+        },
+        {
+          "source": "n_noc",
+          "target": "n_memctl",
+          "kind": "data",
+          "label": "access",
+          "members": [
+            4
+          ],
+          "meanings_in_caption": [],
+          "id": "p5"
+        },
+        {
+          "source": "n_memctl",
+          "target": "n_dram",
+          "kind": "data",
+          "label": "DQ/DQS",
+          "members": [
+            5
+          ],
+          "meanings_in_caption": [],
+          "id": "p6"
+        },
+        {
+          "source": "n_noc",
+          "target": "n_periph",
+          "kind": "data",
+          "label": "MMIO",
+          "members": [
+            6
+          ],
+          "meanings_in_caption": [],
+          "id": "p7"
+        },
+        {
+          "source": "n_noc",
+          "target": "n_hsio",
+          "kind": "data",
+          "label": "DMA path",
+          "members": [
+            7
+          ],
+          "meanings_in_caption": [],
+          "id": "p8"
+        },
+        {
+          "source": "n_hsio",
+          "target": "n_host",
+          "kind": "data",
+          "label": "link",
+          "members": [
+            8
+          ],
+          "meanings_in_caption": [],
+          "id": "p9"
+        },
+        {
+          "source": "n_clk",
+          "target": "n_cpu",
+          "kind": "clock",
+          "label": "clk/rst",
+          "members": [
+            9
+          ],
+          "meanings_in_caption": [],
+          "id": "p10"
+        },
+        {
+          "source": "n_clk",
+          "target": "n_noc",
+          "kind": "clock",
+          "label": "clk/rst",
+          "members": [
+            10
+          ],
+          "meanings_in_caption": [],
+          "id": "p11"
+        },
+        {
+          "source": "n_pwr",
+          "target": "n_cpu",
+          "kind": "control",
+          "label": "pwr ctrl",
+          "members": [
+            11
+          ],
+          "meanings_in_caption": [],
+          "id": "p12"
+        },
+        {
+          "source": "n_sec",
+          "target": "n_cpu",
+          "kind": "control",
+          "label": "debug",
+          "members": [
+            12
+          ],
+          "meanings_in_caption": [],
+          "id": "p13"
+        },
+        {
+          "source": "n_periph",
+          "target": "n_dma",
+          "kind": "control",
+          "label": "req",
+          "members": [
+            13
+          ],
+          "meanings_in_caption": [],
+          "id": "p14"
+        },
+        {
+          "source": "n_memctl",
+          "target": "n_noc",
+          "kind": "feedback",
+          "label": "resp",
+          "members": [
+            14
+          ],
+          "meanings_in_caption": [],
+          "id": "p15"
+        }
+      ],
+      "source_edge_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "required_verbatim_labels": [],
+      "composition_diagnostics": {
+        "grammar": "exact-flow",
+        "candidates": [
+          {
+            "id": "top-to-bottom-100",
+            "accepted": false,
+            "reasons": [
+              "A parallel stage is wider than the print canvas at fixed body type"
+            ]
+          },
+          {
+            "id": "left-to-right-80",
+            "accepted": false,
+            "reasons": [
+              "A relationship tracks a scope boundary and could be mistaken for its outline"
+            ],
+            "boundary_conflicts": [
+              {
+                "source_group": "g_compute",
+                "route_id": "p2",
+                "parallel_span_px": 216.0
+              },
+              {
+                "source_group": "g_compute",
+                "route_id": "p10",
+                "parallel_span_px": 324.0
+              },
+              {
+                "source_group": "g_compute",
+                "route_id": "p12",
+                "parallel_span_px": 328.0
+              },
+              {
+                "source_group": "g_compute",
+                "route_id": "p14",
+                "parallel_span_px": 288.0
+              },
+              {
+                "source_group": "g_mem",
+                "route_id": "p5",
+                "parallel_span_px": 58.0
+              },
+              {
+                "source_group": "g_mem",
+                "route_id": "p6",
+                "parallel_span_px": 49.0
+              },
+              {
+                "source_group": "g_mem",
+                "route_id": "p15",
+                "parallel_span_px": 162.0
+              }
+            ]
+          }
+        ],
+        "selection_policy": "Hard route/typography/crossover/boundary gates, then fewer deferred labels, shorter longest/total routes and fewer bends; no beauty score"
+      },
+      "layout_strategy": "legacy-technical-annex",
+      "requires_layout_guide": true,
+      "generation_inputs": [
+        {
+          "image_index": 1,
+          "role": "target_structure",
+          "source": "layout-guide",
+          "instruction": "Use the target guide for the visible inventory, ownership, relative organization and directed endpoints. Improve typography, spacing and clean bends without changing technical facts.",
+          "technical_revision": "If a generated image has a technical error, regenerate from the source specification and a clean corrected guide; do not continue a chain of local edits to the failed bitmap."
+        }
+      ],
+      "revision_mode": "local-appearance-edit",
+      "negative_prompt": "No invented hardware, parameters or connections. No gradients, shadows, texture, branding, decorative chip artwork, tiny type, dangling connectors, or text masking a wire."
+    }
+  ],
+  "render_plan": {
+    "policy_version": "CPS6",
+    "strategy": "atlas",
+    "summary": "主图先解释阅读重点；完整技术关系保存在源结构、图注和精确附图中。",
+    "figures": [
+      {
+        "id": "organization",
+        "kind": "overview",
+        "abstract": true,
+        "primary": true,
+        "technical_annex": false,
+        "title": "Generic SoC System Overview",
+        "summary": "按真实子系统归属组织主图，展开必要资源清单；内部接线与全局控制在图注及精确附图中保留。",
+        "edge_indices": [],
+        "node_ids": [],
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          11,
+          12,
+          13,
+          14
+        ],
+        "view_role": "organization",
+        "design_contract": {
+          "grammar": "ownership-flow",
+          "question": "Which real subsystems own these resources, and how do those subsystems interact?",
+          "claim": "Source ownership and the main inter-subsystem relationships are explicit; internal operation is a separate technical view.",
+          "scope": "display projection",
+          "target_width_mm": 160,
+          "body_pt": 9,
+          "signal_pt": 8.5,
+          "source_invariants": [
+            "source ownership",
+            "directed source relations",
+            "explicit quantities and conditions",
+            "required verbatim text"
+          ],
+          "editorial_decisions": [
+            "projection",
+            "positions",
+            "line bends",
+            "which optional prose stays in caption"
+          ],
+          "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+          "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+          "symbol_profile": "ink-header"
+        },
+        "layout_strategy": "publication-candidates",
+        "node_count": 6,
+        "edge_count": 8
+      },
+      {
+        "id": "overview",
+        "kind": "overview",
+        "abstract": false,
+        "title": "Generic SoC System Overview",
+        "summary": "完整结构在一张图内呈现。",
+        "node_ids": [
+          "n_accel",
+          "n_clk",
+          "n_cpu",
+          "n_dma",
+          "n_memctl",
+          "n_dram",
+          "n_hsio",
+          "n_host",
+          "n_noc",
+          "n_sram",
+          "n_periph",
+          "n_pwr",
+          "n_sec"
+        ],
+        "edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "context_nodes": [],
+        "node_count": 13,
+        "edge_count": 13,
+        "primary": false,
+        "technical_annex": true,
+        "design_contract": {
+          "grammar": "exact-flow",
+          "question": "How do the selected source relationships operate?",
+          "claim": "Exact technical annex; only this selected source scope is drawn.",
+          "scope": "exact source scope",
+          "target_width_mm": 160,
+          "body_pt": 9,
+          "signal_pt": 8.5,
+          "source_invariants": [
+            "source ownership",
+            "directed source relations",
+            "explicit quantities and conditions",
+            "required verbatim text"
+          ],
+          "editorial_decisions": [
+            "projection",
+            "positions",
+            "line bends",
+            "which optional prose stays in caption"
+          ],
+          "generation_inputs": "one reviewed target plate; source reference figures are learning material",
+          "regeneration_policy": "For technical or structural failure, regenerate from the canonical source and a clean redesigned plate. Local edits are for isolated wording or minor appearance only.",
+          "symbol_profile": "ink-header",
+          "preflight_note": "This grammar uses the historical technical layout; the new physical type-scale preflight was not achieved."
+        },
+        "source_edge_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "layout_strategy": "legacy-technical-annex"
+      }
+    ],
+    "coverage": {
+      "nodes_total": 13,
+      "edges_total": 15,
+      "nodes_covered": 13,
+      "edges_covered": 15,
+      "missing_nodes": [],
+      "missing_edges": []
+    },
+    "checks": [
+      "每张图最多 16 个可见模块、24 条关系；超出预算生成独立视图。",
+      "单图同一资源 ID 只绘制一次；跨图重现是同一资源的视图引用。",
+      "覆盖检查只针对结构清单，实际图片的文字、端点和方向仍需核对。"
+    ],
+    "quality": {
+      "node_budget": 16,
+      "edge_budget": 24,
+      "max_nodes_per_figure": 13,
+      "max_edges_per_figure": 15
+    },
+    "reading_plan": {
+      "source_hash": "767b38bcd090bffbdea02f87fc96c74cc04cd6a6305672a1ce4acd7e8e20d6fd",
+      "primary_figure_ids": [
+        "organization"
+      ],
+      "target_width_mm": 160,
+      "body_pt": 9,
+      "signal_pt": 8.5,
+      "selection_basis": "reader question, true containment and source relationships; not a provider aesthetic or fixed product template",
+      "full_source_retained": true
+    }
+  }
+}

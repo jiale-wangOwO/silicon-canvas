@@ -1,0 +1,270 @@
+{
+  "spec": {
+    "title": "Tiled Online Attention",
+    "summary": "A fixed query tile consumes successive key/value tiles; online row statistics and an unnormalized output accumulator persist across iterations.",
+    "category": "dataflow",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_resident",
+        "label": "Resident on chip",
+        "parent": "",
+        "evidence": "Q tile 和状态驻留片上，K/V 逐块装入",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_stream",
+        "label": "KV tile j",
+        "parent": "",
+        "evidence": "Q tile 和状态驻留片上，K/V 逐块装入",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_iteration",
+        "label": "Repeat over KV tiles",
+        "parent": "",
+        "evidence": "Q tile 和状态驻留片上，K/V 逐块装入",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "q_tile",
+        "label": "Q_i",
+        "kind": "memory",
+        "group": "g_resident",
+        "detail": "Fixed query tile",
+        "evidence": "Q_i 为 B_r × d_k",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B_r × d_k",
+        "residency": "On chip; reused across j"
+      },
+      {
+        "id": "k_tile",
+        "label": "K_j",
+        "kind": "memory",
+        "group": "g_stream",
+        "detail": "Current key tile",
+        "evidence": "K_j 为 B_c × d_k",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B_c × d_k",
+        "residency": "Loaded from HBM each j"
+      },
+      {
+        "id": "v_tile",
+        "label": "V_j",
+        "kind": "memory",
+        "group": "g_stream",
+        "detail": "Current value tile",
+        "evidence": "V_j 为 B_c × d_v",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B_c × d_v",
+        "residency": "Loaded from HBM each j"
+      },
+      {
+        "id": "scores",
+        "label": "Tile scores",
+        "kind": "compute",
+        "group": "g_iteration",
+        "detail": "S_j = Q_i K_j^T / sqrt(d_k)",
+        "evidence": "S_j = Q_i K_j^T / sqrt(d_k)",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B_r × B_c",
+        "residency": "Transient on chip"
+      },
+      {
+        "id": "online",
+        "label": "Online row normalization",
+        "kind": "compute",
+        "group": "g_iteration",
+        "detail": "m_new = max(m, rowmax(S_j)); alpha = exp(m - m_new); P_j = exp(S_j - m_new)",
+        "evidence": "m_new = max(m, rowmax(S_j))，alpha = exp(m - m_new)，P_j = exp(S_j - m_new)",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "reduction",
+        "tensor_shape": "P_j: B_r × B_c; m_new, alpha: B_r",
+        "residency": "Transient on chip"
+      },
+      {
+        "id": "accumulate",
+        "label": "Update accumulators",
+        "kind": "compute",
+        "group": "g_iteration",
+        "detail": "l_new = alpha*l + rowsum(P_j); A_new = diag(alpha)A + P_j V_j",
+        "evidence": "l_new = alpha*l + rowsum(P_j)，A_new = diag(alpha)A + P_j V_j",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "l_new: B_r; A_new: B_r × d_v",
+        "residency": "On chip"
+      },
+      {
+        "id": "state",
+        "label": "Running state (m, l, A)",
+        "kind": "state",
+        "group": "g_resident",
+        "detail": "Initialize m = -inf, l = 0, A = 0; update to m_new, l_new, A_new after each j",
+        "evidence": "状态初值 m=-inf、l=0、A=0；每个 tile 更新后反馈供下个 j 使用",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "state",
+        "tensor_shape": "m, l: B_r; A: B_r × d_v",
+        "residency": "On chip; persists across j"
+      },
+      {
+        "id": "normalize",
+        "label": "Final row normalization",
+        "kind": "compute",
+        "group": "",
+        "detail": "After all KV tiles: O_i = diag(l)^(-1)A",
+        "evidence": "所有 K/V tiles 完成后才输出 O_i=diag(l)^(-1)A",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "operator",
+        "tensor_shape": "B_r × d_v"
+      },
+      {
+        "id": "output",
+        "label": "O_i",
+        "kind": "io",
+        "group": "",
+        "detail": "Write the completed query-tile output",
+        "evidence": "所有 K/V tiles 完成后才输出 O_i=diag(l)^(-1)A",
+        "origin": "given",
+        "rationale": "",
+        "diagram_role": "tensor",
+        "tensor_shape": "B_r × d_v",
+        "residency": "Output to HBM"
+      }
+    ],
+    "edges": [
+      {
+        "source": "q_tile",
+        "target": "scores",
+        "label": "Q_i",
+        "kind": "data",
+        "evidence": "S_j = Q_i K_j^T / sqrt(d_k)",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "k_tile",
+        "target": "scores",
+        "label": "K_j",
+        "kind": "data",
+        "evidence": "S_j = Q_i K_j^T / sqrt(d_k)",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "scores",
+        "target": "online",
+        "label": "S_j",
+        "kind": "data",
+        "evidence": "m_new = max(m, rowmax(S_j))，alpha = exp(m - m_new)，P_j = exp(S_j - m_new)",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "state",
+        "target": "online",
+        "label": "previous m",
+        "kind": "feedback",
+        "evidence": "m_new = max(m, rowmax(S_j))，alpha = exp(m - m_new)，P_j = exp(S_j - m_new)",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "online",
+        "target": "accumulate",
+        "label": "P_j, alpha, m_new",
+        "kind": "data",
+        "evidence": "l_new = alpha*l + rowsum(P_j)，A_new = diag(alpha)A + P_j V_j",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "v_tile",
+        "target": "accumulate",
+        "label": "V_j",
+        "kind": "data",
+        "evidence": "l_new = alpha*l + rowsum(P_j)，A_new = diag(alpha)A + P_j V_j",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "state",
+        "target": "accumulate",
+        "label": "previous l, A",
+        "kind": "feedback",
+        "evidence": "l_new = alpha*l + rowsum(P_j)，A_new = diag(alpha)A + P_j V_j",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "accumulate",
+        "target": "state",
+        "label": "m_new, l_new, A_new",
+        "kind": "feedback",
+        "evidence": "状态初值 m=-inf、l=0、A=0；每个 tile 更新后反馈供下个 j 使用",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "state",
+        "target": "normalize",
+        "label": "final l, A; after all KV tiles",
+        "kind": "data",
+        "evidence": "所有 K/V tiles 完成后才输出 O_i=diag(l)^(-1)A",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "normalize",
+        "target": "output",
+        "label": "O_i",
+        "kind": "data",
+        "evidence": "所有 K/V tiles 完成后才输出 O_i=diag(l)^(-1)A",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Show the one-tile computation with parallel K_j and V_j inputs and a fixed Q_i input. Put persistent (m,l,A) state in a distinct nearby lane, with original feedback directions returning previous m to row normalization and previous l,A to accumulation. Accumulator updates return to state. Route final l,A to the final normalization only after j completes; this exit is distinct from the recurrence. Loop frame means repeat over tiles, not physical copies. Do not draw dense N × N storage or invent extra tile-index control edges.",
+    "steps": [],
+    "annotations": [
+      "Row vectors broadcast across score columns and accumulator columns as appropriate.",
+      "P_j contains unnormalized exponentials; normalization occurs once after the tile loop.",
+      "Only tile-local scores and probabilities exist on chip; no dense N × N intermediate is written to HBM."
+    ],
+    "assumptions": [
+      "Unmasked single-head forward attention; no dropout, backward pass or logsumexp output.",
+      "Boundary tiles may be shorter; padding and scheduling details are omitted."
+    ],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "category": "dataflow",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "strict",
+    "scene": "flow",
+    "representation": "diagram",
+    "labels": "",
+    "notes": ""
+  },
+  "description": "画一张 tiled online attention 的算法数据流图，展示固定 Q_i tile 与流式 K_j、V_j tile，重点是跨 tile 的在线归一化和累加状态，不要画成普通直线链条。Q_i 为 B_r × d_k，K_j 为 B_c × d_k，V_j 为 B_c × d_v。每个 j 计算 S_j = Q_i K_j^T / sqrt(d_k)。维护 m、l 和未归一化 A：m_new = max(m, rowmax(S_j))，alpha = exp(m - m_new)，P_j = exp(S_j - m_new)；l_new = alpha*l + rowsum(P_j)，A_new = diag(alpha)A + P_j V_j。状态初值 m=-inf、l=0、A=0；每个 tile 更新后反馈供下个 j 使用。所有 K/V tiles 完成后才输出 O_i=diag(l)^(-1)A。Q tile 和状态驻留片上，K/V 逐块装入，不把完整 N × N 分数写回 HBM。无 causal mask、无 dropout，省略 backward/logsumexp 输出。"
+}

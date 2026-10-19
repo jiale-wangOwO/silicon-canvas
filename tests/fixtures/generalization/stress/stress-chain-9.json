@@ -1,0 +1,316 @@
+{
+  "id": "stress-chain-9",
+  "split": "post_freeze_stress",
+  "natural_input": {
+    "description": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+    "scene": "flow",
+    "representation": "diagram",
+    "completion_mode": "strict",
+    "language": "en"
+  },
+  "expectations": {
+    "categories": [
+      "dataflow"
+    ],
+    "required_concepts": [
+      {
+        "concept": "n0",
+        "pattern": "Transform 0"
+      },
+      {
+        "concept": "n1",
+        "pattern": "Transform 1"
+      },
+      {
+        "concept": "n2",
+        "pattern": "Transform 2"
+      },
+      {
+        "concept": "n3",
+        "pattern": "Transform 3"
+      },
+      {
+        "concept": "n4",
+        "pattern": "Transform 4"
+      },
+      {
+        "concept": "n5",
+        "pattern": "Transform 5"
+      },
+      {
+        "concept": "n6",
+        "pattern": "Transform 6"
+      },
+      {
+        "concept": "n7",
+        "pattern": "Transform 7"
+      },
+      {
+        "concept": "n8",
+        "pattern": "Transform 8"
+      }
+    ],
+    "relations": [
+      [
+        "n0",
+        "n1",
+        "payload",
+        "data"
+      ],
+      [
+        "n1",
+        "n2",
+        "payload",
+        "data"
+      ],
+      [
+        "n2",
+        "n3",
+        "payload",
+        "data"
+      ],
+      [
+        "n3",
+        "n4",
+        "payload",
+        "data"
+      ],
+      [
+        "n4",
+        "n5",
+        "payload",
+        "data"
+      ],
+      [
+        "n5",
+        "n6",
+        "payload",
+        "data"
+      ],
+      [
+        "n6",
+        "n7",
+        "payload",
+        "data"
+      ],
+      [
+        "n7",
+        "n8",
+        "payload",
+        "data"
+      ]
+    ],
+    "ownership": {
+      "n0": "engine",
+      "n1": "engine",
+      "n2": "engine",
+      "n3": "engine",
+      "n4": "engine",
+      "n5": "engine",
+      "n6": "engine",
+      "n7": "engine",
+      "n8": "engine"
+    },
+    "closed_inventory": true,
+    "minimum_nodes": 9,
+    "representation": "diagram",
+    "assumptions_required": false,
+    "numeric_claims_not_supplied": false
+  },
+  "manual_payload": {
+    "description": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+    "settings": {
+      "scene": "flow",
+      "representation": "diagram",
+      "completion_mode": "strict"
+    },
+    "spec": {
+      "title": "stress-chain-9",
+      "summary": "Original synthetic evaluation, not a real product.",
+      "category": "dataflow",
+      "verbatim_labels": [],
+      "groups": [
+        {
+          "id": "engine",
+          "label": "Engine",
+          "parent": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        }
+      ],
+      "nodes": [
+        {
+          "id": "n0",
+          "label": "Transform 0",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n1",
+          "label": "Transform 1",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n2",
+          "label": "Transform 2",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n3",
+          "label": "Transform 3",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n4",
+          "label": "Transform 4",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n5",
+          "label": "Transform 5",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n6",
+          "label": "Transform 6",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n7",
+          "label": "Transform 7",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "id": "n8",
+          "label": "Transform 8",
+          "kind": "compute",
+          "group": "engine",
+          "detail": "",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        }
+      ],
+      "edges": [
+        {
+          "source": "n0",
+          "target": "n1",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n1",
+          "target": "n2",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n2",
+          "target": "n3",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n3",
+          "target": "n4",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n4",
+          "target": "n5",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n5",
+          "target": "n6",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n6",
+          "target": "n7",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        },
+        {
+          "source": "n7",
+          "target": "n8",
+          "label": "payload",
+          "kind": "data",
+          "origin": "given",
+          "evidence": "Explain the exact payload mechanism of one Engine with 9 named transforms in the supplied serial dependency order. Keep all source endpoint relations. This is functional dependency, not cycle latency.",
+          "rationale": ""
+        }
+      ],
+      "layout": "",
+      "steps": [],
+      "annotations": [],
+      "assumptions": [],
+      "questions": [],
+      "checks": []
+    }
+  }
+}
