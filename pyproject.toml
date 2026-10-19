@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "silicon-canvas"
 version = "0.7.0"
-description = "Model-independent semiconductor render and engineering figure briefs for Image Gen, Web and MCP"
+description = "Help AI create clear, beautiful, and consistent chip visuals, from architecture diagrams and dataflows to polished product renders."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

@@ -12,9 +12,21 @@
   <a href="docs/mcp.md">接入指南</a>
 </p>
 
-Silicon Canvas 是面向芯片架构师的 **AI 绘图方案工具**。把自然语言中的设计内容与表达目标，转换成适合 Image Gen 的提示词、必要的结构参考和可继续修改的源规格，覆盖工程架构、算法数据流、状态与时序，以及系统插画和产品渲染。
+**让 AI 画出好看的架构图，更画出清楚的设计。**
 
-设计事实、阅读目的与视觉表现分别处理，让同一份设计既能用于技术文档，也能用于方案介绍和产品展示。你可以用中文描述，新图默认使用英文标签。
+Silicon Canvas 帮助 AI 更稳定地生成结构清晰、布局有序、风格协调的专业芯片图，适合技术文档、论文、架构评审与产品展示。
+
+让 AI 画图少一点碰运气，减少反复试提示词的时间。从系统架构、算法数据流到产品渲染，都可以描述需求、生成图片，再通过自然反馈继续打磨。你可以用中文描述，新图默认使用英文标签。
+
+## 实际作品
+
+三种任务，三种表达。以下均为实际生成结果，点击图片可查看原图；板卡图在生成后加入了 Silicon Canvas 标志。
+
+| SoC 架构概览 | 算法数据流 | 产品渲染 |
+| --- | --- | --- |
+| [![SoC 计算、存储、管理与 I/O 的功能架构示意](web/assets/render-examples/functional-soc.png)](web/assets/render-examples/functional-soc.png) | [![英文 FFT 算法数据流，展示重排与三级蝶形处理](web/assets/generalization-20261018/06-signal-fft.png)](web/assets/generalization-20261018/06-signal-fft.png) | [![带 Silicon Canvas 标志的完整加速器板卡概念渲染](web/assets/branded-20261019/03-accelerator-board.png)](web/assets/branded-20261019/03-accelerator-board.png) |
+
+更多作品见 [网页演示版的精选展示](https://jiale-wangOwO.github.io/silicon-canvas/#showcaseTitle)。
 
 ## Let your agent set it up
 
@@ -53,29 +65,23 @@ macOS / Linux：
 bash scripts/install-mcp.sh .
 ```
 
-安装器创建独立环境，并输出 `mcp-config.json` 和 `codex-mcp.toml`。把对应配置添加到宿主的 MCP 设置，重新加载服务即可；安装器不会改写现有宿主配置。服务入口为 `silicon-canvas-mcp`，通过 STDIO 由宿主启动。
+安装器创建独立环境，并输出 `mcp-config.json` 和 `codex-mcp.toml`。把对应配置添加到宿主的 MCP 设置，重新加载服务即可；安装器不会改写现有宿主配置。
 
 使用本地 wheel 时，把安装命令中的源码目录参数替换为 wheel 路径。完整安装、客户端配置与故障排查见 [MCP 指南](docs/mcp.md)。
 
 ## 开始画图
 
-安装后直接向 Agent 描述内容与用途，例如：
+在支持 MCP 和图片生成的 Agent 中，安装后直接描述内容与用途，例如：
 
 > 用 Silicon Canvas 做一张 GPU 架构总览，讲清主机接口、命令处理、计算簇、共享缓存与显存之间的关系。用于架构介绍，不展开执行单元内部。用图片生成工具画出来，再根据实际成图继续调整。
 
 也可以要求算法依赖、协议状态、周期交互、封装剖切或完整板卡产品展示，不必先选分类。需要时在描述里指定视角、背景、材质、配色和详略。
 
-默认流程是 **描述 → 宿主模型整理源事实 → MCP 编译 → Image Gen → 看图改进**。在 Codex 等支持 MCP 的 Agent 中，语义理解使用宿主现有模型，无需另配语义模型 API Key；实际生图使用宿主可用的图片工具。
+使用流程是 **描述内容与用途 → Agent 调用 Silicon Canvas 安排绘图 → 图片工具生成 → 看图反馈、继续调整**。
 
-工具会说明参考图的用途：工程图使用配套结构底稿，算法依赖图通常只需提示词，产品渲染的取景参考则是可选的。详见 [MCP 工作流](docs/mcp.md#agent-调用流程)。
+看过图片后，可以直接告诉 Agent：“计算簇按两行排，突出共享缓存”“主路径再清楚一点”或“这张用于产品介绍，减少内部细节”。需要保留的内容、想改变的地方，都可以用平常的话说明。
 
-## 实际作品
-
-下面两张实际生成图展示算法依赖与完整板卡两种表达；板卡图在生成后加入了 Silicon Canvas 标志。更多作品见 [网页演示版的精选展示](https://jiale-wangOwO.github.io/silicon-canvas/#showcaseTitle)。
-
-| 算法数据流 | 产品渲染 |
-| --- | --- |
-| ![英文 FFT 算法数据流示例](web/assets/generalization-20261018/06-signal-fft.png) | ![带 Silicon Canvas 品牌的完整加速板卡概念渲染](web/assets/branded-20261019/03-accelerator-board.png) |
+完整使用说明见 [MCP 指南](docs/mcp.md)。
 
 ## 当前能力
 
@@ -85,22 +91,20 @@ bash scripts/install-mcp.sh .
 | **系统示意** | 功能分区、共享资源、系统组成与主要连接，兼顾结构解释和空间表现 |
 | **商业渲染** | 芯片封装、板卡、服务器和机柜等产品主体，随用途安排镜头、材质、光照和标注 |
 
-- **自然输入，自动安排。** 从描述理解用途、形式、详略与画幅；需要时直接指定视觉要求。信息不足时提供带明确假设的参考方案。
-- **源事实与画面分开。** 保留模块、数量、归属、条件和关系，再选择本图的阅读范围；完整源规格随绘图包交接。
-- **模型与编译解耦。** MCP 使用宿主模型整理内容，Web 连接所选语义服务，两者复用同一套编译核心。
-- **支持继续修改。** 通过自然反馈调整方案，导出提示词、参考和源规格，便于 Agent 接续与核对。
+- **结构有层次。** 区分系统组成、重复单元与共享资源，让读者看懂模块的归属和主次。
+- **布局有主线。** 围绕要解释的关系安排位置与连线，让架构组织、数据流向或机制步骤更容易跟随。
+- **视觉贴合用途。** 技术文档重清晰，方案介绍重整体，产品展示重主体与质感；布局、详略和表现方式一起考虑。
+- **用自然反馈打磨。** 不必先选分类或填完表单，先说想法，再按实际图片调整。需要时可直接指定配色、画幅和细节。
 
-生成图片仍可能出现文字、箭头或数量错误，需要实际查看并迭代；概念渲染不等同于真实版图、CAD 或制造资料。能力和验证边界见 [表达方式](docs/scenes.md) 与 [验证说明](docs/validation.md)。
-
-共享核心与设计说明见 [项目架构](docs/architecture.md)、[系统设计](docs/system-design.md)。
+成图中的文字、箭头和数量仍需查看与调整，概念渲染也不替代真实版图或制造资料。更多能力与适用范围见 [表达方式](docs/scenes.md) 和 [验证说明](docs/validation.md)。
 
 ## 网页演示版
 
-打开 [在线演示](https://jiale-wangOwO.github.io/silicon-canvas/)，连接自己的 DeepSeek 或兼容服务，描述想画的内容并生成提示词。形式、用途和配色等默认自动安排，需要时展开“自定义”；随后复制提示词或下载绘图包，交给图片工具。
+打开 [网页演示版](https://jiale-wangOwO.github.io/silicon-canvas/)，连接自己的 DeepSeek 或兼容服务，描述需求并生成提示词，再交给图片工具。形式、用途和配色等默认自动安排，需要时展开“自定义”。希望由 Agent 连续完成绘图与反馈调整，请使用 MCP。
 
 ![Silicon Canvas 网页工作台](docs/assets/workspace.png)
 
-Web 可托管在 GitHub Pages 等静态服务，编译在浏览器 Worker 中运行。模型请求由浏览器直接发往你选择的服务，API Key 仅保存在当前页面内存；接口需允许浏览器 CORS。使用、本地预览和部署见 [Web 指南](docs/web.md)，数据处理见 [隐私说明](docs/privacy.md)。
+API Key 仅保存在当前页面内存，请求直接发往你选择的服务。使用与服务兼容性见 [Web 指南](docs/web.md)，数据处理见 [隐私说明](docs/privacy.md)。
 
 ## 参与贡献
 
