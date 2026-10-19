@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f3">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="description" content="把 Silicon Canvas 接入你的 Agent，用现有模型理解设计，再使用 Image Gen 生成和改进图片。">
+  <title>Agent / MCP · Silicon Canvas</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./workbench.css">
+  <link rel="stylesheet" href="./brand.css">
+  <link rel="stylesheet" href="./agent.css">
+</head>
+<body class="workbench agent-page">
+  <header class="wb-header">
+    <a class="wb-wordmark" href="./" aria-label="Silicon Canvas 首页"><svg class="sc-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="./assets/logo.svg#mark"/></svg><span>Silicon <strong>Canvas</strong></span></a>
+    <nav class="wb-header-actions" aria-label="页面入口">
+      <a class="wb-header-link" href="https://github.com/jiale-wangOwO/silicon-canvas" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="wb-button wb-secondary agent-back" href="./">网页演示版 <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main class="agent-main">
+    <section class="agent-hero" aria-labelledby="agentTitle">
+      <p class="wb-kicker">SILICON CANVAS FOR AGENTS</p>
+      <h1 id="agentTitle">在 Agent 里，画清楚。</h1>
+      <p class="agent-intro">描述芯片、系统或算法，让 Agent 理解设计、调用 Silicon Canvas，再用 Image Gen 生成图片。中文描述也可以，图中文字默认英文。</p>
+    </section>
+
+    <section class="agent-setup" aria-labelledby="setupTitle">
+      <div class="agent-section-heading"><p class="wb-kicker">GET CONNECTED</p><h2 id="setupTitle" lang="en">Let your agent set it up</h2><p>把下面这段话发给你正在使用的 Agent。</p></div>
+      <pre class="agent-prompt" tabindex="0" aria-label="发送给 Agent 的安装请求"><code>请阅读 https://github.com/jiale-wangOwO/silicon-canvas，
+按照仓库里的 MCP 安装说明，为当前 Agent 安装并配置 Silicon Canvas。
+确认 silicon_prepare 和 silicon_compile 可用后，告诉我可以开始绘图。</code></pre>
+      <p class="agent-note">语义理解使用 Agent 现有的模型，无需额外填写语义模型 Key。实际生图需要宿主提供可用的 Image Gen 能力。</p>
+      <div class="agent-links"><a href="https://github.com/jiale-wangOwO/silicon-canvas" target="_blank" rel="noopener">查看仓库 <span aria-hidden="true">↗</span></a><a href="https://github.com/jiale-wangOwO/silicon-canvas/blob/main/docs/mcp.md" target="_blank" rel="noopener">完整安装说明 <span aria-hidden="true">↗</span></a></div>
+      <details class="agent-manual">
+        <summary>手动安装与配置 <span aria-hidden="true">＋</span></summary>
+        <div class="agent-manual-content">
+          <p>需要 Python 3.11+。下载或克隆仓库后，在项目根目录运行对应安装器；它会创建独立环境，并生成 <code>mcp-config.json</code> 与 <code>codex-mcp.toml</code>。</p>
+          <div class="agent-command-grid"><div><h3>Windows · PowerShell</h3><pre><code>.\scripts\install-mcp.ps1 -PackagePath .</code></pre></div><div><h3>macOS / Linux</h3><pre><code>bash scripts/install-mcp.sh .</code></pre></div></div>
+          <p>将安装器生成的配置添加到支持 MCP 的客户端，由宿主通过 STDIO 启动服务。无需开启网页或本地 HTTP 服务。若使用 Windows 免 Python 发行包，请保持 EXE 与旁边的 <code>_internal</code> 资源目录完整；具体以安装说明为准。</p>
+          <p>可选工具 <code>silicon_generate</code> 可以调用本机配置的兼容模型接口；默认宿主流程使用 <code>silicon_prepare</code> 与 <code>silicon_compile</code>。</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="agent-drawing" aria-labelledby="drawingTitle">
+      <div class="agent-section-heading"><p class="wb-kicker">MAKE SOMETHING CLEAR</p><h2 id="drawingTitle">接入后，直接说你想画什么。</h2></div>
+      <blockquote class="agent-example">用 Silicon Canvas 画一个 GPU 的架构图，讲清任务如何分发到计算簇，以及共享 L2 和显存怎样连接。用图片生成工具画出来，再根据实际成图继续调整。</blockquote>
+      <ol class="agent-workflow">
+        <li><span class="agent-step" aria-hidden="true">01</span><div><h3>理解设计</h3><p>Agent 调用 <code>silicon_prepare</code>，按返回要求整理源事实、关系和必要假设。</p></div></li>
+        <li><span class="agent-step" aria-hidden="true">02</span><div><h3>形成绘图方案</h3><p>通过 <code>silicon_compile</code> 编译提示词与完整源规格，并取得这张图所需的参考材料。</p></div></li>
+        <li><span class="agent-step" aria-hidden="true">03</span><div><h3>生成图片</h3><p>Agent 按工具返回的参考要求，调用宿主的 Image Gen，生成实际图片。</p></div></li>
+        <li><span class="agent-step" aria-hidden="true">04</span><div><h3>看图，再改进</h3><p>检查实际图片的结构、连接与文字，根据你的反馈继续调整。编译完成不等于成图准确。</p></div></li>
+      </ol>
+    </section>
+
+    <section class="agent-continuity" aria-labelledby="continuityTitle"><div><h2 id="continuityTitle">把设计和过程一起留住。</h2><p><code>silicon_export</code> 保存提示词、源规格、参考与图注；<code>silicon_prepare_review</code> 提供核对材料，方便 Agent 对照实际图片继续改进。</p></div><a href="./">打开网页演示版 <span aria-hidden="true">↗</span></a></section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+  "tool": "silicon_generate",
+  "transport": "stdio",
+  "commit": "161a38b96edc22ed71247c8cacfbaef528f3fd3c",
+  "input": "为一款通用推理加速器制作 BP 封面的商业产品主视觉：产品是一颗完整的芯片封装，内部提供矩阵计算、片上存储和主机接口能力，但这张图不要展开内部结构、数据连线或功能标注。主体放在画面右侧，左侧留出干净的文案空间，使用克制的深色背景、精细金属与陶瓷质感和柔和轮廓光，镜头有适度透视。不要虚构商标、型号、工艺节点、带宽、算力或封装尺寸，不加营销口号。",
+  "tool_calls": 1,
+  "semantic_repair": false,
+  "source_hash": "d34aed76ef68c21f2f2d673358e642132dda6b2824d3bb2ae80895f515c4dc1d",
+  "prompt_sha256": "b284d11bb80020308e557751e789406075f1cea8a837a876b6e8638d3e97dc78",
+  "selected_figure_id": "product-render",
+  "representation": "product_render",
+  "grammar": "hero",
+  "guide_policy": "required target guide only; optional composition references omitted",
+  "required_guide_available": false,
+  "figure_strategy": {
+    "version": "FS1",
+    "figure_id": "product-render",
+    "purpose": "What is the product's visual identity?",
+    "representation": "product_render",
+    "grammar": "hero",
+    "how_to_read": "Complete product silhouette, finish and lighting. source-backed explanatory projection; not physical implementation",
+    "planning_status": "planned",
+    "scope": {
+      "source_nodes": 7,
+      "source_relationships": 0,
+      "visible_objects": 0,
+      "top_level_objects": 0,
+      "nested_appearances": 0,
+      "leaf_appearances": 0,
+      "visible_relationships": 0,
+      "visible_source_relationships": [],
+      "deferred_relationships": 0,
+      "relationship_accounting_status": "source_mapped",
+      "not_checked_source_relationships": [],
+      "deferred_primary_relationships": 0
+    },
+    "assumptions": {
+      "statements": [
+        "封装形态（盖板+基板+焊球阵列）为通用示意，用户未指定封装类型、引脚数或尺寸。",
+        "矩阵计算、片上存储、主机接口三项能力仅作为文案/图注素材保留，不在主视觉中展开或连线。",
+        "画面比例与透视角度为艺术指导选择，不代表真实封装几何。"
+      ],
+      "assumed_nodes": 2,
+      "assumed_relationships": 0
+    },
+    "limitations": [],
+    "alternatives": [],
+    "actual_scope_accounting_status": "source_mapped",
+    "document_size_status": "not_checked",
+    "guide_document_fit_status": "not_measured",
+    "actual_image_status": "not_reviewed",
+    "not_aesthetic_certification": true
+  },
+  "image_generation_status": "pending",
+  "actual_image_review_status": "not_reviewed"
+}

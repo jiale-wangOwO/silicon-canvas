@@ -1,0 +1,95 @@
+{
+  "id": "05-paper-softmax",
+  "title": "数值稳定 Softmax 算法数据流",
+  "description": "给论文画一张数值稳定 softmax 的数据流图。输入是一行向量 x，先求 m=max_i x_i，再逐元素计算 z_i=x_i-m、e_i=exp(z_i)，求 s=sum_i e_i，最后 y_i=e_i/s。请保留 x 与 m 到减法、e 到求和及归一化两处的依赖，使用英文标签；不展开并行归约树，也不引入存储器或硬件流水级。",
+  "requested_settings": {
+    "style": "paper",
+    "language": "en"
+  },
+  "commit": "119e1e8d6c037e71101191bebc45b19b72c2467c",
+  "tool": "silicon_generate",
+  "transport": "stdio",
+  "route": "configured-provider-via-actual-MCP",
+  "status": "pass",
+  "errors": [],
+  "resolved_settings": {
+    "category": "dataflow",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "flow",
+    "resolved_representation": "diagram"
+  },
+  "representation": "diagram",
+  "grammar": "mathematical-dependency",
+  "artifact_id": "29c9b6bef537445e9edebf067bd557b7",
+  "selected_figure_id": "algorithm-flow",
+  "source_hash": "6d1d91db5d0a0d75c85894a287bc09e66db16e984ddf889e3df2c77b92208da9",
+  "source_file": "05-paper-softmax-source.json",
+  "prompt_file": "05-paper-softmax-prompt.txt",
+  "prompt_sha256": "b955c559eb93aee1f685c3c93db29eeaa4c2b3477d6d79f41aeb55d48bdde640",
+  "guide_file": null,
+  "guide_sha256": null,
+  "guide_required": false,
+  "guide_role": null,
+  "optional_guide_omitted": true,
+  "repaired": false,
+  "warnings": [
+    "先生成主图；技术附图按需要展开。完整 7 个节点、8 条源关系始终保留，主图的概括与源映射可在图注查看。"
+  ],
+  "elapsed_seconds": 6.58,
+  "image_file": "05-paper-softmax.png",
+  "review": {
+    "status": "pass",
+    "technical_status": "通过所需公式与依赖核对",
+    "visual_status": "结构清楚，可读性较好",
+    "document_status": "可作为数值稳定 softmax 的论文配图候选，配文档图注",
+    "strengths": [
+      "输入 x 同时送往 max 和减法，m 单独进入减法；减法、指数、求和、归一化的公式均正确。",
+      "e_i 分别进入 sum 与归一化，没有被画成串行 sum 后才产生 e_i；源中八条连接均可辨认。",
+      "归约与逐元素操作分成上下两带，输出留在分组之外；没有额外存储器、归约树或硬件流水级。"
+    ],
+    "issues": [],
+    "source_assumptions": [
+      "Reductions 与 Elementwise Ops 两组和 y 输出端点是语义模型的显示补全，已在源中标为 assumed；不表示硬件共享。"
+    ],
+    "scope": "按原输入、规范化源和实际首张位图人工逐条核对五个运算与八条依赖；不认证浮点数值实现、归约树或硬件时序。",
+    "attribution": {
+      "source": "所需运算与依赖保留，显示分组补全合理",
+      "compile": "算法依赖图路线，无硬件参考图要求",
+      "pixel": "所需范围通过"
+    }
+  },
+  "tool_status_before_imagegen": "ready_for_imagegen",
+  "generation_inputs": {
+    "built_in_tool": "image_gen.imagegen",
+    "prompt_sha256": "b955c559eb93aee1f685c3c93db29eeaa4c2b3477d6d79f41aeb55d48bdde640",
+    "uncontrolled_missing_required_guide": false,
+    "transparent_background": false,
+    "prompt_file_bytes_verified": true,
+    "first_output_only": true,
+    "actual_submitted_string_equals_source_bytes": true,
+    "actual_submitted_utf8_sha256": "b955c559eb93aee1f685c3c93db29eeaa4c2b3477d6d79f41aeb55d48bdde640",
+    "actual_submitted_replacement_character_count": 0,
+    "controlled_reference_attached": false,
+    "public_reference_files": []
+  },
+  "image_sha256": "8891316d1e2f43fd6b6cd057c6ee41fc10574766180422a9ab08f88dcfcb14b9",
+  "dimensions": [
+    2146,
+    733
+  ],
+  "imagegen_count": 1,
+  "model": "deepseek-flash",
+  "mcp_generate_invocations": 1,
+  "semantic_repair_used": false,
+  "external_rerolls": 0,
+  "generation_status": "generated_first_output",
+  "first_image_original_filename": "exec-4bba238e-a008-4c6b-a640-bdab5b205a7a.png"
+}

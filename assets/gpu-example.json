@@ -1,0 +1,312 @@
+{
+  "spec": {
+    "title": "GPU Architecture Overview",
+    "summary": "面向同事介绍的通用 GPU 系统架构示意：主机接口接入命令处理器，任务分发到四个计算簇；每簇含 warp 调度、SIMD、张量单元与片上存储；四簇共享 L2，经内存控制器访问显存。图中只保留层级与关键连接，不展开簇内每条控制信号。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_host",
+        "label": "Host Interface",
+        "parent": "",
+        "evidence": "主机接口接到命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_front",
+        "label": "Command Front End",
+        "parent": "",
+        "evidence": "命令处理器，任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster",
+        "label": "Compute Cluster (x4)",
+        "parent": "",
+        "evidence": "每簇有 warp 调度、SIMD、张量单元和片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_mem",
+        "label": "Memory Subsystem",
+        "parent": "",
+        "evidence": "簇之间共享 L2，并经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_host",
+        "label": "Host Interface",
+        "kind": "io",
+        "group": "g_host",
+        "detail": "PCIe / host link",
+        "evidence": "主机接口",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cmd",
+        "label": "Command Processor",
+        "kind": "control",
+        "group": "g_front",
+        "detail": "Decode & dispatch",
+        "evidence": "命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_disp",
+        "label": "Task Dispatcher",
+        "kind": "control",
+        "group": "g_front",
+        "detail": "Fan-out to 4 clusters",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_warp",
+        "label": "Warp Scheduler",
+        "kind": "control",
+        "group": "g_cluster",
+        "detail": "Warp issue & scoreboard",
+        "evidence": "warp 调度",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_simd",
+        "label": "SIMD Unit",
+        "kind": "compute",
+        "group": "g_cluster",
+        "detail": "Vector ALU lanes",
+        "evidence": "SIMD",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_tensor",
+        "label": "Tensor Unit",
+        "kind": "compute",
+        "group": "g_cluster",
+        "detail": "Matrix / MMA datapath",
+        "evidence": "张量单元",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_smem",
+        "label": "On-Chip Storage",
+        "kind": "memory",
+        "group": "g_cluster",
+        "detail": "Shared memory / register file",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_l2",
+        "label": "Shared L2 Cache",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Shared across clusters",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_mc",
+        "label": "Memory Controller",
+        "kind": "control",
+        "group": "g_mem",
+        "detail": "DRAM scheduling",
+        "evidence": "内存控制器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_dram",
+        "label": "DRAM (Device Memory)",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Off-chip frame buffer",
+        "evidence": "显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_host",
+        "target": "n_cmd",
+        "kind": "control",
+        "label": "commands",
+        "evidence": "主机接口接到命令处理器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cmd",
+        "target": "n_disp",
+        "kind": "control",
+        "label": "kernel launch",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_disp",
+        "target": "n_warp",
+        "kind": "control",
+        "label": "workgroups x4",
+        "evidence": "任务分发到四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_warp",
+        "target": "n_simd",
+        "kind": "control",
+        "label": "issue",
+        "evidence": "warp 调度、SIMD",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_warp",
+        "target": "n_tensor",
+        "kind": "control",
+        "label": "issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_smem",
+        "target": "n_simd",
+        "kind": "data",
+        "label": "operands",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_smem",
+        "target": "n_tensor",
+        "kind": "data",
+        "label": "operands",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "作为可调整的示意方案建议；未直接定位到用户原文依据。"
+      },
+      {
+        "source": "n_simd",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "results",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_tensor",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "results",
+        "evidence": "片上存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_smem",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "miss / spill",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_l2",
+        "target": "n_smem",
+        "kind": "data",
+        "label": "fill",
+        "evidence": "簇之间共享 L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_l2",
+        "target": "n_mc",
+        "kind": "data",
+        "label": "miss",
+        "evidence": "经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_mc",
+        "target": "n_dram",
+        "kind": "data",
+        "label": "read / write",
+        "evidence": "访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_dram",
+        "target": "n_mc",
+        "kind": "data",
+        "label": "data return",
+        "evidence": "访问显存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_mc",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "fill",
+        "evidence": "经内存控制器访问显存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Left-to-right main path: g_host (n_host) -> g_front (n_cmd, n_disp) -> g_cluster (n_warp, n_simd, n_tensor, n_smem) -> g_mem (n_l2, n_mc, n_dram). g_cluster is drawn as one populated template cluster with a 'x4' multiplicity label; the other three clusters are implied by the fan-out from n_disp, not drawn as separate blocks. Inside g_cluster, n_warp sits at the top as the control lane, n_simd and n_tensor in the middle as parallel compute lanes, n_smem at the bottom as the storage lane. g_mem is a horizontal band below the cluster, with n_l2 on the left, n_mc in the middle and n_dram on the right. Reserve a lower corridor for the L2 <-> memory-controller <-> DRAM round trip. Do not expand internal control signals inside the cluster.",
+    "steps": [],
+    "annotations": [
+      "Cluster is shown once as a template; the dispatcher fans out to four identical clusters.",
+      "Only key data and control paths are drawn; per-warp control signals are intentionally omitted."
+    ],
+    "assumptions": [
+      "四个计算簇按同构处理，图中只画一个模板簇并标注 x4。",
+      "主机接口按通用 PCIe 类主机链路示意，未指定具体协议版本。",
+      "片上存储合并表示共享内存与寄存器文件，未区分具体容量。",
+      "L2 与显存之间只画一条经内存控制器的往返路径，未展开多通道与仲裁细节。"
+    ],
+    "questions": [
+      "是否需要把四个计算簇分别画出并标注各自的连接？",
+      "是否需要补充主机接口的具体协议或带宽标注？"
+    ],
+    "checks": [
+      "确认模板簇 x4 的表示方式是否满足介绍需求。",
+      "确认 L2 共享关系是否需要在图中显式画出四条簇到 L2 的连接。"
+    ]
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "auto",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "labels": "",
+    "notes": ""
+  },
+  "description": "我想做一张 GPU 架构图给同事介绍。主机接口接到命令处理器，任务分发到四个计算簇。每簇有 warp 调度、SIMD、张量单元和片上存储，簇之间共享 L2，并经内存控制器访问显存。总体层级要清楚，别把每条内部控制信号都展开。"
+}

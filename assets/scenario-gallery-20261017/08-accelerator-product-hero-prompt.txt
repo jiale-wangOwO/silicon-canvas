@@ -1,0 +1,19 @@
+Create a finished commercial semiconductor product illustration with Image Gen.
+Reader question: What is the product's visual identity?
+Treatment: hero. A tangible product hero with an intact, quiet exterior; material, silhouette and light carry the image. Minimal annotation fits a cover or visual identity request.
+Subject: one coherent generic chip package exterior, standing for the supplied complete product without asserting how many internal dies it contains
+Source title: Inference Accelerator — Packaged Chip Product Visual
+Camera: A controlled three-quarter product camera, approximately 30 degrees above the subject, a long lens with subtle perspective; choose the best orientation for its silhouette.
+Materials: Believable satin metal, matte technical ceramic or restrained silicon finish as appropriate to the subject; coherent edge thickness and restrained surface detail.
+Lighting: Large soft studio key, gentle fill and a narrow controlled rim highlight; reflections reveal form without hiding labels. Contact shadow should ground the object naturally.
+Background: A quiet dark charcoal studio field with tonal depth and controlled contrast; no neon grid, cosmic scenery or sci-fi circuits.
+Composition: One dominant coherent complete product or supplied assembly, deliberate scale and a strong overall silhouette. Explicit multiple physical objects may form that assembly. Let camera, finish and grounded lighting organize the hero image; leave usable negative space for any explicitly requested presentation copy.
+Canvas: auto
+Typography: Only explicitly requested copy appears on this hero. Required text is exact and legible, with strong contrast against the actual surface; optional technical inventory belongs in the external caption.
+Color: Use a quiet material palette with restrained accent color; finish and lighting establish the visual identity.
+Build hierarchy before surface detail: one dominant whole-product silhouette, intentional framing, useful negative space and coherent material/light quality. The clean exterior, camera and lighting carry this hero image.
+Use one source-title heading if needed, without an invented marketing subtitle, slogan or tagline. Keep the only in-image disclosure to a small 'Functional concept' note. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.
+User art direction takes precedence over defaults. Complete original intent and latest visual revision: {"description": "为一款通用推理加速器制作 BP 封面的商业产品主视觉：产品是一颗完整的芯片封装，内部提供矩阵计算、片上存储和主机接口能力，但这张图不要展开内部结构、数据连线或功能标注。主体放在画面右侧，左侧留出干净的文案空间，使用克制的深色背景、精细金属与陶瓷质感和柔和轮廓光，镜头有适度透视。不要虚构商标、型号、工艺节点、带宽、算力或封装尺寸，不加营销口号。", "notes": ""}
+Keep explicit labels, logical ownership, quantities and source relationships. Functional overlays are not proof of physical dies, chiplets or HBM stacks. Exterior and context geometry remain illustrative. Avoid fabricated branding, measured specifications, ornamental circuit wallpaper, unrelated application props and cluttered copy.
+The text brief is sufficient. An optional composition reference only suggests scale, negative space and framing. Freely organize the explanatory regions using the source projection. Guide shapes carry no physical placement, object-count or wiring authority.
+Return one coherent finished image. The full engineering ledger remains in the brief and precise technical companions; do not force every secondary source signal onto this image.

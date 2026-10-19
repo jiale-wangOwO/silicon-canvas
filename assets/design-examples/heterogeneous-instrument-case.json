@@ -1,0 +1,288 @@
+{
+  "description": "Show how two genuinely different acquisition channels share the event merger and capture path. Keep their private buffers distinct and the two external interfaces outside. Avoid making the two channels look identical.",
+  "spec": {
+    "title": "Heterogeneous Acquisition Instrument",
+    "summary": "Original generic synthetic benchmark. Given facts belong to this example only; this is not a measured commercial design.",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "instrument",
+        "label": "Acquisition Instrument",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fast",
+        "label": "Fast Channel",
+        "parent": "instrument",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "slow",
+        "label": "Slow Channel",
+        "parent": "instrument",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "common",
+        "label": "Shared Analysis",
+        "parent": "instrument",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "external",
+        "label": "External Equipment",
+        "parent": "",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "adc",
+        "label": "Fast ADC",
+        "kind": "io",
+        "group": "fast",
+        "detail": "Input samples",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fastfifo",
+        "label": "Fast Sample FIFO",
+        "kind": "memory",
+        "group": "fast",
+        "detail": "Private",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fft",
+        "label": "Spectral Transform",
+        "kind": "compute",
+        "group": "fast",
+        "detail": "Private fast-channel transform",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "sensor",
+        "label": "Slow Sensor",
+        "kind": "io",
+        "group": "slow",
+        "detail": "Input measurements",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "slowfifo",
+        "label": "Slow Measurement FIFO",
+        "kind": "memory",
+        "group": "slow",
+        "detail": "Private",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "filter",
+        "label": "Trend Filter",
+        "kind": "compute",
+        "group": "slow",
+        "detail": "Private slow-channel transform",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "timestamp",
+        "label": "Shared Time Base",
+        "kind": "control",
+        "group": "common",
+        "detail": "Timestamp both streams",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "merge",
+        "label": "Timestamp-Aligned Event Merger",
+        "kind": "compute",
+        "group": "common",
+        "detail": "Join by supplied event timestamps",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "store",
+        "label": "Shared Capture Memory",
+        "kind": "memory",
+        "group": "common",
+        "detail": "Buffers both streams",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "dma",
+        "label": "Transfer Engine",
+        "kind": "compute",
+        "group": "common",
+        "detail": "Shared bulk transfer",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "host",
+        "label": "External Analysis Host",
+        "kind": "io",
+        "group": "external",
+        "detail": "Receives captured events",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "cfg",
+        "label": "External Configuration Interface",
+        "kind": "io",
+        "group": "external",
+        "detail": "Programs the instrument",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "adc",
+        "target": "fastfifo",
+        "kind": "data",
+        "label": "samples",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fastfifo",
+        "target": "fft",
+        "kind": "data",
+        "label": "block",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "sensor",
+        "target": "slowfifo",
+        "kind": "data",
+        "label": "measurements",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "slowfifo",
+        "target": "filter",
+        "kind": "data",
+        "label": "window",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fft",
+        "target": "merge",
+        "kind": "data",
+        "label": "spectral events",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "filter",
+        "target": "merge",
+        "kind": "data",
+        "label": "trend events",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "timestamp",
+        "target": "merge",
+        "kind": "control",
+        "label": "timestamp",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "merge",
+        "target": "store",
+        "kind": "data",
+        "label": "aligned events",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "store",
+        "target": "dma",
+        "kind": "data",
+        "label": "read data",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "dma",
+        "target": "host",
+        "kind": "data",
+        "label": "captured events",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "cfg",
+        "target": "timestamp",
+        "kind": "control",
+        "label": "configuration",
+        "evidence": "Synthetic benchmark specification",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Two unequal channel lanes merge into one shared analysis/storage/transfer path.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [],
+    "questions": [],
+    "checks": []
+  },
+  "settings": {
+    "scene": "auto",
+    "representation": "diagram",
+    "style": "paper",
+    "aspect": "16:9",
+    "completion_mode": "strict",
+    "notes": ""
+  }
+}

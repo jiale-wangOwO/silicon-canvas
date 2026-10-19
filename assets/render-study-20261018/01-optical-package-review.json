@@ -1,0 +1,50 @@
+{
+  "id": "01-optical-package",
+  "title": "Optical I/O Package — Controlled Source Comparison",
+  "status": "visually_reviewed_first_output",
+  "technical_verdict": "partial",
+  "reading_verdict": "pass",
+  "visual_verdict": "partial",
+  "text_verdict": "pass",
+  "document_size_verdict": "not_checked",
+  "source_hash": "94d2e1306e7312ccffe71cd9dee7edaaf64be0f242f46a7e912d22ee61d15990",
+  "prompt_sha256": "71cb9b66963752d3564768abe4d1d2ccadaccb6a6ea0b6420f37177d7d0dc4c2",
+  "image_sha256": "1844a9c22bb8e1bb0a97df584e616d4486b67458255fec8250b7b6c2320fa711",
+  "image_size_px": [
+    1672,
+    941
+  ],
+  "summary": "整封装与内部电转光模块终于可见，3条源路径方向清楚；但多根发光电信号箭头和具象端口/光纤数量仍超出未指定的实现，金色走线装饰偏多。",
+  "evidence": [
+    "One complete rectangular package is now the dominant subject. Compute die and Optical I/O are separate parts inside that same package, while Host and Remote device remain outside.",
+    "The three canonical directed relationships are traceable left to right: Host→Compute die, Compute die→Optical I/O, Optical I/O→Remote device. Arrowheads point forward, with no reverse shortcut or second package.",
+    "Optical I/O is labeled next to its actual part. The internal blue electrical route changes to cyan fibers on the right side of that part, making the intended conversion location more understandable than the previous single bare-die exterior.",
+    "Four short English role labels appear once each with quiet part-identification leaders for the two internal parts. No invented throughput, brand, process, die dimensions, or numeric specifications are printed.",
+    "The 1672×941 frame is approximately 16:9. A common three-quarter camera, silver/gray material family, light background and clear package silhouette improve the spatial explanation."
+  ],
+  "failed_relations": [],
+  "limits": [
+    "Each electrical relation is rendered using multiple parallel luminous paths/arrowheads, and the optical side has a specific pair of fibers/connectors. The source did not specify signal-lane, port or fiber counts and explicitly declined actual port-count assumptions. These implementation-looking multiplicities prevent unqualified technical acceptance.",
+    "Electrical paths glow strongly as well as optical fibers. This weakens the electrical-versus-optical distinction and conflicts with the brief’s restrained-routing preference, even though direction and conversion location remain understandable.",
+    "Gold-colored microcircuit traces/trim and detailed host/remote enclosures add unsupplied mechanical surface detail despite the new brief’s request to avoid gold trim and microcircuit wallpaper. They should be read as illustrative appearance, never verified manufacturing structure.",
+    "Electrical and Optical edge words are not printed, so link type is conveyed through source-role labels, staging and color/material change rather than explicit line text.",
+    "No actual document-width export or print-size font measurement was performed. The inspected first bitmap does not certify a physical floorplan, package implementation or BOM.",
+    "Only one ImageGen call was made. No reroll, guide attachment, prompt wrapper, cropping, retouching or pixel edits were used."
+  ],
+  "comparison": {
+    "prior_case": "07-optical-io",
+    "same_description": true,
+    "same_canonical_spec": true,
+    "same_source_hash": true,
+    "controlled_style": "blueprint",
+    "controlled_density": "low",
+    "controlled_aspect": "16:9",
+    "previous_representation": "product_render",
+    "current_representation": "system_illustration",
+    "previous_subject": "bare_die_concept",
+    "current_subject": "package_assembly_concept",
+    "current_treatment": "assembly",
+    "scope": "One controlled source comparison; stochastic image generation prevents attributing every visual difference solely to a compiler rule."
+  },
+  "review_method": "Host inspected the actual first built-in ImageGen bitmap and traced each of the three canonical relations, internal ownership and visible copy; software source coverage did not determine acceptance."
+}

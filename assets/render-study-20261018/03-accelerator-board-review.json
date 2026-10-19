@@ -1,0 +1,29 @@
+{
+  "id": "03-accelerator-board",
+  "title": "双计算封装 AI 推理加速板卡",
+  "status": "partial",
+  "summary": "首图兑现了两个计算封装、四个显存封装、一个PCIe边缘接口及完整整板轮廓，浅色背景、深灰主体、局部青色反光和无文字的产品展示也成立。但模型补入大量未给定的小器件与PCB纹理，无法将它们当作真实电气设计验收。",
+  "strengths": [
+    "两个中央金属框计算封装与四个两侧深色显存封装清楚可数；PCIe为同一带键位的板边接口，分段触点不计成额外接口。",
+    "无散热罩、外设、品牌、标签、标题或数据流箭头，整块PCB及左侧挡板均保留完整轮廓。",
+    "浅灰背景和软接地阴影使深灰PCB保持可读；只有两个计算表面出现明显青色反光，金属边缘与陶瓷表面也有材质差异。",
+    "宽幅画面由完整板卡承担主要面积，没有靠大段空白和周围文字填补内容。"
+  ],
+  "issues": [
+    "画面补入了较多未在输入或source中列出的电源状小方块、细小被动器件、螺钉和挡板细节；工具提示词要求省略无来源辅助器件，因此这一点尚未完全兑现。",
+    "PCB上密集的细微曲线纹理接近装饰性电路纹理，不能解释为真实布线；源输入没有提供电气连接，source也没有任何边。",
+    "这是一张通用概念产品渲染，不验证板卡尺寸、封装间距、机械固定或可制造性。"
+  ],
+  "checks": {
+    "two_compute_packages": "pass",
+    "four_memory_packages": "pass",
+    "one_pcie_edge_interface": "pass",
+    "complete_board_silhouette": "pass",
+    "no_cooler_shell": "pass",
+    "no_text_brand_or_data_arrows": "pass",
+    "light_background_and_restrained_cyan": "pass",
+    "no_unsupported_auxiliary_components": "partial",
+    "electrical_or_mechanical_correctness": "not_verified"
+  },
+  "scope": "实际首张ImageGen像素审查；7个主要物理组件和0条电气关系来自当前MCP编译source。工具返回的guide为optional，本轮没有引用图。未修改提示词、原图或source，未重抽。"
+}

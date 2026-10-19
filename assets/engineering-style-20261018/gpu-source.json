@@ -1,0 +1,509 @@
+{
+  "description": "给客户做一张GPU加速器的整体架构图，用于技术白皮书。主机通过接口和命令前端提交任务，分发器把工作交给四个计算簇，每簇有调度器、计算阵列和本地缓存；计算簇共享L2，经过内存控制器访问片外HBM。要看清计算、缓存、显存和主机的层次与主要通路，不展开单个执行单元。英文标签，横版，浅色底，沉稳的蓝灰和少量青绿色。",
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "medium",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "system",
+    "resolved_representation": "diagram"
+  },
+  "spec": {
+    "title": "GPU Accelerator Architecture Overview",
+    "summary": "面向技术白皮书的 GPU 加速器整体架构示意：主机经接口与命令前端提交任务，分发器把工作分派到四个计算簇（每簇含调度器、计算阵列与本地缓存），计算簇共享 L2，经内存控制器访问片外 HBM。图中保留计算、缓存、显存与主机的层次与主要通路，不展开单个执行单元。属通用概念示例，具体接口协议、带宽与容量未指定。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "g_host",
+        "label": "Host System",
+        "parent": "",
+        "evidence": "主机通过接口和命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_gpu",
+        "label": "GPU Accelerator",
+        "parent": "",
+        "evidence": "GPU加速器的整体架构图",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_frontend",
+        "label": "Command Front End",
+        "parent": "g_gpu",
+        "evidence": "命令前端提交任务，分发器把工作交给四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster",
+        "label": "Compute Clusters",
+        "parent": "g_gpu",
+        "evidence": "每簇有调度器、计算阵列和本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_mem",
+        "label": "Memory Subsystem",
+        "parent": "g_gpu",
+        "evidence": "计算簇共享L2，经过内存控制器访问片外HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_hbm",
+        "label": "Off-chip HBM",
+        "parent": "",
+        "evidence": "访问片外HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster0",
+        "label": "Cluster 0",
+        "parent": "g_cluster",
+        "evidence": "四个计算簇，每簇有调度器、计算阵列和本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster1",
+        "label": "Cluster 1",
+        "parent": "g_cluster",
+        "evidence": "四个计算簇，每簇有调度器、计算阵列和本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster2",
+        "label": "Cluster 2",
+        "parent": "g_cluster",
+        "evidence": "四个计算簇，每簇有调度器、计算阵列和本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "g_cluster3",
+        "label": "Cluster 3",
+        "parent": "g_cluster",
+        "evidence": "四个计算簇，每簇有调度器、计算阵列和本地缓存",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "n_host",
+        "label": "Host",
+        "kind": "io",
+        "group": "g_host",
+        "detail": "Submits work to the accelerator",
+        "evidence": "主机通过接口和命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_if",
+        "label": "Host Interface",
+        "kind": "io",
+        "group": "g_gpu",
+        "detail": "On-chip entry point for host commands",
+        "evidence": "主机通过接口和命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_cmd",
+        "label": "Command Front End",
+        "kind": "control",
+        "group": "g_frontend",
+        "detail": "Receives and decodes submitted tasks",
+        "evidence": "命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_disp",
+        "label": "Work Distributor",
+        "kind": "control",
+        "group": "g_frontend",
+        "detail": "Dispatches work to the four compute clusters",
+        "evidence": "分发器把工作交给四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_sched0",
+        "label": "Scheduler 0",
+        "kind": "control",
+        "group": "g_cluster0",
+        "detail": "Cluster 0 scheduling",
+        "evidence": "每簇有调度器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_arr0",
+        "label": "Compute Array 0",
+        "kind": "compute",
+        "group": "g_cluster0",
+        "detail": "Cluster 0 compute array (execution units not expanded)",
+        "evidence": "计算阵列",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_lc0",
+        "label": "Local Cache 0",
+        "kind": "memory",
+        "group": "g_cluster0",
+        "detail": "Cluster 0 private local cache",
+        "evidence": "本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_sched1",
+        "label": "Scheduler 1",
+        "kind": "control",
+        "group": "g_cluster1",
+        "detail": "Cluster 1 scheduling",
+        "evidence": "每簇有调度器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_arr1",
+        "label": "Compute Array 1",
+        "kind": "compute",
+        "group": "g_cluster1",
+        "detail": "Cluster 1 compute array (execution units not expanded)",
+        "evidence": "计算阵列",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_lc1",
+        "label": "Local Cache 1",
+        "kind": "memory",
+        "group": "g_cluster1",
+        "detail": "Cluster 1 private local cache",
+        "evidence": "本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_sched2",
+        "label": "Scheduler 2",
+        "kind": "control",
+        "group": "g_cluster2",
+        "detail": "Cluster 2 scheduling",
+        "evidence": "每簇有调度器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_arr2",
+        "label": "Compute Array 2",
+        "kind": "compute",
+        "group": "g_cluster2",
+        "detail": "Cluster 2 compute array (execution units not expanded)",
+        "evidence": "计算阵列",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_lc2",
+        "label": "Local Cache 2",
+        "kind": "memory",
+        "group": "g_cluster2",
+        "detail": "Cluster 2 private local cache",
+        "evidence": "本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_sched3",
+        "label": "Scheduler 3",
+        "kind": "control",
+        "group": "g_cluster3",
+        "detail": "Cluster 3 scheduling",
+        "evidence": "每簇有调度器",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_arr3",
+        "label": "Compute Array 3",
+        "kind": "compute",
+        "group": "g_cluster3",
+        "detail": "Cluster 3 compute array (execution units not expanded)",
+        "evidence": "计算阵列",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_lc3",
+        "label": "Local Cache 3",
+        "kind": "memory",
+        "group": "g_cluster3",
+        "detail": "Cluster 3 private local cache",
+        "evidence": "本地缓存",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_l2",
+        "label": "Shared L2 Cache",
+        "kind": "memory",
+        "group": "g_mem",
+        "detail": "Shared by all four compute clusters",
+        "evidence": "计算簇共享L2",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_mc",
+        "label": "Memory Controller",
+        "kind": "control",
+        "group": "g_mem",
+        "detail": "Bridges L2 to off-chip HBM",
+        "evidence": "经过内存控制器访问片外HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "n_hbm",
+        "label": "HBM",
+        "kind": "memory",
+        "group": "g_hbm",
+        "detail": "Off-chip high-bandwidth memory",
+        "evidence": "片外HBM",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "n_host",
+        "target": "n_if",
+        "kind": "data",
+        "label": "Task submission",
+        "evidence": "主机通过接口和命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_if",
+        "target": "n_cmd",
+        "kind": "data",
+        "label": "Commands",
+        "evidence": "主机通过接口和命令前端提交任务",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_cmd",
+        "target": "n_disp",
+        "kind": "data",
+        "label": "Decoded work",
+        "evidence": "命令前端提交任务，分发器把工作交给四个计算簇",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_disp",
+        "target": "n_sched0",
+        "kind": "data",
+        "label": "Work",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_disp",
+        "target": "n_sched1",
+        "kind": "data",
+        "label": "Work",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_disp",
+        "target": "n_sched2",
+        "kind": "data",
+        "label": "Work",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_disp",
+        "target": "n_sched3",
+        "kind": "data",
+        "label": "Work",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_sched0",
+        "target": "n_arr0",
+        "kind": "control",
+        "label": "Issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_sched1",
+        "target": "n_arr1",
+        "kind": "control",
+        "label": "Issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_sched2",
+        "target": "n_arr2",
+        "kind": "control",
+        "label": "Issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_sched3",
+        "target": "n_arr3",
+        "kind": "control",
+        "label": "Issue",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_arr0",
+        "target": "n_lc0",
+        "kind": "data",
+        "label": "Local access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_arr1",
+        "target": "n_lc1",
+        "kind": "data",
+        "label": "Local access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_arr2",
+        "target": "n_lc2",
+        "kind": "data",
+        "label": "Local access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_arr3",
+        "target": "n_lc3",
+        "kind": "data",
+        "label": "Local access",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_lc0",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "Cache traffic",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_lc1",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "Cache traffic",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_lc2",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "Cache traffic",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_lc3",
+        "target": "n_l2",
+        "kind": "data",
+        "label": "Cache traffic",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将已给定的簇级分发、调度、计算与缓存关系映射到具体资源端点，作为可调整的逻辑示意，不声明总线协议或物理端口。"
+      },
+      {
+        "source": "n_l2",
+        "target": "n_mc",
+        "kind": "data",
+        "label": "Miss / fill",
+        "evidence": "经过内存控制器访问片外HBM",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "n_mc",
+        "target": "n_hbm",
+        "kind": "data",
+        "label": "Memory access",
+        "evidence": "经过内存控制器访问片外HBM",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Host and the accelerator retain their actual boundaries. The four Cluster groups are peers inside Compute Clusters. Shared L2 and the memory controller are common accelerator resources; HBM stays off chip. Do not expand individual execution units.",
+    "steps": [],
+    "annotations": [
+      "Execution units inside each compute array are intentionally not expanded.",
+      "HBM is off-chip and drawn outside the GPU boundary."
+    ],
+    "assumptions": [
+      "接口协议、L2 与本地缓存容量、HBM 通道数及带宽均未指定，图中不标注具体数值。",
+      "调度器到计算阵列、计算阵列到本地缓存、本地缓存到 L2 的通路方向按常规 GPU 数据路径补全，属通用示意。",
+      "四个计算簇按同构处理，仅以编号区分。",
+      "具体调度器、计算阵列和本地缓存之间的连线是明确标注的示意假设；原始输入给定四簇及各簇资源组成、共享L2与片外HBM主通路。"
+    ],
+    "questions": [
+      "是否需要在白皮书中补充主机接口协议名称（如 PCIe/CXL）与 HBM 通道数量？",
+      "是否需要单独一页展开单个计算簇内部的调度器与计算阵列细节？"
+    ],
+    "checks": [
+      "确认四个计算簇与分发器的扇出关系在图中清晰可数。",
+      "确认 HBM 位于 GPU 边界之外，L2 与内存控制器位于片内。",
+      "确认未出现执行单元级细节。"
+    ]
+  }
+}

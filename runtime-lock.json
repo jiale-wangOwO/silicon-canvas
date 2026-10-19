@@ -1,0 +1,6 @@
+{
+  "pyodideVersion": "314.0.7",
+  "indexURL": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+  "packages": ["Pillow"],
+  "compilerArchive": "./assets/compiler.zip"
+}

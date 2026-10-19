@@ -1,0 +1,138 @@
+{
+  "description": "做一张 AI 推理加速板卡的产品渲染图：完整展示一块无散热罩的板卡，板上有两个计算封装、四个显存封装和一个 PCIe 边缘接口。浅色背景，中性深灰 PCB 和金属，只有中心计算表面有少量青色反光；画面横向，保持整块板卡轮廓完整。不要任何文字、品牌、功能标签、数据线或外设，不展开电气接线，也不添加速度、工艺等参数。",
+  "requested_settings": {
+    "category": "auto",
+    "scene": "auto",
+    "representation": "product_render",
+    "style": "auto",
+    "density": "auto",
+    "language": "en",
+    "aspect": "16:9",
+    "completion_mode": "strict"
+  },
+  "settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "low",
+    "completion_mode": "strict",
+    "scene": "auto",
+    "representation": "product_render",
+    "labels": "",
+    "notes": "",
+    "automatic_visual_settings": {
+      "requested": {
+        "style": "auto",
+        "density": "auto"
+      },
+      "selected": {
+        "style": "paper",
+        "density": "low"
+      },
+      "method": "semantic-response"
+    },
+    "resolved_scene": "system",
+    "resolved_representation": "product_render"
+  },
+  "spec": {
+    "title": "AI Inference Accelerator Board",
+    "summary": "完整展示一块无散热罩的推理加速板卡，保留两个计算封装、四个显存封装与一个PCIe边缘接口；仅做产品外观渲染，不推断电气接线。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "board",
+        "label": "Accelerator Board",
+        "parent": "",
+        "evidence": "一块无散热罩的板卡",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "compute_1",
+        "label": "Compute Package 1",
+        "kind": "compute",
+        "group": "board",
+        "detail": "One of exactly two physical compute packages; uncovered compute surface.",
+        "evidence": "两个计算封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "compute_2",
+        "label": "Compute Package 2",
+        "kind": "compute",
+        "group": "board",
+        "detail": "One of exactly two physical compute packages; uncovered compute surface.",
+        "evidence": "两个计算封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory_1",
+        "label": "Memory Package 1",
+        "kind": "memory",
+        "group": "board",
+        "detail": "One of exactly four physical memory packages.",
+        "evidence": "四个显存封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory_2",
+        "label": "Memory Package 2",
+        "kind": "memory",
+        "group": "board",
+        "detail": "One of exactly four physical memory packages.",
+        "evidence": "四个显存封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory_3",
+        "label": "Memory Package 3",
+        "kind": "memory",
+        "group": "board",
+        "detail": "One of exactly four physical memory packages.",
+        "evidence": "四个显存封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "memory_4",
+        "label": "Memory Package 4",
+        "kind": "memory",
+        "group": "board",
+        "detail": "One of exactly four physical memory packages.",
+        "evidence": "四个显存封装",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "pcie",
+        "label": "PCIe Edge Connector",
+        "kind": "io",
+        "group": "board",
+        "detail": "Exactly one PCIe board-edge interface.",
+        "evidence": "一个 PCIe 边缘接口",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [],
+    "layout": "Show board as one complete uncovered physical board with all seven supplied components visible. Keep compute_1 and compute_2 in the central region; place memory_1 through memory_4 on the same board and pcie on its board edge. Preserve the entire board silhouette in a landscape image. This is a product exterior rendering only: no text, brands, labels, data lines, external devices or electrical wiring. Do not turn the board into a logical block diagram or add a cooler shell.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [
+      "未给出PCB的真实器件坐标；排列仅作为概念产品示意，不表示电气布局或测量尺寸。"
+    ],
+    "questions": [],
+    "checks": [
+      "检查首图是否恰好有两个计算封装、四个显存封装和一个PCIe边缘接口。",
+      "检查板卡完整轮廓及无文字、品牌、数据线和外设的要求。"
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "description": "为商业计划书画一张AI推理系统概念展示图：四个推理节点连接中央高速交换节点，交换节点再连接外部客户端和共享存储。希望像商业芯片发布会的系统展示插图，能看清系统组成与连接，深色背景、冰蓝与少量橙色、少量英文标签，不做传统平面框图。四个推理节点是等价的，不要变成一串处理步骤。不写性能数字，也不宣称是真实产品外观。",
+  "settings": {
+    "category": "architecture",
+    "style": "blueprint",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "low",
+    "completion_mode": "auto",
+    "scene": "auto",
+    "representation": "auto",
+    "explanatory_mode": "auto",
+    "labels": "",
+    "notes": "",
+    "resolved_scene": "concept",
+    "resolved_representation": "system_illustration"
+  },
+  "spec": {
+    "title": "AI Inference System",
+    "summary": "商业计划书的通用推理系统概念：四个等价推理节点连接中央高速交换节点，客户端与共享存储也连接该交换节点。连线说明连接关系，不暗示阶段顺序、带宽或协议。",
+    "category": "architecture",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "pod",
+        "label": "Inference system",
+        "parent": "",
+        "evidence": "",
+        "origin": "assumed",
+        "rationale": "将四个推理节点与交换节点组织为系统主体；客户端和共享存储作为外围语境，非实际机柜边界。"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "client",
+        "label": "Clients",
+        "kind": "io",
+        "group": "",
+        "detail": "",
+        "evidence": "外部客户端",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "fabric",
+        "label": "High-speed switch",
+        "kind": "io",
+        "group": "pod",
+        "detail": "",
+        "evidence": "中央高速交换节点",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "node1",
+        "label": "Inference node 1",
+        "kind": "compute",
+        "group": "pod",
+        "detail": "Equivalent inference node",
+        "evidence": "四个推理节点是等价的",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "node2",
+        "label": "Inference node 2",
+        "kind": "compute",
+        "group": "pod",
+        "detail": "Equivalent inference node",
+        "evidence": "四个推理节点是等价的",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "node3",
+        "label": "Inference node 3",
+        "kind": "compute",
+        "group": "pod",
+        "detail": "Equivalent inference node",
+        "evidence": "四个推理节点是等价的",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "node4",
+        "label": "Inference node 4",
+        "kind": "compute",
+        "group": "pod",
+        "detail": "Equivalent inference node",
+        "evidence": "四个推理节点是等价的",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "id": "storage",
+        "label": "Shared storage",
+        "kind": "memory",
+        "group": "",
+        "detail": "",
+        "evidence": "共享存储",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "client",
+        "target": "fabric",
+        "kind": "relation",
+        "label": "",
+        "evidence": "交换节点再连接外部客户端和共享存储",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "node1",
+        "kind": "relation",
+        "label": "",
+        "evidence": "四个推理节点连接中央高速交换节点",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "node2",
+        "kind": "relation",
+        "label": "",
+        "evidence": "四个推理节点连接中央高速交换节点",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "node3",
+        "kind": "relation",
+        "label": "",
+        "evidence": "四个推理节点连接中央高速交换节点",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "node4",
+        "kind": "relation",
+        "label": "",
+        "evidence": "四个推理节点连接中央高速交换节点",
+        "origin": "given",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "storage",
+        "kind": "relation",
+        "label": "",
+        "evidence": "交换节点再连接外部客户端和共享存储",
+        "origin": "given",
+        "rationale": ""
+      }
+    ],
+    "layout": "Place fabric centrally and the four equivalent inference nodes around it as peers. Show client and shared storage at the perimeter, each connected to fabric. The composition communicates a hub with four equal branches, not a sequential pipeline. Spatial positions are illustrative, not actual rack placement.",
+    "steps": [],
+    "annotations": [],
+    "assumptions": [
+      "节点编号仅用于辨认四个等价实例，不表示产品型号。",
+      "系统主体分组与设备外观是概念表达，不是真实机柜、产品设计或部署位置。",
+      "连接只表达拓扑，不表示单向通信、协议和性能。"
+    ],
+    "questions": [],
+    "checks": [
+      "确认只有四个等价推理节点，六条连接均落在中央交换节点。",
+      "确认客户端与共享存储不被画成第五或第六个推理节点。",
+      "确认没有性能数字或真实产品标志。"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "01-optical-package",
+  "artifact_type": "ImageGen branded edit derivative",
+  "is_original_mcp_first_image": false,
+  "source_image": "../render-study-20261018/01-optical-package.png",
+  "image_file": "01-optical-package.png",
+  "edit_prompt_file": "01-optical-package-edit-prompt.txt",
+  "edit_prompt_sha256": "317f49ad0ebef0a7b956d5efbc00f0cd584f91e2f26e349b09881c0d47c6f29c",
+  "exact_prompt_file_matches_invoked_text": true,
+  "input_image_sha256": "1844a9c22bb8e1bb0a97df584e616d4486b67458255fec8250b7b6c2320fa711",
+  "input_dimensions": [
+    1672,
+    941
+  ],
+  "logo_reference_sha256": "41e13c19931ab98a219a2cd83a4fd988ae71c0f71f701ba8ccb22c78dd3e189c",
+  "logo_reference_dimensions": [
+    1800,
+    390
+  ],
+  "output": {
+    "sha256": "06b26bb8340881fc658ee5373a3767122b4e9cf08dd9b1b87d265c35da6281d9",
+    "bytes": 2014056,
+    "dimensions": [
+      1671,
+      941
+    ]
+  },
+  "image_sha256": "06b26bb8340881fc658ee5373a3767122b4e9cf08dd9b1b87d265c35da6281d9",
+  "dimensions": [
+    1671,
+    941
+  ],
+  "first_edit_attempt": true,
+  "imagegen_edit_calls": 1,
+  "rerolls": 0,
+  "generation_inputs": {
+    "reference_order": [
+      "edit_target",
+      "official_logo_A_identity_reference"
+    ],
+    "transparent_background": false
+  },
+  "original_output_bytes_preserved": true,
+  "requested_change": "Subtle silver Logo A and exact Silicon Canvas wordmark on the Compute die only",
+  "preservation_scope": "Visual preservation of composition, devices, labels and routes; not a claim of pixel-identical unedited regions."
+}

@@ -1,0 +1,43 @@
+Create one polished technical figure with Image Gen using the supplied semantic target guide.
+Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.
+Prioritize the reader's task: How do the specified resources, signals, conditions and return paths actually implement this design?
+Use crisp sans-serif type, compact labels and purposeful whitespace. Dark neutral text; sparse role-based accents. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale.
+Crop the canvas to the actual objects, labels and necessary return/branch corridors, with a small clean perimeter. A shallow path needs a shallow figure; do not leave a slide-sized empty area above or below it.
+The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.
+Use the requested palette: {"background": "#FFFFFF", "ink": "#202020", "primary": "#FFFFFF", "secondary": "#ECECEC", "muted": "#F6F6F6"}. If it is monochrome, keep the final image in neutral grayscale even when reference roles use muted hues.
+State-machine grammar: one circle/ellipse per source state. Every transition, including EACH self-loop, is a solid directed arrow with its exact predicate attached. A transition is not a dashed hardware-control wire. No decision diamonds or event boxes unless they are actual source states.
+Make forward progress, branching, retry/return and hold loops separately traceable. Draw one small initial marker only for a supplied initial state; never invent reset transitions, default holds or priority.
+Keep the guide's state placement, transition attachments and reserved return corridors. Refine strokes and label spacing; do not move a return onto another state or retain both an old and a new route after relocating it.
+Each self-loop preserves the guide's asymmetric plain departure and ONE downward arrowhead at the top re-entry of the SAME state. A loop is not bidirectional. Return predicates sit adjacent to the departing state's exterior leg, not on a distant shared-looking bottom rail; keep each source, predicate and destination inseparable.
+Every transition arrowhead touches its target state outline at the guide's assigned attachment. A return never stops at a nearby condition label or in the gap above a state; preserve the final approach segment all the way into the intended state boundary.
+"IDLE"; visible state outputs: none supplied. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Reset target; retry counter cleared"
+"SEND"; visible state outputs: none supplied. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Holds while request not accepted"
+"WAIT_ACK"; visible state outputs: none supplied. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Holds without ack or timeout"
+"BACKOFF"; visible state outputs: none supplied. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Holds while waiting for backoff_done"
+"FAIL"; visible state outputs: none supplied. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Third timeout; exits only on clear"
+Exact directed relations, one connector per source relation, including loops:
+"IDLE" → "SEND": "send_req"
+"SEND" → "WAIT_ACK": "request accepted"
+"SEND" → "SEND": "!accepted"
+"WAIT_ACK" → "IDLE": "ack (priority over timeout) / report done"
+"WAIT_ACK" → "WAIT_ACK": "!ack && !timeout"
+"WAIT_ACK" → "BACKOFF": "!ack && timeout && retry < 2"
+"WAIT_ACK" → "FAIL": "!ack && timeout && retry == 2 (third timeout)"
+"BACKOFF" → "SEND": "backoff_done"
+"BACKOFF" → "BACKOFF": "!backoff_done"
+"FAIL" → "IDLE": "clear"
+Closed outgoing-target contract: these are the ONLY arrow destinations allowed from each named object. Every listed source relation appears once, with one target head; no adjacency shortcut or duplicate route.
+"IDLE" may point only to "SEND".
+"SEND" may point only to "WAIT_ACK"; "SEND".
+"WAIT_ACK" may point only to "IDLE"; "WAIT_ACK"; "BACKOFF"; "FAIL".
+"BACKOFF" may point only to "SEND"; "BACKOFF".
+"FAIL" may point only to "IDLE".
+Source conventions (keep essential conditions near their source, ordinary explanation in caption):
+Reset has priority over all conditions: returns to IDLE and clears the retry counter.
+ack and timeout simultaneous: ack wins.
+Retry limit: at most two retries; the third timeout goes to FAIL.
+FAIL exits only on clear.
+States are distinct state symbols and conditions sit on their transition. Use a cyclic or clustered transition map when needed; do not turn states into a numbered linear pipeline or invent an initial/final state.
+Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.
+Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics.
+Review the generated bitmap against the source: sample values, transition predicates, state outputs, loop directions and logical links. A source guide is not an image-quality certificate.

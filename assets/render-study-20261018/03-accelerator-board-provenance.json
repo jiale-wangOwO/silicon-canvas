@@ -1,0 +1,117 @@
+{
+  "id": "03-accelerator-board",
+  "title": "双计算封装 AI 推理加速板卡",
+  "image_file": "03-accelerator-board.png",
+  "input_file": "03-accelerator-board-input.txt",
+  "source_file": "03-accelerator-board-source.json",
+  "prompt_file": "03-accelerator-board-prompt.txt",
+  "review_file": "03-accelerator-board-review.json",
+  "first_attempt": true,
+  "imagegen_calls": 1,
+  "rerolls": 0,
+  "tool_route": "current-source STDIO MCP silicon_prepare -> read semantic messages -> host-authored spec -> silicon_compile -> exact returned prompt and required guide to built-in ImageGen",
+  "mcp_artifact_id": "ce55fc3beae541b48d59cb5092fb0586",
+  "mcp_preparation_id": "2b26534e94284d4cb75b33df97107126",
+  "source_hash": "622ce4632c9b295ba6ad4b741a96418299a8f45dbed76c5d6fc51f594028a91f",
+  "commit": "2c814978d2a07107635b5e1cc20ad3303ebc22f5",
+  "source_snapshot": "private exact source copies and SHA ledger include every src/silicon_canvas/*.py plus catalog.json",
+  "representation": "product_render",
+  "figure_strategy": {
+    "version": "FS1",
+    "figure_id": "product-render",
+    "purpose": "How do the system's objects, shared resources and interfaces work together?",
+    "representation": "product_render",
+    "grammar": "assembly",
+    "how_to_read": "Compute Package 1; Compute Package 2; Memory Package 1; Memory Package 2; Memory Package 3; Memory Package 4; PCIe Edge Connector. source-backed explanatory projection; not physical implementation",
+    "planning_status": "planned",
+    "scope": {
+      "source_nodes": 7,
+      "source_relationships": 0,
+      "visible_objects": 7,
+      "top_level_objects": 7,
+      "nested_appearances": 0,
+      "leaf_appearances": 7,
+      "visible_relationships": 0,
+      "visible_source_relationships": [],
+      "deferred_relationships": 0,
+      "relationship_accounting_status": "source_mapped",
+      "not_checked_source_relationships": [],
+      "deferred_primary_relationships": 0
+    },
+    "assumptions": {
+      "statements": [
+        "未给出PCB的真实器件坐标；排列仅作为概念产品示意，不表示电气布局或测量尺寸。"
+      ],
+      "assumed_nodes": 0,
+      "assumed_relationships": 0
+    },
+    "limitations": [],
+    "alternatives": [],
+    "actual_scope_accounting_status": "source_mapped",
+    "document_size_status": "not_checked",
+    "guide_document_fit_status": "not_measured",
+    "actual_image_status": "not_reviewed",
+    "not_aesthetic_certification": true
+  },
+  "requested_settings": {
+    "category": "auto",
+    "scene": "auto",
+    "representation": "product_render",
+    "style": "auto",
+    "density": "auto",
+    "language": "en",
+    "aspect": "16:9",
+    "completion_mode": "strict"
+  },
+  "resolved_settings": {
+    "category": "architecture",
+    "style": "paper",
+    "aspect": "16:9",
+    "language": "en",
+    "density": "low",
+    "completion_mode": "strict",
+    "scene": "auto",
+    "representation": "product_render",
+    "labels": "",
+    "notes": "",
+    "automatic_visual_settings": {
+      "requested": {
+        "style": "auto",
+        "density": "auto"
+      },
+      "selected": {
+        "style": "paper",
+        "density": "low"
+      },
+      "method": "semantic-response"
+    },
+    "resolved_scene": "system",
+    "resolved_representation": "product_render"
+  },
+  "prompt_sha256": "0df22d97e6eafb88ab0e595e4b51b47bf448ae5e105b48ab24ca092da0804e65",
+  "guide_required": false,
+  "guide_file": null,
+  "guide_sha256": null,
+  "generation_inputs": {
+    "transparent_background": false,
+    "reference_paths": []
+  },
+  "image_sha256": "2b04876b5e23cf7c43b4b57265f6b004fd11e9b77890fd8e6cbb2361ef6c2bd1",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "original_image_bytes_preserved": true,
+  "prompt_transport": {
+    "route": "Python ensure_ascii=True JSON stdout -> JSON.parse -> functions store -> unchanged built-in ImageGen prompt parameter",
+    "exact_canonical_prompt_match": true,
+    "utf8_sha256_match": true,
+    "replacement_character_count": 0
+  },
+  "warnings": [
+    "当前按模块总览呈现，没有连线。需要表现交互时，可在反馈中让 AI 补一版连接方案。",
+    "除用户明确给出的外观条件外，相机、材质、光照、轮廓和表面细节是可调整的概念表现，不代表已制造产品。",
+    "功能分区、互联覆盖及外围器件符号用于解释源规格；它们不是实际封装结构、物理 BOM、引脚数量或接口线缆实物。",
+    "先生成主图；技术附图按需要展开。完整 7 个节点、0 条源关系始终保留，主图的概括与源映射可在图注查看。"
+  ]
+}
