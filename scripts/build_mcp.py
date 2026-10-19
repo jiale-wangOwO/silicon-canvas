@@ -35,7 +35,7 @@ def copy_documentation(portable):
         if relative in included:
             return match.group(0)
         base = ("https://raw.githubusercontent.com/jiale-wangOwO/silicon-canvas/main/"
-                if prefix.startswith("!") else REPOSITORY + "/blob/main/")
+                if prefix.startswith("!") or prefix.lower().startswith("<img") else REPOSITORY + "/blob/main/")
         return prefix + base + relative + (separator + anchor if separator else "") + suffix
 
     for name in PORTABLE_DOCUMENTS:
@@ -44,6 +44,8 @@ def copy_documentation(portable):
         if source.suffix == ".md":
             text = source.read_text(encoding="utf-8")
             text = re.sub(r"(!?\[[^\]]*\]\()([^)]+)(\))", lambda match: public_link(match, source), text)
+            text = re.sub(r'''(<(?:img|a)\b[^>]*\b(?:src|href)=["'])([^"']+)(["'])''',
+                          lambda match: public_link(match, source), text, flags=re.IGNORECASE)
             destination.write_text(text, encoding="utf-8", newline="\n")
         else:
             shutil.copy2(source, destination)
