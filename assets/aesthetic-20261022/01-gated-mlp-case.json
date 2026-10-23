@@ -1,0 +1,44 @@
+{
+  "id": "01-gated-mlp",
+  "title": "SwiGLU：门控与融合",
+  "purpose": "用于算法论文与 AI 芯片架构汇报，解释双路投影、非线性门控、逐元素融合及输出投影。",
+  "category": "算法与数据流",
+  "palette": "墨色 / 朱砂 / 杏色",
+  "composition": [
+    "共享输入拆成上下两条并行路径，融合后回到单路。",
+    "朱砂只强调 gate 与 SiLU，杏色区分 value 分支；形状从属于公式。",
+    "两路投影和乘法汇合保持充足间距，短连接直接表达依赖。"
+  ],
+  "review": "已查看实际图片：X 的双路分支、Gate→SiLU、两路逐元素乘法与输出投影关系清楚；G/U/H、输出形状与关键公式一致，色彩克制。数学公式取代部分自然语言操作名，读图仍明确。",
+  "limitations": [
+    "示意无偏置 SwiGLU 的数学依赖，不包含 kernel 调度、存储访问或性能。",
+    "未展示 Wg/Wu/Wo 的矩阵尺寸脚注与完整合成公式，主路径公式和 X/H/Y 的形状已保留。"
+  ],
+  "artifact_id": "68eecf1b36f940e1869aa7283e3fe0ee",
+  "preparation_id": "9bc59b2a5b834479aa6e8c75e1da21fa",
+  "figure_id": "algorithm-flow",
+  "guide_role": null,
+  "guide_optional": true,
+  "sources": [
+    {
+      "title": "GLU Variants Improve Transformer",
+      "url": "https://arxiv.org/abs/2002.05202",
+      "use": "无偏置三矩阵门控 FFN 的数学语义；原文无相应结构图，未声称临摹。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "process": [
+    "silicon_prepare",
+    "host semantic spec",
+    "silicon_compile",
+    "built-in image_gen with exact compiled prompt",
+    "actual image visual review"
+  ],
+  "imagegen_mode": "built-in",
+  "prompt": "01-gated-mlp-prompt.txt",
+  "image": "01-gated-mlp.png",
+  "repair_count": 0
+}

@@ -1,0 +1,51 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #203833, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "SwiGLU".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #203833; primary #DCF0E9; secondary #F8E8D4; muted #F1F4F3. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Requested canvas proportions: 16:9. Adapt open spacing and the source-backed branch lanes to this canvas.
+Named spatial organization: top-to-bottom dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "X". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "Gate projection", "Value projection". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "SiLU". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "⊙". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 5: "Output projection". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 6: "Y". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: Left to right: x on the centerline, gate and silu on upper branch, value on lower branch, mul joins both branches on centerline, then outproj then y. gate and value vertically aligned; keep value-to-mul route clear and direct. Use operator glyph for mul, with only tiny tensor slabs for x/y and H edge. One spacious graph with no containment boxes.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+Branch "X" into separate lanes toward "Gate projection", "Value projection"; preserve each exact connector and shared source, without serialized arrows between those branches.
+At "⊙", keep incoming operands from "SiLU", "Value projection" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Required visible mathematical inventory:
+"X" — tensor; supplied shape ONCE "N × d". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Gate projection" — operator; essential exact equation(s) "G = XWg". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"SiLU" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Value projection" — operator; essential exact equation(s) "U = XWu". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"⊙" — operator; essential exact equation(s) "H = SiLU(G) ⊙ U"; supplied output shape ONCE "N × h". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Output projection" — operator; essential exact equation(s) "Y = HWo". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Y" — tensor; supplied shape ONCE "N × d". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"X": "Gate projection", "Value projection".
+"Gate projection": "SiLU".
+"SiLU": "⊙".
+"Value projection": "⊙".
+"⊙": "Output projection".
+"Output projection": "Y".
+"Y": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "X" → "Gate projection": 1 connector; "X" → "Value projection": 1 connector; "Gate projection" → "SiLU": 1 connector; "SiLU" → "⊙": 1 connector; "Value projection" → "⊙": 1 connector; "⊙" → "Output projection": 1 connector; "Output projection" → "Y": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"X" → "Gate projection"; thin solid directed dependency.
+"X" → "Value projection"; thin solid directed dependency.
+"Gate projection" → "SiLU"; supplied edge text "G"; thin solid directed dependency.
+"SiLU" → "⊙"; thin solid directed dependency.
+"Value projection" → "⊙"; supplied edge text "U"; thin solid directed dependency.
+"⊙" → "Output projection"; supplied edge text "H"; thin solid directed dependency.
+"Output projection" → "Y"; thin solid directed dependency.
+Additional supplied mathematical expressions: show only beside the matching operator if not already printed there:
+"Y = (SiLU(XWg) ⊙ XWu)Wo"
+Source context for interpretation ONLY; preserve its meaning through graph and equations, but DO NOT TYPESET this prose or add a footer:
+"Wg, Wu: d × h; Wo: h × d"
+Additional requested presentation constraints: Make a publication-quality compact horizontal 16:9 graph. White background and dark charcoal ink. Use muted vermilion ONLY for gate projection and SiLU, pale apricot for value projection, warm gray for tensors and output projection. This semantic palette overrides generic color-role defaults. Align upper and lower branches; keep labels sparse and sufficient. A paper's equation diagram, not a hardware block inventory.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

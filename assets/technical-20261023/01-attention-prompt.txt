@@ -1,0 +1,44 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #263238, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "Scaled Dot-Product Attention".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Named spatial organization: left-to-right dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "K". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "Q", "Kᵀ". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "S = QKᵀ / √d". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "P = softmax(S)", "V". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 5: "O = PV". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: A wide dependency graph. q and kt feed s from separate input positions at the left. k sits directly before kt on a separate lower operand branch. s, p and out share one straight left-to-right horizontal baseline. v occupies a distinct upper bypass lane above p and enters out from above with one clean turn. Display tensor shapes beside their owning expressions. The score and probability dimensions [N,M] are implied by the supplied products.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+At "S = QKᵀ / √d", keep incoming operands from "Q", "Kᵀ" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "O = PV", keep incoming operands from "P = softmax(S)", "V" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Required visible mathematical inventory:
+"Q" — tensor; supplied shape ONCE "[N,d]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"K" — tensor; supplied shape ONCE "[M,d]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Kᵀ" — operator; supplied output shape ONCE "[d,M]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"S = QKᵀ / √d" — operator; supplied output shape ONCE "[N,M]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"P = softmax(S)" — operator; supplied output shape ONCE "[N,M]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"V" — tensor; supplied shape ONCE "[M,dv]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"O = PV" — operator; supplied output shape ONCE "[N,dv]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"Q": "S = QKᵀ / √d".
+"K": "Kᵀ".
+"Kᵀ": "S = QKᵀ / √d".
+"S = QKᵀ / √d": "P = softmax(S)".
+"P = softmax(S)": "O = PV".
+"V": "O = PV".
+"O = PV": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "K" → "Kᵀ": 1 connector; "Q" → "S = QKᵀ / √d": 1 connector; "Kᵀ" → "S = QKᵀ / √d": 1 connector; "S = QKᵀ / √d" → "P = softmax(S)": 1 connector; "P = softmax(S)" → "O = PV": 1 connector; "V" → "O = PV": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"K" → "Kᵀ"; thin solid directed dependency.
+"Q" → "S = QKᵀ / √d"; thin solid directed dependency.
+"Kᵀ" → "S = QKᵀ / √d"; thin solid directed dependency.
+"S = QKᵀ / √d" → "P = softmax(S)"; thin solid directed dependency.
+"P = softmax(S)" → "O = PV"; thin solid directed dependency.
+"V" → "O = PV"; thin solid directed dependency.
+Additional requested presentation constraints: Editorial research figure aesthetic: warm white canvas, charcoal hairline outlines, dusty indigo for Q and K, muted coral for scores/normalization, sage for values and output. Matrix tensors as crisp small 2D gridded rectangles; operation nodes concise white circles or compact rounded rectangles. Dominant straight left-to-right path with generous spacing; V uses one clean parallel top bypass, no gratuitous bends, no shadows, no 3D, no gradients, no giant title. Equations are the hierarchy, not decorative boxes. Produce a refined wide paper figure rather than a busy slide.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

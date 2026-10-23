@@ -1,0 +1,55 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #263238, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "Ring All-Reduce".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Requested canvas proportions: 16:9. Adapt open spacing and the source-backed branch lanes to this canvas.
+Named spatial organization: left-to-right dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "GPU 0", "GPU 0". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "GPU 1", "GPU 1". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "GPU 2", "GPU 2". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "GPU 3", "GPU 3". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: Two side-by-side small-multiple views. rs and ag show SAME logical ranks in different phase outcomes. Both have r0 upper-left, r1 upper-right, r2 lower-right, r3 lower-left. Ring connections clockwise around the perimeter, clear central negative space for annotation. In rs each rank shows one shard; in ag each rank shows full four-shard vector. Never combine rs and ag into one circuit, never infer data transfer between duplicate appearances in panels.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+Use a dedicated lower/outer return corridor for these actual source cycles: "GPU 3" → "GPU 0"; "GPU 3" → "GPU 0". Preserve their arrowhead direction and any supplied predicate; do not mix these returns into the forward lanes.
+Supplied group "1  Reduce-scatter" has exact members "GPU 0", "GPU 1", "GPU 2", "GPU 3". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "GPU 0", "GPU 1", "GPU 2", "GPU 3". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Supplied group "2  All-gather" has exact members "GPU 0", "GPU 1", "GPU 2", "GPU 3". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "GPU 0", "GPU 1", "GPU 2", "GPU 3". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Required visible mathematical inventory:
+"GPU 0" — tensor; essential exact equation(s) "Shards = [S0]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 1" — tensor; essential exact equation(s) "Shards = [S1]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 2" — tensor; essential exact equation(s) "Shards = [S2]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 3" — tensor; essential exact equation(s) "Shards = [S3]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 0" — tensor; essential exact equation(s) "Shards = [S0, S1, S2, S3]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 1" — tensor; essential exact equation(s) "Shards = [S0, S1, S2, S3]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 2" — tensor; essential exact equation(s) "Shards = [S0, S1, S2, S3]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"GPU 3" — tensor; essential exact equation(s) "Shards = [S0, S1, S2, S3]". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"GPU 0": "GPU 1".
+"GPU 1": "GPU 2".
+"GPU 2": "GPU 3".
+"GPU 3": "GPU 0".
+"GPU 0": "GPU 1".
+"GPU 1": "GPU 2".
+"GPU 2": "GPU 3".
+"GPU 3": "GPU 0".
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "GPU 0" → "GPU 1": 1 connector; "GPU 1" → "GPU 2": 1 connector; "GPU 2" → "GPU 3": 1 connector; "GPU 3" → "GPU 0": 1 connector; "GPU 0" → "GPU 1": 1 connector; "GPU 1" → "GPU 2": 1 connector; "GPU 2" → "GPU 3": 1 connector; "GPU 3" → "GPU 0": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"GPU 0" → "GPU 1"; thin solid directed dependency.
+"GPU 1" → "GPU 2"; thin solid directed dependency.
+"GPU 2" → "GPU 3"; thin solid directed dependency.
+"GPU 3" → "GPU 0"; thin solid directed dependency; route on the outer return corridor.
+"GPU 0" → "GPU 1"; thin solid directed dependency.
+"GPU 1" → "GPU 2"; thin solid directed dependency.
+"GPU 2" → "GPU 3"; thin solid directed dependency.
+"GPU 3" → "GPU 0"; thin solid directed dependency; route on the outer return corridor.
+Additional supplied mathematical expressions: show only beside the matching operator if not already printed there:
+"Sj = Σr xr,j"
+Source context for interpretation ONLY; preserve its meaning through graph and equations, but DO NOT TYPESET this prose or add a footer:
+"Sum corresponding shards"
+"Replicate reduced shards"
+"Phase outcomes · 4 logical ranks"
+Additional requested presentation constraints: Scientific phase-outcome comparison, not a temporal trace. Two side-by-side small multiples of the SAME four logical ranks. Within each ring use stable square positions: GPU0 upper-left, GPU1 upper-right, GPU2 lower-right, GPU3 lower-left. All ring arrows follow 0→1→2→3→0 clockwise; no diagonal crossing. Left panel muted teal, right panel muted violet, both using neutral shard tiles with exact identity labels. Ring arrows represent phase communication topology; cards represent outcomes. Preserve separate phase headings and central explanatory phrases; do not connect the panels by data arrows. Flat, wide, crisp, spacious.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

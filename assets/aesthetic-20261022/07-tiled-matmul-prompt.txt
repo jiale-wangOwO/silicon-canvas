@@ -1,0 +1,44 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #263238, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "Tiled Matrix Multiplication".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Requested canvas proportions: 16:9. Adapt open spacing and the source-backed branch lanes to this canvas.
+Named spatial organization: left-to-right dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "A_ik", "B_kj". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "P_ij = A_ik B_kj", "C_ij (old)". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "+". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "C_ij (new)". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: A at upper left and B lower left as large mathematical matrices with selected tiles; the tile product at center; old C directly above the addition, and new C to its right. Show selected tiles as submatrices not scalar vectors. Compact matched operands beside their consumers. One small equation under the geometry. All arrows are short, direct, noncrossing. No numeric grid size is asserted.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+At "P_ij = A_ik B_kj", keep incoming operands from "A_ik", "B_kj" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "+", keep incoming operands from "P_ij = A_ik B_kj", "C_ij (old)" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Required visible mathematical inventory:
+"A_ik" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"B_kj" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"P_ij = A_ik B_kj" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"C_ij (old)" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"+" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"C_ij (new)" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"A_ik": "P_ij = A_ik B_kj".
+"B_kj": "P_ij = A_ik B_kj".
+"P_ij = A_ik B_kj": "+".
+"C_ij (old)": "+".
+"+": "C_ij (new)".
+"C_ij (new)": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "A_ik" → "P_ij = A_ik B_kj": 1 connector; "B_kj" → "P_ij = A_ik B_kj": 1 connector; "P_ij = A_ik B_kj" → "+": 1 connector; "C_ij (old)" → "+": 1 connector; "+" → "C_ij (new)": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"A_ik" → "P_ij = A_ik B_kj"; thin solid directed dependency.
+"B_kj" → "P_ij = A_ik B_kj"; thin solid directed dependency.
+"P_ij = A_ik B_kj" → "+"; thin solid directed dependency.
+"C_ij (old)" → "+"; thin solid directed dependency.
+"+" → "C_ij (new)"; thin solid directed dependency.
+Source context for interpretation ONLY; preserve its meaning through graph and equations, but DO NOT TYPESET this prose or add a footer:
+"Repeat over k"
+"C_ij ← C_ij + A_ik B_kj"
+Additional requested presentation constraints: Editorial scientific illustration, white ground. Use muted teal for A, warm ochre for B, ink blue for output C; one role per hue. Large flat mathematical matrix grids, carefully aligned selected tiles. Compact equation-led composition, not a stack of flowchart boxes. Place A and B as peer operands with product between their convergence and C, no crossing arrows. Restrained fine gridlines, ample margins, no large title. Math typography legible, symbolic submatrix tiles not scalar row vectors. Do not add unrelated tensors or prose.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

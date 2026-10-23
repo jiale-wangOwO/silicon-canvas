@@ -1,0 +1,41 @@
+{
+  "title": "Coherent Heterogeneous SoC",
+  "category": "system",
+  "alt": "Flat system architecture of CPU and NPU clusters feeding a coherent fabric, shared LLC and DRAM controller, with separate host ingress and external memory.",
+  "image": "05-coherent-soc.png",
+  "prompt": "05-coherent-soc-prompt.txt",
+  "edit_prompt": "05-coherent-soc-edit-prompt.txt",
+  "artifact_id": "be13bbe261a84d93953c87c58cc40aff",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "strengths": [
+    "CPU and NPU are clearly parallel clients, with private cache ownership and shared coherent fabric/LLC visible.",
+    "Straight request paths, source-backed internal ownership and external host/DRAM boundaries remain clear.",
+    "Restrained sage peers, neutral common services and pale ochre memory role create a hierarchy without rainbow coding."
+  ],
+  "limitations": [
+    "This explanatory system illustration was generated in system_illustration mode after exact engineering guide attempts failed or folded too much structure; it is not a certified exact netlist rendering.",
+    "Only request-direction paths are shown; coherence response, snoop and protocol detail are outside this example.",
+    "Host I/O is placed below rather than left; the lower-right SoC area has spare space. Finishes retain slight tonal variation."
+  ],
+  "provenance": {
+    "workflow": "silicon_prepare → host semantic spec → silicon_compile → exact prompt → built-in Image Gen → one focused style edit",
+    "representation": "system_illustration",
+    "requested_visual_form": "flat front-facing engineering schematic",
+    "guide_role": "composition_reference",
+    "guide_optional": true,
+    "guide_used": false,
+    "prompt_source": "Exact silicon_compile returned prompt, unchanged",
+    "repair_count": 1,
+    "repair_reason": "Unify CPU/NPU sage palette; remove loud blue/pink and shaded fills while preserving source graph.",
+    "planning_history": [
+      "Initial system diagram: required organization guide unavailable.",
+      "Exact overview annex: source containment visually inconsistent; rejected before Image Gen.",
+      "Flow projection: required internals collapsed; rejected before Image Gen.",
+      "Selected explanatory system mode with explicit 2D schematic art direction."
+    ],
+    "actual_image_review": "Visually inspected final image; core shown request links and named ownership agree with the declared scope."
+  }
+}

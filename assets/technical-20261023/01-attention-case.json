@@ -1,0 +1,40 @@
+{
+  "title": "Scaled Dot-Product Attention",
+  "category": "algorithm",
+  "alt": "Single-head attention: independent Q and K branches form scaled scores, softmax produces probabilities, and a separate V branch joins the final matrix product.",
+  "strengths": [
+    "Distinct operand branches and correct dimensions.",
+    "A wide single reading path and restrained coral/sage accents.",
+    "No extra hardware or invented traffic."
+  ],
+  "limitations": [
+    "Symbolic tensor grids are illustrative, not literal element counts.",
+    "Row-wise normalization is documented in input but not explicitly printed in the final figure."
+  ],
+  "dimensions": [
+    2172,
+    724
+  ],
+  "image": "01-attention.png",
+  "prompt": "01-attention-prompt.txt",
+  "artifact_id": "c98edde2d6394276b45f0f90b155c5e2",
+  "preparation_id": "43c74681ca3d4741a31db926b9791bbf",
+  "provenance": {
+    "workflow": "silicon_prepare → host semantic spec → silicon_compile → built-in image_gen",
+    "representation": "diagram",
+    "guide_role": null,
+    "guide_optional": true,
+    "algorithm_flow_plan": true,
+    "prompt_source": "Exact silicon_compile returned prompt, unchanged",
+    "imagegen_invocation": {
+      "prompt_file": "01-attention-prompt.txt",
+      "transparent_background": false
+    },
+    "repair_count": 0
+  },
+  "description": "An elegant paper-quality dataflow figure for single-head scaled dot-product attention. Inputs Q [N,d], K [M,d], V [M,dv]. K passes through transpose, Q and K^T meet in matrix multiplication S=QK^T / sqrt(d), followed by row-wise Softmax P=softmax(S), then P and V meet in O=PV producing O [N,dv]. Show Q and K as separate branches, and V as a distinct bypass branch feeding the last multiply. No causal mask, multihead, hardware or memory traffic; only this single-head mathematical operation. English labels, clear tensor shapes, compact landscape figure suitable for a research presentation. The main path and independent V branch should be readable immediately.",
+  "settings": {
+    "notes": "Editorial research figure aesthetic: warm white canvas, charcoal hairline outlines, dusty indigo for Q and K, muted coral for scores/normalization, sage for values and output. Matrix tensors as crisp small 2D gridded rectangles; operation nodes concise white circles or compact rounded rectangles. Dominant straight left-to-right path with generous spacing; V uses one clean parallel top bypass, no gratuitous bends, no shadows, no 3D, no gradients, no giant title. Equations are the hierarchy, not decorative boxes. Produce a refined wide paper figure rather than a busy slide.",
+    "representation": "diagram"
+  }
+}

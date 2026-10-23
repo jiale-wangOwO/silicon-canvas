@@ -1,7 +1,8 @@
 import { Compiler } from './compiler.js';
 import { complete, providerSettings } from './provider.js';
 import { renderOptionPreview } from './option-previews.js';
-import { setupArtworkCarousel } from './artwork-carousel.js';
+import { setupArtworkCarousel } from './artwork-carousel.js?v=20261023-gallery';
+import { setupArtworkViewer } from './artwork-viewer.js?v=20261023-gallery';
 
 const $ = (id) => document.getElementById(id);
 const GPU_INPUT = '我想画一张 GPU 架构图给同事介绍。主机接口接到命令处理器，任务分发到四个计算簇；每簇包含 warp 调度、SIMD、张量单元和片上存储。各簇共享 L2，并经内存控制器访问显存。主图突出任务分发与存储路径，计算簇看得出重复关系，内部控制信号不必全部展开。希望层级清楚，适合放进技术演示文稿。';
@@ -201,9 +202,16 @@ $('settingsForm').addEventListener('submit', (event) => {
 });
 $('clearKey').addEventListener('click', () => { state.provider = { ...state.provider, key: '' }; $('apiKey').value = ''; keyStatus(); toast('密钥已清除。'); });
 
-const cleanupCarousel = setupArtworkCarousel({ strip: $('artworkStrip'), previous: $('artworkPrevious'), next: $('artworkNext'), pause: $('artworkPause') });
+const cleanupCarousel = setupArtworkCarousel({
+  strips: [$('artworkStrip'), $('artworkStripSecondary')],
+  previous: $('artworkPrevious'), next: $('artworkNext'), pause: $('artworkPause'),
+});
+const cleanupViewer = setupArtworkViewer({
+  showcase: document.querySelector('.wb-showcase'), dialog: $('artworkViewer'), returnControl: $('artworkPause'),
+  onOpen: () => cleanupCarousel.setSuspended(true), onClose: () => cleanupCarousel.setSuspended(false),
+});
 document.addEventListener('click', (event) => { if (!$('downloadMenu').contains(event.target)) $('downloadMenu').open = false; });
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape') $('downloadMenu').open = false; });
-window.addEventListener('pagehide', (event) => { state.provider.key = ''; $('apiKey').value = ''; compiler.stop(); if (!event.persisted) cleanupCarousel(); });
+window.addEventListener('pagehide', (event) => { state.provider.key = ''; $('apiKey').value = ''; compiler.stop(); if (!event.persisted) { cleanupViewer(); cleanupCarousel(); } });
 window.addEventListener('pageshow', keyStatus);
 keyStatus(); customCount();

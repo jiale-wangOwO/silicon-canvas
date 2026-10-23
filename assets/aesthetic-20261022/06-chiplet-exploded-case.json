@@ -1,0 +1,39 @@
+{
+  "id": "06-chiplet-exploded",
+  "title": "Chiplet 层间组装",
+  "subtitle": "暖白说明图 · 精简爆炸视图",
+  "purpose": "技术产品介绍、封装概念说明、演示文稿插图",
+  "composition": [
+    "四个清楚的高度层：热扩散盖板、两颗计算chiplet、单I/O die、基板。",
+    "所有平面共享相机角度；单侧统一标签列及短引线减少视觉搜索。",
+    "暖白底配银灰与低饱和蓝，柔和阴影建立空间；颜色不承担过多语义。"
+  ],
+  "evaluation": "层数和两颗计算chiplet数量清楚，标注层级明确，组装逻辑可读。材质、阴影与色调统一，适合解释结构的商业插图。",
+  "limitations": [
+    "为原创简化概念堆叠，不对应真实AMD或NVIDIA器件。",
+    "die厚度、互连及焊接细节是示意造型，不能据此推断工艺或电气连接。",
+    "较厚的die造型强化可读性但弱化物理比例；非封装设计图。"
+  ],
+  "artifact_id": "5b1e8b08fc4e442d89322894c3a0eb41",
+  "reference_sources": [
+    {
+      "title": "AMD CDNA 4 Architecture Whitepaper, Figure 1",
+      "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-4-architecture-whitepaper.pdf#page=3",
+      "learned": "由装配层间分离解释封装；少量引线标签、统一透视与背景留白。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "flow": "silicon_prepare → host semantic spec → silicon_compile → built-in Image Gen → visual inspection",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "prompt_file": "06-chiplet-exploded-prompt.txt",
+  "image_file": "06-chiplet-exploded.png",
+  "generation_attempts": 1,
+  "edits": 0,
+  "technical_status": "conceptual packaging, not manufacturing CAD",
+  "reference_images_used_in_generation": []
+}

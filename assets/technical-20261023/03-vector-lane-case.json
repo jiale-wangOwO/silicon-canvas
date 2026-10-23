@@ -1,0 +1,48 @@
+{
+  "id": "03-vector-lane",
+  "title": "双 Lane 向量执行后台",
+  "alt": "Flat English technical illustration of a dual-lane vector backend with shared four-bank vector registers, issue/dispatch, predicate, load/store interface, and two Operand Select to ALU/MAC to Writeback paths.",
+  "category": "microarchitecture",
+  "purpose": "共享资源与每lane执行结构说明、向量后台概览",
+  "strengths": [
+    "四分区共享寄存器文件与两条独立执行lane清楚区分。",
+    "每lane的操作数读取、选择、运算、写回和结果返回均能追踪。",
+    "共享派发与谓词控制分别进入各lane的目标模块，访存接口与共享寄存器双向相连。"
+  ],
+  "limitations": [
+    "这是 system_illustration 生成的平面技术说明图，不是 exact target guide 几何锁定的工程图。",
+    "数据路径按lane汇总；没有声明每bank端口数、容量或具体lane到bank映射。",
+    "外部控制路径仍较长，颜色比初始要求更鲜明；没有进行工程签核或周期验证。"
+  ],
+  "review_notes": "升级首稿的results错误起于Operand Select，lane1控制链断裂。经一次针对实际位图的编辑，results改为各Writeback回VRF，控制链改为共享控制到目标的外部独立路径。",
+  "previous_artifact_id": "f317e955c5b449b08f723f318e7870d8",
+  "width": 1672,
+  "height": 941,
+  "image": "03-vector-lane.png",
+  "prompt": "03-vector-lane-prompt.txt",
+  "initial_prompt_file": "03-vector-lane-initial-prompt.txt",
+  "edit_prompt": "03-vector-lane-edit-prompt.txt",
+  "prompt_kind": "generate_then_edit",
+  "representation": "system_illustration",
+  "artifact_id": "0e03f07b76fc48d9b8aef28cf7abeb43",
+  "selected_figure_id": "system-illustration",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "generation_count": 1,
+  "repair_count": 1,
+  "previous_version_archived": ".local/technical-20261023/first-pass",
+  "replaces_previous_compile": true,
+  "workflow": [
+    "MCP prepare",
+    "host semantic spec",
+    "MCP compile",
+    "Image Gen exact compiled prompt",
+    "inspect bitmap",
+    "one host-directed semantic repair using the actual bitmap",
+    "inspect final bitmap"
+  ],
+  "review_status": "visually_reviewed_after_one_repair",
+  "local_records": ".local/technical-20261023",
+  "created": "2026-10-23"
+}

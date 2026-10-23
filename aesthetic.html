@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="用 Silicon Canvas 与 Image Gen 探索算法、系统和产品的不同视觉表达。">
+  <title>视觉案例 · Silicon Canvas</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./aesthetic.css">
+  <script src="./aesthetic.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="Silicon Canvas 首页"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="./assets/logo.svg#mark"/></svg><span>Silicon <strong>Canvas</strong></span></a>
+    <nav aria-label="站点导航"><a href="./">工作台 ↗</a><a href="./agent.html">Agent / MCP ↗</a><a href="https://github.com/jiale-wangOwO/silicon-canvas" target="_blank" rel="noopener">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">SILICON CANVAS × IMAGE GEN</p>
+      <h1>不同表达，同样清晰</h1>
+      <p class="lead">从算法关系到产品质感，探索更合适的表达。</p>
+    </section>
+    <div class="gallery-toolbar">
+      <div class="filters" role="group" aria-label="按用途筛选">
+        <button type="button" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" data-filter="algorithm" aria-pressed="false">算法与通信</button>
+        <button type="button" data-filter="system" aria-pressed="false">系统说明</button>
+        <button type="button" data-filter="product" aria-pressed="false">产品与封装</button>
+      </div>
+      <span class="gallery-hint">点开，看看细节 ↗</span>
+    </div>
+    <section id="gallery" class="gallery" aria-label="生成案例" aria-busy="true"></section>
+    <p id="loadStatus" class="load-status" role="status">正在展开画面…</p>
+    <noscript><p>启用 JavaScript 后可查看完整画廊。也可以直接打开<a href="./assets/aesthetic-20261022/05-compute-package.png">封装主视觉</a>、<a href="./assets/aesthetic-20261022/01-gated-mlp.png">算法数据流</a>或<a href="./assets/aesthetic-20261022/06-chiplet-exploded.png">分层组装图</a>。</p></noscript>
+    <section class="design-notes" aria-labelledby="designTitle">
+      <div><p class="eyebrow">A FEW THINGS THAT MATTER</p><h2 id="designTitle">好看，源于表达有序</h2></div>
+      <div class="principles">
+        <article><h3>先有重点</h3><p>一张图回答一个问题，让主体先进入视线，再展开细节。</p></article>
+        <article><h3>让位置说话</h3><p>用分支、并列、层级或空间关系组织信息，留白为理解服务。</p></article>
+        <article><h3>颜色有含义</h3><p>同一种角色使用同一种色彩，依靠明暗、形状和位置保留层次。</p></article>
+        <article><h3>细节有分寸</h3><p>统一线条、视角与光照，只留下帮助理解的标签和材质。</p></article>
+      </div>
+      <details class="references"><summary>参考学习</summary><p>借鉴信息组织、构图与材质表达，案例本身为新生成图像。</p><ul>
+        <li><a href="https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/" target="_blank" rel="noopener">NVIDIA Blackwell · 单主体与产品质感 ↗</a></li>
+        <li><a href="https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-4-architecture-whitepaper.pdf#page=3" target="_blank" rel="noopener">AMD CDNA 4 · 分层结构说明 ↗</a></li>
+        <li><a href="https://spcl.ethz.ch/Publications/.pdf/hu-demystifying-nccl.pdf" target="_blank" rel="noopener">Demystifying NCCL · 通信阶段与拓扑 ↗</a></li>
+      </ul></details>
+    </section>
+  </main>
+  <dialog id="viewer" aria-labelledby="viewerTitle">
+    <div class="viewer-top"><div><h2 id="viewerTitle"></h2><p id="viewerPurpose"></p></div><button id="closeViewer" type="button" aria-label="关闭大图">×</button></div>
+    <img id="viewerImage" alt="">
+    <div class="viewer-bottom"><button id="previousImage" type="button" aria-label="上一张">←</button><a id="originalImage" target="_blank" rel="noopener">打开原图 ↗</a><button id="nextImage" type="button" aria-label="下一张">→</button></div>
+  </dialog>
+</body>
+</html>

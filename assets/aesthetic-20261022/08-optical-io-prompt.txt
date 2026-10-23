@@ -1,0 +1,34 @@
+Create a finished dimensional semiconductor system illustration with Image Gen.
+Reader question: How do the system's objects, shared resources and interfaces work together?
+Treatment: assembly. A coherent whole-system assembly with source-backed objects and quantities. Choose staging that reveals ownership, shared resources and principal interfaces; mechanical detail remains secondary to the explanation.
+Subject: one coherent generic chip package exterior, standing for the supplied complete product without asserting how many internal dies it contains
+Source title: Co-Packaged Optical I/O
+Camera: A controlled three-quarter product camera, approximately 30 degrees above the subject, a long lens with subtle perspective; choose the best orientation for its silhouette.
+Materials: Believable satin metal, matte technical ceramic or restrained silicon finish as appropriate to the subject; coherent edge thickness and restrained surface detail.
+Lighting: Large soft studio key, gentle fill and a narrow controlled rim highlight; reflections reveal form without hiding labels. Contact shadow should ground the object naturally.
+Background: A clean light neutral studio field with subtle tonal separation and generous empty space; transparent output only when explicitly requested by the user.
+Composition: One dominant coherent complete product or system assembly, deliberate scale and a strong overall silhouette. Explicit multiple physical objects may form that assembly. Organize functional roles into a few contiguous regions, give shared resources clear common ownership, and stage external context beyond the chip boundary. Leave real space for readable typography.
+Canvas: 16:9
+Typography: Required text is exact and legible. Use one consistent typographic hierarchy, strong contrast against the actual surface, concise member lists, and adequate spacing. Functional overlays may carry their own labels; surrounding callouts use tidy neutral leaders.
+Color: Use a quiet base and a small family of muted accents for semantic roles. Keep one hue per meaningful region and emphasize one main route; colors do not imply physical manufacturing boundaries.
+Build hierarchy before surface detail: one dominant whole-product silhouette, a few meaningful functional roles and subordinate context. Keep objects under one camera and lighting system; texture remains subtle.
+Use one source-title heading if needed, without an invented marketing subtitle, slogan or tagline. Keep the only in-image disclosure to a small 'Functional concept' note. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.
+Functional content (exact headings and concise members; place them according to this treatment, once each):
+- Package substrate: ["Switch ASIC", "Optical engine 1", "Optical engine 2", "Optical engine 3", "Optical engine 4"]
+- Fiber ribbon 1
+- Fiber ribbon 2
+- Fiber ribbon 3
+- Fiber ribbon 4
+- PCB
+Each quoted member is one source item. Preserve compound labels such as 'Accelerator / DSP' as one member, not separate invented instances. Group typography may summarize these members without drawing each as a physical part.
+Routing instructions, not a text panel or legend: draw only these selected source-backed interface links.
+- Package substrate ~ Fiber ribbon 1
+- Package substrate ~ Fiber ribbon 2
+- Package substrate ~ Fiber ribbon 3
+- Package substrate ~ Fiber ribbon 4
+Quiet fine neutral interface lines without arrowheads; this overview explains organization, not directed traffic. Use one unified fine neutral line treatment, or at most two subtle levels of contrast. Aggregate repeated links. Do not print link-kind words, a 'Key Relationships' section or an explanatory relation legend. Shared memory retains its common ownership.
+Stage the supplied objects as one understandable assembly; preserve explicitly supplied counts and physical membership. Functional overlays and symbolic interfaces may help show shared ownership. Unspecified mechanical geometry remains conceptual.
+User art direction takes precedence over defaults. Complete original intent and latest visual revision: {"description": "Create a sophisticated explanatory product illustration of a generic co-packaged optical I/O platform for a semiconductor technology presentation. One central switch ASIC sits on a common package substrate. Four optical-engine modules flank it, two on each side. Short electrical paths within the common package link ASIC to optical engines. Four neat fiber ribbons leave those optical engines towards the lateral edges. Distinguish common package substrate from the darker PCB underneath. Exact physical geometry and trace routing are illustrative, not fabrication data. Four external editorial callouts only: Switch ASIC, Optical engines, Fiber ribbons, Package substrate. No numbers, brand logos, performance claims or cabinet. Explain the transition from electrical connection inside the package to optical fibers outside.", "notes": "A premium technical product illustration on a warm pearl-gray studio background. Single large foreground assembly in a restrained shallow three-quarter view, occupying 70 percent canvas. Sapphire silicon surfaces, graphite substrate, fine brushed nickel mechanical detail, warm gold micro contacts. Optical fibers in desaturated pale cyan physically connected to all four optical engines, arranged as smooth purposeful ribbons with generous bend radii. Electrical paths are short understated copper traces, no glowing energy beams. Four small typography callouts along the outside margins with thin clean leaders. No giant headline or dashboard panels; no neon, no rainbow, no fantasy PCB. Soft wide studio key and controlled rim highlights, photographic material depth with diagram clarity."}
+Keep explicit labels, logical ownership, quantities and source relationships. Functional overlays are not proof of physical dies, chiplets or HBM stacks. Exterior and context geometry remain illustrative. Avoid fabricated branding, measured specifications, ornamental circuit wallpaper, unrelated application props and cluttered copy.
+The text brief is sufficient. An optional composition reference only suggests scale, negative space and framing. Freely organize the explanatory regions using the source projection. Guide shapes carry no physical placement, object-count or wiring authority.
+Return one coherent finished image. The full engineering ledger remains in the brief and precise technical companions; do not force every secondary source signal onto this image.
