@@ -1,0 +1,38 @@
+{
+  "id": "08-optical-io",
+  "title": "光电共封装",
+  "subtitle": "物理对象 · 信号介质",
+  "purpose": "光互联技术介绍、产品原理说明、概念展示",
+  "composition": [
+    "以中心交换 ASIC 和两侧四颗光引擎形成整体，光纤向画面外延伸。",
+    "金属、硅面与 PCB 区分层级，短铜色走线和蓝色光纤区分电与光。",
+    "柔和棚拍照明与外置标签结合，保持实体质感与结构可读性。"
+  ],
+  "evaluation": "主体轮廓、四个光引擎、四路光纤与板层清楚。标签比请求更细，适合说明页，作为封面可以再减少文字。",
+  "limitations": [
+    "器件尺寸、接触结构与走线是概念造型，不对应真实厂商产品。",
+    "原请求四类标签被展开到独立光纤和 PCB，未做到最简标注。"
+  ],
+  "artifact_id": "8706bc22dc294a83b2e2020fbeff03cf",
+  "reference_sources": [
+    {
+      "title": "NVIDIA — Scaling AI Factories with Co-Packaged Optics",
+      "url": "https://developer.nvidia.com/blog/scaling-ai-factories-with-co-packaged-optics-for-better-power-efficiency/",
+      "learned": "完整封装的主视觉和电光对象的层级，未复制其几何或品牌。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "flow": "silicon_prepare → host spec → silicon_compile → built-in Image Gen → visual inspection",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "prompt_file": "08-optical-io-prompt.txt",
+  "image_file": "08-optical-io.png",
+  "generation_attempts": 1,
+  "edits": 0,
+  "reference_images_used_in_generation": [],
+  "render_brief_version": "RENDER2"
+}

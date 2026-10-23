@@ -45,6 +45,10 @@ python -m http.server 8080 --directory dist
 
 构建产物位于 `dist/web/`。共享核心和 Noto 字体打包在站点自己的 `assets/compiler.zip` 中；Pyodide 与 Pillow 运行时按 `web/runtime-lock.json` 从固定地址加载。首次加载需要网络，浏览器缓存可减少后续下载；当前不提供完整离线站点。运行时资源请求不携带 API Key。
 
+### 维护首页作品
+
+首页的两行画廊同步循环，以当前作品居中排列。作品顺序、分类与简短介绍在 `web/assets/showcase.json` 中维护；新增图片后运行 `python scripts/build_showcase.py`，再构建站点。脚本生成最长 1120 像素、最高 440 像素的 WebP 缩略图，同时更新首页卡片。页面仅懒加载缩略图，点击后在浮窗中按需加载高清图，显示作品介绍并支持前后切换。浮窗打开时暂停两行轮播，保留独立的原图入口；原图、提示词和生成记录保持独立保存。
+
 ## 静态部署
 
 可以将 `dist/web/` 的内容托管到 GitHub Pages 或其他静态服务。资源使用相对路径，支持 Pages 项目站点的仓库子路径。

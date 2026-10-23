@@ -1,0 +1,39 @@
+{
+  "id": "05-compute-package",
+  "title": "黑曜计算封装",
+  "subtitle": "石墨棚拍 · 铜色边光",
+  "purpose": "产品发布封面、品牌主视觉、BP 产品页",
+  "composition": [
+    "用一个完整且有重量感的封装建立主视觉；左上保留安静空间。",
+    "陶瓷颗粒、拉丝金属与微弱铜色轮廓光区分材质，不用高饱和色抢注意力。",
+    "通过真实阴影、厚薄层次和局部高光说明产品结构。"
+  ],
+  "evaluation": "整体沉稳，材质分工和轮廓识别清楚；激光字样准确、接地阴影可信。适合作为产品展示图。",
+  "limitations": [
+    "仅表达封装外观，不承担架构和数据路径解释。",
+    "接触点、边框、尺寸比例属于概念造型，不是制造设计。",
+    "主体比最初60%的占幅要求更大，文案留白以左上为主。"
+  ],
+  "artifact_id": "d3a790f40221404d9aace97246a4f3b0",
+  "reference_sources": [
+    {
+      "title": "NVIDIA Blackwell Architecture",
+      "url": "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/",
+      "learned": "黑色背景、单主体、金属色强调；不复制实际产品几何或商标。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "flow": "silicon_prepare → host semantic spec → silicon_compile → built-in Image Gen → visual inspection",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "prompt_file": "05-compute-package-prompt.txt",
+  "image_file": "05-compute-package.png",
+  "generation_attempts": 1,
+  "edits": 0,
+  "technical_status": "conceptual product appearance",
+  "reference_images_used_in_generation": []
+}

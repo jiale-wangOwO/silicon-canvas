@@ -1,0 +1,55 @@
+{
+  "id": "03-edge-vision",
+  "title": "端侧视觉：从像素到事件",
+  "english_title": "Edge Vision Pipeline",
+  "purpose": "技术白皮书、架构介绍、端侧 AI 方案讲解",
+  "representation": "system_illustration",
+  "style": "平面系统说明图；骨白、深蓝与少量青绿",
+  "composition": "五段横向主路径构成阅读主轴；CPU 配置和片上存储作为短局部分支；输入输出明确位于处理器外。",
+  "image": "03-edge-vision.png",
+  "prompt": "03-edge-vision-prompt.txt",
+  "width": 1672,
+  "height": 941,
+  "artifact_id": "b332649139c54606a587a61edf0b0987",
+  "initial_artifact_id": "cb9210af21c947c896b650453a035bf5",
+  "preparation_id": "5ff94d506d77405e99e7b77dccfd05d9",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "workflow": [
+    "silicon_prepare",
+    "宿主模型语义 spec",
+    "silicon_compile",
+    "Image Gen 使用原样提示词",
+    "查看实际成图",
+    "silicon_prepare(previous_artifact_id, feedback, lock_structure)",
+    "silicon_compile",
+    "Image Gen 对实际位图做一次风格修复"
+  ],
+  "generation_count": 2,
+  "review": {
+    "status": "visually_reviewed",
+    "strengths": [
+      "7 个资源、4 段主链、2 条 CPU 配置虚线、1 条双向存储路径均可读。",
+      "处理器内外边界清楚；主数据路径直接水平相连。",
+      "缩小标题后主次更平衡，配色克制。"
+    ],
+    "limitations": [
+      "这是 system_illustration 的系统说明图，不是使用 exact target guide 且几何受控的工程图。",
+      "CPU 到 ISP 仍有短折线，画面保留轻微色阶感；没有通过像素级或工程签核验证。",
+      "结构为通用演示方案，不对应真实量产芯片。"
+    ]
+  },
+  "references": [
+    {
+      "title": "TI Processor SDK Linux Edge AI — Overview",
+      "url": "https://software-dl.ti.com/jacinto7/esd/processor-sdk-linux-sk-tda4vm/10_01_00/exports/edgeai-docs/common/sdk_overview.html",
+      "use": "参考真实视觉系统中预处理、推理和外围输入输出的层次表达；本案例不复刻其芯片结构。"
+    }
+  ],
+  "source_notes": "先尝试 diagram 的 system / flow 编译，自动布局持续选纵向且不显示处理器边界；这些尝试未送往 Image Gen。经主控同意切换说明插画并保留完整关系。未手绘底稿，未改编译器提示词。",
+  "local_raw_directory": ".local/aesthetic-20261022",
+  "created": "2026-10-22",
+  "initial_prompt_file": "03-edge-vision-initial-prompt.txt",
+  "prompt_kind": "edit"
+}

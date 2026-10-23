@@ -20,11 +20,11 @@ Silicon Canvas 帮助 AI 更稳定地生成结构清晰、布局有序、风格�
 
 ## 实际作品
 
-三种任务，三种表达。以下均为实际生成结果，点击图片可查看原图；板卡图在生成后加入了 Silicon Canvas 标志。
+三种任务，三种表达。以下均为实际生成结果。
 
 | SoC 架构概览 | 算法数据流 | 产品渲染 |
 | --- | --- | --- |
-| [![SoC 计算、存储、管理与 I/O 的功能架构示意](web/assets/render-examples/functional-soc.png)](web/assets/render-examples/functional-soc.png) | [![英文 FFT 算法数据流，展示重排与三级蝶形处理](web/assets/generalization-20261018/06-signal-fft.png)](web/assets/generalization-20261018/06-signal-fft.png) | [![带 Silicon Canvas 标志的完整加速器板卡概念渲染](web/assets/branded-20261019/03-accelerator-board.png)](web/assets/branded-20261019/03-accelerator-board.png) |
+| [![SoC 计算、存储、管理与 I/O 的功能架构示意](web/assets/render-examples/functional-soc.png)](web/assets/render-examples/functional-soc.png) | [![英文 FFT 算法数据流，展示重排与三级蝶形处理](web/assets/generalization-20261018/06-signal-fft.png)](web/assets/generalization-20261018/06-signal-fft.png) | [![交换芯片、光引擎与光纤连接的光电共封装概念渲染](web/assets/aesthetic-20261022/08-optical-io.png)](web/assets/aesthetic-20261022/08-optical-io.png) |
 
 更多作品见 [网页演示版的精选展示](https://jiale-wangOwO.github.io/silicon-canvas/#showcaseTitle)。
 

@@ -1,0 +1,48 @@
+{
+  "id": "04-tiled-accelerator",
+  "title": "双缓冲：加载下一块，计算当前块",
+  "alt": "Two English temporal snapshots of the same tiled accelerator. Phase A loads Q while computing P; Phase B loads P while computing Q, with matrix, accumulator and store on each compute track.",
+  "category": "dataflow",
+  "purpose": "双缓冲工作原理、数据搬运与计算重叠说明",
+  "strengths": [
+    "每阶段的LOAD NEXT与COMPUTE CURRENT分别成行，明确表现两条并行活动路径。",
+    "A阶段填Q算P，B阶段填P算Q，角色交换条件直接标出。",
+    "每阶段只一P一Q和四条活动数据箭头，没有P/Q复制或两缓冲同时供给计算的误解。"
+  ],
+  "limitations": [
+    "两个panel是同一硬件的时间快照，不是两套引擎；也不表示精确周期或吞吐量。",
+    "这是system_illustration平面技术说明图，未使用exact target guide；图中分组为功能表达。",
+    "演示P/Q交替机制，未覆盖启动、尾块、背压和异常边界条件。"
+  ],
+  "review_notes": "升级首稿在每阶段额外重复一个缓冲，Phase B出现错误P→Q箭头。经一次针对位图的编辑，去掉重复框与缓冲互连，保留每阶段的四条活动路径。",
+  "previous_artifact_id": "5496b541b4214e0d8ff79f497b800185",
+  "width": 1672,
+  "height": 941,
+  "image": "04-tiled-accelerator.png",
+  "prompt": "04-tiled-accelerator-prompt.txt",
+  "initial_prompt_file": "04-tiled-accelerator-initial-prompt.txt",
+  "edit_prompt": "04-tiled-accelerator-edit-prompt.txt",
+  "prompt_kind": "generate_then_edit",
+  "representation": "system_illustration",
+  "artifact_id": "66f62d5fb30241078dcac474aa53e5cf",
+  "selected_figure_id": "system-illustration",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "generation_count": 1,
+  "repair_count": 1,
+  "previous_version_archived": ".local/technical-20261023/first-pass",
+  "replaces_previous_compile": true,
+  "workflow": [
+    "MCP prepare",
+    "host semantic spec",
+    "MCP compile",
+    "Image Gen exact compiled prompt",
+    "inspect bitmap",
+    "one host-directed semantic repair using the actual bitmap",
+    "inspect final bitmap"
+  ],
+  "review_status": "visually_reviewed_after_one_repair",
+  "local_records": ".local/technical-20261023",
+  "created": "2026-10-23"
+}

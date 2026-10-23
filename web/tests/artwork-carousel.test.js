@@ -18,7 +18,7 @@ class Element extends EventTarget {
     const all = this.children.flatMap((n) => [n, ...n.querySelectorAll('*')]);
     return selector === '*' ? all : selector === 'img' ? all.filter((n) => n.tagName === 'img') : all.filter((n) => n.tagName === 'a' || n.hasAttribute('tabindex') || n.hasAttribute('contenteditable'));
   }
-  closest(selector) { return this.hasAttribute('data-carousel-clone') ? this : this.parent?.closest(selector) ?? null; }
+  closest() { return this.hasAttribute('data-carousel-clone') ? this : this.parent?.closest() ?? null; }
   getBoundingClientRect() {
     const rail = this.parent;
     if (!rail?.isStrip) return { left: 0, right: 0, top: 0, bottom: 0 };
@@ -29,7 +29,7 @@ class Element extends EventTarget {
   emit(type) { this.dispatchEvent(new Event(type)); }
 }
 
-function browser({ viewport = 800, widths = Array(5).fill(280), gap = 20, reduced = false, roundScroll = false } = {}) {
+function browser({ viewport = 800, widths = [Array(5).fill(280), [400, 540, 350, 280, 420]], gap = 20, reduced = false, roundScroll = false } = {}) {
   let time = 0, sequence = 0, observer;
   const jobs = new Map();
   const doc = new Element(); doc.hidden = false; doc.activeElement = null;
@@ -39,23 +39,28 @@ function browser({ viewport = 800, widths = Array(5).fill(280), gap = 20, reduce
   view.innerHeight = 1000; view.innerWidth = 1200; view.queueMicrotask = (fn) => fn();
   view.setTimeout = (callback, delay) => { const id = ++sequence; jobs.set(id, { callback, at: time + delay }); return id; };
   view.clearTimeout = (id) => jobs.delete(id);
+  view.requestAnimationFrame = (callback) => view.setTimeout(() => callback(time), 16);
+  view.cancelAnimationFrame = view.clearTimeout;
   view.IntersectionObserver = class { constructor(callback) { this.callback = callback; observer = this; } observe() {} disconnect() { this.disconnected = true; } };
-  const strip = new Element(); strip.ownerDocument = doc; strip.scrollLeft = 0; strip.isStrip = true; strip.scale = 1; strip.gap = gap; strip.clientWidth = viewport;
-  Object.defineProperty(strip, 'scrollWidth', { get: () => strip.children.reduce((s, n) => s + n.baseWidth * strip.scale, 0) + Math.max(0, strip.children.length - 1) * gap });
-  strip.getBoundingClientRect = () => ({ left: 0, right: strip.clientWidth, top: 100, bottom: 300 });
-  strip.moves = [];
-  const visible = () => strip.children.map((n) => ({ src: n.children[0].getAttribute('href'), ...n.getBoundingClientRect() })).filter((n) => n.right > 0 && n.left < strip.clientWidth);
-  strip.scrollTo = ({ left, behavior }) => {
-    const before = visible();
-    strip.scrollLeft = Math.max(0, Math.min(Math.max(0, strip.scrollWidth - strip.clientWidth), roundScroll ? Math.round(left) : left));
-    strip.moves.push({ left: strip.scrollLeft, behavior, before, after: visible() }); strip.emit('scroll');
-  };
-  const originals = widths.map((width, i) => {
-    const node = new Element(); node.baseWidth = width; node.setAttribute('data-original-artwork', ''); node.setAttribute('id', 'card-' + i);
-    const anchor = new Element('a'); anchor.setAttribute('href', i + '.png'); anchor.setAttribute('id', 'link-' + i); anchor.appendChild(new Element('img')); node.appendChild(anchor); strip.appendChild(node); return node;
+  const visible = (strip) => strip.children.map((n) => ({ src: n.children[0].getAttribute('href'), ...n.getBoundingClientRect() })).filter((n) => n.right > 0 && n.left < strip.clientWidth);
+  const rows = widths.map((rowWidths, r) => {
+    const strip = new Element(); strip.ownerDocument = doc; strip.scrollLeft = 0; strip.isStrip = true; strip.scale = 1; strip.gap = gap; strip.clientWidth = viewport;
+    Object.defineProperty(strip, 'scrollWidth', { get: () => strip.children.reduce((s, n) => s + n.baseWidth * strip.scale, 0) + Math.max(0, strip.children.length - 1) * gap });
+    strip.getBoundingClientRect = () => ({ left: 0, right: strip.clientWidth, top: 100, bottom: 300 });
+    strip.moves = [];
+    strip.scrollTo = ({ left, behavior }) => {
+      const before = visible(strip);
+      strip.scrollLeft = Math.max(0, Math.min(Math.max(0, strip.scrollWidth - strip.clientWidth), roundScroll ? Math.round(left) : left));
+      strip.moves.push({ left: strip.scrollLeft, at: time, behavior, before, after: visible(strip) }); strip.emit('scroll');
+    };
+    const originals = rowWidths.map((width, i) => {
+      const node = new Element(); node.baseWidth = width; node.setAttribute('data-original-artwork', ''); node.setAttribute('id', 'card-' + r + '-' + i);
+      const anchor = new Element('a'); anchor.setAttribute('href', r + '-' + i + '.png'); anchor.setAttribute('id', 'link-' + r + '-' + i); anchor.appendChild(new Element('img')); node.appendChild(anchor); strip.appendChild(node); return node;
+    });
+    return { strip, originals };
   });
   const previous = new Element(), next = new Element(), pause = new Element();
-  const cleanup = setupArtworkCarousel({ strip, previous, next, pause });
+  const cleanup = setupArtworkCarousel({ strips: rows.map((r) => r.strip), previous, next, pause });
   function advance(duration) {
     const end = time + duration;
     for (;;) {
@@ -65,129 +70,140 @@ function browser({ viewport = 800, widths = Array(5).fill(280), gap = 20, reduce
     }
     time = end;
   }
-  advance(160); // Initial instant placement settles before interaction.
-  return { strip, originals, previous, next, pause, doc, motion, view, cleanup, advance, jobs, visible,
-    intersect(value) { observer.callback([{ target: strip, isIntersecting: value }]); },
-    key(key) { const event = new Event('keydown', { cancelable: true }); Object.defineProperty(event, 'key', { value: key }); strip.dispatchEvent(event); return event; } };
+  return { rows, previous, next, pause, doc, motion, view, cleanup, advance, jobs, visible,
+    intersect(value) { observer.callback(rows.map(({ strip }) => ({ target: strip, isIntersecting: value }))); },
+    key(key, row = 0) { const event = new Event('keydown', { cancelable: true }); Object.defineProperty(event, 'key', { value: key }); rows[row].strip.dispatchEvent(event); return event; } };
+}
+function centered({ strip, originals }, index) {
+  const rect = originals[index].getBoundingClientRect();
+  assert.ok(Math.abs((rect.left + rect.right) / 2 - strip.clientWidth / 2) < 0.51, 'selected image is centered');
+  assert.equal(strip.getAttribute('data-current-index'), String(index));
+  assert.equal(originals[index].classList.contains('is-current'), true);
+}
+function samePixels(before, after) {
+  assert.deepEqual(before.map((p) => p.src), after.map((p) => p.src));
+  before.forEach((p, i) => {
+    assert.ok(Math.abs(p.left - after[i].left) < 0.6);
+    assert.ok(Math.abs(p.right - after[i].right) < 0.6);
+  });
 }
 
-test('two-second forward advances cross the seam smoothly, then recenter identical pixels without a backwards animation', () => {
-  const b = browser();
-  assert.equal(b.strip.scrollLeft, 1500);
-  b.advance(1839); assert.equal(b.strip.scrollLeft, 1500);
-  b.advance(1); assert.equal(b.strip.scrollLeft, 1800);
-  b.advance(8000); assert.equal(b.strip.scrollLeft, 3000);
-  b.advance(160); assert.equal(b.strip.scrollLeft, 1500);
-  const movement = b.strip.moves.slice(1);
-  assert.deepEqual(movement.filter((m) => m.behavior === 'smooth').map((m) => m.left), [1800, 2100, 2400, 2700, 3000]);
-  const normalization = movement.at(-1);
-  assert.equal(normalization.behavior, 'instant'); assert.deepEqual(normalization.before, normalization.after);
-  assert.equal(b.previous.disabled, false); assert.equal(b.next.disabled, false);
-  b.cleanup();
+test('unequal-width rows center their first image and share every animation frame and two-second start', () => {
+  const b = browser(); b.rows.forEach((r) => centered(r, 0));
+  const starts = b.rows.map(({ strip }) => strip.scrollLeft);
+  b.advance(1999); assert.deepEqual(b.rows.map(({ strip }) => strip.scrollLeft), starts);
+  b.advance(257);
+  const fractions = b.rows.map(({ strip, originals }, r) => {
+    const distance = (originals[0].baseWidth + originals[1].baseWidth) / 2 + strip.gap;
+    return (strip.scrollLeft - starts[r]) / distance;
+  });
+  assert.ok(fractions[0] > 0 && fractions[0] < 1);
+  assert.ok(Math.abs(fractions[0] - fractions[1]) < 1e-10, 'same eased progress despite different widths');
+  b.advance(272); b.rows.forEach((r) => centered(r, 1));
+  assert.deepEqual(b.rows[0].strip.moves.map((m) => m.at), b.rows[1].strip.moves.map((m) => m.at));
+  assert.equal(b.jobs.size, 1, 'one autoplay timer for both rows');
+  b.advance(1472); assert.equal(b.rows[0].strip.moves.at(-1).at, 2528);
+  b.advance(528); b.rows.forEach((r) => centered(r, 2)); b.cleanup();
 });
 
-test('previous crosses the leading seam with the same stationary pixel equivalence', () => {
-  const b = browser(); b.previous.emit('click'); assert.equal(b.strip.scrollLeft, 1200);
-  b.advance(160); assert.equal(b.strip.scrollLeft, 2700);
-  assert.deepEqual(b.strip.moves.at(-1).before, b.strip.moves.at(-1).after); b.cleanup();
-});
-
-test('unequal fractional card widths and thirteen originals retain exact repeated geometry over many cycles', () => {
-  const b = browser({ viewport: 710, widths: Array.from({ length: 13 }, (_, i) => 190.125 + i * 7.25), gap: 13.5 });
-  const start = b.strip.scrollLeft;
-  for (let i = 0; i < 52; i++) { b.next.emit('click'); b.advance(160); }
-  assert.equal(b.strip.scrollLeft, start);
-  for (const move of b.strip.moves.filter((m) => m.behavior === 'instant').slice(1)) assert.deepEqual(move.before, move.after);
-  b.cleanup();
-});
-
-test('rapid manual arrows queue whole steps and do not race the running animation or autoplay', () => {
-  const b = browser(); b.next.emit('click'); b.next.emit('click'); b.next.emit('click');
-  assert.equal(b.strip.scrollLeft, 1800);
-  b.advance(480); assert.equal(b.strip.scrollLeft, 2400);
-  b.advance(1999); assert.equal(b.strip.scrollLeft, 2400);
-  b.advance(1); assert.equal(b.strip.scrollLeft, 2700); b.cleanup();
-});
-
-test('native integer scroll rounding just below a fractional cycle boundary still recenters the first artwork', () => {
-  const b = browser({ viewport: 367, widths: [280.171875, 280, 280, 280, 280], gap: 13, roundScroll: true });
-  const start = b.strip.scrollLeft;
-  for (let i = 0; i < 5; i++) { b.next.emit('click'); b.advance(160); }
-  assert.equal(b.strip.scrollLeft, start);
-  assert.equal(b.visible()[0].src, '0.png');
-  assert.ok(b.strip.moves.at(-1).before[0].left < 1);
-  b.cleanup();
-});
-
-test('hover, reading focus, hidden and offscreen states pause autoplay and resume a fresh interval', () => {
-  const b = browser(); const start = b.strip.scrollLeft;
-  b.strip.emit('mouseenter'); b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.strip.emit('mouseleave'); b.doc.activeElement = b.originals[0].children[0]; b.strip.emit('focusin');
-  b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.doc.activeElement = null; b.strip.emit('focusout'); b.doc.hidden = true; b.doc.emit('visibilitychange');
-  b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.doc.hidden = false; b.doc.emit('visibilitychange'); b.intersect(false); b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.intersect(true); b.advance(1999); assert.equal(b.strip.scrollLeft, start); b.advance(1); assert.equal(b.strip.scrollLeft, start + 300); b.cleanup();
-});
-
-test('Play retains focus and resumes after hover exits; explicit pause survives lifecycle restoration', () => {
-  const b = browser(); const start = b.strip.scrollLeft;
-  b.doc.activeElement = b.pause; b.pause.emit('focusin'); b.pause.emit('mouseenter'); b.pause.emit('click');
-  b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.pause.emit('click'); b.pause.emit('mouseleave'); b.advance(2000); assert.equal(b.strip.scrollLeft, start + 300);
-  b.advance(160); b.pause.emit('click'); b.view.emit('pagehide'); b.view.emit('pageshow'); b.view.emit('pageshow');
-  b.advance(6000); assert.equal(b.strip.scrollLeft, start + 300); assert.equal(b.pause.getAttribute('aria-pressed'), 'true'); b.cleanup();
-});
-
-test('pagehide cancels pending work and repeated pageshow leaves one autoplay timer', () => {
-  const b = browser(); const start = b.strip.scrollLeft;
-  b.view.emit('pagehide'); assert.equal(b.jobs.size, 0); b.advance(6000); assert.equal(b.strip.scrollLeft, start);
-  b.view.emit('pageshow'); b.view.emit('pageshow'); assert.equal(b.jobs.size, 1);
-  b.advance(2000); assert.equal(b.strip.scrollLeft, start + 300); b.cleanup();
-});
-
-test('reduced motion retains cyclic instant manual navigation without autoplay', () => {
-  const b = browser({ reduced: true }); const start = b.strip.scrollLeft;
-  b.advance(6000); assert.equal(b.strip.scrollLeft, start); assert.equal(b.pause.disabled, true);
-  b.previous.emit('click'); b.advance(160); assert.equal(b.strip.scrollLeft, start + 1200);
-  assert.equal(b.strip.moves.some((m) => m.behavior === 'smooth'), false); b.cleanup();
-});
-
-test('keyboard Home and End refer to originals; drag release normalizes a long native scroll', () => {
-  const b = browser({ viewport: 367, widths: Array(9).fill(268.25), gap: 13 });
-  const start = b.strip.scrollLeft;
-  assert.equal(b.key('End').defaultPrevented, true); b.advance(160); assert.equal(b.strip.scrollLeft, start + 8 * 281.25);
-  b.key('Home'); b.advance(160); assert.equal(b.strip.scrollLeft, start);
-  b.strip.emit('pointerdown'); b.strip.scrollTo({ left: b.strip.scrollWidth - b.strip.clientWidth, behavior: 'instant' });
-  b.advance(2000); const edge = b.visible(); b.view.emit('pointerup'); b.advance(160);
-  assert.deepEqual(edge, b.visible()); b.cleanup();
-});
-
-test('resize preserves the logical artwork and recomputes variable measured offsets', () => {
-  const b = browser({ widths: [200.5, 350.25, 280.75, 400.5] });
-  b.next.emit('click'); b.advance(160); b.next.emit('click'); b.advance(160);
-  assert.equal(b.visible()[0].src, '2.png');
-  b.strip.scale = 1.27; b.strip.clientWidth = 390; b.view.emit('resize'); b.advance(160);
-  assert.equal(b.visible()[0].src, '2.png');
-  b.strip.clientWidth = 2000; b.view.emit('resize'); b.advance(160);
-  assert.equal(b.strip.children.length, 4); assert.equal(b.next.disabled, true); assert.equal(b.pause.hidden, true); b.cleanup();
-});
-
-test('clones keep pointer hrefs but have no duplicate IDs, original markers or keyboard stops; cleanup removes them', () => {
-  const b = browser();
-  const clones = b.strip.children.filter((n) => n.hasAttribute('data-carousel-clone'));
-  assert.equal(clones.length, 10);
-  for (const clone of clones) {
-    assert.equal(clone.getAttribute('aria-hidden'), 'true'); assert.equal(clone.hasAttribute('data-original-artwork'), false);
-    assert.equal([clone, ...clone.querySelectorAll('*')].some((n) => n.hasAttribute('id')), false);
-    assert.equal(clone.children[0].getAttribute('tabindex'), '-1'); assert.match(clone.children[0].getAttribute('href'), /\.png$/);
-    assert.equal(clone.children[0].children[0].loading, 'lazy');
+test('both seams preserve surrounding pixels and fractional centers over repeated cycles', () => {
+  const b = browser({ viewport: 710, widths: [[190.125, 350.25, 280.75, 400.5, 261.125], [210.75, 410.125, 250.25, 360.5, 300.125]], gap: 13.5 });
+  const starts = b.rows.map(({ strip }) => strip.scrollLeft);
+  b.previous.emit('click'); b.advance(528); b.rows.forEach((r) => centered(r, 4));
+  for (const { strip } of b.rows) samePixels(strip.moves.at(-1).before, strip.moves.at(-1).after);
+  for (let i = 0; i < 21; i++) { b.next.emit('click'); b.advance(528); }
+  assert.deepEqual(b.rows.map(({ strip }) => strip.scrollLeft), starts);
+  for (const { strip } of b.rows) {
+    strip.moves.slice(1).forEach((move, i) => {
+      if (Math.abs(move.left - strip.moves[i].left) > 700) samePixels(move.before, move.after);
+    });
   }
-  b.cleanup(); b.cleanup(); assert.equal(b.strip.children.length, 5); assert.equal(b.jobs.size, 0);
-  b.next.emit('click'); b.view.emit('pageshow'); b.advance(6000); assert.equal(b.jobs.size, 0);
+  b.cleanup();
 });
 
-test('small nonoverflowing inventories remain uncloned and have no automatic work', () => {
-  const b = browser({ widths: [240, 240] }); b.advance(6000);
-  assert.equal(b.strip.children.length, 2); assert.equal(b.jobs.size, 0); assert.equal(b.previous.disabled, true); assert.equal(b.next.disabled, true); assert.equal(b.pause.hidden, true); b.cleanup();
+test('rapid arrows queue complete synchronized steps; each manual completion resets autoplay', () => {
+  const b = browser(); b.next.emit('click'); b.next.emit('click'); b.next.emit('click');
+  b.advance(3 * 528); b.rows.forEach((r) => centered(r, 3));
+  const starts = b.rows.map(({ strip }) => strip.scrollLeft);
+  b.advance(1999); assert.deepEqual(b.rows.map(({ strip }) => strip.scrollLeft), starts);
+  b.advance(529); b.rows.forEach((r) => centered(r, 4)); b.cleanup();
+});
+
+test('dragging either row settles to its nearest center and synchronizes the other row', () => {
+  const b = browser(); const row = b.rows[1];
+  const target = row.originals[2].getBoundingClientRect();
+  const targetLeft = row.strip.scrollLeft + (target.left + target.right) / 2 - row.strip.clientWidth / 2;
+  row.strip.emit('pointerdown'); row.strip.scrollTo({ left: targetLeft + 45, behavior: 'instant' });
+  b.advance(1000);
+  const sourceGap = (row.originals[2].baseWidth + row.originals[3].baseWidth) / 2 + row.strip.gap;
+  const mirrored = b.rows[0].originals[2].getBoundingClientRect();
+  assert.ok(Math.abs((mirrored.left + mirrored.right) / 2 - b.rows[0].strip.clientWidth / 2 + 45 / sourceGap * 300) < 1e-8,
+    'other row follows fractional card progress before drag release');
+  b.view.emit('pointerup'); b.advance(160 + 528);
+  b.rows.forEach((r) => centered(r, 2));
+  b.cleanup();
+});
+
+test('reading either row pauses both; modal suspension freezes motion and resumes from a centered pair', () => {
+  const b = browser(); const starts = b.rows.map(({ strip }) => strip.scrollLeft);
+  b.rows[1].strip.emit('mouseenter'); b.advance(6000);
+  assert.deepEqual(b.rows.map(({ strip }) => strip.scrollLeft), starts);
+  b.rows[1].strip.emit('mouseleave'); b.advance(2300);
+  b.cleanup.setSuspended(true); const frozen = b.rows.map(({ strip }) => strip.scrollLeft);
+  b.advance(6000); assert.deepEqual(b.rows.map(({ strip }) => strip.scrollLeft), frozen);
+  assert.equal(b.jobs.size, 0);
+  b.cleanup.setSuspended(false); b.advance(528); b.rows.forEach((r) => centered(r, 1));
+  b.advance(2528); b.rows.forEach((r) => centered(r, 2)); b.cleanup();
+});
+
+test('reading focus, hidden pages and offscreen rows pause playback; Play focus permits resume', () => {
+  const b = browser();
+  b.doc.activeElement = b.rows[1].originals[0].children[0]; b.rows[1].strip.emit('focusin'); b.advance(6000);
+  b.rows.forEach((r) => centered(r, 0));
+  b.doc.activeElement = null; b.rows[1].strip.emit('focusout'); b.doc.hidden = true; b.doc.emit('visibilitychange');
+  b.advance(6000); b.rows.forEach((r) => centered(r, 0));
+  b.doc.hidden = false; b.doc.emit('visibilitychange'); b.intersect(false); b.advance(6000); b.rows.forEach((r) => centered(r, 0));
+  b.intersect(true); b.doc.activeElement = b.pause; b.pause.emit('focusin'); b.pause.emit('click'); b.advance(6000);
+  b.rows.forEach((r) => centered(r, 0)); b.pause.emit('click'); b.advance(2528); b.rows.forEach((r) => centered(r, 1));
+  b.pause.emit('click'); b.view.emit('pagehide'); b.view.emit('pageshow'); b.view.emit('pageshow');
+  b.advance(6000); b.rows.forEach((r) => centered(r, 1)); assert.equal(b.pause.getAttribute('aria-pressed'), 'true'); b.cleanup();
+});
+
+test('reduced motion supports instant centered keyboard navigation without autoplay', () => {
+  const b = browser({ reduced: true }); b.advance(6000); b.rows.forEach((r) => centered(r, 0));
+  assert.equal(b.pause.disabled, true); assert.equal(b.key('End', 1).defaultPrevented, true);
+  b.rows.forEach((r) => centered(r, 4)); b.key('Home'); b.rows.forEach((r) => centered(r, 0));
+  b.previous.emit('click'); b.rows.forEach((r) => centered(r, 4)); assert.equal(b.jobs.size, 0); b.cleanup();
+});
+
+test('resize preserves selected images and recenters for the new viewport', () => {
+  const b = browser(); b.next.emit('click'); b.advance(528); b.next.emit('click'); b.advance(528);
+  for (const { strip } of b.rows) { strip.scale = 1.27; strip.clientWidth = 390; }
+  b.view.emit('resize'); b.rows.forEach((r) => centered(r, 2));
+  for (const { strip } of b.rows) strip.clientWidth = 4000;
+  b.view.emit('resize'); assert.equal(b.next.disabled, true); assert.equal(b.pause.hidden, true);
+  assert.equal(b.jobs.size, 0); b.rows.forEach(({ strip }) => assert.equal(strip.children.length, 5)); b.cleanup();
+});
+
+test('clones keep pointer metadata but no duplicate IDs or keyboard stops; cleanup cancels all work', () => {
+  const b = browser();
+  for (const { strip } of b.rows) {
+    const clones = strip.children.filter((n) => n.hasAttribute('data-carousel-clone')); assert.equal(clones.length, 10);
+    for (const clone of clones) {
+      assert.equal(clone.getAttribute('aria-hidden'), 'true'); assert.equal(clone.hasAttribute('data-original-artwork'), false);
+      assert.equal([clone, ...clone.querySelectorAll('*')].some((n) => n.hasAttribute('id')), false);
+      assert.equal(clone.children[0].getAttribute('tabindex'), '-1'); assert.match(clone.children[0].getAttribute('href'), /\.png$/);
+      assert.equal(clone.children[0].children[0].loading, 'lazy');
+    }
+  }
+  b.next.emit('click'); b.advance(64); b.cleanup(); b.cleanup();
+  b.rows.forEach(({ strip }) => assert.equal(strip.children.length, 5)); assert.equal(b.jobs.size, 0);
+  b.cleanup.setSuspended(false); b.next.emit('click'); b.view.emit('pageshow'); b.advance(6000); assert.equal(b.jobs.size, 0);
+});
+
+test('small inventories stay uncloned; missing markup still provides safe suspension API', () => {
+  const b = browser({ widths: [[240, 240], [280]] }); b.advance(6000);
+  assert.equal(b.rows[0].strip.children.length, 2); assert.equal(b.rows[1].strip.children.length, 1);
+  assert.equal(b.jobs.size, 0); assert.equal(b.previous.disabled, true); b.cleanup();
+  const cleanup = setupArtworkCarousel({}); cleanup.setSuspended(true); cleanup();
 });

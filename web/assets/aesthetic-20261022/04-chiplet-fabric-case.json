@@ -1,0 +1,54 @@
+{
+  "id": "04-chiplet-fabric",
+  "title": "异构芯粒：围绕共享枢纽组织计算",
+  "english_title": "Heterogeneous Chiplet Fabric",
+  "purpose": "芯粒产品架构说明、技术方案演示",
+  "representation": "system_illustration",
+  "style": "正视浅浮雕；灰白、石墨与琥珀",
+  "composition": "I/O Hub 构成画面中心，左右各两块计算区域，顶端共享存储、下方外部连接；四条计算链接各自直接接入枢纽。",
+  "image": "04-chiplet-fabric.png",
+  "prompt": "04-chiplet-fabric-prompt.txt",
+  "width": 1672,
+  "height": 941,
+  "artifact_id": "7914e89340e24eca91f664271ee6af48",
+  "initial_artifact_id": "43efa6ad5c294a6dab92b7d86788b0b8",
+  "preparation_id": "6b810a1e494f4551afdfa6955e1f802a",
+  "guide_role": "composition_reference",
+  "guide_optional": true,
+  "guide_used": false,
+  "workflow": [
+    "silicon_prepare",
+    "宿主模型语义 spec",
+    "silicon_compile",
+    "Image Gen 使用原样提示词",
+    "查看实际成图",
+    "silicon_prepare(previous_artifact_id, feedback, lock_structure)",
+    "silicon_compile",
+    "Image Gen 对实际位图做一次修复"
+  ],
+  "generation_count": 2,
+  "review": {
+    "status": "visually_reviewed",
+    "strengths": [
+      "2 个 CPU、2 个 AI、共享存储与 Hub 的关系清楚。",
+      "四条计算链接、存储链接与外部链接共 6 条双向关系可辨，最终图已去掉初稿多余的外部箭头。",
+      "修复后去掉机械装饰与黑底厚框，标题和声明正确。"
+    ],
+    "limitations": [
+      "模块外形、位置、面积和材质仅是概念表达，不代表真实 die、封装结构或布线。",
+      "保留比原意略明显的浅浮雕和琥珀边缘；不是晶体管级版图或物理连接验证。"
+    ]
+  },
+  "references": [
+    {
+      "title": "AMD 4th Gen EPYC Processor Architecture White Paper",
+      "url": "https://www.amd.com/content/dam/amd/en/documents/products/epyc/4th-gen-epyc-processor-architecture-white-paper.pdf",
+      "use": "参考多芯粒围绕 I/O 核心的主次关系和对称编组；不引用具体规格或物理版图。"
+    }
+  ],
+  "source_notes": "当前 MCP 返回 RENDER2。原准备阶段将需求选成 annotated_context；补充自然语言 internal functional regions 后才选 functional_cutaway。返回 prompt 的默认相机与显式正视要求冲突，但其中用户 art direction priority 使图像模型最终遵从正视。全程使用工具原样 prompt。",
+  "local_raw_directory": ".local/aesthetic-20261022",
+  "created": "2026-10-22",
+  "initial_prompt_file": "04-chiplet-fabric-initial-prompt.txt",
+  "prompt_kind": "edit"
+}

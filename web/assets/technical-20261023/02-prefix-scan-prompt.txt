@@ -1,0 +1,72 @@
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Use the selected background #FFFFFF and restrained thin strokes/text #263238, generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 200 mm document width: main labels about 10 pt, edge labels about 9 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "Parallel Inclusive Scan".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Selected palette: background #FFFFFF; ink #263238; primary #EDF2F5; secondary #E8EEE8; muted #F7F8F9. Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.
+Named spatial organization: top-to-bottom dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "a₀", "a₁", "a₂", "a₃". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "b₀ = a₀", "b₁ = a₀ + a₁", "b₂ = a₁ + a₂", "b₃ = a₂ + a₃". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "y₀ = b₀", "y₁ = b₁", "y₂ = b₀ + b₂", "y₃ = b₁ + b₃". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Supplied source-specific organization intent: Use four aligned element columns i=0,1,2,3. Top row input a0,a1,a2,a3. Middle row offset-1 results b0,b1,b2,b3. Bottom row offset-2 results y0,y1,y2,y3. Each same-index dependency is a straight vertical connector. The offset-1 dependencies are short diagonals into separate addition inputs; the offset-2 dependencies span two columns. Groups are subtle row labels rather than enclosing boxes. Copied b0,y0,y1 are plain compact value objects, not addition operators. Exactly four positions in each row, no serial chain within a row. Arrows into actual sums remain distinct.. Follow its named operand/bypass/state/residency relationships; dependency bands may be transposed or spaced to support this intent without changing the graph.
+Branch "a₀" into separate lanes toward "b₀ = a₀", "b₁ = a₀ + a₁"; preserve each exact connector and shared source, without serialized arrows between those branches.
+Branch "a₁" into separate lanes toward "b₁ = a₀ + a₁", "b₂ = a₁ + a₂"; preserve each exact connector and shared source, without serialized arrows between those branches.
+Branch "a₂" into separate lanes toward "b₂ = a₁ + a₂", "b₃ = a₂ + a₃"; preserve each exact connector and shared source, without serialized arrows between those branches.
+Branch "b₀ = a₀" into separate lanes toward "y₀ = b₀", "y₂ = b₀ + b₂"; preserve each exact connector and shared source, without serialized arrows between those branches.
+Branch "b₁ = a₀ + a₁" into separate lanes toward "y₁ = b₁", "y₃ = b₁ + b₃"; preserve each exact connector and shared source, without serialized arrows between those branches.
+At "b₁ = a₀ + a₁", keep incoming operands from "a₁", "a₀" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "b₂ = a₁ + a₂", keep incoming operands from "a₂", "a₁" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "b₃ = a₂ + a₃", keep incoming operands from "a₃", "a₂" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "y₂ = b₀ + b₂", keep incoming operands from "b₂ = a₁ + a₂", "b₀ = a₀" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "y₃ = b₁ + b₃", keep incoming operands from "b₃ = a₂ + a₃", "b₁ = a₀ + a₁" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Supplied group "Input" has exact members "a₀", "a₁", "a₂", "a₃". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "b₀ = a₀", "b₁ = a₀ + a₁", "b₂ = a₁ + a₂", "b₃ = a₂ + a₃", "y₀ = b₀", "y₁ = b₁", "y₂ = b₀ + b₂", "y₃ = b₁ + b₃". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Supplied group "Offset 1" has exact members "b₀ = a₀", "b₁ = a₀ + a₁", "b₂ = a₁ + a₂", "b₃ = a₂ + a₃". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "a₀", "a₁", "a₂", "a₃", "y₀ = b₀", "y₁ = b₁", "y₂ = b₀ + b₂", "y₃ = b₁ + b₃". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Supplied group "Offset 2 · Inclusive result" has exact members "y₀ = b₀", "y₁ = b₁", "y₂ = b₀ + b₂", "y₃ = b₁ + b₃". Use a compact heading, open bracket or thin enclosure when it clarifies the real iteration, residency or phase scope. Keep operators visible and avoid empty padded frames. Every shown boundary must stop before nonmembers "a₀", "a₁", "a₂", "a₃", "b₀ = a₀", "b₁ = a₀ + a₁", "b₂ = a₁ + a₂", "b₃ = a₂ + a₃". Unowned outputs stay outside every source group; no group may expand merely to fill the canvas. A real source-group frame is meaningful scope, not a hardware package or an implied repeated-instance count.
+Required visible mathematical inventory:
+"a₀" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"a₁" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"a₂" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"a₃" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"b₀ = a₀" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"b₁ = a₀ + a₁" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"b₂ = a₁ + a₂" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"b₃ = a₂ + a₃" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"y₀ = b₀" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"y₁ = b₁" — tensor. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"y₂ = b₀ + b₂" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"y₃ = b₁ + b₃" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"a₀": "b₀ = a₀", "b₁ = a₀ + a₁".
+"a₁": "b₁ = a₀ + a₁", "b₂ = a₁ + a₂".
+"a₂": "b₂ = a₁ + a₂", "b₃ = a₂ + a₃".
+"a₃": "b₃ = a₂ + a₃".
+"b₀ = a₀": "y₀ = b₀", "y₂ = b₀ + b₂".
+"b₁ = a₀ + a₁": "y₁ = b₁", "y₃ = b₁ + b₃".
+"b₂ = a₁ + a₂": "y₂ = b₀ + b₂".
+"b₃ = a₂ + a₃": "y₃ = b₁ + b₃".
+"y₀ = b₀": terminal sink; no outgoing arrows.
+"y₁ = b₁": terminal sink; no outgoing arrows.
+"y₂ = b₀ + b₂": terminal sink; no outgoing arrows.
+"y₃ = b₁ + b₃": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "a₀" → "b₀ = a₀": 1 connector; "b₀ = a₀" → "y₀ = b₀": 1 connector; "a₁" → "b₁ = a₀ + a₁": 1 connector; "a₀" → "b₁ = a₀ + a₁": 1 connector; "b₁ = a₀ + a₁" → "y₁ = b₁": 1 connector; "a₂" → "b₂ = a₁ + a₂": 1 connector; "a₁" → "b₂ = a₁ + a₂": 1 connector; "b₂ = a₁ + a₂" → "y₂ = b₀ + b₂": 1 connector; "b₀ = a₀" → "y₂ = b₀ + b₂": 1 connector; "a₃" → "b₃ = a₂ + a₃": 1 connector; "a₂" → "b₃ = a₂ + a₃": 1 connector; "b₃ = a₂ + a₃" → "y₃ = b₁ + b₃": 1 connector; "b₁ = a₀ + a₁" → "y₃ = b₁ + b₃": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"a₀" → "b₀ = a₀"; thin solid directed dependency.
+"b₀ = a₀" → "y₀ = b₀"; thin solid directed dependency.
+"a₁" → "b₁ = a₀ + a₁"; thin solid directed dependency.
+"a₀" → "b₁ = a₀ + a₁"; thin solid directed dependency.
+"b₁ = a₀ + a₁" → "y₁ = b₁"; thin solid directed dependency.
+"a₂" → "b₂ = a₁ + a₂"; thin solid directed dependency.
+"a₁" → "b₂ = a₁ + a₂"; thin solid directed dependency.
+"b₂ = a₁ + a₂" → "y₂ = b₀ + b₂"; thin solid directed dependency.
+"b₀ = a₀" → "y₂ = b₀ + b₂"; thin solid directed dependency.
+"a₃" → "b₃ = a₂ + a₃"; thin solid directed dependency.
+"a₂" → "b₃ = a₂ + a₃"; thin solid directed dependency.
+"b₃ = a₂ + a₃" → "y₃ = b₁ + b₃"; thin solid directed dependency.
+"b₁ = a₀ + a₁" → "y₃ = b₁ + b₃"; thin solid directed dependency.
+Additional supplied mathematical expressions: show only beside the matching operator if not already printed there:
+"y = [a₀, a₀+a₁, a₀+a₁+a₂, a₀+a₁+a₂+a₃]"
+Additional requested presentation constraints: Refined academic diagram, white canvas, near-black thin lines, cool teal operand rows and restrained amber addition nodes. Four equal columns with plenty of horizontal whitespace. Top-to-bottom depth: input at top, offset 1 in middle, offset 2/output at bottom. Draw copied values as small points or plain labels and actual additions as circles with +; diagonals are appropriate because this is a scan dependency network, no elbow zigzags. Offset annotations sit unobtrusively on left. A single thin amber highlight can distinguish the offset-2 span. Avoid giant cards, dashboard headers, decorative labels, shaded panels, 3D effects. Mathematical array values must read clearly.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.

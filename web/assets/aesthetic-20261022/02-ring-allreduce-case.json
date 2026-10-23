@@ -1,0 +1,50 @@
+{
+  "id": "02-ring-allreduce",
+  "title": "Ring All-Reduce：两个阶段",
+  "purpose": "用于分布式训练通信讲解，对比四个逻辑 rank 的归约分片与完整结果复制。",
+  "category": "算法与数据流",
+  "palette": "低饱和青绿 / 紫色",
+  "composition": [
+    "两幅并列小多图共享完全一致的 rank 空间顺序。",
+    "青绿表示 Reduce-scatter，紫色表示 All-gather；中性分片瓷砖表示相同数据身份。",
+    "环上全部四条连接沿矩形边缘，中心给语义说明和求和公式。"
+  ],
+  "review": "已查看实际图片：两侧各四个 rank、GPU 编号及顺时针环方向一致；左侧一 rank 一份 Sj，右侧每个 rank 具备 S0–S3；两阶段区别一眼可读。相同 shard 名在列表与瓷砖中重复，视觉稍偏教学图而非极简论文图。",
+  "limitations": [
+    "仅阶段完成态比较；环形箭头表示该阶段通信拓扑，不是这份数据在当前拍的实时传输。",
+    "规范化显示 GPU j 保留 Sj，不对应某一具体 NCCL 版本的 rank/chunk 调度映射。",
+    "没有展示全部传输步骤、pipeline/chunk 调度、通信耗时或性能提升。"
+  ],
+  "artifact_id": "fff334644ec34434961ea3e545d16db8",
+  "preparation_id": "ce72ebdf2bf044a1bd14d7120be6f858",
+  "figure_id": "algorithm-flow",
+  "guide_role": null,
+  "guide_optional": true,
+  "sources": [
+    {
+      "title": "Demystifying NCCL — Figure 4",
+      "url": "https://spcl.ethz.ch/Publications/.pdf/hu-demystifying-nccl.pdf",
+      "use": "查看论文第 9 页 Figure 4；借鉴稳定 rank 方位、阶段分区和数据身份一致性，将逐步 trace 简化为两阶段结果。 "
+    },
+    {
+      "title": "NVIDIA NCCL Collective Operations",
+      "url": "https://docs.nvidia.com/deeplearning/nccl/archives/nccl_2287/user-guide/docs/usage/collectives.html",
+      "use": "ReduceScatter 后接 AllGather 与 AllReduce 的语义。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "process": [
+    "silicon_prepare (diagram + phase-level algorithm)",
+    "host semantic spec",
+    "silicon_compile",
+    "built-in image_gen with exact compiled prompt",
+    "actual image visual review"
+  ],
+  "imagegen_mode": "built-in",
+  "prompt": "02-ring-allreduce-prompt.txt",
+  "image": "02-ring-allreduce.png",
+  "repair_count": 0
+}

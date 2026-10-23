@@ -1,0 +1,38 @@
+{
+  "id": "07-tiled-matmul",
+  "title": "分块矩阵乘加",
+  "subtitle": "操作数配色 · 几何与计算",
+  "purpose": "GPU 算法讲解、分块计算说明、技术文档配图",
+  "composition": [
+    "用完整矩阵中的高亮子块说明输入与输出，避免把矩阵乘法画成硬件流水线。",
+    "青绿、赭黄、蓝色对应 A、B 和 C，颜色沿数据依赖保持一致。",
+    "旧输出从上方进入加法，主路径向右推进，减少线条交叉。"
+  ],
+  "evaluation": "收窄范围并进行一次局部图片修正后，输入子块、乘积与旧 C 累加关系可读，留白较均衡。",
+  "limitations": [
+    "网格与子块面积是示意，不表示真实维度或分块尺寸。",
+    "本例展示单 k 迭代，没有给出 GPU 调度或存储层次。"
+  ],
+  "artifact_id": "a8c20f52e21a4b28a7ee114cbd4717bf",
+  "reference_sources": [
+    {
+      "title": "NVIDIA Matrix Multiplication Background User's Guide",
+      "url": "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html",
+      "learned": "输出分块及沿 K 累加的解释范围。"
+    }
+  ],
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "flow": "silicon_prepare → host spec → silicon_compile → built-in Image Gen → visual inspection",
+  "guide_role": null,
+  "guide_optional": true,
+  "guide_used": false,
+  "prompt_file": "07-tiled-matmul-prompt.txt",
+  "image_file": "07-tiled-matmul.png",
+  "generation_attempts": 2,
+  "edits": 1,
+  "reference_images_used_in_generation": [],
+  "edit_prompt_file": "07-tiled-matmul-edit-prompt.txt"
+}

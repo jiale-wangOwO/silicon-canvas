@@ -1,0 +1,41 @@
+{
+  "title": "Ethernet Packet Processing",
+  "category": "system",
+  "alt": "A horizontal six-stage Ethernet packet pipeline with a separate management plane above, a shared rule table feeding the classifier and dashed configuration/policy links.",
+  "image": "06-packet-system.png",
+  "prompt": "06-packet-system-prompt.txt",
+  "edit_prompt": "06-packet-system-edit-prompt.txt",
+  "artifact_id": "41cc71066db7402c9cbcc3cc2962a9b6",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "strengths": [
+    "All six packet stages form a continuous left-to-right path with no gratuitous bends.",
+    "Rule lookup feeds Classifier directly while management policy feeds Scheduler separately.",
+    "Dashed copper control links and solid muted blue data links remain distinct, with readable short labels."
+  ],
+  "limitations": [
+    "Generated in system_illustration mode with explicit flat-schematic art direction after exact guide variants omitted scope; not a certified netlist rendering.",
+    "The rule lookup is an abstract supplied-information relation; request and response handshakes are not expanded.",
+    "Final artwork is a raster engineering illustration and retains slight tonal variation."
+  ],
+  "provenance": {
+    "workflow": "silicon_prepare → host semantic spec → silicon_compile → exact prompt → built-in Image Gen → one focused correction/finish edit",
+    "representation": "system_illustration",
+    "requested_visual_form": "flat front-facing engineering schematic",
+    "guide_role": "composition_reference",
+    "guide_optional": true,
+    "guide_used": false,
+    "prompt_source": "Exact silicon_compile returned prompt, unchanged",
+    "repair_count": 1,
+    "repair_reason": "Add the missing leftward rule-updates arrowhead and reduce shaded fills.",
+    "planning_history": [
+      "Initial detail diagram: main packet path separated from required management context.",
+      "System organization projection: main packet path and exact endpoints folded.",
+      "Flow projection: overly collapsed packet engine; rejected before Image Gen.",
+      "Selected explanatory system mode with explicit 2D schematic and complete horizontal packet path."
+    ],
+    "actual_image_review": "Visually inspected final image; all six packet stages and three dashed control paths including the corrected rule-updates arrowhead are visible."
+  }
+}
