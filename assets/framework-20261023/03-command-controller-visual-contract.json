@@ -1,0 +1,29 @@
+{
+  "version": "VIS1",
+  "family": "behavior",
+  "style": "monochrome",
+  "palette": {
+    "background": "#FFFFFF",
+    "ink": "#202020",
+    "primary": "#FFFFFF",
+    "secondary": "#ECECEC",
+    "muted": "#F6F6F6"
+  },
+  "role_fills": {
+    "compute": "#FFFFFF",
+    "storage": "#ECECEC",
+    "control/state": "#FFFFFF",
+    "interface": "#FFFFFF"
+  },
+  "character": "Neutral grayscale only. Distinguish roles by shape, grouping and line convention, without colored accents.",
+  "typography": "Neutral sans-serif: medium object names, regular signals/conditions, subdued ownership headings. Typeset mathematics properly. No all-bold text or dark title banners.",
+  "hierarchy": "Structure leads; role fills support it, unfilled containers recede. Align peers; reserve whitespace for branches and labels, not padded cards.",
+  "surface": "Solid fills, crisp narrow strokes, small arrowheads. No gradients, texture, glow, shadows or bevels. Tensor shape cues may express supplied dimensions.",
+  "precedence": "Explicit user appearance requests override preset defaults; they never change the selected technical scope, ownership, quantities or directed endpoints.",
+  "reference_mechanisms": [],
+  "user_intent": {
+    "description": "An English controller state diagram for a command engine. Preserve all supplied guards. Use a compact grayscale publication drawing.",
+    "notes": "",
+    "feedback": ""
+  }
+}

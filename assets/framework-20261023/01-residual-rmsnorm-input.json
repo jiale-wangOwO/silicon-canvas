@@ -1,0 +1,165 @@
+{
+  "description": "Draw a research-paper dataflow of residual RMS normalization. x and residual r are added into u. u branches into a square/mean/epsilon/reciprocal-square-root path and a direct multiply path; combine them to normalize u, then multiply by gamma to produce y. Show independent operands, reduction axis and the bypass clearly. English labels.",
+  "settings": {
+    "category": "algorithm",
+    "representation": "diagram",
+    "style": "signal",
+    "language": "en",
+    "aspect": "auto",
+    "completion_mode": "strict"
+  },
+  "spec": {
+    "title": "Residual RMS Normalization",
+    "category": "algorithm",
+    "groups": [],
+    "nodes": [
+      {
+        "id": "x",
+        "label": "x",
+        "kind": "io",
+        "diagram_role": "tensor",
+        "tensor_shape": "D"
+      },
+      {
+        "id": "r",
+        "label": "r",
+        "kind": "io",
+        "diagram_role": "tensor",
+        "tensor_shape": "D"
+      },
+      {
+        "id": "add",
+        "label": "Residual add",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "u = x + r",
+        "tensor_shape": "D"
+      },
+      {
+        "id": "square",
+        "label": "Square",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "q_i = u_i²"
+      },
+      {
+        "id": "mean",
+        "label": "Mean",
+        "kind": "compute",
+        "diagram_role": "reduction",
+        "equation": "m = (1/D) ∑_i q_i",
+        "detail": "Reduce over i = 1...D"
+      },
+      {
+        "id": "eps",
+        "label": "Stabilize",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "v = m + ε"
+      },
+      {
+        "id": "inv",
+        "label": "Inverse RMS",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "s = 1/√v"
+      },
+      {
+        "id": "norm",
+        "label": "Normalize",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "z_i = u_i s"
+      },
+      {
+        "id": "gamma",
+        "label": "γ",
+        "kind": "io",
+        "diagram_role": "tensor",
+        "tensor_shape": "D"
+      },
+      {
+        "id": "scale",
+        "label": "Scale",
+        "kind": "compute",
+        "diagram_role": "operator",
+        "equation": "y_i = γ_i z_i"
+      },
+      {
+        "id": "y",
+        "label": "y",
+        "kind": "io",
+        "diagram_role": "tensor",
+        "tensor_shape": "D"
+      }
+    ],
+    "edges": [
+      {
+        "source": "x",
+        "target": "add",
+        "kind": "data",
+        "label": ""
+      },
+      {
+        "source": "r",
+        "target": "add",
+        "kind": "data",
+        "label": ""
+      },
+      {
+        "source": "add",
+        "target": "square",
+        "kind": "data",
+        "label": "u"
+      },
+      {
+        "source": "square",
+        "target": "mean",
+        "kind": "data",
+        "label": "q"
+      },
+      {
+        "source": "mean",
+        "target": "eps",
+        "kind": "data",
+        "label": "m"
+      },
+      {
+        "source": "eps",
+        "target": "inv",
+        "kind": "data",
+        "label": "v"
+      },
+      {
+        "source": "inv",
+        "target": "norm",
+        "kind": "data",
+        "label": "s"
+      },
+      {
+        "source": "add",
+        "target": "norm",
+        "kind": "data",
+        "label": "u"
+      },
+      {
+        "source": "norm",
+        "target": "scale",
+        "kind": "data",
+        "label": "z"
+      },
+      {
+        "source": "gamma",
+        "target": "scale",
+        "kind": "data",
+        "label": ""
+      },
+      {
+        "source": "scale",
+        "target": "y",
+        "kind": "data",
+        "label": ""
+      }
+    ]
+  }
+}

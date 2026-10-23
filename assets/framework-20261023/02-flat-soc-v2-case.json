@@ -1,0 +1,40 @@
+{
+  "title": "Coherent Heterogeneous SoC — shared visual language study",
+  "category": "system",
+  "alt": "A planar SoC study with stacked CPU and NPU client groups, coherent fabric, memory and host paths. Unedited first pass with a remaining shared ownership error.",
+  "image": "02-flat-soc-v2.png",
+  "prompt": "02-flat-soc-v2-prompt.txt",
+  "source_input": "02-flat-soc-input.json",
+  "visual_contract": "02-flat-soc-v2-visual-contract.json",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "strengths": [
+    "The whole figure remains front-facing and two-dimensional, with no package base, metallic texture or visible side faces.",
+    "Compared with v1, the color families are quieter and more consistent: parallel compute clients share blue, caches share warm pale fills, and host/context boundaries are restrained.",
+    "The left-to-right memory path and lower host ingress are largely straight. PCIe Endpoint now points toward Coherent Fabric, correcting the reversed direction seen in v1.",
+    "The title is integrated into the system boundary rather than occupying a large separate banner; names and peer groups are readable."
+  ],
+  "limitations": [
+    "Coherent Fabric is outside the Shared Resources boundary. Source ownership places both Coherent Fabric and Shared LLC inside Shared Resources, so this image is not an accepted exact architecture diagram.",
+    "The compiled annotated_context view deliberately lists only the external DRAM and host links; the image still includes additional internal request paths from the retained source context despite explicit closed-scope instructions. Source-history leakage remains an observed limitation.",
+    "Ownership containers have broad tinted fills and visible tonal variation, although the shared graphic contract requests unfilled quiet ownership boundaries and solid flat fills.",
+    "Text, arrows and the outer boundary remain heavier than the requested restrained treatment. More whitespace is used inside the vertical fabric strip than needed.",
+    "This single fresh generation demonstrates observed changes, not stable success, a quality score, or correctness certification. It is comparison evidence and should not be presented as a validated final showcase."
+  ],
+  "provenance": {
+    "workflow": "Same saved source input → updated silicon_compile → exact compiled prompt → one fresh built-in Image Gen call; no reference image, augmentation or bitmap repair",
+    "tool": "image_gen",
+    "representation": "system_illustration",
+    "explanatory_mode": "annotated_context",
+    "resolved_projection": "flat_2d",
+    "guide_used": false,
+    "transparent_background": false,
+    "prompt_source": "Exact unchanged contents of 02-flat-soc-v2-prompt.txt",
+    "source_input": "02-flat-soc-input.json",
+    "repair_count": 0,
+    "comparison_to": "02-flat-soc-case.json",
+    "actual_image_review": "Visually inspected. Palette, planar layout and host direction improved relative to v1, but Shared Resources ownership and selected-view scope are not correct. Not accepted as an accurate final engineering figure."
+  }
+}

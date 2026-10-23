@@ -2,6 +2,15 @@
   "rows": [
     [
       {
+        "source": "assets/framework-20261023/01-residual-rmsnorm.png",
+        "title": "Residual RMS Normalization",
+        "alt": "Residual add splits into RMS reduction and a direct normalization bypass, followed by gamma scaling.",
+        "origin": "imagegen",
+        "shape": "panorama",
+        "category": "算法与数据流",
+        "description": "残差加法分出归约与旁路，在归一化处汇合，gamma 就近接入最终缩放。"
+      },
+      {
         "source": "assets/technical-20261023/01-attention.png",
         "title": "Scaled Dot-Product Attention",
         "alt": "Single-head attention: independent Q and K branches form scaled scores, softmax produces probabilities, and a separate V branch joins the final matrix product.",
@@ -138,6 +147,15 @@
       }
     ],
     [
+      {
+        "source": "assets/framework-20261023/03-command-controller.png",
+        "title": "命令控制器状态机",
+        "alt": "Four command states, two guarded self-loops and an acknowledgment return in neutral grayscale.",
+        "origin": "imagegen",
+        "shape": "panorama",
+        "category": "微架构与控制",
+        "description": "四个状态、两条等待自循环和一条确认返回，区分前进、等待与完成。"
+      },
       {
         "source": "assets/technical-20261023/02-prefix-scan.png",
         "title": "Parallel Inclusive Scan",

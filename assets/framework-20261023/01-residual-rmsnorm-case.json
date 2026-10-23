@@ -1,0 +1,13 @@
+{
+  "title": "Residual RMS Normalization",
+  "category": "algorithm",
+  "image": "01-residual-rmsnorm.png",
+  "prompt": "01-residual-rmsnorm-prompt.txt",
+  "input": "01-residual-rmsnorm-input.json",
+  "style": "Signal · 张量与算子分色",
+  "composition": ["独立的 x、r 在残差加法处汇合", "归约分支在上，u 的旁路保持连续", "gamma 在最终缩放处就近接入"],
+  "evaluation": "按新版工具的完整提示词原样调用内置 Image Gen，一次生成，无人工改写或修复。可见主链、旁路与独立 gamma 输入方向正确；张量与运算用两种浅色区分。",
+  "strengths": ["归约和旁路的层级清楚", "mean、epsilon、inverse RMS 和两次乘法语义可辨", "独立操作数不被错误串成流水线"],
+  "limitations": ["运算名称部分被数学符号替代，没有逐一打印原始对象名称", "填色仍有轻微明暗变化，箭头和字体略粗", "这是单次成图的可见检查，没有进行印刷物理尺寸校验"],
+  "provenance": {"workflow": "Shared compiler → exact compiled prompt → built-in Image Gen", "repair_count": 0, "prompt_modified": false, "guide_used": false, "dimensions": [2166, 726]}
+}
