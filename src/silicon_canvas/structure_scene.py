@@ -10,6 +10,8 @@ import math
 from pathlib import Path
 import re
 
+from .visual_style import boundary_color, result_palette, role_fill, route_color
+
 
 def compact_path(points, tolerance=1e-7):
     """Remove zero-length/collinear geometry without changing a connection."""
@@ -388,10 +390,10 @@ def render(result,figure,labels_only=False):
     width,height=scene['width'],scene['height']
     if plan.get('flow_basis')=='control' and plan['canvas'].get('label_unit_pixels',0)>40:
         width=1100;height=round(scene['height']*width/scene['width'])
-    img=Image.new('RGB',(width,height),'white');draw=ImageDraw.Draw(img)
+    palette=result_palette(result)
+    img=Image.new('RGB',(width,height),palette['background']);draw=ImageDraw.Draw(img)
     fonts={size:ImageFont.truetype(str(font_path),size,layout_engine=ImageFont.Layout.BASIC) for size in [14,16,18,20,22,24]}
     source={n['id']:n for n in result['spec']['nodes']}
-    palette={p.split()[0]:p.split()[1].rstrip('.') for p in result['style_prompt'].split('Palette: ')[1].split('\n')[0].split('; ')}
     ink=palette['ink'];scale=lambda b:(b['x']*width,b['y']*height,(b['x']+b['width'])*width,(b['y']+b['height'])*height)
     def text_lines(text,box,size=20):
         x0,y0,x1,y1=box;font=fonts[size];lines=[];current=''
@@ -419,8 +421,8 @@ def render(result,figure,labels_only=False):
         draw.text((x0+12,y0+7),frame['label'],font=fonts[24],fill=ink)
     for cap in plan.get('containers',[]):
         if cap.get('is_system_boundary') or cap.get('replaces_region') or cap.get('render_boundary') is False:continue
-        x0,y0,x1,y1=scale(cap['box']);draw.rectangle((x0,y0,x1,y1),outline='#AFB8BE',width=1)
-        tw=draw.textlength(cap['label'],font=fonts[20]);draw.rectangle((x0+7,y0-23,x0+11+tw,y0+1),fill='white')
+        x0,y0,x1,y1=scale(cap['box']);draw.rectangle((x0,y0,x1,y1),outline=boundary_color(palette),width=1)
+        tw=draw.textlength(cap['label'],font=fonts[20]);draw.rectangle((x0+7,y0-23,x0+11+tw,y0+1),fill=palette['background'])
         draw.text((x0+9,y0-23),cap['label'],font=fonts[20],fill=ink)
     # Continuous connections first; symbols mask only their own interiors.
     def arrow(a,b,color):
@@ -444,7 +446,7 @@ def render(result,figure,labels_only=False):
                 if a[1]==b[1] and box[1]-2<a[1]<box[3]+2 and max(min(a[0],b[0]),box[0]-2)<min(max(a[0],b[0]),box[2]+2):return True
         return False
     for e in scene['routes']:
-        points=[(x*width,y*height) for x,y in e['points']];dashed=e.get('stroke_style', 'dashed' if e['kind'] in {'control','clock','feedback'} else 'solid')=='dashed';color='#727E87' if dashed else e.get('line_color',ink)
+        points=[(x*width,y*height) for x,y in e['points']];dashed=e.get('stroke_style', 'dashed' if e['kind'] in {'control','clock','feedback'} else 'solid')=='dashed';color=boundary_color(palette,strong=True) if dashed else route_color(e.get('line_color'),palette)
         for a,b in zip(points,points[1:]):
             if dashed:
                 length=math.dist(a,b)
@@ -473,21 +475,21 @@ def render(result,figure,labels_only=False):
     for obj in plan['macro_nodes']:
         box=scale(obj['box']);x0,y0,x1,y1=box
         if obj.get('template_slots'):
-            draw.rectangle(box,fill='white',outline=ink,width=1)
+            draw.rectangle(box,fill=palette['background'],outline=ink,width=1)
             label_box=(x0+5,y0+3,x1-5,y0+(y1-y0)*obj.get('header_fraction',.14))
             if not text_lines(obj['label'],label_box,22):return None
             for slot in obj['template_slots']:
                 b=slot['box'];child=(x0+b['x']*(x1-x0),y0+b['y']*(y1-y0),x0+(b['x']+b['width'])*(x1-x0),y0+(b['y']+b['height'])*(y1-y0))
-                fill=palette['secondary'] if slot['kind']=='memory' else palette['primary'] if slot['kind']=='compute' else 'white'
-                draw.rectangle(child,fill=fill,outline='#65747D',width=1)
+                fill=role_fill(slot['kind'],palette)
+                draw.rectangle(child,fill=fill,outline=boundary_color(palette,strong=True),width=1)
                 size=18 if child[3]-child[1]>=48 else 16
                 if not label_and_parameters(source.get(slot['source_node_id']),slot.get('display_label',slot['label']),child,size) and not (size>16 and label_and_parameters(source.get(slot['source_node_id']),slot.get('display_label',slot['label']),child,16)):return None
         else:
-            fill=palette['secondary'] if obj['kind']=='memory' else palette['primary'] if obj['kind']=='compute' else 'white'
+            fill=role_fill(obj['kind'],palette)
             draw.rectangle(box,fill=fill,outline=ink,width=1)
             if not label_and_parameters(source.get(obj['id']),obj['label'],box,22):return None
     for text,box,color in label_tasks:
-        draw.rectangle((box[0]-2,box[1]-1,box[2]+2,box[3]+1),fill='white')
+        draw.rectangle((box[0]-2,box[1]-1,box[2]+2,box[3]+1),fill=palette['background'])
         draw.text((box[0],box[1]),text,font=fonts[16],fill=color)
     if labels_only:
         return {'width':width,'height':height,'labels':[{'text':text,'box':{'x':round(box[0]/width,6),'y':round(box[1]/height,6),'width':round((box[2]-box[0])/width,6),'height':round((box[3]-box[1])/height,6)},'color':color} for text,box,color in label_tasks]}

@@ -1,0 +1,79 @@
+{
+  "description": "An English controller state diagram for a command engine. Preserve all supplied guards. Use a compact grayscale publication drawing.",
+  "settings": {
+    "category": "fsm",
+    "representation": "diagram",
+    "style": "monochrome",
+    "language": "en",
+    "completion_mode": "strict"
+  },
+  "spec": {
+    "title": "Command Controller",
+    "category": "fsm",
+    "groups": [],
+    "nodes": [
+      {
+        "id": "idle",
+        "label": "IDLE",
+        "kind": "state",
+        "detail": "Initial state; busy=0"
+      },
+      {
+        "id": "fetch",
+        "label": "FETCH",
+        "kind": "state",
+        "detail": "busy=1"
+      },
+      {
+        "id": "execute",
+        "label": "EXECUTE",
+        "kind": "state",
+        "detail": "busy=1"
+      },
+      {
+        "id": "done",
+        "label": "DONE",
+        "kind": "state",
+        "detail": "done=1"
+      }
+    ],
+    "edges": [
+      {
+        "source": "idle",
+        "target": "fetch",
+        "label": "start",
+        "kind": "control"
+      },
+      {
+        "source": "fetch",
+        "target": "execute",
+        "label": "ready",
+        "kind": "control"
+      },
+      {
+        "source": "fetch",
+        "target": "fetch",
+        "label": "!ready",
+        "kind": "control"
+      },
+      {
+        "source": "execute",
+        "target": "done",
+        "label": "complete",
+        "kind": "control"
+      },
+      {
+        "source": "execute",
+        "target": "execute",
+        "label": "!complete",
+        "kind": "control"
+      },
+      {
+        "source": "done",
+        "target": "idle",
+        "label": "ack",
+        "kind": "control"
+      }
+    ]
+  }
+}

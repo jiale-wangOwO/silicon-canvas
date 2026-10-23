@@ -1,5 +1,7 @@
 const base = './assets/aesthetic-20261022/';
 const entries = [
+  ['01-residual-rmsnorm', 'algorithm', 'Residual RMS Normalization', './assets/framework-20261023/'],
+  ['03-command-controller', 'system', 'Command Controller', './assets/framework-20261023/'],
   ['05-compute-package', 'product', '黑曜计算封装'],
   ['01-gated-mlp', 'algorithm', 'SwiGLU：门控与融合'],
   ['06-chiplet-exploded', 'product', 'Chiplet 层间组装'],
@@ -21,17 +23,17 @@ const node = (tag, text, className) => {
 let filter = 'all';
 let selectedId = '';
 let lastTrigger;
-const cases = await Promise.all(entries.map(async ([id, group, title]) => {
+const cases = await Promise.all(entries.map(async ([id, group, title, folder = base]) => {
   let data = {};
   try {
-    const response = await fetch(`${base}${id}-case.json`);
+    const response = await fetch(`${folder}${id}-case.json`);
     if (response.ok) data = await response.json();
   } catch { /* Images remain available if supplementary text cannot load. */ }
   return {
     ...data, id, group, title: data.title || title,
-    image: base + (data.image_file || data.image || `${id}.png`),
-    thumbnail: `./assets/showcase-thumbs/aesthetic-20261022--${id}.webp`,
-    prompt: base + (data.prompt_file || data.prompt || `${id}-prompt.txt`),
+    image: folder + (data.image_file || data.image || `${id}.png`),
+    thumbnail: `./assets/showcase-thumbs/${folder.split('/').filter(Boolean).pop()}--${id}.webp`,
+    prompt: folder + (data.prompt_file || data.prompt || `${id}-prompt.txt`),
     style: data.subtitle || data.palette || data.style || '',
     composition: asList(data.composition),
     evaluation: data.evaluation || (typeof data.review === 'string' ? data.review : asList(data.review?.strengths).join(' ')),

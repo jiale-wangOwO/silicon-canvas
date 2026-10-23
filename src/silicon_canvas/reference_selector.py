@@ -71,6 +71,30 @@ GENRES = {
     "behavior": {"algorithm": 4, "fsm": 4, "dataflow": 1},
 }
 
+# Reference metadata chooses mechanisms; reference captions never become
+# generation instructions. These refine the selected display without changing
+# its objects, routing, ownership, palette or fixed guide coordinates.
+_EXPRESSION_RULES = {
+    "organization": "Within the selected arrangement, make existing ownership headings quieter than resource names and keep peer labels on consistent typographic baselines; do not add headings or group boundaries.",
+    "hierarchy": "Use a consistent stroke hierarchy for the existing ownership boundaries, keeping enclosing frames quieter than contained resources; preserve every supplied boundary and placement.",
+    "repetition": "Give confirmed equivalent instances the same graphic treatment and label rhythm within their existing positions, while retaining all source-backed differences; do not duplicate, fold or relocate instances.",
+    "private_shared": "Make the existing distinction between private ownership and shared resources readable through heading and boundary hierarchy; keep the selected membership and individual connections intact.",
+    "shared_band": "Treat each already shared resource as a coherent visual unit across its existing extent; do not create a bus or merge independent links to achieve a continuous appearance.",
+    "zoom": "Keep the existing representative-detail inset visually subordinate and its identity link unambiguous, preserving its approved position and the distinction between an explanation and another hardware instance.",
+    "flow": "Make the selected data path easy to trace with consistent arrowheads, clear endpoints and restrained line weight; preserve fixed guide routes and avoid ornamental bends on unconstrained clear segments.",
+    "dual_input": "Keep the supplied operands individually traceable at their existing convergence, with distinct readable endpoints and labels; do not imply an additional merge or an order between independent inputs.",
+    "branch_merge": "Make existing branch and join points readable with clean junctions and distinct arrowheads; preserve the supplied branches, convergence semantics and selected route geometry.",
+    "return": "Keep each existing return path distinguishable from forward traffic through clear arrowheads and endpoint labels; preserve its routing and do not add an outer detour for decoration.",
+    "memory": "Use consistent silhouettes and text hierarchy for the visible storage resources while preserving their distinct levels and connections; do not add storage tiers or a common bus.",
+    "control_data": "Differentiate the existing control and data paths using the selected stroke conventions and a consistent weight hierarchy; preserve their endpoints without introducing another lane or legend.",
+    "tensor": "Keep supplied mathematical objects visually distinct from operations, with shape annotations legible and associated with their own object; preserve the selected glyph grammar and do not invent dimensions.",
+    "operator": "Give existing operation names and exact mathematical expressions a consistent typographic hierarchy, retaining their full meaning without duplicating prose inside the glyphs.",
+    "recurrence": "Keep the supplied state symbols and update dependencies recognizable throughout the existing recurrence, using consistent label treatment; do not unroll iterations or invent an extra state rail.",
+    "reuse": "Make the already specified residency and reuse annotations concise and consistently placed beside their existing objects; do not invent buffers, copies or data movement.",
+    "timing": "Use consistent visual alignment for the supplied event or time positions and keep labels clear of their marks; preserve every event position, interval and stated ordering.",
+    "reduction": "Make the existing reduction and its supplied operands readable with a consistent operator treatment and precise endpoints; do not infer additional reduction levels from a junction.",
+}
+
 
 def _items(value):
     return value if isinstance(value, list) else []
@@ -147,17 +171,77 @@ def _records():
 
 
 def _visible_graph(spec, figure):
-    nodes = [node for node in _items(spec.get("nodes")) if isinstance(node, dict) and isinstance(node.get("id"), str)]
-    wanted = set(item for item in _items(figure.get("node_ids")) if isinstance(item, str))
-    if wanted:
-        nodes = [node for node in nodes if node["id"] in wanted]
-    ids = {node["id"] for node in nodes}
-    all_edges = [edge for edge in _items(spec.get("edges")) if isinstance(edge, dict)]
-    if not figure.get("abstract") and isinstance(figure.get("edge_indices"), list):
-        edges = [all_edges[index] for index in figure["edge_indices"] if type(index) is int and 0 <= index < len(all_edges)]
+    """Rank the drawing the reader sees, not the source ledger it summarizes."""
+    layout = figure.get("structure_layout") if isinstance(figure.get("structure_layout"), dict) else {}
+    brief = figure.get("render_brief") if isinstance(figure.get("render_brief"), dict) else {}
+    visible = brief.get("visible_content")
+    if isinstance(visible, dict):
+        # Region membership is a caption/inventory, not visible internal wiring.
+        nodes = [{"id": item["id"], "label": item.get("label", ""),
+                  "kind": item.get("role", "resource")}
+                 for item in _items(visible.get("regions")) + _items(visible.get("context_objects"))
+                 if isinstance(item, dict) and isinstance(item.get("id"), str)]
+        edges = [{**edge, "kind": (_items(edge.get("kinds")) or ["relation"])[0]}
+                 for edge in _items(visible.get("relationships")) if isinstance(edge, dict)]
+    elif layout.get("type") in {"publication", "behavioral"} and isinstance(layout.get("macro_nodes"), list):
+        # Finalized guides can differ from the initial reading-plan projection.
+        nodes, edges = layout["macro_nodes"], _items(layout.get("macro_edges"))
+    elif isinstance(figure.get("macro_nodes"), list) or figure.get("abstract"):
+        nodes = _items(figure.get("macro_nodes", layout.get("macro_nodes")))
+        edges = _items(figure.get("macro_edges", layout.get("macro_edges")))
     else:
-        edges = all_edges
-    return nodes, [edge for edge in edges if edge.get("source") in ids and edge.get("target") in ids]
+        nodes = _items(spec.get("nodes"))
+        if isinstance(figure.get("node_ids"), list):
+            wanted = {item for item in figure["node_ids"] if isinstance(item, str)}
+            nodes = [node for node in nodes if isinstance(node, dict) and node.get("id") in wanted]
+        all_edges = _items(spec.get("edges"))
+        edges = [all_edges[index] for index in figure["edge_indices"] if type(index) is int and 0 <= index < len(all_edges)] if isinstance(figure.get("edge_indices"), list) else all_edges
+    nodes = [node for node in nodes if isinstance(node, dict) and isinstance(node.get("id"), str)]
+    ids = {node["id"] for node in nodes}
+    return nodes, [edge for edge in edges if isinstance(edge, dict) and edge.get("source") in ids and edge.get("target") in ids]
+
+
+def _visible_groups(spec, nodes, layout):
+    """Only ownership represented by this display can suggest visual nesting."""
+    ids = {node["id"] for node in nodes}
+    ids.update(node.get("original_group", node.get("group", "")) for node in nodes)
+    ids.update(container.get("source_group") for container in _items(layout.get("containers")) if isinstance(container, dict) and container.get("render_boundary") is not False)
+    return [group for group in _items(spec.get("groups")) if isinstance(group, dict) and group.get("id") in ids]
+
+
+def _visible_repetition(nodes, figure, layout):
+    ids = {node["id"] for node in nodes}
+    families = _items(layout.get("repeat_families")) + _items(figure.get("repeat_families"))
+    for family in families:
+        if not isinstance(family, dict):
+            continue
+        instances = {item for item in _items(family.get("instances")) if isinstance(item, str)}
+        if len(ids & instances) >= 2:
+            return True
+    equivalents = Counter(node.get("equivalent_to") for node in nodes if node.get("equivalent_to") and node["id"] != node["equivalent_to"])
+    return any(count >= 2 or (target in ids and count >= 1) for target, count in equivalents.items())
+
+
+def _has_cycle(edges):
+    remaining, successors = Counter(), defaultdict(set)
+    for edge in edges:
+        if edge.get("kind") == "clock":
+            continue
+        source, target = edge["source"], edge["target"]
+        remaining.setdefault(source, 0)
+        if target not in successors[source]:
+            successors[source].add(target)
+            remaining[target] += 1
+    ready = [node for node, count in remaining.items() if not count]
+    visited = 0
+    while ready:
+        source = ready.pop()
+        visited += 1
+        for target in successors[source]:
+            remaining[target] -= 1
+            if remaining[target] == 0:
+                ready.append(target)
+    return visited < len(remaining)
 
 
 def _task(spec, figure):
@@ -170,7 +254,7 @@ def _task(spec, figure):
     category = _text(spec.get("category"))
     if not nodes:
         return {"family": "unknown", "view_role": role, "mode": mode.strip(), "weights": {},
-                "visible_nodes": 0, "edge_kinds": {}, "package_allowed": False}
+                "visible_nodes": 0, "edge_kinds": {}, "package_allowed": False, "expression_traits": []}
     package_allowed = role in {"package", "packaging", "package-overview"} or bool(re.search(r"package|packaging|封装", mode))
     data = [edge for edge in edges if edge.get("kind", "data") == "data"]
     control = [edge for edge in edges if edge.get("kind") in {"control", "feedback", "clock"}]
@@ -182,19 +266,30 @@ def _task(spec, figure):
     by_id = {node["id"]: node for node in nodes}
     algorithm = figure.get("algorithm_flow_plan")
     if isinstance(algorithm, dict):
-        motifs = algorithm.get("motifs", {})
-        weights = {"flow": 5, "operator": 9, "tensor": 14}
-        if motifs.get("joins"):
+        objects = [item for item in _items(algorithm.get("objects")) if isinstance(item, dict) and item.get("source_node_id") in by_id]
+        roles = {item.get("role") for item in objects}
+        weights = {"flow": 5} if edges else {}
+        if roles & {"operator", "reduction", "decision"}:
+            weights["operator"] = 9
+        if "tensor" in roles:
+            weights["tensor"] = 14
+        if any(len(sources) >= 2 for sources in incoming.values()):
             weights.update(dual_input=10, branch_merge=7)
-        if motifs.get("recurrence_components"):
+        elif any(len(targets) >= 2 for targets in outgoing.values()):
+            weights["branch_merge"] = 7
+        if _has_cycle(edges):
             weights.update({"recurrence": 16, "return": 7})
-        if motifs.get("reductions"):
+        if "reduction" in roles:
             weights["reduction"] = 10
-        if motifs.get("data_residency"):
+        if any(item.get("residency") for item in objects):
             weights.update(reuse=15, memory=5)
+        expression_traits = set(weights) - {"recurrence", "memory"}
+        if "state" in roles and "recurrence" in weights:
+            expression_traits.add("recurrence")
         return {"family": "algorithm", "view_role": role, "mode": algorithm.get("composition", {}).get("grammar", "algorithm"),
                 "weights": weights, "visible_nodes": len(nodes),
-                "edge_kinds": dict(Counter(edge.get("kind", "data") for edge in edges)), "package_allowed": False}
+                "edge_kinds": dict(Counter(edge.get("kind", "data") for edge in edges)), "package_allowed": False,
+                "expression_traits": sorted(expression_traits)}
     compute = {node["id"] for node in nodes if node.get("kind") == "compute"}
     memory = {node["id"] for node in nodes if node.get("kind") == "memory"}
     dual = any(len(incoming[nid]) >= 2 for nid in compute)
@@ -203,18 +298,20 @@ def _task(spec, figure):
     labels = "\n".join(_text(node.get("label")) for node in nodes)
     cache_nodes = sum(bool(re.search(r"\bL[123]\b|cache|DRAM|HBM|DDR|memory controller|缓存|内存", _text(node.get("label")), re.I)) for node in nodes)
     memory_path = cache_nodes >= 2 or any(edge["source"] in memory and edge["target"] in memory for edge in data)
-    groups = [group for group in _items(spec.get("groups")) if isinstance(group, dict)]
+    groups = _visible_groups(spec, nodes, layout)
     parents = {group.get("id"): group.get("parent") for group in groups}
-    nested = any(parents.values()) or bool(layout.get("containers"))
-    repetition = bool(layout.get("repeat_families")) or len(_items(layout.get("region_slots"))) > 1 or "repeated" in mode
+    nested = any(parent in parents for parent in parents.values()) or any(node.get("children") for node in nodes) or any(container.get("render_boundary") is not False for container in _items(layout.get("containers")) if isinstance(container, dict))
+    evidenced_repetition = _visible_repetition(nodes, figure, layout)
+    projected = figure.get("abstract") or isinstance(figure.get("macro_nodes"), list) or isinstance(layout.get("macro_nodes"), list) or bool(figure.get("render_brief"))
+    repetition = evidenced_repetition or (not projected and bool(layout.get("repeat_families")))
     scope_text = "\n".join(_text(group.get("label")) for group in groups)
     lane_roles = {_text(lane.get("role")) for lane in _items(layout.get("role_lanes")) if isinstance(lane, dict)}
-    has_private = bool(layout.get("repeat_families")) or bool(re.search(r"private|私有", scope_text, re.I))
+    has_private = repetition or bool(re.search(r"private|私有", scope_text, re.I))
     has_shared = "shared" in lane_roles or bool(re.search(r"shared|共享", scope_text, re.I))
     private_shared = has_private and has_shared
     shared_band = has_shared or bool(lane_roles & {"shared", "memory"}) or any(len(incoming[nid] | outgoing[nid]) >= 3 for nid in memory)
-    zoom = bool(figure.get("expand_ids") or layout.get("expand_ids")) or bool(re.search(r"zoom|expansion|representative-detail", mode))
-    owner_of = {nid: _text(node.get("group")) for nid, node in by_id.items()}
+    zoom = bool(figure.get("expand_ids") or layout.get("expand_ids") or layout.get("insets")) or bool(re.search(r"zoom|expansion|representative-detail", mode))
+    owner_of = {nid: _text(node.get("original_group", node.get("group"))) for nid, node in by_id.items()}
     cross_owner = sum(owner_of.get(edge["source"]) != owner_of.get(edge["target"]) for edge in edges)
     owner_count = len(set(owner_of.values()) - {""})
     swimlane = "swimlane" in mode or (bool(data and control) and owner_count >= 3 and cross_owner >= 2 and bool(spec.get("steps")))
@@ -273,9 +370,24 @@ def _task(spec, figure):
         weights["comparison"] = 9
     if any(len(incoming[nid]) >= 3 and re.search(r"reduce|accumulat|adder|sum|归约|累加", _text(by_id[nid].get("label")), re.I) for nid in compute):
         weights["reduction"] = 12
+    # Family affinities help retrieve references, but are not evidence that a
+    # motif exists (a memory view need not have a return; a topology need not
+    # repeat). Only witnessed mechanisms may influence a generated prompt.
+    expression_traits = {trait for trait, present in {
+        "organization": family == "organization" and len(nodes) > 1,
+        "hierarchy": nested, "repetition": evidenced_repetition,
+        "private_shared": has_shared and bool(re.search(r"private|私有", scope_text, re.I)), "shared_band": has_shared,
+        "zoom": bool(layout.get("insets")), "flow": bool(data),
+        "dual_input": dual, "branch_merge": branch,
+        "return": returning or any(edge.get("kind") == "feedback" for edge in edges),
+        "memory": memory_path, "control": bool(control), "control_data": bool(data and control),
+        "swimlane": "swimlane" in mode, "pipeline": pipeline, "timing": temporal,
+        "topology": topology, "comparison": comparison,
+        "reduction": "reduction" in weights,
+    }.items() if present}
     return {"family": family, "view_role": role, "mode": mode.strip(), "weights": weights,
             "visible_nodes": len(nodes), "edge_kinds": dict(Counter(edge.get("kind", "data") for edge in edges)),
-            "package_allowed": package_allowed}
+            "package_allowed": package_allowed, "expression_traits": sorted(expression_traits)}
 
 
 def _quality(record):
@@ -328,11 +440,48 @@ def explain(spec, figure, style="paper"):
         selected.append({"path": record["path"], "score": score,
                          "reason": "匹配：" + "、".join(TRAIT_NAMES[trait] for trait in matches),
                          "matched_traits": matches, "metadata_focus": record["focus"],
-                         "metadata_features": record["features"], "source_url": record["source_url"],
+                         "metadata_features": record["features"], "metadata_diagram_type": record.get("diagram_type", ""),
+                         "source_url": record["source_url"],
                          "manifests": record["manifests"], "use_scope": REFERENCE_SCOPE})
         covered.update(matches)
     return {"task": task, "selected": selected, "use_scope": REFERENCE_SCOPE,
             "palette_source": "target_style", "selection_is_visual_certification": False}
+
+
+def expression_rules(selection) -> list[str]:
+    """Translate confident, visible reference matches into bounded polish.
+
+    Retrieval affinities alone cannot authorize a motif. The selected metadata,
+    current display evidence and current task weight must all agree; otherwise
+    the ordinary compiler grammar remains sufficient.
+    """
+    if not isinstance(selection, dict):
+        return []
+    task = selection.get("task", {})
+    if not isinstance(task, dict) or not task.get("visible_nodes"):
+        return []
+    weights = task.get("weights", {})
+    evidence = set(_items(task.get("expression_traits")))
+    candidates = {}
+    for item in _items(selection.get("selected")):
+        if not isinstance(item, dict) or not isinstance(item.get("score"), (int, float)) or item["score"] < 5:
+            continue
+        provenance = _reference_traits({"focus": item.get("metadata_focus"), "features": item.get("metadata_features"),
+                                        "diagram_type": item.get("metadata_diagram_type")})
+        for trait in set(_items(item.get("matched_traits"))) & provenance & evidence & _EXPRESSION_RULES.keys():
+            weight = weights.get(trait, 0)
+            if isinstance(weight, (int, float)) and weight >= 5:
+                candidates[trait] = max(candidates.get(trait, (0, 0)), (weight, item["score"]))
+    output, families = [], set()
+    for trait in sorted(candidates, key=lambda name: (-candidates[name][0], -candidates[name][1], name)):
+        family = "ownership" if trait in {"organization", "hierarchy", "private_shared", "shared_band"} else "junction" if trait in {"dual_input", "branch_merge"} else trait
+        if family in families:
+            continue
+        families.add(family)
+        output.append(_EXPRESSION_RULES[trait])
+        if len(output) == 2:
+            break
+    return output
 
 
 def select(spec, figure, style="paper") -> list[str]:

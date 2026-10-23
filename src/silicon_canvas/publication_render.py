@@ -9,6 +9,8 @@ import math
 from pathlib import Path
 import re
 
+from .visual_style import boundary_color, result_palette, role_fill, route_color
+
 
 @lru_cache(maxsize=1)
 def font_path():
@@ -235,20 +237,11 @@ def _wire_crosses_rect(a, b, box, margin=0):
 
 
 def _palette(result):
-    defaults = {"ink": "#263238", "primary": "#EDF2F5", "secondary": "#E8EEE8", "muted": "#F7F8F9"}
-    if result.get("settings", {}).get("style") == "paper":
-        defaults.update(ink="#17324D", primary="#DCEAFF", secondary="#FFF0BE", muted="#F7FAFF",
-                        control="#EEE5FF", outline="#6E8BAB", container="#BFCFE0")
-    text = result.get("style_prompt", "")
-    match = re.search(r"Palette: ([^\n]+)", text)
-    if match:
-        for key, color in re.findall(r"(\w+)\s+(#[0-9a-fA-F]{6})", match.group(1)):
-            defaults[key] = color
-    return defaults
+    return result_palette(result)
 
 
 def _role_fill(kind, palette):
-    return palette["secondary"] if kind == "memory" else palette["primary"] if kind == "compute" else palette.get("control", "white") if kind == "control" else "white"
+    return role_fill(kind, palette)
 
 
 def _symbols_match_source(plan, spec, figure):
@@ -390,7 +383,7 @@ def render(result, figure, labels_only=False):
                 return None
         paths.append(points)
     palette = _palette(result)
-    image = Image.new("RGB", (width, height), "white")
+    image = Image.new("RGB", (width, height), palette["background"])
     draw = ImageDraw.Draw(image)
     reserved = list(boxes.values())
     annotation_tasks = []
@@ -413,7 +406,7 @@ def render(result, figure, labels_only=False):
             if any(_wire_crosses_rect(a, b, marker, 8) for path in paths for a, b in zip(path, path[1:])):
                 return None
             reserved.append(marker)
-            annotation_tasks.append({"text": annotation, "box_pixels": marker, "color": "#64747E",
+            annotation_tasks.append({"text": annotation, "box_pixels": marker, "color": boundary_color(palette, strong=True),
                                      "source_edge_indices": [], "source_object": inset["source_object"], "role": "same-hardware-view"})
         leader = [(x * width, y * height) for x, y in inset.get("leader", [])]
         leader_regions = [(min(a[0], b[0]) - 8, min(a[1], b[1]) - 8,
@@ -523,7 +516,7 @@ def render(result, figure, labels_only=False):
                 break
         if found:
             reserved.append(found)
-            label_tasks.append({"text": text, "box_pixels": found, "color": route.get("line_color", palette["ink"]),
+            label_tasks.append({"text": text, "box_pixels": found, "color": route_color(route.get("line_color"), palette),
                                 "route_id": route.get("id"), "source_edge_indices": route.get("members", [])})
         else:
             deferred.append({"text": text, "source_edge_indices": route.get("members", []), "reason": "No unobstructed region at signal font size"})
@@ -564,17 +557,16 @@ def render(result, figure, labels_only=False):
                       (b[0] - size * dx - size * .35 * dy, b[1] - size * dy + size * .35 * dx)], fill=color)
 
     scene_id = plan.get("scene_id", "")
-    light_paper = result.get("settings", {}).get("style") == "paper"
-    outline = palette.get("outline", palette["ink"])
+    outline = boundary_color(palette, strong=True)
     if product_frame:
         frame_box = _rect(product_frame["box"], width, height)
-        draw.rounded_rectangle(frame_box, radius=26, fill="#F4F7FA", outline="#75899B", width=3)
+        draw.rounded_rectangle(frame_box, radius=26, fill=palette["muted"], outline=outline, width=3)
         if product_title:
             draw.text((product_title[0], product_title[1]), product_frame["label"], font=main_face, fill=palette["ink"], anchor="lt")
     for container, _ in title_tasks:
-        draw.rectangle(_rect(container["box"], width, height), outline=palette.get("container", "#AAB4BA"), width=2)
+        draw.rectangle(_rect(container["box"], width, height), outline=boundary_color(palette), width=2)
     for route, points in zip(scene["routes"], paths):
-        color = route.get("line_color", palette["ink"])
+        color = route_color(route.get("line_color"), palette)
         dashed = route.get("stroke_style", "dashed" if route["kind"] in {"control", "feedback", "clock"} else "solid") == "dashed"
         for a, b in zip(points, points[1:]):
             length = math.dist(a, b)
@@ -608,22 +600,19 @@ def render(result, figure, labels_only=False):
         if re.sub(r"\s", "", "".join(measured["lines"])) != re.sub(r"\s", "", node["label"]):
             return None
         children = measured.get("children", [])
-        fill = "white" if light_paper and children else _role_fill(node["kind"], palette)
+        fill = palette["background"] if children else _role_fill(node["kind"], palette)
         if scene_id in {"concept", "flow"}:
             draw.rounded_rectangle(box, radius=16 if scene_id == "concept" else 9, fill=fill, outline=outline, width=2)
         else:
             draw.rectangle(box, fill=fill, outline=outline, width=2)
         header_height = measured.get("header_height", (len(measured["lines"]) + len(measured.get("detail_lines", []))) * measured["line_height"] + 22)
         header = box if not children else (box[0], box[1], box[2], box[1] + header_height)
-        dark_header = measured.get("ink_header") and not light_paper
-        if dark_header:
-            draw.rectangle(header, fill=palette["ink"])
-        elif light_paper and children:
+        if children:
             draw.rectangle(header, fill=palette["muted"])
         if measured.get("entry_gutter_height", 0):
-            draw.rectangle((box[0] + 2, header[3], box[2] - 2, header[3] + measured["entry_gutter_height"]), fill="white")
+            draw.rectangle((box[0] + 2, header[3], box[2] - 2, header[3] + measured["entry_gutter_height"]), fill=palette["background"])
         displayed_lines = measured["lines"] + measured.get("detail_lines", [])
-        if not centered_lines(displayed_lines, header, main_face, measured["line_height"], "white" if dark_header else palette["ink"]):
+        if not centered_lines(displayed_lines, header, main_face, measured["line_height"], palette["ink"]):
             return None
         for child in children:
             source_child = next((n for n in current_spec["nodes"] if n["id"] == child["id"]), None)
@@ -633,7 +622,7 @@ def render(result, figure, labels_only=False):
             cb = (box[0] + child_box["x"], box[1] + child_box["y"],
                   box[0] + child_box["x"] + child_box["width"], box[1] + child_box["y"] + child_box["height"])
             child_fill = _role_fill(child["kind"], palette)
-            draw.rectangle(cb, fill=child_fill, outline=palette.get("outline", "#86959F"), width=2)
+            draw.rectangle(cb, fill=child_fill, outline=outline, width=2)
             if not centered_lines(child["lines"], cb, main_face, math.ceil(typography["body_px"] * 1.22), palette["ink"]):
                 return None
     for inset in plan.get("insets", []):
@@ -648,18 +637,13 @@ def render(result, figure, labels_only=False):
             for index in range(steps):
                 t0, t1 = index / steps, min(1, (index + .18) / steps)
                 draw.line([(a[0] + (b[0] - a[0]) * t0, a[1] + (b[1] - a[1]) * t0),
-                           (a[0] + (b[0] - a[0]) * t1, a[1] + (b[1] - a[1]) * t1)], fill="#9DAAB2", width=2)
-        draw.rectangle(inset_box, fill="white", outline=palette.get("outline", "#86959F"), width=2)
+                           (a[0] + (b[0] - a[0]) * t1, a[1] + (b[1] - a[1]) * t1)], fill=boundary_color(palette), width=2)
+        draw.rectangle(inset_box, fill=palette["background"], outline=outline, width=2)
         header_height = measured.get("header_height", len(measured["lines"]) * measured["line_height"] + 22)
         header_box = (inset_box[0], inset_box[1], inset_box[2], inset_box[1] + header_height)
-        dark_header = measured.get("ink_header") and not light_paper
-        if dark_header:
-            draw.rectangle(header_box, fill=palette["ink"])
-            draw.rectangle((inset_box[0] + 2, header_box[3], inset_box[2] - 2, header_box[3] + measured["entry_gutter_height"]), fill="white")
-        elif light_paper:
-            draw.rectangle(header_box, fill=palette["muted"])
+        draw.rectangle(header_box, fill=palette["muted"])
         if not centered_lines(measured["lines"], (inset_box[0], inset_box[1], inset_box[2], inset_box[1] + header_height),
-                              main_face, measured["line_height"], "white" if dark_header else palette["ink"]):
+                              main_face, measured["line_height"], palette["ink"]):
             return None
         for child in measured["children"]:
             source_child = next((n for n in current_spec["nodes"] if n["id"] == child["id"]), None)
@@ -669,7 +653,7 @@ def render(result, figure, labels_only=False):
             child_box = (inset_box[0] + cb["x"], inset_box[1] + cb["y"],
                          inset_box[0] + cb["x"] + cb["width"], inset_box[1] + cb["y"] + cb["height"])
             child_fill = _role_fill(child["kind"], palette)
-            draw.rectangle(child_box, fill=child_fill, outline=palette.get("outline", "#86959F"), width=2)
+            draw.rectangle(child_box, fill=child_fill, outline=outline, width=2)
             if not centered_lines(child["lines"], child_box, main_face, math.ceil(typography["body_px"] * 1.22), palette["ink"]):
                 return None
     for container, box in title_tasks:

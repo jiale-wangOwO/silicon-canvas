@@ -12,6 +12,9 @@ import math
 import re
 from collections import defaultdict, deque
 
+from . import visual_language
+from .visual_style import boundary_color, result_palette, role_fill
+
 RANGE = re.compile(r"\b([A-Za-z]+)(\d+)\s*\.\.\s*\1(\d+)\s*:\s*(.+)")
 COORD = re.compile(r"(?:logical\s+)?(?:grid\s+)?(?:position|coordinate|坐标)\s*[:=]?\s*\(?\s*(\d+)\s*[,，]\s*(\d+)\s*\)?", re.I)
 INITIAL = re.compile(r"(?<!not )(?<!not an )(?<!not the )(?<!not a )initial\s+state|(?<!not )(?<!not a )reset\s+state|(?<!非)(?<!不是)初始状态|(?<!非)(?<!不是)复位状态", re.I)
@@ -406,13 +409,14 @@ def compile_figure(figure, spec, settings, palette, required_labels=()):
     lines = ["Create one polished technical figure with Image Gen using the supplied semantic target guide.",
              "Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.",
              "Prioritize the reader's task: "+figure["design_contract"]["question"],
-             "Use crisp sans-serif type, compact labels and purposeful whitespace. Dark neutral text; sparse role-based accents. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale."]
+             "Use compact labels and purposeful whitespace. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale."]
     lines.append("Crop the canvas to the actual objects, labels and necessary return/branch corridors, with a small clean perimeter. A shallow path needs a shallow figure; do not leave a slide-sized empty area above or below it.")
     if re.search(r"inline\s*title|title\s*in\s*(?:the\s*)?image|图内标题",settings.get("notes",""),re.I):
         lines.append("Use the exact supplied title as a modest heading: "+json.dumps(spec["title"],ensure_ascii=False)+". Do not invent another title.")
     else:
         lines.append("The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.")
-    lines.append("Use the requested palette: "+json.dumps(palette,ensure_ascii=False)+". If it is monochrome, keep the final image in neutral grayscale even when reference roles use muted hues.")
+    figure["visual_contract"] = visual_language.build(settings, "behavior")
+    lines.append(visual_language.describe(figure["visual_contract"]))
     if grammar == "state-machine":
         lines += ["State-machine grammar: one circle/ellipse per source state. Every transition, including EACH self-loop, is a solid directed arrow with its exact predicate attached. A transition is not a dashed hardware-control wire. No decision diamonds or event boxes unless they are actual source states.",
                   "Make forward progress, branching, retry/return and hold loops separately traceable. Draw one small initial marker only for a supplied initial state; never invent reset transitions, default holds or priority."]
@@ -471,7 +475,10 @@ def render(result, figure):
     from .publication_render import font_path
     layout=figure["structure_layout"]
     height=layout["height"]
-    img=Image.new("RGB",(WIDTH,height),"white")
+    colors=result_palette(result)
+    ink=colors["ink"];background=colors["background"]
+    outline=boundary_color(colors,strong=True)
+    img=Image.new("RGB",(WIDTH,height),background)
     draw=ImageDraw.Draw(img)
     font=ImageFont.truetype(str(font_path()),32,layout_engine=ImageFont.Layout.BASIC)
     small=ImageFont.truetype(str(font_path()),27,layout_engine=ImageFont.Layout.BASIC)
@@ -488,34 +495,34 @@ def render(result, figure):
         for i,line in enumerate(lines):
             w=draw.textlength(line,font=face)
             yy=y+(i-(len(lines)-1)/2)*(face.size+4)
-            if erase:draw.rectangle((x-w/2-4,yy-3,x+w/2+4,yy+face.size+4),fill="white")
-            draw.text((x-w/2,yy),line,font=face,fill="#263238")
+            if erase:draw.rectangle((x-w/2-4,yy-3,x+w/2+4,yy+face.size+4),fill=background)
+            draw.text((x-w/2,yy),line,font=face,fill=ink)
     def arrow(points,dashed=False):
         if dashed:
             for a,b in zip(points,points[1:]):
                 length=math.hypot(b[0]-a[0],b[1]-a[1])
                 for begin in range(0,int(length),15):
                     end=min(begin+8,length)
-                    draw.line([(a[0]+(b[0]-a[0])*begin/max(1,length),a[1]+(b[1]-a[1])*begin/max(1,length)),(a[0]+(b[0]-a[0])*end/max(1,length),a[1]+(b[1]-a[1])*end/max(1,length))],fill="#596A74",width=2)
-        else:draw.line([tuple(p) for p in points],fill="#263238",width=3)
+                    draw.line([(a[0]+(b[0]-a[0])*begin/max(1,length),a[1]+(b[1]-a[1])*begin/max(1,length)),(a[0]+(b[0]-a[0])*end/max(1,length),a[1]+(b[1]-a[1])*end/max(1,length))],fill=outline,width=2)
+        else:draw.line([tuple(p) for p in points],fill=ink,width=3)
         a,b=points[-2],points[-1]
         angle=math.atan2(b[1]-a[1],b[0]-a[0])
         tip=tuple(b)
         draw.polygon([tip,(b[0]-14*math.cos(angle)+6*math.sin(angle),b[1]-14*math.sin(angle)-6*math.cos(angle)),
-                      (b[0]-14*math.cos(angle)-6*math.sin(angle),b[1]-14*math.sin(angle)+6*math.cos(angle))],fill="#263238")
+                      (b[0]-14*math.cos(angle)-6*math.sin(angle),b[1]-14*math.sin(angle)+6*math.cos(angle))],fill=ink)
     grammar=layout["grammar"]
     if grammar=="sampled-timing":
         axis=layout["axis"];left=360;cell=(WIDTH-left-90)/len(axis)
         for col,value in enumerate(axis):text_at(value,[left+(col+.5)*cell,64],font,cell-12)
         for row_index,row in enumerate(layout["rows"]):
             y=150+row_index*108
-            draw.line((55,y+75,WIDTH-50,y+75),fill="#DDE3E5",width=1)
+            draw.line((55,y+75,WIDTH-50,y+75),fill=boundary_color(colors),width=1)
             text_at(row["label"],[170,y+24],font,270)
             for col in range(len(axis)):
                 x=left+(col+.5)*cell
                 if row["kind"]=="sample-markers":
-                    draw.line((x,y+50,x,y+4),fill="#596A74",width=2)
-                    draw.polygon([(x,y+4),(x-5,y+14),(x+5,y+14)],fill="#596A74")
+                    draw.line((x,y+50,x,y+4),fill=outline,width=2)
+                    draw.polygon([(x,y+4),(x-5,y+14),(x+5,y+14)],fill=outline)
                 else:text_at(row["values"][col],[x,y+24],font,cell-12)
         text_at("Values at named sample edges; inter-edge timing unspecified",[WIDTH/2,height-70],small,1500)
     else:
@@ -525,18 +532,18 @@ def render(result, figure):
         source={n["id"]:n for n in result["spec"]["nodes"]}
         for nid,(x,y) in layout["positions"].items():
             node=source[nid]
-            fill=("#F0F0F0" if node["kind"]!="memory" else "#E4E4E4") if layout.get("monochrome") else "#EDF2F5" if node["kind"]!="memory" else "#E8EEE8"
+            fill=role_fill(node["kind"],colors)
             if grammar=="state-machine":
-                draw.ellipse((x-78,y-78,x+78,y+78),fill=fill,outline="#263238",width=2)
+                draw.ellipse((x-78,y-78,x+78,y+78),fill=fill,outline=ink,width=2)
                 text_at(node["label"],[x,y-18],font,138,False)
                 outputs=_state_outputs(node["detail"])
                 if outputs:text_at(", ".join(outputs),[x,y+25],small,140,False)
                 if nid in layout["initial_node_ids"]:
                     arrow([[x-30,y+140],[x-14,y+76]])
-                    draw.ellipse((x-38,y+139,x-26,y+151),fill="#263238")
+                    draw.ellipse((x-38,y+139,x-26,y+151),fill=ink)
             elif grammar=="directed-process":
                 w,h=layout["sizes"][nid]
-                draw.rectangle((x-w/2,y-h/2,x+w/2,y+h/2),fill=fill,outline="#263238",width=2)
+                draw.rectangle((x-w/2,y-h/2,x+w/2,y+h/2),fill=fill,outline=ink,width=2)
                 record=layout["object_text"][nid]
                 yy=y-h/2+14
                 for line in record["name_lines"]:
@@ -544,7 +551,7 @@ def render(result, figure):
                 for line in record["required_detail_lines"]:
                     text_at(line,[x,yy],small,w-16,False);yy+=34
             else:
-                draw.rectangle((x-98,y-42,x+98,y+42),fill=fill,outline="#263238",width=2)
+                draw.rectangle((x-98,y-42,x+98,y+42),fill=fill,outline=ink,width=2)
                 text_at(node["label"],[x,y-16],font,180,False)
         for label in layout["labels"]:text_at(label["text"],label["at"],small,label.get("max_width",310))
     output=io.BytesIO();img.save(output,format="PNG");return output.getvalue()

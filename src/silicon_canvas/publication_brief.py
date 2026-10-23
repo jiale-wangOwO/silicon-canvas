@@ -12,6 +12,7 @@ import math
 import re
 
 from .publication_render import required_detail
+from . import visual_language, visual_style
 
 
 POLICY_VERSION = "CPS6"
@@ -126,15 +127,9 @@ def input_roles(figure):
 
 
 def _palette(style_prompt, style="paper"):
-    # Extract preset facts, not the old prompt's uncalibrated pixel-font advice.
-    match = re.search(r"Palette:\s*([^\n]+)", style_prompt or "")
-    values = {}
-    if match:
-        values = dict(re.findall(r"([a-zA-Z_]+)\s+(#[0-9a-fA-F]{6})", match.group(1)))
-    defaults = {"background": "#FFFFFF", "ink": "#263238", "primary": "#EDF2F5", "secondary": "#E8EEE8"}
-    if style == "paper":
-        defaults.update(ink="#17324D", primary="#DCEAFF", secondary="#FFF0BE", control="#EEE5FF", outline="#6E8BAB", container="#BFCFE0")
-    return {name: values.get(name, value) for name, value in defaults.items()}
+    # Keep the callable signature for older integrations, but appearance is
+    # selected by structured settings, never recovered from generated prose.
+    return visual_style.palette(style)
 
 
 def _inventory(figure, spec):
@@ -331,11 +326,9 @@ def compile_figure(figure, spec, settings, style_prompt, required_labels):
     document_scale = f"Document scale: Intended figure width {width_mm:g} mm; module names {body_pt:g} pt and signal labels {signal_pt:g} pt at that width. Choose a canvas that remains readable after insertion. Wrap a long exact name before reducing its size. Use one neutral sans-serif family, normal or medium weight, and subordinate scope names."
     if figure.get("layout_strategy") == "legacy-technical-annex":
         document_scale = f"Legacy structure sketch: This plate has not passed the physical typography contract at {width_mm:g} mm width. Its current geometry is technical context, not a publication-ready composition. Recompose and verify the actual document-size result before document use; do not claim readable type from this plate."
-    style_line = f"Style: Flat drawing on {palette['background']}; text and neutral outlines {palette['ink']}, compute fill {palette['primary']}, storage fill {palette['secondary']}; control and interfaces mostly unfilled. Color is sparse and meaningful. Use narrow crisp strokes, small arrowheads and unfilled ownership boundaries. No gradients, shadows, texture, decorative icons, vendor branding, heavy frames or empty padded cards."
-    if settings.get("style", "paper") == "paper":
-        style_line = f"Style: Clear white-paper technical drawing on {palette['background']}; deep blue-gray text {palette['ink']}, compute fill {palette['primary']}, storage fill {palette['secondary']}, sparse control fill {palette['control']}; interfaces stay white. Repeat these role colors consistently, never one hue per module. Use restrained outlines {palette['outline']} and very light unfilled ownership boundaries {palette['container']}. Containers and same-hardware details have white bodies with light headings, never black or charcoal title bars. Establish hierarchy with aligned peer arrays, shared-resource bands and concise medium-weight names; secondary labels are regular weight. Keep the technical information visible without dashboard cards, heavy all-bold text or a washed-out gray-green palette. No gradients, shadows, texture, decorative icons, vendor branding or heavy frames."
+    style_line = visual_language.describe(visual_language.build(settings))
     if concept:
-        style_line = f"Style: Professional commercial product graphic on {palette['background']}, with typography in {palette['ink']}. Use a dominant central product enclosure and concise functional region tiles, contextual I/O or external memory around it, and few source-backed interface paths. Use refined geometry and generous presentation whitespace. The visible inventory is a functional concept, not a manufacturing layout. No fabricated branding, performance numbers, application icons, pins or internal wiring."
+        style_line += "\nProfessional product concept graphic: use the source-backed product boundary and concise functional regions, contextual I/O or external memory, and selected interface paths. The inventory is a functional concept, not a manufacturing layout. No fabricated branding, performance numbers, application icons, pins or internal wiring."
     elif scene_id == "flow":
         style_line += " Make the supplied data journey visually dominant through continuous paths and a single reading direction; secondary controls belong in their separate view. Do not number dependency edges as clock cycles or create unsupplied processing stages."
     lines.extend([

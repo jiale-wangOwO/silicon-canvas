@@ -57,8 +57,10 @@ class PublicationBriefTests(unittest.TestCase):
         figure["design_contract"].update(target_width_mm=170, body_pt=10, signal_pt=9)
         prompt = publication_brief.compile_figure(figure, source(), {}, STYLE, [])
         self.assertIn("width 170 mm; module names 10 pt and signal labels 9 pt", prompt)
-        self.assertIn("compute fill #EDF2F5", prompt)
-        self.assertIn("storage fill #E8EEE8", prompt)
+        # A stale prose prompt must not override the current catalog selection.
+        self.assertIn("compute #DCEAFF", prompt)
+        self.assertIn("storage #FFF0BE", prompt)
+        self.assertNotIn("#EDF2F5", prompt)
 
     def test_default_inputs_do_not_inherit_research_references(self):
         figure = exact()

@@ -1,0 +1,42 @@
+{
+  "id": "03-command-controller",
+  "title": "命令控制器状态机",
+  "alt": "Compact grayscale command controller with IDLE, FETCH, EXECUTE and DONE states, six guarded transitions, two self-loops and an initial marker.",
+  "category": "fsm",
+  "purpose": "命令控制状态与等待条件说明",
+  "representation": "diagram",
+  "style": "monochrome",
+  "image": "03-command-controller.png",
+  "prompt": "03-command-controller-prompt.txt",
+  "source_input": "03-command-controller-input.json",
+  "guide": "03-command-controller-guide.png",
+  "visual_contract": "03-command-controller-visual-contract.json",
+  "width": 2078,
+  "height": 757,
+  "generator": "built-in Image Gen",
+  "prompt_kind": "exact_compiled_prompt_with_structure_guide",
+  "guide_role": "target_structure",
+  "guide_used": true,
+  "prompt_augmented": false,
+  "generation_count": 1,
+  "repair_count": 0,
+  "workflow": [
+    "Stored source input compiled by Silicon Canvas into the linked prompt and structure guide",
+    "Inspect the local structure guide",
+    "Built-in Image Gen with the exact prompt file and the single linked guide as reference",
+    "Inspect the first generated bitmap; no repair or additional generation"
+  ],
+  "strengths": [
+    "IDLE、FETCH、EXECUTE、DONE 四个状态及各自输出清晰，初始标记进入 IDLE。",
+    "六条有向状态转移均可追踪：start、ready、complete、ack，以及 FETCH 的 !ready 和 EXECUTE 的 !complete 自环。",
+    "横向主路径与底部返回路径明确分离，整体为紧凑灰度图，没有深色标题横幅或额外说明面板。"
+  ],
+  "limitations": [
+    "字体和箭头比预期更粗，尚未达到细线论文插图的精致程度。",
+    "Image Gen 改变了参考图中的自环曲线和部分端口位置，几何并非严格照搬；可见语义仍保持。",
+    "ack 被放在底部返回线中央，而非靠近 DONE 的出发侧，弱于提示词要求的就近标注。",
+    "这是首轮图像的人工可见范围检查，不是对状态机行为的形式化验证。"
+  ],
+  "review_status": "first_pass_visually_reviewed",
+  "created": "2026-10-23"
+}

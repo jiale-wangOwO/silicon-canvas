@@ -1,0 +1,41 @@
+USER VISUAL INTENT — apply explicit appearance requests before preset defaults; the selected inventory and source facts below still govern technical content. Do not typeset this instruction block.
+Original user brief (context, not additional objects to draw): An English controller state diagram for a command engine. Preserve all supplied guards. Use a compact grayscale publication drawing.
+
+Create one polished technical figure with Image Gen using the supplied semantic target guide.
+Image 1 is a source-grounded target structure: preserve every listed object, source membership, directed endpoint and assigned label. It is not the finished image.
+Prioritize the reader's task: Which events change state, which outputs hold, and how do reset and retry operate?
+Use compact labels and purposeful whitespace. Avoid repeated paragraphs, uniform dashboard cards and ornamental frames. Keep technical conventions understandable in grayscale.
+Crop the canvas to the actual objects, labels and necessary return/branch corridors, with a small clean perimeter. A shallow path needs a shallow figure; do not leave a slide-sized empty area above or below it.
+The document caption carries the title and ordinary explanation. No large headline, subtitle, footer notes panel, repeated output table or summary cards inside this image. Assigned labels appear once at their objects, paths or sample cells; do not duplicate them elsewhere.
+Graphic language: Neutral grayscale only. Distinguish roles by shape, grouping and line convention, without colored accents.
+Palette: background #FFFFFF; ink #202020; object outline #848484; quiet ownership boundary #C7C7C7.
+Semantic fills: compute #FFFFFF; storage #ECECEC; control/state #FFFFFF; interface #FFFFFF. Apply each role consistently, not a separate hue per object. Meaning must survive grayscale.
+Typography: Neutral sans-serif: medium object names, regular signals/conditions, subdued ownership headings. Typeset mathematics properly. No all-bold text or dark title banners.
+Visual hierarchy: Structure leads; role fills support it, unfilled containers recede. Align peers; reserve whitespace for branches and labels, not padded cards.
+Surface: Solid fills, crisp narrow strokes, small arrowheads. No gradients, texture, glow, shadows or bevels. Tensor shape cues may express supplied dimensions.
+Explicit user appearance requests override preset defaults; they never change the selected technical scope, ownership, quantities or directed endpoints.
+State-machine grammar: one circle/ellipse per source state. Every transition, including EACH self-loop, is a solid directed arrow with its exact predicate attached. A transition is not a dashed hardware-control wire. No decision diamonds or event boxes unless they are actual source states.
+Make forward progress, branching, retry/return and hold loops separately traceable. Draw one small initial marker only for a supplied initial state; never invent reset transitions, default holds or priority.
+Keep the guide's state placement, transition attachments and reserved return corridors. Refine strokes and label spacing; do not move a return onto another state or retain both an old and a new route after relocating it.
+Each self-loop preserves the guide's asymmetric plain departure and ONE downward arrowhead at the top re-entry of the SAME state. A loop is not bidirectional. Return predicates sit adjacent to the departing state's exterior leg, not on a distant shared-looking bottom rail; keep each source, predicate and destination inseparable.
+Every transition arrowhead touches its target state outline at the guide's assigned attachment. A return never stops at a nearby condition label or in the gap above a state; preserve the final approach segment all the way into the intended state boundary.
+"IDLE"; visible state outputs: busy=0. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "Initial state; busy=0"
+"FETCH"; visible state outputs: busy=1. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "busy=1"
+"EXECUTE"; visible state outputs: busy=1. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "busy=1"
+"DONE"; visible state outputs: done=1. The ordinary source meaning belongs in the caption, not a paragraph inside the circle: "done=1"
+Exact directed relations, one connector per source relation, including loops:
+"IDLE" → "FETCH": "start"
+"FETCH" → "EXECUTE": "ready"
+"FETCH" → "FETCH": "!ready"
+"EXECUTE" → "DONE": "complete"
+"EXECUTE" → "EXECUTE": "!complete"
+"DONE" → "IDLE": "ack"
+Closed outgoing-target contract: these are the ONLY arrow destinations allowed from each named object. Every listed source relation appears once, with one target head; no adjacency shortcut or duplicate route.
+"IDLE" may point only to "FETCH".
+"FETCH" may point only to "EXECUTE"; "FETCH".
+"EXECUTE" may point only to "DONE"; "EXECUTE".
+"DONE" may point only to "IDLE".
+States are distinct state symbols and conditions sit on their transition. Use a cyclic or clustered transition map when needed; do not turn states into a numbered linear pipeline or invent an initial/final state.
+Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.
+Use consistent semantic role fills from the selected graphic language and neutral secondary marks. Emphasis follows the reading structure; meaning must remain clear through position, shape, line style and text in grayscale. Color never implies unsupplied semantics.
+Review the generated bitmap against the source: sample values, transition predicates, state outputs, loop directions and logical links. A source guide is not an image-quality certificate.

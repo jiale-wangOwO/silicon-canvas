@@ -22,6 +22,7 @@ from . import render_brief
 from . import algorithm_flow
 from . import diagram_design
 from . import auto_settings
+from . import visual_language
 
 ROOT = Path(__file__).resolve().parent
 CATALOG = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
@@ -409,7 +410,7 @@ def _style_prompt(settings):
                                        "Preserve source facts without requiring every logical module or relation to appear on the product surface."])
     profile = scene_profiles.PROFILES.get(settings.get("resolved_scene"))
     if profile:
-        contract = {"scene": profile, "palette": style["palette"]}
+        contract = {"scene": profile, "graphic_language": visual_language.build(settings)}
         fingerprint = "SCENE1-" + profile["id"] + "-" + hashlib.sha256(json.dumps(contract, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:10]
         lines = [f"STYLE CONTRACT {fingerprint}", "Reader purpose: " + profile["question"],
                  "Palette: " + "; ".join(f"{key} {value}" for key, value in style["palette"].items()) + ".",
@@ -672,11 +673,34 @@ def compile_result(spec, settings, description="", feedback="", previous_spec=No
                 fig["diagram_design"] = diagram_design.build(spec, fig, settings)
                 prompt = publication_brief.compile_figure(fig, spec, settings, figure_style_prompt, labels)
                 result["warnings"].append("该视图的必保文字未能放入合格底稿，技术事实已完整保留；本次仅提供未受控构图的文本方案。")
-        if feedback:
-            prompt += "\nRequested design revision within the source lock: " + feedback
-        technical_failure = bool(re.search(r"错|错误|丢|缺|漏|多余|悬空|断线|方向|层级|结构|wrong|missing|extra|dangling|direction|topology", feedback, re.I))
+        selection = reference_selector.explain(spec, fig, settings["style"])
+        fig["reference_selection"] = selection
+        if is_render:
+            fig["visual_contract"] = copy.deepcopy(fig["render_brief"]["art_direction"])
+        else:
+            fig.setdefault("visual_contract", visual_language.build(settings))
+            # A product's camera/material request does not restyle its optional
+            # flat technical companion. Facts and exact labels are already in
+            # the selected inventory; keep global appearance history in metadata.
+            intent = "" if fig.get("technical_annex") else visual_language.user_intent(description, settings.get("notes", ""))
+            if intent:
+                prompt = intent + "\n\n" + prompt
+            mechanisms = reference_selector.expression_rules(selection)
+            fig["visual_contract"]["reference_mechanisms"] = mechanisms
+            if mechanisms:
+                prompt += "\nReference-informed expression (retain the selected inventory and any supplied target geometry):\n" + "\n".join(mechanisms)
+        fig["visual_contract"]["user_intent"] = {"description": description, "notes": settings.get("notes", ""), "feedback": feedback}
+        if fig.get("technical_annex"):
+            fig["visual_contract"]["user_intent_scope"] = "Primary artwork context only; this technical annex retains its flat notation, selected palette and target-guide geometry. Product camera/material requests do not apply."
+        figure_feedback = feedback if not fig.get("technical_annex") or figure_id == fig["id"] else ""
+        if figure_feedback and not is_render:
+            prompt += "\nRequested design revision within the source lock: " + figure_feedback
+        technical_failure = bool(re.search(r"错|错误|丢|缺|漏|多余|悬空|断线|方向|层级|结构|wrong|missing|extra|dangling|direction|topology", figure_feedback, re.I))
         revision_mode = "regenerate-from-source" if technical_failure else "local-appearance-edit"
-        if is_render and technical_failure:
+        flat_illustration = is_render and fig["render_brief"]["art_direction"].get("projection") == "flat_2d"
+        if flat_illustration:
+            edit = ("Regenerate the flat illustration from the canonical source below; the failed bitmap is not a geometry reference. " if technical_failure else "Edit the actual generated flat illustration using the resolved graphic treatment below. ") + "Keep the two-dimensional projection, supplied identity, ownership, quantities and selected connections. Refine alignment, typography and flat fills without introducing product-render materials or lighting.\n" + prompt
+        elif is_render and technical_failure:
             edit = "Regenerate this complete product image with Image Gen from the clean source brief below. The failed bitmap is not a geometry reference. Correct source-contradicting claims while freely selecting a coherent camera, physical-looking finish and composition. The optional composition guide controls framing only.\n" + prompt
         elif is_render:
             edit = "Use Image Gen to revise this product image: " + (feedback or "state the desired camera, material, lighting or composition change") + ". Preserve supplied product identity and supported physical facts; perspective, materials, lighting, background and framing may change. Do not preserve invented physical details from a failed image.\nSource brief for validation:\n" + prompt
@@ -687,8 +711,7 @@ def compile_result(spec, settings, description="", feedback="", previous_spec=No
         elif technical_failure:
             edit = "Regenerate this selected illustration with Image Gen from the clean current target plate and brief below. The failed bitmap is not a reference. Preserve the source technical facts, while correcting the requested design problem.\n" + prompt
         else:
-            edit = "Use Image Gen to apply one appearance change to the existing selected figure: " + (feedback or "state the isolated wording or visual change") + ". Keep its technical names, original ownership, endpoints, directions, numbers and conditions. If inspection finds a technical error, stop this edit chain and regenerate from the canonical source and a clean target plate.\nTarget brief for validation:\n" + prompt
-        selection = reference_selector.explain(spec, fig, settings["style"])
+            edit = "Use Image Gen to apply one appearance change to the existing selected figure: " + (figure_feedback or "state the isolated wording or visual change") + ". Keep its technical names, original ownership, endpoints, directions, numbers and conditions. If inspection finds a technical error, stop this edit chain and regenerate from the canonical source and a clean target plate.\nTarget brief for validation:\n" + prompt
         inspiration = [{"path": str((ROOT / "reference_images" / x["path"]).resolve()),
                         "role": "upstream visual grammar research; not a default Image Gen input"} for x in selection["selected"] if (ROOT / "reference_images" / x["path"]).is_file()]
         fig["reference_selection"] = selection
@@ -701,18 +724,20 @@ def compile_result(spec, settings, description="", feedback="", previous_spec=No
             fig["projection_diagnostics"] = diagram_design.reconcile_scope_metadata(spec, fig)
         fig["review_task"] = quality_review.build(spec,fig,reading_plan.source_hash(spec))
         fig["review_task"]["diagram_design"] = fig["diagram_design"]
+        fig["review_task"]["visual_contract"] = fig["visual_contract"]
         fig["review_task"]["prompt"] += "\nReader-task acceptance checks:\n" + "\n".join(fig["diagram_design"]["acceptance_checks"])
+        fig["review_task"]["prompt"] += "\nVisual acceptance: compare the actual image with the selected graphic language and user's appearance requests. Check the projection, dominant reading structure, role consistency and quiet secondary text/boundaries. Report observed conflicts, not a score inferred from the prompt.\n" + json.dumps(fig["visual_contract"], ensure_ascii=False)
         fig["figure_strategy"] = diagram_design.figure_strategy(spec, fig)
         figures.append({**fig, "prompt": prompt, "caption": (render_brief.caption(fig, spec) if is_render else _figure_caption(fig, spec)) + "\n" + diagram_design.caption(fig["diagram_design"]),
                         "reference_images": [], "inspiration_images": inspiration,
                         "negative_prompt": result["negative_prompt"] if is_render else "No invented hardware, parameters, connections or branding. Preserve the selected technical notation; no product-render lighting or material ornament on exact engineering diagrams.", "edit_prompt": edit})
     selected = next((f for f in figures if f["id"] == figure_id), next(f for f in figures if f.get("primary")))
     keys = {"id", "kind", "abstract", "title", "summary", "node_ids", "edge_indices", "context_nodes",
-            "node_count", "edge_count", "view_role", "view_type", "main_group", "primary", "technical_annex", "design_contract", "diagram_design", "figure_strategy", "layout_strategy", "source_edge_indices", "representation", "render_contract", "requires_composition_guide", "composition_guide_optional"}
+            "node_count", "edge_count", "view_role", "view_type", "main_group", "primary", "technical_annex", "design_contract", "diagram_design", "visual_contract", "figure_strategy", "layout_strategy", "source_edge_indices", "representation", "render_contract", "requires_composition_guide", "composition_guide_optional"}
     public_plan = {**plan, "figures": [{k: v for k, v in f.items() if k in keys} for f in figures]}
     result.update(version=3, prompt=figures[0]["prompt"], edit_prompt=selected["edit_prompt"],
                   figures=figures, render_plan=public_plan, selected_figure_id=selected["id"],
-                  reading_plan=plan["reading_plan"], figure_strategy=selected["figure_strategy"], source_hash=reading_plan.source_hash(spec))
+                  reading_plan=plan["reading_plan"], figure_strategy=selected["figure_strategy"], visual_contract=selected["visual_contract"], source_hash=reading_plan.source_hash(spec))
     for f in figures:
         if f.get("render_brief"):
             result["warnings"].extend(f["render_brief"]["appearance"]["illustrative_assumptions"])

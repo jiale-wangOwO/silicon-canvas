@@ -1,0 +1,72 @@
+USER VISUAL INTENT — apply explicit appearance requests before preset defaults; the selected inventory and source facts below still govern technical content. Do not typeset this instruction block.
+Original user brief (context, not additional objects to draw): Draw a research-paper dataflow of residual RMS normalization. x and residual r are added into u. u branches into a square/mean/epsilon/reciprocal-square-root path and a direct multiply path; combine them to normalize u, then multiply by gamma to produce y. Show independent operands, reduction axis and the bypass clearly. English labels.
+
+Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.
+The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.
+Graphic language: Emphasize the supplied main journey by alignment and continuity; secondary relationships remain lighter, never turn every edge into a thick arrow.
+Palette: background #FFFFFF; ink #203833; object outline #84928F; quiet ownership boundary #C7CDCC.
+Semantic fills: tensor #DCF0E9; operator #F8E8D4; state #FFFFFF. Apply each role consistently, not a separate hue per object. Meaning must survive grayscale.
+Typography: Neutral sans-serif: medium object names, regular signals/conditions, subdued ownership headings. Typeset mathematics properly. No all-bold text or dark title banners.
+Visual hierarchy: Structure leads; role fills support it, unfilled containers recede. Align peers; reserve whitespace for branches and labels, not padded cards.
+Surface: Solid fills, crisp narrow strokes, small arrowheads. No gradients, texture, glow, shadows or bevels. Tensor shape cues may express supplied dimensions.
+Explicit user appearance requests override preset defaults; they never change the selected technical scope, ownership, quantities or directed endpoints.
+Use clear sans-serif names and clean mathematical typesetting. Fit legibly at 160 mm document width: main labels about 9 pt, edge labels about 8.5 pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries "Residual RMS Normalization".
+Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.
+Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page.
+Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.
+Named spatial organization: left-to-right dependency order; the following display columns are dependency-based reading bands, never a pipeline schedule. Independent single-consumer operands sit beside their actual consumer rather than at the far left. Never print column numbers.
+Display band 1: "x", "r". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 2: "Residual add". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 3: "Square". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 4: "Mean". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 5: "Stabilize". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 6: "Inverse RMS". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 7: "Normalize", "γ". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 8: "Scale". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Display band 9: "y". Objects in a band occupy separate aligned branch lanes, not one combined object.
+Branch "Residual add" into separate lanes toward "Square", "Normalize"; preserve each exact connector and shared source, without serialized arrows between those branches.
+At "Residual add", keep incoming operands from "x", "r" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "Normalize", keep incoming operands from "Inverse RMS", "Residual add" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+At "Scale", keep incoming operands from "Normalize", "γ" distinct. Align their arrowheads on separate attachments; their fan-in does not create a sum/reduction operation.
+Required visible mathematical inventory:
+"x" — tensor; supplied shape ONCE "D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"r" — tensor; supplied shape ONCE "D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Residual add" — operator; supplied output shape ONCE "D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Square" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Mean" — reduction; essential exact equation(s) "Reduce over i = 1...D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Stabilize" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Inverse RMS" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Normalize" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"γ" — tensor; supplied shape ONCE "D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"Scale" — operator. Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+"y" — tensor; supplied shape ONCE "D". Keep this object compact. Do not repeat its label as both a nearby heading and inside a card.
+Closed outgoing-connection contract: the targets listed below are the ONLY permissible arrow destinations for each object. Omit all other adjacency shortcuts; a visually adjacent successor is not automatically connected.
+"x": "Residual add".
+"r": "Residual add".
+"Residual add": "Square", "Normalize".
+"Square": "Mean".
+"Mean": "Stabilize".
+"Stabilize": "Inverse RMS".
+"Inverse RMS": "Normalize".
+"Normalize": "Scale".
+"γ": "Scale".
+"Scale": "y".
+"y": terminal sink; no outgoing arrows.
+One listed source relation produces one connector. A comma-separated tuple carried by one edge is ONE arrow bearing that entire tuple; never split it into several update arrows. Parallel source relations only remain separate when separately listed.
+Exact connector cardinality between each ordered pair (audit constraint only; do not typeset these counts): "x" → "Residual add": 1 connector; "r" → "Residual add": 1 connector; "Residual add" → "Square": 1 connector; "Square" → "Mean": 1 connector; "Mean" → "Stabilize": 1 connector; "Stabilize" → "Inverse RMS": 1 connector; "Inverse RMS" → "Normalize": 1 connector; "Residual add" → "Normalize": 1 connector; "Normalize" → "Scale": 1 connector; "γ" → "Scale": 1 connector; "Scale" → "y": 1 connector.
+Exact directed connections (quoted names identify the objects; do not print provenance tags or source IDs):
+"x" → "Residual add"; thin solid directed dependency.
+"r" → "Residual add"; thin solid directed dependency.
+"Residual add" → "Square"; supplied edge text "u"; thin solid directed dependency.
+"Square" → "Mean"; supplied edge text "q"; thin solid directed dependency.
+"Mean" → "Stabilize"; supplied edge text "m"; thin solid directed dependency.
+"Stabilize" → "Inverse RMS"; supplied edge text "v"; thin solid directed dependency.
+"Inverse RMS" → "Normalize"; supplied edge text "s"; thin solid directed dependency.
+"Residual add" → "Normalize"; supplied edge text "u"; thin solid directed dependency.
+"Normalize" → "Scale"; supplied edge text "z"; thin solid directed dependency.
+"γ" → "Scale"; thin solid directed dependency.
+"Scale" → "y"; thin solid directed dependency.
+Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.
+Reference-informed expression (retain the selected inventory and any supplied target geometry):
+Keep supplied mathematical objects visually distinct from operations, with shape annotations legible and associated with their own object; preserve the selected glyph grammar and do not invent dimensions.
+Keep the supplied operands individually traceable at their existing convergence, with distinct readable endpoints and labels; do not imply an additional merge or an order between independent inputs.

@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 
-from . import scene_profiles, render_strategy
+from . import scene_profiles, render_strategy, visual_language
 
 VERSION = "RENDER3"
 
@@ -47,7 +47,7 @@ def primary(spec, representation, scene="", language="en"):
 
 
 _PHYSICAL = re.compile(r"\b(?:package|packaging|chiplet|die|dies|HBM\d*|interposer|wafer|substrate|PCB|board|BGA|LGA|lid|ceramic|metal|silicon|photograph)\b|封装|裸片|晶圆|硅片|基板|电路板|金属|陶瓷|盖板|实物|小芯片|堆叠", re.I)
-_APPEARANCE = re.compile(r"camera|lighting|material|background|perspective|angle|isometric|studio|white\s*background|dark\s*background|相机|光照|材质|背景|透视|俯视|仰视|等距|视角|白底|黑底|深色|浅色|留白|质感", re.I)
+_APPEARANCE = re.compile(r"camera|lighting|material|background|perspective|orthographic|angle|isometric|studio|\bflat\b|\b[23]d\b|white\s*background|dark\s*background|相机|光照|材质|背景|透视|俯视|仰视|等距|视角|白底|黑底|深色|浅色|留白|质感|二维|三维|平面图|平面化|正视", re.I)
 _VISUAL_WISH = re.compile(r"想要|希望|风格|质感|看起来|呈现|feel|look\s*like|style|wish|would\s*like|render|渲染", re.I)
 _NEGATION = re.compile(r"不要|不用|避免|不需要|无需|不能|别用|禁止|不可|without|avoid|never|do\s*not|don't|\bno\b|\bnot\b(?!\s*only)", re.I)
 _EXTERNAL = re.compile(r"\boff[ -]?chip\b|\bexternal\b|片外|芯片外", re.I)
@@ -76,6 +76,88 @@ def _visual_cue(text, pattern):
     default selection must not pretend to exhaustively parse natural language.
     """
     return scene_profiles.visual_cue(text, pattern)
+
+
+def _projection(text, feedback=""):
+    """Resolve global drawing depth separately from object scope and camera angle.
+
+    This is a bounded cue resolver, not unrestricted natural-language parsing.
+    Flat labels/overlays describe a surface, not the projection of a product.
+    Orthographic and top-down product views may still have material depth.
+    """
+    pattern = re.compile(
+        r"(?P<flat>\bflat\b|\b2[ -]?d\b|\btwo[ -]?dimensional\b|二维|平面化|平面图|纯平面)|"
+        r"(?P<depth>\b3[ -]?d\b|\bthree[ -]?dimensional\b|三维|立体|\bisometric\b|等距|轴测)|"
+        r"(?P<front>\bfront[ -]?(?:facing|on|view)\b|\bfrontal\b|正向直视|正视(?:图)?|正面(?:直视|视图))|"
+        r"(?P<ortho>\borthographic\b|正交投影|正投影)|(?P<perspective>\bperspective\b|透视)", re.I)
+    result, frontal = "dimensional", False
+    for request in (text, feedback):
+        for clause in scene_profiles._CLAUSE_BREAK.split(request or ""):
+            for match in pattern.finditer(clause):
+                kind = match.lastgroup
+                if kind == "flat" and re.match(r"\s*(?:(?:functional|logical|role)\s+)*(?:overlays?|regions?|labels?|surfaces?|tiles?|tops?|fills?)\b", clause[match.end():], re.I):
+                    continue
+                cue = clause[:match.start()] + "<projection>" + clause[match.end():]
+                affirmative, excluded = _visual_cue(cue, r"<projection>")
+                if kind == "flat":
+                    result, frontal = ("flat_2d", False) if affirmative else ("dimensional", False)
+                elif kind == "depth":
+                    if affirmative:
+                        result, frontal = "dimensional", False
+                    elif excluded and match.group().casefold() not in {"isometric", "等距", "轴测"}:
+                        result, frontal = "flat_2d", False
+                elif kind == "front" and affirmative:
+                    frontal = True
+                    if result != "flat_2d":
+                        result = "orthographic"
+                elif (kind == "ortho" and affirmative) or (kind == "perspective" and excluded):
+                    if result != "flat_2d":
+                        result = "orthographic"
+                elif kind == "perspective" and affirmative:
+                    result, frontal = "dimensional", False
+    return result, frontal
+
+
+def _apply_projection(art, composition, projection, frontal, settings):
+    """Replace incompatible defaults before prompt emission, never add overrides."""
+    art["projection"] = projection
+    if projection == "orthographic":
+        art["camera"] = ("A direct front-facing orthographic view with parallel projection; no oblique angle, perspective convergence or wide-angle distortion."
+                         if frontal else "A top-down orthographic view with parallel projection and no perspective convergence; material depth may remain visible."
+                         if "top-down camera" in art["camera"] else "An orthographic parallel projection without perspective convergence or wide-angle distortion. Preserve the requested viewing direction; material depth may remain visible.")
+        art["shot_profile"]["camera"] = art["camera"]
+        art["shot_profile"]["projection"] = projection
+        return
+    if projection != "flat_2d":
+        return
+    graphic = visual_language.build(settings)
+    art["graphic_language"] = graphic
+    art.update(camera="A direct front-facing, strictly two-dimensional drawing plane; no perspective, foreshortening or visible side faces.",
+               materials=graphic["surface"] + " No physical surface materials or extrusion.",
+               lighting="Uniform graphic contrast; no studio lighting, highlights, reflections, gradients or shadows.",
+               detail="A flat explanatory illustration of the selected source objects, ownership and relationships. Shape, alignment and typography establish the hierarchy.",
+               composition="Arrange the selected source objects on one common two-dimensional plane. " + graphic["hierarchy"] + " Keep shared resources distinct and external context outside its real owner.",
+               palette_policy=graphic["character"] + " Role fills: " + "; ".join(role + " " + value for role, value in graphic["role_fills"].items()) + ". Ink " + graphic["palette"]["ink"] + "; outline " + graphic["palette"].get("outline", graphic["palette"]["ink"]) + ". Equivalent roles share the same fill. Do not assign a different hue to each region or tint entire ownership containers.",
+               freedom=["Choose clear planar alignment, spacing and framing within the selected source scope.",
+                        "Source identities, membership and selected relationships remain unchanged."])
+    exclusions = art["exclusions"]
+    art["background"] = ("A transparent canvas with crisp graphic edges and no grounding shadows; request transparent output in the image generator." if art["transparent_background"] else
+                         "A uniform dark charcoal graphic background with high-contrast labels." if "dark charcoal" in art["background"] else
+                         "A uniform mid-tone neutral graphic background respecting the requested light and dark exclusions." if exclusions["light_background"] and exclusions["dark_background"] else
+                         "A uniform light neutral graphic background " + graphic["palette"]["background"] + " with open whitespace.")
+    if "Text-free artwork" not in art["labels"]["policy"]:
+        art["labels"]["policy"] = graphic["typography"] + " Print every selected object name once, using direct labels inside compact symbols. Keep group names subordinate and do not repeat member lists in perimeter callouts. Required text stays exact and legible."
+    composition["instruction"] = {
+        "assembled_section": "Draw the supplied assembled layers as a flat section diagram, preserving their actual order and contact relationships. Reveal the requested local section without exploded spacing or added physical details.",
+        "exploded_assembly": "Use a flat separated-layer assembly illustration along one shared alignment axis. Preserve supplied layer order, membership and counts; spacing explains assembly and adds no transfer arrows.",
+        "logical_function_plane": "Organize logical functions with thin source-backed ownership boundaries, aligned peer regions and visible shared resources. Keep this a two-dimensional logical map, without a package base or implied physical floorplan.",
+        "whole_with_context": "Use a flat complete-subject illustration with concise surrounding context. Keep each selected function and contextual role identifiable once, with quiet labels and clear interface paths.",
+        "coherent_assembly": "Organize source-supplied assembly parts on a common two-dimensional plane, preserving their actual membership, assembly relationships and quantities. Use planar silhouettes and clear labels without creating additional parts.",
+        "product_identity": "Use one flat complete-subject silhouette with deliberate scale and clean negative space. Preserve the source identity; add only explicitly requested labels or copy.",
+    }[composition["geometry"]]
+    composition["repetition_policy"] = "Repeated source components use consistent planar silhouettes, scale and graphic treatment; preserve source-specified multiplicity."
+    art["shot_profile"] = {"projection": projection, "camera": art["camera"], "composition": art["composition"],
+                           "materials": art["materials"], "lighting": art["lighting"], "color": art["palette_policy"]}
 
 
 def _art_direction(text, representation, settings, palette, required_labels, subject_kind, mode="hero"):
@@ -443,6 +525,13 @@ def build(spec, figure, settings, description="", palette=None, required_labels=
                 for key in exclusions:
                     art_direction["exclusions"][key] = revision["exclusions"][key]
         appearance_requests.append(visual_feedback)
+    projection, frontal = _projection(text, visual_feedback)
+    _apply_projection(art_direction, composition, projection, frontal, settings)
+    if projection == "flat_2d":
+        subject_instruction = ("the complete source-described assembly as a flat explanatory drawing, preserving its supplied parts, layer order and membership"
+                               if composition["geometry"] in {"assembled_section", "coherent_assembly", "exploded_assembly"} else
+                               "the complete selected source subject as a flat explanatory illustration; show logical ownership and selected relationships without a three-dimensional package or measured physical floorplan")
+        visible["primary_subject"] = subject_instruction
     questions = {"hero": "What is the product's visual identity?",
                  "annotated_context": "What does the complete product do, and how does it connect to its environment?",
                  "functional_cutaway": "How are the product's main functions organized, and what connects them?",
@@ -453,8 +542,8 @@ def build(spec, figure, settings, description="", palette=None, required_labels=
     return {"version": VERSION, "representation": representation, "source_hash": _hash(spec),
             "artwork_language": settings.get("language", "en"),
             "explanation_plan": {"mode": mode, "reason": mode_reason, "reading_question": questions[mode],
-                                 "visible_summary": summary or ["Complete product silhouette, finish and lighting"],
-                                 "visible_scope": summary or ["Complete product silhouette, finish and lighting"],
+                                 "visible_summary": summary or ["Complete subject silhouette and visual identity"],
+                                 "visible_scope": summary or ["Complete subject silhouette and visual identity"],
                                  "semantic_role": "source-backed explanatory projection; not physical implementation",
                                  "geometry": composition["geometry"],
                                  "workflow": "optional_edit" if staged else "single_pass"},
@@ -478,8 +567,9 @@ def _prompt(brief, spec):
     """One concise visual brief; review metadata does not become image props."""
     art, visible = brief["art_direction"], brief["visible_content"]
     mode = brief["explanation_plan"]["mode"]
+    flat = art["projection"] == "flat_2d"
     nodes = {node["id"]: node for node in spec["nodes"]}
-    name = "commercial semiconductor product illustration" if brief["representation"] == "product_render" else "dimensional semiconductor system illustration"
+    name = "flat two-dimensional semiconductor illustration" if flat else "commercial semiconductor product illustration" if brief["representation"] == "product_render" else "dimensional semiconductor system illustration"
     lines = ["Create a finished " + name + " with Image Gen.",
              "Reader question: " + brief["explanation_plan"]["reading_question"],
              "Treatment: " + mode + ". " + art["detail"],
@@ -488,18 +578,20 @@ def _prompt(brief, spec):
              "Background: " + art["background"], "Composition: " + art["composition"],
              "Canvas: " + art["canvas"], "Typography: " + art["labels"]["policy"],
              "Color: " + art["palette_policy"],
-             ("Build hierarchy before surface detail: one dominant whole-product silhouette, intentional framing, useful negative space and coherent material/light quality. The clean exterior, camera and lighting carry this hero image." if mode == "hero" else
+             ("Build hierarchy through planar alignment, consistent symbol proportions, restrained fills and readable typography; keep this selected scope flat throughout." if flat else
+              "Build hierarchy before surface detail: one dominant whole-product silhouette, intentional framing, useful negative space and coherent material/light quality. The clean exterior, camera and lighting carry this hero image." if mode == "hero" else
               "Build hierarchy before surface detail: one dominant whole-product silhouette, a few meaningful functional roles and subordinate context. Keep objects under one camera and lighting system; texture remains subtle.")]
     composition = brief["composition_plan"]
     language = "Chinese" if brief["artwork_language"] == "zh" else "English"
     lines.append("Artwork language: " + language + ". Translate optional source-title prose into this language; keep explicitly required verbatim labels unchanged. Original-language source evidence and user intent below are context, not additional artwork text.")
     lines.append("Explanatory geometry: " + composition["instruction"])
+    lines.append("Selected-view authority: the functional content and relationship list below define the complete visible scope for this image. Source-request history, full-ledger prose and optional guides provide context only; they cannot add objects, arrows or internal wiring to this selected view. Member names describe ownership, not an implicit dependency chain.")
     if composition["detail_view"]["requested"]:
         lines.append(composition["detail_view"]["instruction"])
     if mode != "hero":
         lines.append(composition["repetition_policy"] + (" " + composition["annotation_policy"] if not visible["no_optional_text"] else " Keep source object counts and selected relationships while omitting text and identification leaders."))
     if not visible["no_optional_text"]:
-        lines.append("Only include a small source-title heading when it helps the requested view. Do not add a marketing subtitle, slogan, tagline or a default 'Functional concept' badge. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.")
+        lines.append("Keep the source title in the external caption unless the user explicitly requires it inside the image; in that case use one small quiet heading, subordinate to the objects. Do not add a large title banner, marketing subtitle, slogan, tagline or a default 'Functional concept' badge. Detailed assumptions and appearance limitations belong in the separate caption, outside the image.")
     if mode == "hero":
         plan = brief["subject"]["plan"]
         object_ids = list(nodes) if plan["scale"] in {"rack", "server", "system"} else plan["source_physical_part_ids"]
@@ -524,14 +616,14 @@ def _prompt(brief, spec):
         else:
             lines.append("Keep the supplied parts within their actual source assembly and preserve their membership. Do not invent additional packages, duplicate the assembly, or repeat its inventory in peripheral bullet lists.")
     if visible["context_objects"]:
-        context_rule = (". Keep these supplied supporting parts in their stated assembled spatial relationship, sharing the main subject's perspective; do not turn an attached board into a separate peripheral icon." if composition["geometry"] == "assembled_section" else ". Use one small representative neutral device silhouette or glyph per listed role, with unboxed text. These symbols express roles, not package quantities or a physical BOM. Do not expand a role into multiple application devices, colored cards or use-case scenes.")
+        context_rule = (". Keep these supporting parts in their supplied assembly relationship on the same two-dimensional drawing plane." if flat and composition["geometry"] == "assembled_section" else ". Use one compact flat symbol per listed source role; place it outside unrelated source boundaries, with concise labels." if flat else ". Keep these supplied supporting parts in their stated assembled spatial relationship, sharing the main subject's perspective; do not turn an attached board into a separate peripheral icon." if composition["geometry"] == "assembled_section" else ". Use one small representative neutral device silhouette or glyph per listed role, with unboxed text. These symbols express roles, not package quantities or a physical BOM. Do not expand a role into multiple application devices, colored cards or use-case scenes.")
         if visible["no_optional_text"]:
             context_rule = ". These names specify contextual objects, not printed labels. Keep a single source role coherent, without adding application devices for visual richness."
         lines.append("External context: " + "; ".join(item["label"] for item in visible["context_objects"]) + context_rule)
     if visible["interface_symbols"]:
         lines.append("Source interface families: " + "; ".join(item["source_label"] + " (" + item["label"] + ")" for item in visible["interface_symbols"]) + (". These are source-role constraints only; do not print protocol captions or lettering." if visible["no_optional_text"] else ". A concise protocol caption or small neutral interface glyph is sufficient.") + " A protocol does not authorize inventing cameras, robots, watches or other application products; depict those only if explicitly supplied as source roles. Actual connector shapes and pinouts are unspecified.")
     if visible["relationships"]:
-        lines.append("Routing instructions, not a text panel or legend: draw only these selected source-backed interface links.")
+        lines.append("Closed selected relationship list, not a text panel or legend: draw only these selected source-backed interface links. Unlisted internal paths remain outside this image even when mentioned in the source-request history.")
         drawn_pairs = set()
         for relation in visible["relationships"]:
             directed = relation["directionality"] == "source-directed"
@@ -563,7 +655,7 @@ def _prompt(brief, spec):
         lines.append("Required exact text: " + json.dumps(visible["required_verbatim_labels"], ensure_ascii=False))
     if brief["appearance"]["known"]:
         lines.append("Direct user physical input, supplied but not independently verified: " + "; ".join(item["statement"] for item in brief["appearance"]["known"]))
-    lines.extend(["User art direction takes precedence over defaults. Complete original intent and latest visual revision: " + json.dumps(brief["user_intent"], ensure_ascii=False),
+    lines.extend(["User art direction takes precedence over appearance defaults only. The resolved projection and treatment above incorporate the latest visual request. Original intent and visual revision history below are context, not another drawing inventory: do not add their unselected connections, objects or parameters to the closed selected view. Superseded appearance instructions do not override the resolved treatment: " + json.dumps(brief["user_intent"], ensure_ascii=False),
                   "Keep explicit labels, logical ownership, quantities and source relationships. Functional overlays are not proof of physical dies, chiplets or HBM stacks. Exterior and context geometry remain illustrative. Avoid fabricated branding, measured specifications, ornamental circuit wallpaper, unrelated application props and cluttered copy.",
                   "The text brief is sufficient. " + brief["composition_guide"]["instruction"],
                   "Return one coherent finished image. The full engineering ledger remains in the brief and precise technical companions; do not force every secondary source signal onto this image."])
@@ -578,7 +670,7 @@ def workflow(brief, spec):
     if staged:
         refinement = "\n".join([
             "Edit Image 1, the actual generated product image. Image 1 is the edit target; a composition guide is never the edit target.",
-            "Preserve the approved visual identity, coherent camera/material/light system and all valid source-backed structure. Refine only the requested visual details, typography or explanation. A functional overlay and selected interface links may remain or improve under this explanatory treatment.",
+            ("Preserve the approved flat visual identity, planar composition and all valid source-backed structure. Refine only the requested graphic finish, typography or explanation. Keep the resolved two-dimensional treatment throughout." if brief["art_direction"]["projection"] == "flat_2d" else "Preserve the approved visual identity, coherent camera/material/light system and all valid source-backed structure. Refine only the requested visual details, typography or explanation. A functional overlay and selected interface links may remain or improve under this explanatory treatment."),
             "Use neutral typography with strong contrast against the actual background, clear hierarchy and enough whitespace. Any new arrows retain listed source endpoints and direction; any context symbols explain source roles rather than assert a physical BOM.",
             "Target explanation, including the selected functional groups and relationships:\n" + complete,
             "Visual feedback cannot establish new physical or engineering facts. Correct contradictions from the source brief; preserve background transparency where requested. Return one finished image."])

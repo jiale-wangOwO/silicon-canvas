@@ -251,7 +251,7 @@ def build(spec, figure, settings=None):
                       "basis": "supplied semantic role/type or source-backed mathematical interpretation; geometry adds no operation"})
     instructions = [strategy["convention"],
                     "Make the main question visually dominant; use consistent role silhouettes and stronger resource names, with subdued real ownership labels. Whitespace belongs to independent paths, labels and related clusters rather than equal padded cards.",
-                    "Use one restrained accent for the main relationship family and consistent neutral secondary marks. Meaning must remain clear through position, shape, line style and text when printed in grayscale; color never implies unsupplied semantics."]
+                    "Use consistent semantic role fills from the selected graphic language and neutral secondary marks. Emphasis follows the reading structure; meaning must remain clear through position, shape, line style and text in grayscale. Color never implies unsupplied semantics."]
     if repeated:
         instructions.append("Repetition follows the actual plate: preserve each shown expanded private inventory and each compact peer. A same-hardware inset is explanatory; its leader has no data arrowhead.")
     if figure.get("context_nodes"):

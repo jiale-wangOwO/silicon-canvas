@@ -12,6 +12,7 @@ import json
 import re
 from collections import defaultdict
 from . import edge_semantics
+from . import visual_language
 
 POLICY_VERSION = "ALGO1"
 ROLES = {"tensor", "operator", "reduction", "state", "storage", "index", "decision"}
@@ -268,19 +269,14 @@ def compile_figure(figure, spec, settings, palette, required_labels=()):
     name = lambda nid: json.dumps(by_id[nid]["label"], ensure_ascii=False)
     contract = figure.get("design_contract", {})
     width_mm, body_pt, signal_pt = (contract.get("target_width_mm", 160), contract.get("body_pt", 9), contract.get("signal_pt", 8.5))
-    background, ink = palette.get("background", "#FFFFFF"), palette.get("ink", "#263238")
+    figure["visual_contract"] = visual_language.build(settings, "algorithm")
     lines = ["Generate one publication-quality ALGORITHM DATAFLOW figure with Image Gen from this complete source-backed brief. No input guide image is required.",
              "The figure explains mathematical data objects, operations and dependencies, with the clarity of an algorithm paper. It is not a chip floorplan, hardware block inventory, timing chart or numbered process dashboard.",
-             "Use the selected background " + background + " and restrained thin strokes/text " + ink + ", generous open gaps and small consistent arrowheads. A few quiet semantic accent families are a starting point; each color has one stable role and grayscale position/shape/line cues must retain meaning. Avoid decorative gradients, bevels, glossy cards, heavy shadows and thick enclosing boxes that compete with the mathematics.",
+             visual_language.describe(figure["visual_contract"]),
              f"Use clear sans-serif names and clean mathematical typesetting. Fit legibly at {width_mm:g} mm document width: main labels about {body_pt:g} pt, edge labels about {signal_pt:g} pt; redesign spacing or panels rather than shrink text. Keep shapes subordinate to mathematics. Omit the large title/header; the document caption carries " + json.dumps(spec["title"], ensure_ascii=False) + ".",
              "Visual vocabulary: tensors are compact mathematical symbols with a pale silhouette when useful. A simple projected plane, meaningful stack or depth cue may explain a supplied tensor shape, axis or feature resolution; do not add an unsupplied tensor axis or imply counted cells, tiles or hardware copies. A symbolic dimension is never a fabricated grid-cell count. Operators use compact outlined symbols with their operation name and essential expression. Supplied reductions have their own operator and exact axis. State is an explicitly named accumulator/state strip next to its update path. Storage/residency is shown only as supplied. Diamonds belong only to an actual decision. Shapes differ by meaning rather than becoming identical rounded cards.",
              "Layout is a dependency graph, not a serial list of steps: keep independent inputs and parallel branches separately aligned. Put each operator's operands beside its actual input arrows, use distinct ingress attachments for separate operands, and place its output downstream along the selected reading orientation. An unlabeled arrow carries the supplied dependency only; never create intermediate tensors or duplicate an operator to fill the page."]
     lines.append("Concise text policy: print each supplied object name once, each essential equation once and each object/output shape once. Mathematical symbols may recur within actual equations. Put an output shape beside its outgoing value or once below its producing operator, never at both. Do not repeat Query/Key/Value/Output tensor prose, transient descriptions or long annotations in the artwork. The caption carries explanatory prose. Do not turn audit instructions into notes, legends or footers.")
-    if settings.get("style") == "monochrome":
-        lines.append("Selected monochrome style: white background, dark ink and pale neutral grayscale only. Distinguish tensors, operators and state by silhouette and line treatment, without colored accents.")
-    else:
-        selected = {key: value for key, value in palette.items() if isinstance(value, str) and value.startswith("#")}
-        lines.append("Selected palette: " + "; ".join(key + " " + value for key, value in selected.items()) + ". Use its pale primary family for tensors and pale secondary family for operations; keep state quietly distinct by line treatment. A palette never changes the algorithm topology.")
     aspect = settings.get("aspect", "auto")
     if aspect != "auto":
         lines.append("Requested canvas proportions: " + aspect + ". Adapt open spacing and the source-backed branch lanes to this canvas.")
@@ -372,7 +368,5 @@ def compile_figure(figure, spec, settings, palette, required_labels=()):
         lines.extend(json.dumps(item, ensure_ascii=False) for item in context)
     if required_labels:
         lines.append("Mandatory exact supplied text: " + "; ".join(json.dumps(label, ensure_ascii=False) for label in required_labels) + ". Put each on its matching object, never in a separate label list.")
-    if settings.get("notes"):
-        lines.append("Additional requested presentation constraints: " + settings["notes"])
     lines.append("Check the final bitmap: every arrow must have the listed source, target and direction; trace every separate operand and source cycle. Preserve shapes, axes, predicates and source grouping without inventing numerical dimensions, tile counts, extra normalization, hardware buffers or mathematical operators. A compact paper figure must still explain the computation at a glance.")
     return "\n".join(lines)

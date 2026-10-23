@@ -1,0 +1,31 @@
+{
+  "version": "VIS1",
+  "family": "algorithm",
+  "style": "signal",
+  "palette": {
+    "background": "#FFFFFF",
+    "ink": "#203833",
+    "primary": "#DCF0E9",
+    "secondary": "#F8E8D4",
+    "muted": "#F1F4F3"
+  },
+  "role_fills": {
+    "tensor": "#DCF0E9",
+    "operator": "#F8E8D4",
+    "state": "#FFFFFF"
+  },
+  "character": "Emphasize the supplied main journey by alignment and continuity; secondary relationships remain lighter, never turn every edge into a thick arrow.",
+  "typography": "Neutral sans-serif: medium object names, regular signals/conditions, subdued ownership headings. Typeset mathematics properly. No all-bold text or dark title banners.",
+  "hierarchy": "Structure leads; role fills support it, unfilled containers recede. Align peers; reserve whitespace for branches and labels, not padded cards.",
+  "surface": "Solid fills, crisp narrow strokes, small arrowheads. No gradients, texture, glow, shadows or bevels. Tensor shape cues may express supplied dimensions.",
+  "precedence": "Explicit user appearance requests override preset defaults; they never change the selected technical scope, ownership, quantities or directed endpoints.",
+  "reference_mechanisms": [
+    "Keep supplied mathematical objects visually distinct from operations, with shape annotations legible and associated with their own object; preserve the selected glyph grammar and do not invent dimensions.",
+    "Keep the supplied operands individually traceable at their existing convergence, with distinct readable endpoints and labels; do not imply an additional merge or an order between independent inputs."
+  ],
+  "user_intent": {
+    "description": "Draw a research-paper dataflow of residual RMS normalization. x and residual r are added into u. u branches into a square/mean/epsilon/reciprocal-square-root path and a direct multiply path; combine them to normalize u, then multiply by gamma to produce y. Show independent operands, reduction axis and the bypass clearly. English labels.",
+    "notes": "",
+    "feedback": ""
+  }
+}

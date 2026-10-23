@@ -298,6 +298,8 @@ class AlgorithmMCPTests(unittest.IsolatedAsyncioTestCase):
                 saved = await client.read_resource(next(f["brief_uri"] for f in data["figures"] if f["primary"]))
                 brief = json.loads(saved.contents[0].text)
                 self.assertEqual(brief["algorithm_flow_plan"], data["algorithm_flow_plan"])
+                self.assertEqual(brief["visual_contract"], data["visual_contract"])
+                self.assertEqual(data["visual_contract"]["family"], "algorithm")
                 self.assertIsNone(brief["guide_role"])
                 review = await client.call_tool("silicon_prepare_review", {"artifact_id": data["artifact_id"]})
                 self.assertEqual(review.structured_content["review_task"]["objects"], data["algorithm_flow_plan"]["objects"])

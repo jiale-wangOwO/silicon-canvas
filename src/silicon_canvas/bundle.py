@@ -21,7 +21,7 @@ def build(result,figure_id=''):
     if figure_id:
         selected=portable['figures'][0]
         portable['selected_figure_id']=selected['id']
-        for key in ('figure_strategy','prompt','edit_prompt'):
+        for key in ('figure_strategy','visual_contract','prompt','edit_prompt'):
             if key in selected:portable[key]=copy.deepcopy(selected[key])
     buf=io.BytesIO();seen=set();sources={}
     for name in ('paper_manifest.json','isca_manifest.json','commercial_manifest.json'):
@@ -41,6 +41,8 @@ def build(result,figure_id=''):
                 archive.writestr(folder+'review-manifest.json',json.dumps({k:v for k,v in f['review_task'].items() if k!='prompt'},ensure_ascii=False,indent=2))
             if f.get('diagram_design'):
                 archive.writestr(folder+'diagram-design.json',json.dumps(f['diagram_design'],ensure_ascii=False,indent=2))
+            if f.get('visual_contract'):
+                archive.writestr(folder+'visual-contract.json',json.dumps(f['visual_contract'],ensure_ascii=False,indent=2))
             if f.get('figure_strategy'):
                 archive.writestr(folder+'figure-strategy.json',json.dumps(f['figure_strategy'],ensure_ascii=False,indent=2))
             if f.get('behavior_plan'):

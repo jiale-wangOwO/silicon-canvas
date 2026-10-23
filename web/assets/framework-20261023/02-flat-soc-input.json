@@ -1,0 +1,266 @@
+{
+  "spec": {
+    "title": "Coherent Heterogeneous SoC",
+    "category": "architecture",
+    "summary": "通用异构SoC概览，展示CPU和NPU的缓存一致性客户端、共享互联与LLC，以及存储控制器和主机入口。箭头只表示请求方向，不完整展开返回和snoop。",
+    "verbatim_labels": [],
+    "groups": [
+      {
+        "id": "soc",
+        "label": "SoC",
+        "parent": "",
+        "origin": "given",
+        "evidence": "SoC",
+        "rationale": ""
+      },
+      {
+        "id": "cpu",
+        "label": "CPU Cluster",
+        "parent": "soc",
+        "origin": "given",
+        "evidence": "CPU Cluster",
+        "rationale": ""
+      },
+      {
+        "id": "npu",
+        "label": "NPU Cluster",
+        "parent": "soc",
+        "origin": "given",
+        "evidence": "NPU Cluster",
+        "rationale": ""
+      },
+      {
+        "id": "shared",
+        "label": "Shared Resources",
+        "parent": "soc",
+        "origin": "given",
+        "evidence": "Shared Resources",
+        "rationale": ""
+      },
+      {
+        "id": "memory",
+        "label": "Memory Interface",
+        "parent": "soc",
+        "origin": "given",
+        "evidence": "Memory Interface",
+        "rationale": ""
+      },
+      {
+        "id": "hostio",
+        "label": "Host I/O",
+        "parent": "soc",
+        "origin": "given",
+        "evidence": "Host I/O",
+        "rationale": ""
+      }
+    ],
+    "nodes": [
+      {
+        "id": "cores",
+        "label": "CPU Cores",
+        "kind": "compute",
+        "group": "cpu",
+        "detail": "",
+        "origin": "given",
+        "evidence": "CPU Cores",
+        "rationale": ""
+      },
+      {
+        "id": "private",
+        "label": "Private Cache",
+        "kind": "memory",
+        "group": "cpu",
+        "detail": "",
+        "origin": "given",
+        "evidence": "Private Cache",
+        "rationale": ""
+      },
+      {
+        "id": "tensor",
+        "label": "Tensor Engines",
+        "kind": "compute",
+        "group": "npu",
+        "detail": "",
+        "origin": "given",
+        "evidence": "Tensor Engines",
+        "rationale": ""
+      },
+      {
+        "id": "nc",
+        "label": "NPU Cache",
+        "kind": "memory",
+        "group": "npu",
+        "detail": "",
+        "origin": "given",
+        "evidence": "NPU Cache",
+        "rationale": ""
+      },
+      {
+        "id": "fabric",
+        "label": "Coherent Fabric",
+        "kind": "io",
+        "group": "shared",
+        "detail": "",
+        "origin": "given",
+        "evidence": "Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "id": "llc",
+        "label": "Shared LLC",
+        "kind": "memory",
+        "group": "shared",
+        "detail": "",
+        "origin": "given",
+        "evidence": "Shared LLC",
+        "rationale": ""
+      },
+      {
+        "id": "mc",
+        "label": "DRAM Controller",
+        "kind": "control",
+        "group": "memory",
+        "detail": "",
+        "origin": "given",
+        "evidence": "DRAM Controller",
+        "rationale": ""
+      },
+      {
+        "id": "pci",
+        "label": "PCIe Endpoint",
+        "kind": "io",
+        "group": "hostio",
+        "detail": "",
+        "origin": "given",
+        "evidence": "PCIe Endpoint",
+        "rationale": ""
+      },
+      {
+        "id": "dram",
+        "label": "External DRAM",
+        "kind": "memory",
+        "group": "",
+        "detail": "",
+        "origin": "given",
+        "evidence": "External DRAM",
+        "rationale": ""
+      },
+      {
+        "id": "host",
+        "label": "External Host",
+        "kind": "io",
+        "group": "",
+        "detail": "",
+        "origin": "given",
+        "evidence": "External Host",
+        "rationale": ""
+      }
+    ],
+    "edges": [
+      {
+        "source": "cores",
+        "target": "private",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "CPU Cores → Private Cache → Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "source": "private",
+        "target": "fabric",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "CPU Cores → Private Cache → Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "source": "tensor",
+        "target": "nc",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "Tensor Engines → NPU Cache → Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "source": "nc",
+        "target": "fabric",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "Tensor Engines → NPU Cache → Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "source": "fabric",
+        "target": "llc",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "Coherent Fabric → Shared LLC → DRAM Controller → External DRAM",
+        "rationale": ""
+      },
+      {
+        "source": "llc",
+        "target": "mc",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "Coherent Fabric → Shared LLC → DRAM Controller → External DRAM",
+        "rationale": ""
+      },
+      {
+        "source": "mc",
+        "target": "dram",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "Coherent Fabric → Shared LLC → DRAM Controller → External DRAM",
+        "rationale": ""
+      },
+      {
+        "source": "host",
+        "target": "pci",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "External Host → PCIe Endpoint → Coherent Fabric",
+        "rationale": ""
+      },
+      {
+        "source": "pci",
+        "target": "fabric",
+        "label": "",
+        "kind": "data",
+        "origin": "given",
+        "evidence": "External Host → PCIe Endpoint → Coherent Fabric",
+        "rationale": ""
+      }
+    ],
+    "layout": "Keep one SoC boundary containing cpu,npu,shared,memory,hostio. Stack cpu and npu as parallel left-side peer groups, cores/private and tensor/nc internally ordered left to right. Place shared center, fabric then llc; memory right. dram is beyond SoC on right. hostio is lower-left and host outside left, feeding fabric. Direct unobstructed local links; group boundaries hug content. Preserve each actual node and exact request endpoint; do not fold connections into boundary-only arrows.",
+    "steps": [],
+    "annotations": [
+      "Request paths shown; response and snoop detail omitted."
+    ],
+    "assumptions": [],
+    "questions": [],
+    "checks": [
+      "确认CPU与NPU为平行客户端，片外设备在SoC外。",
+      "确认示意仅为请求方向，不宣称完整一致性协议。"
+    ]
+  },
+  "description": "Draw an English flat engineering system architecture figure titled 'Coherent Heterogeneous SoC'. This is a generic reference system, not a physical floorplan. Within one SoC boundary: a CPU Cluster contains CPU Cores and Private Cache; an NPU Cluster contains Tensor Engines and NPU Cache; Shared Resources contains Coherent Fabric and Shared LLC; Memory Interface contains DRAM Controller; Host I/O contains PCIe Endpoint. External DRAM and an External Host are outside the SoC boundary. Show only the high-level memory/request direction, not all response signals: CPU Cores → Private Cache → Coherent Fabric; Tensor Engines → NPU Cache → Coherent Fabric; Coherent Fabric → Shared LLC → DRAM Controller → External DRAM; External Host → PCIe Endpoint → Coherent Fabric. CPU and NPU caches are coherent clients; do not add bypasses, capacities, clocks, core counts, snoop routes or physical details. Draw all named modules and group ownership at a readable scale in a single figure. The reader should immediately see compute clients, shared coherence/cache, memory access, and host ingress. Generic conceptual architecture. English labels only.",
+  "settings": {
+    "category": "architecture",
+    "representation": "system_illustration",
+    "scene": "system",
+    "style": "paper",
+    "language": "en",
+    "aspect": "16:9",
+    "density": "medium",
+    "completion_mode": "strict",
+    "notes": "Strictly flat, front-facing system illustration. White background, restrained blue compute clients and warm neutral memory. No perspective, shadows or materials. Keep the named ownership and selected request paths readable."
+  }
+}

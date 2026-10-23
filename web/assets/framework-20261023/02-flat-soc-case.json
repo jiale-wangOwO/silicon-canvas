@@ -1,0 +1,37 @@
+{
+  "title": "Coherent Heterogeneous SoC — first-pass projection study",
+  "category": "system",
+  "alt": "Front-facing planar SoC illustration with parallel CPU and NPU clusters, shared fabric, memory interface and host I/O. First-pass result with a reversed host path and appearance limitations.",
+  "image": "02-flat-soc.png",
+  "prompt": "02-flat-soc-prompt.txt",
+  "source_input": "02-flat-soc-input.json",
+  "dimensions": [
+    1672,
+    941
+  ],
+  "strengths": [
+    "The result is front-facing and planar, without the former isometric package base, physical materials or visible side faces.",
+    "CPU and NPU appear as aligned peers with their own cache resources; external DRAM and external host remain outside the system boundary.",
+    "Named resources are readable at the generated size, with a short mostly straight top-to-bottom visual path."
+  ],
+  "limitations": [
+    "The path from Coherent Fabric to Host I/O is reversed relative to the source request, which requires PCIe Endpoint to Coherent Fabric. This prevents acceptance as an accurate engineering diagram.",
+    "The Shared Resources group title and its explicit ownership boundary are omitted, although Coherent Fabric and Shared LLC remain visible.",
+    "Several internal arrows are drawn even though the compiled annotated_context scope lists only two external links. The retained source description and selected-view scope still give the image model conflicting guidance.",
+    "Saturated blue, yellow, orange, green, red and purple fills exceed the restrained two-family palette request. Fills have tonal shading, outlines/arrows are heavy, and the large title competes with the structure.",
+    "This is one unedited first-pass observation, not a quality score or evidence of general success across models or topics."
+  ],
+  "provenance": {
+    "workflow": "Existing source input → current silicon_compile → exact compiled prompt → built-in Image Gen; no prompt augmentation, reference image or repair",
+    "tool": "image_gen",
+    "representation": "system_illustration",
+    "requested_visual_form": "flat front-facing system illustration",
+    "resolved_projection": "flat_2d",
+    "guide_used": false,
+    "transparent_background": false,
+    "prompt_source": "Exact unchanged contents of 02-flat-soc-prompt.txt",
+    "source_input": "02-flat-soc-input.json",
+    "repair_count": 0,
+    "actual_image_review": "Visually inspected first pass. Projection correction is visible, but topology, ownership and color/typography limitations remain. Not accepted as an accurate final showcase figure."
+  }
+}
