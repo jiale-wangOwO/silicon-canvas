@@ -72,7 +72,7 @@ MCP 输入接受 `representation: "auto"` 或三种形式 ID，`scene` 接受自
 }
 ```
 
-MCP 的默认流程是 `silicon_prepare` → 宿主整理完整源规格 → `silicon_compile` → 宿主调用 Image Gen 并查看成图；语义理解使用宿主现有模型。详细接入见 [Agent 页面](../web/agent.html) 与 [MCP 说明](mcp.md)。
+MCP 的默认流程是 `silicon_prepare` → 宿主整理完整源规格 → `silicon_compile` → 宿主调用 Image Gen 并查看成图；语义理解使用宿主现有模型。详细接入见 [插件与 MCP 接入指南](mcp.md)。
 
 返回的 `settings.representation` 是请求形式，`settings.resolved_representation` 和 `representation_profile` 记录实际选择，`scene_profile` 记录内容用途。Agent 可以基于已有源规格重新编译，不直接信任旧文件缓存的选择与几何。
 
