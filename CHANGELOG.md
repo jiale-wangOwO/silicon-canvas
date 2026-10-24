@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Codex plugin with a discoverable marketplace entry, Silicon Canvas branding, the drawing workflow Skill, and its bundled MCP launcher.
+- Isolated, pinned backend setup on first use; existing clients can continue using the standalone MCP installation.
+- Plugin installation instructions in the README and Agent setup page.
+
 ## 0.7.0 — 2026-10-19
 
 First public release of Silicon Canvas.

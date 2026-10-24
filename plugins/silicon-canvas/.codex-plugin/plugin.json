@@ -1,0 +1,27 @@
+{
+  "name": "silicon-canvas",
+  "version": "0.7.0",
+  "description": "Create clear, beautiful and consistent chip architecture, algorithm and product visuals with Image Gen.",
+  "author": {"name": "Jiale Wang"},
+  "homepage": "https://jiale-wangowo.github.io/silicon-canvas/",
+  "repository": "https://github.com/jiale-wangOwO/silicon-canvas",
+  "license": "MIT",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "Silicon Canvas",
+    "shortDescription": "让 AI 稳定画出清晰、美观的专业芯片图",
+    "longDescription": "从系统架构、微架构与算法数据流到芯片产品渲染，描述想法，让 Agent 调用 Silicon Canvas 规划画面，再用 Image Gen 生成并按反馈打磨。统一布局、层级与视觉风格，适合文档、论文、架构评审和产品展示。中文描述，英文图中文字。",
+    "developerName": "Jiale Wang",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://jiale-wangowo.github.io/silicon-canvas/",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg",
+    "defaultPrompt": [
+      "用 Silicon Canvas 画一张 GPU 架构图，清楚展示计算簇、共享缓存和显存的关系。",
+      "用 Silicon Canvas 和 Image Gen 画出这段算法的数据流，并检查分支、汇合与关键公式。"
+    ]
+  }
+}

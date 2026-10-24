@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://jiale-wangOwO.github.io/silicon-canvas/">网页演示版</a> ·
-  <a href="https://github.com/jiale-wangOwO/silicon-canvas/releases/latest">下载 MCP</a> ·
+  <a href="#安装-codex-插件">安装 Codex 插件</a> ·
   <a href="docs/mcp.md">接入指南</a>
 </p>
 
@@ -30,13 +30,28 @@ Silicon Canvas 帮助 AI 更稳定地生成结构清晰、布局有序、风格�
 
 ## Let your agent set it up
 
-把下面这段话发给支持本地 MCP 的 Agent：
+把下面这段话发给你的 Agent：
 
 ```text
-Hi! Please install https://github.com/jiale-wangOwO/silicon-canvas for me and get the MCP server running in this agent. When ready, give me a short list of the figures it can help me create and one example request to try.
+Hi! Please install https://github.com/jiale-wangOwO/silicon-canvas for me. In Codex, install it as a plugin so it appears in the plugin list; in another agent, set up its MCP server. Verify the tools work, then give me a short list of how to use it and one example request.
 ```
 
-## 安装 MCP
+## 安装 Codex 插件
+
+Codex 用户推荐安装插件：它将绘图 Skill、MCP 工具与 Silicon Canvas 的名称和 Logo 一起提供，可以在插件列表中找到并启用。
+
+需要 **Python 3.11+**，并能在终端运行 `python`。使用支持插件的 Codex：
+
+```sh
+codex plugin marketplace add jiale-wangOwO/silicon-canvas
+codex plugin add silicon-canvas@silicon-canvas
+```
+
+在插件列表的 **Silicon Canvas** 来源中找到 **Silicon Canvas**。首次使用会自动准备独立的本机运行环境，后续调用复用缓存；无需再手动添加同名 MCP。宿主需要提供图片生成工具才能产出最终图像。
+
+更新插件来源后，可通过插件管理界面重新安装或更新。插件固定使用随包记录的后端版本，避免调用时悄悄切换到不同的绘图规则。详细说明见 [接入指南](docs/mcp.md)。
+
+## 其他 Agent：安装 MCP
 
 ### 下载发布包
 

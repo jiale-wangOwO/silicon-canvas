@@ -1,6 +1,32 @@
 # MCP 使用指南
 
-MCP 是 Silicon Canvas 的完整体验入口。服务在本机通过 STDIO 运行，默认使用宿主 Agent 的模型理解设计，由共享核心编译方案，再交给宿主可用的 ImageGen 生成与审查。无需启动 Web 页面或本地 HTTP 服务。
+Codex 的推荐入口是 **Silicon Canvas 插件**，它一起安装绘图 Skill 和本机 MCP 服务。其他支持 MCP 的 Agent 可以独立接入同一服务。默认使用宿主模型理解设计，由共享核心编译方案，再交给宿主可用的 ImageGen 生成与审查。
+
+## Codex 插件
+
+需要 Python 3.11+，且命令名 `python` 可用：
+
+```sh
+codex plugin marketplace add jiale-wangOwO/silicon-canvas
+codex plugin add silicon-canvas@silicon-canvas
+```
+
+插件在 **Silicon Canvas** 插件来源下显示，标识为 `silicon-canvas@silicon-canvas`。它包含 Logo、绘图工作流 Skill 和 MCP 工具；安装插件后不必另填全局 MCP command。
+
+首次启动会将已固定版本的后端安装到独立缓存，安装过程需要网络。准备环境的输出写入诊断流，MCP 的标准输出仅传协议消息。后续启动复用缓存，普通准备与编译不会请求外部语义模型。
+
+如果以前已经手动配置 `[mcp_servers.silicon-canvas]`，确认插件安装成功后可禁用那一项，避免在工具列表出现两个来源。已有绘图产物不需要删除。
+
+开发本地插件时，在仓库根目录运行：
+
+```sh
+codex plugin marketplace add .
+codex plugin add silicon-canvas@silicon-canvas
+```
+
+插件目录是 `plugins/silicon-canvas/`，仓库的 `.agents/plugins/marketplace.json` 提供可发现的目录。版本与后端源提交记录在插件 manifest 和 `backend.json` 中。发布前用实际插件启动器完成一次 STDIO 准备、编译及结果读取；不能用独立源码服务的成功代替插件启动验证。
+
+下面的独立 MCP 安装方式供其他客户端使用。插件打包方式依据 [OpenAI 插件文档](https://developers.openai.com/plugins/build/plugins)。
 
 ## 安装与客户端配置
 
