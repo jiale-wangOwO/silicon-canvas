@@ -32,14 +32,18 @@
     <section class="agent-setup" aria-labelledby="setupTitle">
       <div class="agent-section-heading"><p class="wb-kicker">GET CONNECTED</p><h2 id="setupTitle" lang="en">Let your agent set it up</h2><p>把下面这段话发给你正在使用的 Agent。</p></div>
       <pre class="agent-prompt" tabindex="0" aria-label="发送给 Agent 的安装请求"><code>请阅读 https://github.com/jiale-wangOwO/silicon-canvas，
-按照仓库里的 MCP 安装说明，为当前 Agent 安装并配置 Silicon Canvas。
+如果当前使用 Codex，请安装 Silicon Canvas 插件，让它出现在插件列表中；
+其他 Agent 请按照仓库里的 MCP 安装说明接入。
 确认 silicon_prepare 和 silicon_compile 可用后，告诉我可以开始绘图。</code></pre>
-      <p class="agent-note">语义理解使用 Agent 现有的模型，无需额外填写语义模型 Key。实际生图需要宿主提供可用的 Image Gen 能力。</p>
+      <p class="agent-note">Codex 插件包含绘图 Skill 与 MCP 工具。语义理解使用 Agent 现有模型，实际生图使用宿主的 Image Gen 能力。</p>
       <div class="agent-links"><a href="https://github.com/jiale-wangOwO/silicon-canvas" target="_blank" rel="noopener">查看仓库 <span aria-hidden="true">↗</span></a><a href="https://github.com/jiale-wangOwO/silicon-canvas/blob/main/docs/mcp.md" target="_blank" rel="noopener">完整安装说明 <span aria-hidden="true">↗</span></a></div>
       <details class="agent-manual">
-        <summary>手动安装与配置 <span aria-hidden="true">＋</span></summary>
+        <summary>安装命令与其他客户端 <span aria-hidden="true">＋</span></summary>
         <div class="agent-manual-content">
-          <p>需要 Python 3.11+。下载或克隆仓库后，在项目根目录运行对应安装器；它会创建独立环境，并生成 <code>mcp-config.json</code> 与 <code>codex-mcp.toml</code>。</p>
+          <p>Codex 用户：需要 Python 3.11+，并能运行 <code>python</code>。安装插件后，在 Silicon Canvas 来源中启用即可；首次使用会自动准备独立运行环境。</p>
+          <pre><code>codex plugin marketplace add jiale-wangOwO/silicon-canvas
+codex plugin add silicon-canvas@silicon-canvas</code></pre>
+          <p>其他 MCP 客户端：下载或克隆仓库后，在项目根目录运行下面的安装器，取得客户端配置。</p>
           <div class="agent-command-grid"><div><h3>Windows · PowerShell</h3><pre><code>.\scripts\install-mcp.ps1 -PackagePath .</code></pre></div><div><h3>macOS / Linux</h3><pre><code>bash scripts/install-mcp.sh .</code></pre></div></div>
           <p>将安装器生成的配置添加到支持 MCP 的客户端，由宿主通过 STDIO 启动服务。无需开启网页或本地 HTTP 服务。若使用 Windows 免 Python 发行包，请保持 EXE 与旁边的 <code>_internal</code> 资源目录完整；具体以安装说明为准。</p>
           <p>可选工具 <code>silicon_generate</code> 可以调用本机配置的兼容模型接口；默认宿主流程使用 <code>silicon_prepare</code> 与 <code>silicon_compile</code>。</p>
