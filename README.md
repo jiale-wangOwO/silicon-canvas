@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://jiale-wangOwO.github.io/silicon-canvas/">网页演示版</a> ·
-  <a href="#安装-codex-插件">安装 Codex 插件</a> ·
+  <a href="#让-ai-助手帮你安装">安装 Codex 插件</a> ·
   <a href="docs/mcp.md">接入指南</a>
 </p>
 
@@ -28,9 +28,9 @@ Silicon Canvas 帮助 AI 更稳定地生成结构清晰、布局有序、风格�
 
 更多作品见 [网页演示版的精选展示](https://jiale-wangOwO.github.io/silicon-canvas/#showcaseTitle)。
 
-## Let your agent set it up
+## 让 AI 助手帮你安装
 
-把下面这段话发给你的 Agent：
+把下面这段话发给你的 AI 助手，让它帮你完成安装：
 
 ```text
 Hi! Please install https://github.com/jiale-wangOwO/silicon-canvas for me. In Codex, install it as a plugin so it appears in the plugin list; in another agent, set up its MCP server. Verify the tools work, then give me a short list of how to use it and one example request.
